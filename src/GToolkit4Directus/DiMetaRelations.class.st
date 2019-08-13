@@ -37,3 +37,9 @@ DiMetaRelations >> gtDataFor: aView [
 DiMetaRelations >> numberOfData [
 	^ self data size
 ]
+
+{ #category : #enumerating }
+DiMetaRelations >> selectCollectionOneNamed: aString [ 
+	<return: #Array of: #DiMetaRelation>
+	^ self data select: [ :eachRelation | eachRelation collectionOne = aString ]
+]

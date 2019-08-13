@@ -66,3 +66,11 @@ DiMetaCollections >> initialize [
 DiMetaCollections >> numberOfData [
 	^ self data size
 ]
+
+{ #category : #enumerating }
+DiMetaCollections >> selectInCollectionManyRelations: aCollectionOfMetaRelation [
+	<return: #Array of: #DiMetaCollection>
+	^ self data select: [ :eachCollection | 
+		aCollectionOfMetaRelation anySatisfy: [ :eachRelation | 
+			eachCollection collection = eachRelation collectionMany ] ]
+]

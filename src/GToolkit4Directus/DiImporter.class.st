@@ -73,6 +73,20 @@ DiImporter >> getCollections [
 ]
 
 { #category : #importing }
+DiImporter >> getCollectionsWithRelations [
+	<return: #DiMetaCollections>
+	<return: #ZnResponse>
+	| aCollectionOrResponse aRelationOrResponse |
+	aCollectionOrResponse := self getCollections.
+	aCollectionOrResponse isSuccess ifFalse: [ ^ aCollectionOrResponse ].
+	aRelationOrResponse := self getRelations.
+	aRelationOrResponse isSuccess ifFalse: [ ^ aRelationOrResponse ].
+	^ DiMetaCollectionsWithRelations new
+		collections: aCollectionOrResponse;
+		relations: aRelationOrResponse
+]
+
+{ #category : #importing }
 DiImporter >> getElementsInCollection: name [
 	| aResponse |
 	aResponse := self getResponse: {#items. name}.

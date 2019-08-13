@@ -11,3 +11,10 @@ Class {
 	#superclass : #Object,
 	#category : #'GToolkit4Directus-Meta Model'
 }
+
+{ #category : #testing }
+DiMetaModel >> isSuccess [
+	"Polymorphic to ${method:ZnResponse>>#isSuccess}$.
+	This is likely not an optimal solution."
+	^ true
+]
