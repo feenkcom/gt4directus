@@ -27,7 +27,9 @@ DiMetaFieldUnrecognizedType >> jsonName [
 { #category : #accessing }
 DiMetaFieldUnrecognizedType >> name [
 	<return: #String>
-	^ name ifNil: [ '<unspeficied type>' ]
+	^ name 
+		ifNotNil: [ :aString | aString, ' (?)' ]
+		ifNil: [ '<unspeficied type>' ]
 ]
 
 { #category : #accessing }
