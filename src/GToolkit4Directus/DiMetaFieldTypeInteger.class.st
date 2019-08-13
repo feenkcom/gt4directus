@@ -11,6 +11,12 @@ DiMetaFieldTypeInteger class >> matchesName: aString [
 ]
 
 { #category : #accessing }
+DiMetaFieldTypeInteger >> jsonName [
+	<return: #String>
+	^ 'integer'
+]
+
+{ #category : #accessing }
 DiMetaFieldTypeInteger >> name [
 	<return: #String>
 	^ 'Integer'

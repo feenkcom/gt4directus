@@ -11,6 +11,12 @@ DiMetaFieldTypeOneToMany class >> matchesName: aString [
 ]
 
 { #category : #accessing }
+DiMetaFieldTypeOneToMany >> jsonName [
+	<return: #String>
+	^ 'O2M'
+]
+
+{ #category : #accessing }
 DiMetaFieldTypeOneToMany >> name [
 	<return: #String>
 	^ 'O2M'

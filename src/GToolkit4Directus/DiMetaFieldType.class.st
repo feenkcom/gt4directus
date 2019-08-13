@@ -23,6 +23,12 @@ DiMetaFieldType >> isUnrecognized [
 ]
 
 { #category : #accessing }
+DiMetaFieldType >> jsonName [
+	<return: #String>
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 DiMetaFieldType >> name [
 	<return: #String>
 	^ self subclassResponsibility

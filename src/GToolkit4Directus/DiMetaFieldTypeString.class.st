@@ -11,6 +11,12 @@ DiMetaFieldTypeString class >> matchesName: aString [
 ]
 
 { #category : #accessing }
+DiMetaFieldTypeString >> jsonName [
+	<return: #String>
+	^ 'string'
+]
+
+{ #category : #accessing }
 DiMetaFieldTypeString >> name [
 	<return: #String>
 	^ 'String'

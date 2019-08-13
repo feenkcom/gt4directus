@@ -19,6 +19,12 @@ DiMetaFieldUnrecognizedType >> isUnrecognized [
 ]
 
 { #category : #accessing }
+DiMetaFieldUnrecognizedType >> jsonName [
+	<return: #String>
+	^ name
+]
+
+{ #category : #accessing }
 DiMetaFieldUnrecognizedType >> name [
 	<return: #String>
 	^ name ifNil: [ '<unspeficied type>' ]

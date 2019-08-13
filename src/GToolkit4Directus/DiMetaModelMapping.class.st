@@ -91,7 +91,7 @@ DiMetaModelMapping >> metaFieldTypeMappingFor: aNeoJSONMapper [
 		for: DiMetaFieldType customDo: [ :mapping |
 	     mapping 
 			decoder: [ :aString | DiMetaFieldType typeNamed: aString ];
-			encoder: [ :aType | aType name ] ].
+			encoder: [ :aType | aType jsonName ] ].
 ]
 
 { #category : #mapping }
