@@ -74,7 +74,7 @@ DiImporter >> getCollections [
 
 { #category : #importing }
 DiImporter >> getRelations [
-	<return: #DiMetaCollections>
+	<return: #DiMetaRelations>
 	<return: #ZnResponse>
 	| aResponse |
 	aResponse := self getResponse: 'relations'.
