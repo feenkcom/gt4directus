@@ -10,7 +10,7 @@ Class {
 		'accessToken',
 		'projectURL'
 	],
-	#category : #'Directus-Importer'
+	#category : #'GToolkit4Directus-Importer'
 }
 
 { #category : #authentication }

@@ -5,7 +5,7 @@ See ${class:EsMetaCollections}$ for more details about the model.
 Class {
 	#name : #DiExamples,
 	#superclass : #Object,
-	#category : #'Directus-Examples'
+	#category : #'GToolkit4Directus-Examples'
 }
 
 { #category : #'json data' }

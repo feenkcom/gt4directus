@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Directus-Json Mapping'
+	#category : #'GToolkit4Directus-Json Mapping'
 }
 
 { #category : #cleanup }

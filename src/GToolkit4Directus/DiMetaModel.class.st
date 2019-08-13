@@ -9,5 +9,5 @@ See my subclasses for more detials: ${class:DiMetaModel|expanded=true|show=gtSub
 Class {
 	#name : #DiMetaModel,
 	#superclass : #Object,
-	#category : #'Directus-Meta Model'
+	#category : #'GToolkit4Directus-Meta Model'
 }

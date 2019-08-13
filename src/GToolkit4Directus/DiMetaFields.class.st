@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'fields'
 	],
-	#category : #'Directus-Meta Model'
+	#category : #'GToolkit4Directus-Meta Model'
 }
 
 { #category : #enumerating }
