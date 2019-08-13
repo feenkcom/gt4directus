@@ -139,7 +139,7 @@ DiMetaModelMapping >> read: aJsonSchema withMapping: aMessageSymbol on: aReadStr
 ]
 
 { #category : #reading }
-DiMetaModelMapping >> readMetaDescriptions: aJson [
+DiMetaModelMapping >> readCollections: aJson [
 	^ self read: DiMetaCollections withMapping: #metaCollectionsMappingFor: on: aJson readStream
 ]
 

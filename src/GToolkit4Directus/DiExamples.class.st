@@ -1,28 +1,12 @@
 "
 I exemplify Editorial Services.
-See ${class:EsMetaCollections}$ for more details about the model.
+See ${class:DiMetaCollections}$ for more details about the model.
 "
 Class {
 	#name : #DiExamples,
 	#superclass : #Object,
 	#category : #'GToolkit4Directus-Examples'
 }
-
-{ #category : #'json data' }
-DiExamples >> collectionsJsonString [
-	^ '{"data":[', self metaCollectionJsonString, ',', self metaCollectionTwoJsonString, ']}'
-]
-
-{ #category : #'json data' }
-DiExamples >> collectionsJsonStringStonJson [
-	<gtExample>
-	| aString anObject |
-	aString := self collectionsJsonString.
-	anObject := STONJSON fromString: aString.
-	self assert: anObject isDictionary.
-	self assert: anObject keys size equals: 1.
-	^ anObject
-]
 
 { #category : #'meta model' }
 DiExamples >> mapping [
@@ -82,10 +66,26 @@ DiExamples >> metaCollectionTwoStonJson [
 DiExamples >> metaCollections [
 	<gtExample>
 	| aJson anObject |
-	aJson := self collectionsJsonString.
-	anObject := self mapping readMetaDescriptions: aJson. 
+	aJson := self metaCollectionsJsonString.
+	anObject := self mapping readCollections: aJson. 
 	self assert: anObject class equals: DiMetaCollections.
 	self assert: anObject numberOfData equals: 2.
+	^ anObject
+]
+
+{ #category : #'json data' }
+DiExamples >> metaCollectionsJsonString [
+	^ '{"data":[', self metaCollectionJsonString, ',', self metaCollectionTwoJsonString, ']}'
+]
+
+{ #category : #'json data' }
+DiExamples >> metaCollectionsStonJson [
+	<gtExample>
+	| aString anObject |
+	aString := self metaCollectionsJsonString.
+	anObject := STONJSON fromString: aString.
+	self assert: anObject isDictionary.
+	self assert: anObject keys size equals: 1.
 	^ anObject
 ]
 
@@ -228,5 +228,92 @@ DiExamples >> metaFieldsOfNameAndDescriptionStonJson [
 	anObject := STONJSON fromString: aString.
 	self assert: anObject isDictionary.
 	self assert: anObject keys size equals: 2.
+	^ anObject
+]
+
+{ #category : #'meta model' }
+DiExamples >> metaRelationOfFieldManyRole [
+	<gtExample>
+	| aJson anObject |
+	aJson := self metaRelationOfFieldManyRoleJsonString.
+	anObject := self mapping read: DiMetaRelation withMapping: #metaRelationMappingFor: on: aJson readStream. 
+	self assert: anObject class equals: DiMetaRelation.
+	self assert: anObject junctionField equals: 'user'.
+	self assert: anObject collectionMany equals: 'directus_user_roles'.
+	self assert: anObject collectionOne equals: 'directus_roles'.
+	self assert: anObject fieldMany equals: 'role'.
+	self assert: anObject fieldOne equals: 'users'.
+	^ anObject
+]
+
+{ #category : #'json data' }
+DiExamples >> metaRelationOfFieldManyRoleJsonString [
+	^ '{"junction_field":"user","collection_many":"directus_user_roles","field_many":"role","id":12,"collection_one":"directus_roles","field_one":"users"}'
+]
+
+{ #category : #'json data' }
+DiExamples >> metaRelationOfFieldManyRoleStonJson [
+	<gtExample>
+	| aString anObject |
+	aString := self metaRelationOfFieldManyRoleJsonString.
+	anObject := STONJSON fromString: aString.
+	self assert: anObject isDictionary.
+	self assert: anObject keys size equals: 6.
+	^ anObject
+]
+
+{ #category : #'meta model' }
+DiExamples >> metaRelationOfFieldManyUser [
+	<gtExample>
+	| aJson anObject |
+	aJson := self metaRelationOfFieldManyUserJsonString.
+	anObject := self mapping read: DiMetaRelation withMapping: #metaRelationMappingFor: on: aJson readStream. 
+	self assert: anObject class equals: DiMetaRelation.
+	self assert: anObject collectionMany equals: 'directus_activity_seen'.
+	self assert: anObject collectionOne equals: 'directus_users'.
+	self assert: anObject fieldMany equals: 'user'.
+	^ anObject
+]
+
+{ #category : #'json data' }
+DiExamples >> metaRelationOfFieldManyUserJsonString [
+	^ '{"junction_field":null,"collection_many":"directus_activity_seen","field_many":"user","id":2,"collection_one":"directus_users","field_one":null}'
+]
+
+{ #category : #'json data' }
+DiExamples >> metaRelationOfFieldManyUserStonJson [
+	<gtExample>
+	| aString anObject |
+	aString := self metaRelationOfFieldManyUserJsonString.
+	anObject := STONJSON fromString: aString.
+	self assert: anObject isDictionary.
+	self assert: anObject keys size equals: 6.
+	^ anObject
+]
+
+{ #category : #'meta model' }
+DiExamples >> metaRelationsOfFieldManyUserAndRole [
+	<gtExample>
+	| aJson anObject |
+	aJson := self metaRelationsOfFieldManyUserAndRoleJsonString.
+	anObject := self mapping readRelations: aJson. 
+	self assert: anObject class equals: DiMetaRelations.
+	self assert: anObject numberOfData equals: 2.
+	^ anObject
+]
+
+{ #category : #'json data' }
+DiExamples >> metaRelationsOfFieldManyUserAndRoleJsonString [
+	^ '{"data":[', self metaRelationOfFieldManyUserJsonString, ',', self metaRelationOfFieldManyRoleJsonString, ']}'
+]
+
+{ #category : #'json data' }
+DiExamples >> metaRelationsOfFieldManyUserAndRoleStonJson [
+	<gtExample>
+	| aString anObject |
+	aString := self metaRelationsOfFieldManyUserAndRoleJsonString.
+	anObject := STONJSON fromString: aString.
+	self assert: anObject isDictionary.
+	self assert: anObject keys size equals: 1.
 	^ anObject
 ]

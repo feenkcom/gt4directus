@@ -1,3 +1,10 @@
+"
+I keep all ${class:DiMetaRelation}$ objects.
+
+Example with two ${class:DiMetaRelation}$ instances: ${example:DiExamples>>#metaRelationsOfFieldManyUserAndRole|noCode}$
+
+
+"
 Class {
 	#name : #DiMetaRelations,
 	#superclass : #DiMetaModel,

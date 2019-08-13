@@ -69,7 +69,7 @@ DiImporter >> getCollections [
 	| aResponse |
 	aResponse := self getResponse: 'collections'.
 	aResponse isSuccess ifFalse: [ ^ aResponse ].
-	^ DiMetaModelMapping uniqueInstance readMetaDescriptions: aResponse contents.
+	^ DiMetaModelMapping uniqueInstance readCollections: aResponse contents.
 ]
 
 { #category : #importing }

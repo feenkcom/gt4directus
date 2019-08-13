@@ -1,3 +1,10 @@
+"
+I represent a relation between ${class:DiMetaField}$ objects.
+
+Example: ${example:DiExamples>>#metaRelationOfFieldManyRole|noCode=true|previewHeight=500}$
+
+
+"
 Class {
 	#name : #DiMetaRelation,
 	#superclass : #DiMetaModel,
@@ -49,6 +56,22 @@ DiMetaRelation >> fieldOne [
 { #category : #accessing }
 DiMetaRelation >> fieldOne: anObject [
 	fieldOne := anObject
+]
+
+{ #category : #'gt-extension' }
+DiMetaRelation >> gtRelationFor: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Description';
+		items: [ OrderPreservingDictionary new
+			at: 'Relation from' put: self fieldOne;
+			at: 'In one-collection' put: self collectionOne;
+			at: 'To field' put: self fieldMany;
+			at: 'In many-collection' put: self collectionMany;
+			at: 'Junction field' put: self junctionField;
+			associations ];
+		column: 'Description' item: [ :anAssoc | anAssoc key ];
+		column: 'Value' item: [ :anAssoc | anAssoc value ]
 ]
 
 { #category : #accessing }
