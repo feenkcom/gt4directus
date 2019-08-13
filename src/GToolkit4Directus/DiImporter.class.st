@@ -73,6 +73,14 @@ DiImporter >> getCollections [
 ]
 
 { #category : #importing }
+DiImporter >> getElementsInCollection: name [
+	| aResponse |
+	aResponse := self getResponse: {#items. name}.
+	^ aResponse contents.
+
+]
+
+{ #category : #importing }
 DiImporter >> getRelations [
 	<return: #DiMetaRelations>
 	<return: #ZnResponse>
