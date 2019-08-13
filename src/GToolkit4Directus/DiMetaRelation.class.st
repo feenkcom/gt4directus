@@ -15,7 +15,7 @@ Class {
 		'fieldMany',
 		'collectionOne'
 	],
-	#category : #GToolkit4Directus
+	#category : #'GToolkit4Directus-Meta Model'
 }
 
 { #category : #accessing }

@@ -98,7 +98,8 @@ DiExamples >> metaFieldOfDescription [
 	self assert: anObject class equals: DiMetaField.
 	self assert: anObject name equals: 'description'.
 	self assert: anObject note equals: 'Describes, what the app does'.
-	self assert: anObject type equals: 'string'.
+	self assert: anObject type isUnrecognized not.
+	self assert: anObject type name equals: 'String'.
 	^ anObject
 ]
 
@@ -154,7 +155,8 @@ DiExamples >> metaFieldOfName [
 	self assert: anObject class equals: DiMetaField.
 	self assert: anObject name equals: 'name'.
 	self assert: anObject note equals: 'The name of an app'.
-	self assert: anObject type equals: 'string'.
+	self assert: anObject type isUnrecognized not.
+	self assert: anObject type name equals: 'String'.
 	^ anObject
 ]
 

@@ -19,6 +19,19 @@ Class {
 }
 
 { #category : #accessing }
+DiMetaField >> collectionNameOrType [
+	<return: #String>
+	^ self collection ifNotNil: [ :aCollection | aCollection collection ] ifNil: [ self type ]
+]
+
+{ #category : #testing }
+DiMetaField >> isOneToMany [
+	<return: #Boolean>
+	self shouldBeImplemented.
+	^ self type = 'o2m' or: [ self type = 'O2M' ]
+]
+
+{ #category : #accessing }
 DiMetaField >> name [
 	^ name
 ]
@@ -41,11 +54,12 @@ DiMetaField >> note: anObject [
 { #category : #printing }
 DiMetaField >> printOn: aStream [
 	self name ifNil: [ ^ super printOn: aStream ].
+	self type ifNil: [ ^ super printOn: aStream ].
 	aStream 
 		nextPutAll: 'Field ';
 		print: self name;
 		nextPutAll: ' of type ';
-		print: self type
+		print: self type name
 ]
 
 { #category : #accessing }
@@ -56,4 +70,10 @@ DiMetaField >> type [
 { #category : #accessing }
 DiMetaField >> type: anObject [
 	type := anObject
+]
+
+{ #category : #accessing }
+DiMetaField >> typeName [
+	<return: #String>
+	^ self type name
 ]

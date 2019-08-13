@@ -8,6 +8,15 @@ Class {
 	#category : #'GToolkit4Directus-Meta Model'
 }
 
+{ #category : #'as yet unclassified' }
+DiMetaCollectionsWithRelations >> buildRelations [
+	DiCollectionRelationBuilder new
+		collections: self collections;
+		relations: self relations;
+		build.
+	^ self collections.
+]
+
 { #category : #accessing }
 DiMetaCollectionsWithRelations >> collections [
 	^ collections

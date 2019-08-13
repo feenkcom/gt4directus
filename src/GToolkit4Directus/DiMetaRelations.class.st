@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'data'
 	],
-	#category : #GToolkit4Directus
+	#category : #'GToolkit4Directus-Meta Model'
 }
 
 { #category : #accessing }

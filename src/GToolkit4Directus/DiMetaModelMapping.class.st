@@ -79,9 +79,19 @@ DiMetaModelMapping >> metaFieldMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: DiMetaField do: [ :mapping |
 	      mapping mapAccessor: #note.
-	      mapping mapAccessor: #type.
+	      (mapping mapAccessor: #type) valueSchema: DiMetaFieldType.
 	      mapping mapAccessor: #name to: #field.
 		].
+	self metaFieldTypeMappingFor: aNeoJSONMapper.
+]
+
+{ #category : #mapping }
+DiMetaModelMapping >> metaFieldTypeMappingFor: aNeoJSONMapper [
+	aNeoJSONMapper
+		for: DiMetaFieldType customDo: [ :mapping |
+	     mapping 
+			decoder: [ :aString | DiMetaFieldType typeNamed: aString ];
+			encoder: [ :aType | aType name ] ].
 ]
 
 { #category : #mapping }
