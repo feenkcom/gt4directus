@@ -73,6 +73,16 @@ DiImporter >> getCollections [
 ]
 
 { #category : #importing }
+DiImporter >> getRelations [
+	<return: #DiMetaCollections>
+	<return: #ZnResponse>
+	| aResponse |
+	aResponse := self getResponse: 'relations'.
+	aResponse isSuccess ifFalse: [ ^ aResponse ].
+	^ DiMetaModelMapping uniqueInstance readRelations: aResponse contents.
+]
+
+{ #category : #importing }
 DiImporter >> getResponse: endpoint [
 	<return: #ZnResponse>
 	

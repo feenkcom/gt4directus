@@ -40,6 +40,15 @@ DiMetaModelMapping >> collectionOfMetaCollectionMappingFor: aNeoJSONMapper [
 ]
 
 { #category : #mapping }
+DiMetaModelMapping >> collectionOfMetaRelationMappingFor: aNeoJSONMapper [
+	aNeoJSONMapper
+		for: #CollectionOfMetaRelation customDo: [ :mapping |
+			mapping listOfElementSchema: DiMetaRelation ].
+	self metaRelationMappingFor: aNeoJSONMapper.
+
+]
+
+{ #category : #mapping }
 DiMetaModelMapping >> metaCollectionMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: DiMetaCollection do: [ :mapping |
@@ -97,6 +106,28 @@ DiMetaModelMapping >> metaFieldsMappingFor: aNeoJSONMapper [
 	self metaFieldMappingFor: aNeoJSONMapper.
 ]
 
+{ #category : #mapping }
+DiMetaModelMapping >> metaRelationMappingFor: aNeoJSONMapper [
+	aNeoJSONMapper
+		for: DiMetaRelation do: [ :mapping |
+	      mapping mapAccessor: #fieldOne to: #field_one.
+	      mapping mapAccessor: #junctionField to: #junction_field.
+			mapping mapAccessor: #collectionMany to: #collection_many.
+			mapping mapAccessor: #fieldMany to: #field_many.
+			mapping mapAccessor: #collectionOne to: #collection_one.
+		].
+]
+
+{ #category : #mapping }
+DiMetaModelMapping >> metaRelationsMappingFor: aNeoJSONMapper [
+	aNeoJSONMapper
+		for: DiMetaRelations do: [ :mapping |
+	      (mapping mapAccessor: #data) valueSchema: #CollectionOfMetaRelation.
+		].
+	self collectionOfMetaRelationMappingFor: aNeoJSONMapper.
+
+]
+
 { #category : #reading }
 DiMetaModelMapping >> read: aJsonSchema withMapping: aMessageSymbol on: aReadStream [ 
 	"Read a JSON string using json schema and return an object.
@@ -110,4 +141,9 @@ DiMetaModelMapping >> read: aJsonSchema withMapping: aMessageSymbol on: aReadStr
 { #category : #reading }
 DiMetaModelMapping >> readMetaDescriptions: aJson [
 	^ self read: DiMetaCollections withMapping: #metaCollectionsMappingFor: on: aJson readStream
+]
+
+{ #category : #reading }
+DiMetaModelMapping >> readRelations: aJson [
+	^ self read: DiMetaRelations withMapping: #metaRelationsMappingFor: on: aJson readStream.
 ]
