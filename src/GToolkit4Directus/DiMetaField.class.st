@@ -25,10 +25,9 @@ DiMetaField >> collectionNameOrType [
 ]
 
 { #category : #testing }
-DiMetaField >> isOneToMany [
+DiMetaField >> isRelatedToCollection: aDiMetaCollection [
 	<return: #Boolean>
-	self shouldBeImplemented.
-	^ self type = 'o2m' or: [ self type = 'O2M' ]
+	^ self type isRelatedToCollection: aDiMetaCollection
 ]
 
 { #category : #accessing }

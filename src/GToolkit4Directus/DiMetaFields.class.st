@@ -16,6 +16,13 @@ Class {
 }
 
 { #category : #enumerating }
+DiMetaFields >> collectFieldsRelatedToCollection: aDiMetaCollection [
+	<return: #Array of: #DiMetaField>
+	^ self fields select: [ :eachField | 
+		eachField isRelatedToCollection: aDiMetaCollection ]
+]
+
+{ #category : #enumerating }
 DiMetaFields >> fieldNamed: aString [
 	<return: #DiMetaField>
 	^ self fields detect: [ :eachField | eachField name = aString ]
@@ -39,7 +46,7 @@ DiMetaFields >> gtFieldsFor: aView [
 		title: 'Fields';
 		items: [ self fields ];
 		column: 'Name' item: [ :aField | aField name ];
-		column: 'Type' item: [ :aField | aField type ]
+		column: 'Type' item: [ :aField | aField type ifNotNil: #name ]
 ]
 
 { #category : #testing }

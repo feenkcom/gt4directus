@@ -52,7 +52,7 @@ DiMetaModelMapping >> collectionOfMetaRelationMappingFor: aNeoJSONMapper [
 DiMetaModelMapping >> metaCollectionMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: DiMetaCollection do: [ :mapping |
-	      mapping mapAccessor: #collection.
+	      mapping mapAccessor: #name to: #collection.
 	      (mapping mapAccessor: #fields) valueSchema: DiMetaFields.
 	      mapping mapAccessor: #hidden.
 	      mapping mapAccessor: #icon.

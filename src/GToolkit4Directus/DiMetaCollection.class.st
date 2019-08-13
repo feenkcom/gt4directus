@@ -22,14 +22,10 @@ Class {
 	#category : #'GToolkit4Directus-Meta Model'
 }
 
-{ #category : #accessing }
-DiMetaCollection >> collection [
-	^ collection
-]
-
-{ #category : #accessing }
-DiMetaCollection >> collection: anObject [
-	collection := anObject
+{ #category : #enumerating }
+DiMetaCollection >> collectFieldsRelatedToCollection: aDiMetaCollection [
+	<return: #Array of: #DiMetaField>
+	^ self fields collectFieldsRelatedToCollection: aDiMetaCollection
 ]
 
 { #category : #enumerating }
@@ -105,6 +101,16 @@ DiMetaCollection >> managed: anObject [
 ]
 
 { #category : #accessing }
+DiMetaCollection >> name [
+	^ collection
+]
+
+{ #category : #accessing }
+DiMetaCollection >> name: anObject [
+	collection := anObject
+]
+
+{ #category : #accessing }
 DiMetaCollection >> note [
 	^ note
 ]
@@ -116,10 +122,10 @@ DiMetaCollection >> note: anObject [
 
 { #category : #printing }
 DiMetaCollection >> printOn: aStream [
-	self collection ifNil: [ super printOn: aStream. ^ self ].
+	self name ifNil: [ super printOn: aStream. ^ self ].
 	aStream 
 		nextPutAll: 'Collection of ';
-		print: self collection
+		print: self name
 ]
 
 { #category : #accessing }

@@ -18,6 +18,22 @@ DiMetaFieldType class >> typeNamed: aString [
 ]
 
 { #category : #testing }
+DiMetaFieldType >> isManyToOne [
+	^ false
+]
+
+{ #category : #testing }
+DiMetaFieldType >> isOneToMany [
+	^ false
+]
+
+{ #category : #testing }
+DiMetaFieldType >> isRelatedToCollection: aDiMetaCollection [
+	<return: #Boolean>
+	^ self name = aDiMetaCollection name
+]
+
+{ #category : #testing }
 DiMetaFieldType >> isUnrecognized [
 	^ false
 ]

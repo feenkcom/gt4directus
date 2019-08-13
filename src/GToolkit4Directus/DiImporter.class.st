@@ -83,7 +83,8 @@ DiImporter >> getCollectionsWithRelations [
 	aRelationOrResponse isSuccess ifFalse: [ ^ aRelationOrResponse ].
 	^ DiMetaCollectionsWithRelations new
 		collections: aCollectionOrResponse;
-		relations: aRelationOrResponse
+		relations: aRelationOrResponse;
+		buildRelations
 ]
 
 { #category : #importing }

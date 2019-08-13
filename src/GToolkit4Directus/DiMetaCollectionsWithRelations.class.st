@@ -8,13 +8,12 @@ Class {
 	#category : #'GToolkit4Directus-Meta Model'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 DiMetaCollectionsWithRelations >> buildRelations [
 	DiCollectionRelationBuilder new
 		collections: self collections;
 		relations: self relations;
 		build.
-	^ self collections.
 ]
 
 { #category : #accessing }
@@ -28,34 +27,17 @@ DiMetaCollectionsWithRelations >> collections: anObject [
 ]
 
 { #category : #'gt-extension' }
+DiMetaCollectionsWithRelations >> gtDataFor: aView [
+	<gtView>
+	self collections ifNil: [ ^ aView empty ].
+	^ self collections gtDataFor: aView
+]
+
+{ #category : #'gt-extension' }
 DiMetaCollectionsWithRelations >> gtUMLFor: aView [
 	<gtView>
 	self collections ifNil: [ ^ aView empty ].
-	^ aView mondrian 
-		title: 'UML';
-		painting: [ :aMondrian | 
-			aMondrian nodes 
-				umlClassShapeWithName: [ :eachMetaDescription | eachMetaDescription collection ];
-				with: self collections data;
-				forEach: [ :eachMetaDescription | 
-					aMondrian nodes 
-						shape: [ :eachMetaField | 
-							| aText | 
-							aText := (eachMetaField name asString, ': ', eachMetaField type asString) asRopedText.
-							(aText from: eachMetaField name size + 2 to: aText size) foreground: Color lightGray.
-							BlTextElement new text: aText ];
-						 with: eachMetaDescription fields fields.
-					aMondrian layout vertical ].
-			aMondrian edges
-				fromNearestBounds;
-				toNearestBounds;
-				connectFromAll: [ :eachMetaDescription | 
-					| theRelations theCollections |
-					theRelations := self relations selectCollectionOneNamed: eachMetaDescription collection.
-					theCollections := self collections selectInCollectionManyRelations: theRelations.
-					theCollections  ].
-			aMondrian
-		]
+	^ self collections gtUMLFor: aView
 ]
 
 { #category : #accessing }

@@ -14,6 +14,13 @@ Class {
 	#category : #'GToolkit4Directus-Meta Model'
 }
 
+{ #category : #enumerating }
+DiMetaCollections >> collectFieldsRelatedToCollection: aDiMetaCollection [
+	<return: #Array of: #DiMetaField>
+	^ self data flatCollect: [ :eachCollection | 
+		eachCollection collectFieldsRelatedToCollection: aDiMetaCollection ]
+]
+
 { #category : #accessing }
 DiMetaCollections >> data [
 	^ data
@@ -29,7 +36,7 @@ DiMetaCollections >> gtDataFor: aView [
 	<gtView>
 	self data ifNil: [ ^ aView empty ].
 	^ aView list
-		title: 'Descriptions';
+		title: 'Collections';
 		items: [ self data ]
 ]
 
@@ -41,18 +48,22 @@ DiMetaCollections >> gtUMLFor: aView [
 		title: 'UML';
 		painting: [ :aMondrian | 
 			aMondrian nodes 
-				umlClassShapeWithName: [ :eachMetaDescription | eachMetaDescription collection ];
+				umlClassShapeWithName: [ :eachMetaCollection | eachMetaCollection name ];
 				with: self data;
-				forEach: [ :eachMetaDescription | 
+				forEach: [ :eachMetaCollection | 
 					aMondrian nodes 
 						shape: [ :eachMetaField | 
 							| aText | 
-							aText := (eachMetaField name asString, ': ', eachMetaField type asString) asRopedText.
+							aText := (eachMetaField name asString, ': ', eachMetaField type name asString) asRopedText.
 							(aText from: eachMetaField name size + 2 to: aText size) foreground: Color lightGray.
 							BlTextElement new text: aText ];
-						with: eachMetaDescription fields fields.
+						with: eachMetaCollection fields fields.
 					aMondrian layout custom: BlLinearLayout vertical ].
-			aMondrian  
+			aMondrian edges
+				fromNearestBounds;
+				toNearestBounds;
+				connectFromAll: [ :eachMetaCollection | 
+					self collectFieldsRelatedToCollection: eachMetaCollection ].
 		]
 ]
 
