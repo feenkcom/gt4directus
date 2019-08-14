@@ -19,17 +19,27 @@ DiCollectionToClassBuilder >> build [
 ]
 
 { #category : #building }
-DiCollectionToClassBuilder >> buildCollection: aDiMetaCollection [ 
+DiCollectionToClassBuilder >> buildCollection: aDiMetaCollection [
 	| aClassName theSlots aClass |
 	aClassName := self collectionClassName: aDiMetaCollection.
 	theSlots := self collectionSlots: aDiMetaCollection.
-	aClass := self modelRootClass subclass: aClassName asSymbol
+	aClass := self modelRootClass
+		subclass: aClassName asSymbol
 		slots: theSlots
-		classVariables: {  }
+		classVariables: {}
 		package: self package name.
-	self buildCollection: aDiMetaCollection class: aClass accessors: theSlots.
-	self buildJsonMappingForCollection: aDiMetaCollection class: aClass accessors: theSlots.
-	self buildJsonMappingForCollectionsOf: aDiMetaCollection class: aClass accessors: theSlots.
+	self
+		buildCollection: aDiMetaCollection
+		class: aClass
+		accessors: theSlots.
+	self
+		buildJsonMappingForCollection: aDiMetaCollection
+		class: aClass
+		accessors: theSlots.
+	self
+		buildJsonMappingForCollectionsOf: aDiMetaCollection
+		class: aClass.
+	self buildJsonMappingForDataOf: aDiMetaCollection class: aClass
 ]
 
 { #category : #building }
@@ -62,7 +72,7 @@ DiCollectionToClassBuilder >> buildJsonMappingForCollection: aDiMetaCollection c
 ]
 
 { #category : #'as yet unclassified' }
-DiCollectionToClassBuilder >> buildJsonMappingForCollectionsOf: aDiMetaCollection class: aClass accessors: theSlots [ 
+DiCollectionToClassBuilder >> buildJsonMappingForCollectionsOf: aDiMetaCollection class: aClass [ 
 	| aJsonMappingClass aMethodBody |
 	aJsonMappingClass := self jsonMappingClass.
 	aMethodBody := String streamContents: [ :aStream | 
@@ -73,6 +83,33 @@ DiCollectionToClassBuilder >> buildJsonMappingForCollectionsOf: aDiMetaCollectio
 			tab; tab; tab; nextPutAll: 'mapping listOfElementSchema: '; nextPutAll: aClass name; nextPutAll: ' ].'; cr;
 			tab; nextPutAll: 'self mappingOf'; nextPutAll: aClass name; nextPutAll: 'For: aNeoJSONMapper.'; cr ].
 	aJsonMappingClass compile: aMethodBody classified: 'mappings - collections'.
+]
+
+{ #category : #'as yet unclassified' }
+DiCollectionToClassBuilder >> buildJsonMappingForDataOf: aDiMetaCollection class: aClass [ 
+	| aJsonMappingClass aMethodBody |
+	aJsonMappingClass := self jsonMappingClass.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'dataOf'; nextPutAll: aClass name; nextPutAll: 'For: aNeoJSONMapper'; cr;
+			tab; nextPutAll: 'aNeoJSONMapper'; cr;
+			tab; tab; nextPutAll: 'for: '; nextPutAll: '#DataOf'; nextPutAll: aClass name; nextPutAll: ' customDo: [ :mapping |'; cr;
+			tab; tab; tab; nextPutAll: 'mapping reader: [ :jsonReader | '; cr;
+			tab; tab; tab; tab; nextPutAll: '| aResult |'; cr;
+			tab; tab; tab; tab; nextPutAll: 'jsonReader parseMapDo: ['; cr;
+			tab; tab; tab; tab; tab; nextPutAll: '(jsonReader parsePropertyName asString = ''data'')'; cr;
+			tab; tab; tab; tab; tab; tab; nextPutAll: 'ifTrue: ['; cr;
+			tab; tab; tab; tab; tab; tab; tab; nextPutAll: 'jsonReader expectChar: $:.'; cr;
+			tab; tab; tab; tab; tab; tab; tab; nextPutAll: 'aResult := jsonReader nextAs: #CollectionOf'; nextPutAll: aClass name; nextPutAll: ' ]'; cr;
+			tab; tab; tab; tab; tab; tab; nextPutAll: 'ifFalse: ['; cr;
+			tab; tab; tab; tab; tab; tab; tab; nextPutAll: 'jsonReader expectChar: $:.'; cr;
+			tab; tab; tab; tab; tab; tab; tab; nextPutAll: 'aResult := jsonReader next ] ].'; cr;
+			tab; tab; tab; tab; nextPutAll: 'aResult ].'; cr;
+			tab; tab; tab; nextPutAll: 'mapping writer: [ :jsonWriter :list |'; cr;
+			tab; tab; tab; tab; nextPutAll: 'self error: ''Writer not supported'' ] ]'; cr ].
+	aJsonMappingClass compile: aMethodBody classified: 'mappings - data'.
+	
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -172,7 +209,8 @@ DiCollectionToClassBuilder >> compileJsonMappingMainReadingMethod: aDiMetaCollec
 			aClassName := self collectionClassName: eachMetaCollection.
 			aStream
 				tab; nextPutAll: 'self '; nextPutAll: 'mappingOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr;
-				tab; nextPutAll: 'self '; nextPutAll: 'collectionOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr ].
+				tab; nextPutAll: 'self '; nextPutAll: 'collectionOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr;
+				tab; nextPutAll: 'self '; nextPutAll: 'dataOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr ].
 		aStream
 				tab; nextPutAll: '^ aReader nextAs: aJsonSchema.'; cr ].
 	aJsonMappingClass compile: aMethodBody classified: 'reading'.

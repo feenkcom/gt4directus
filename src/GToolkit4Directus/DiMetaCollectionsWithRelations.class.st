@@ -48,6 +48,13 @@ DiMetaCollectionsWithRelations >> gtUMLFor: aView [
 	^ self collections gtUMLFor: aView
 ]
 
+{ #category : #testing }
+DiMetaCollectionsWithRelations >> isSuccess [
+	"Polymorphic to ${method:ZnResponse>>#isSuccess}$.
+	This is likely not an optimal solution."
+	^ true
+]
+
 { #category : #accessing }
 DiMetaCollectionsWithRelations >> relations [
 	^ relations
