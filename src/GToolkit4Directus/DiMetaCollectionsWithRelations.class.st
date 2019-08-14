@@ -9,6 +9,14 @@ Class {
 }
 
 { #category : #building }
+DiMetaCollectionsWithRelations >> buildModelInPackage: aRPackage [
+	DiCollectionToClassBuilder new
+		collections: self collections;
+		package: aRPackage;
+		build
+]
+
+{ #category : #building }
 DiMetaCollectionsWithRelations >> buildRelations [
 	DiCollectionRelationBuilder new
 		collections: self collections;

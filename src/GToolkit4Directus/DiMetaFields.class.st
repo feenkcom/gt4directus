@@ -22,6 +22,11 @@ DiMetaFields >> collectFieldsRelatedToCollection: aDiMetaCollection [
 		eachField isRelatedToCollection: aDiMetaCollection ]
 ]
 
+{ #category : #'as yet unclassified' }
+DiMetaFields >> do: aBlockClosure [ 
+	self fields do: aBlockClosure
+]
+
 { #category : #enumerating }
 DiMetaFields >> fieldNamed: aString [
 	<return: #DiMetaField>

@@ -120,6 +120,12 @@ DiMetaCollection >> note: anObject [
 	note := anObject
 ]
 
+{ #category : #convenience }
+DiMetaCollection >> numberOfFields [
+	<return: #Integer>
+	^ self fields numberOfFields
+]
+
 { #category : #printing }
 DiMetaCollection >> printOn: aStream [
 	self name ifNil: [ super printOn: aStream. ^ self ].
