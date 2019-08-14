@@ -10,6 +10,11 @@ DiMetaFieldTypeInteger class >> matchesName: aString [
 	^ aString = 'integer'
 ]
 
+{ #category : #visitor }
+DiMetaFieldTypeInteger >> accept: aVisitor [
+	^ aVisitor visitDiMetaFieldTypeInteger: self
+]
+
 { #category : #accessing }
 DiMetaFieldTypeInteger >> jsonName [
 	<return: #String>

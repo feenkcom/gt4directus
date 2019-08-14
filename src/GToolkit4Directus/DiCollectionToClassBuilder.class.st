@@ -140,18 +140,7 @@ DiCollectionToClassBuilder >> collectionClassName: aDiMetaCollection [
 
 { #category : #'as yet unclassified' }
 DiCollectionToClassBuilder >> collectionSlotName: aDiMetaField [ 
-	^ String streamContents: [ :aStream | 
-		| aFirstChar | 
-		aFirstChar := false.
-		aDiMetaField name do: [ :eachCharacter | 
-			eachCharacter isLetter 
-				ifFalse: [ aFirstChar := true ]
-				ifTrue: [ aFirstChar 
-					ifTrue: [ 
-						aStream nextPut: eachCharacter asUppercase. 
-						aFirstChar := false. ]
-					ifFalse: [ 
-						aStream nextPut: eachCharacter ] ] ] ]
+	^ aDiMetaField getter
 ]
 
 { #category : #'as yet unclassified' }

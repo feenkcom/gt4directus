@@ -13,6 +13,11 @@ DiMetaFieldUnrecognizedType class >> matchesName: aString [
 	^ false
 ]
 
+{ #category : #visitor }
+DiMetaFieldUnrecognizedType >> accept: aVisitor [
+	^ aVisitor visitDiMetaFieldUnrecognizedType: self
+]
+
 { #category : #testing }
 DiMetaFieldUnrecognizedType >> isUnrecognized [
 	^ true

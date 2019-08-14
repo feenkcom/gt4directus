@@ -2,7 +2,8 @@ Class {
 	#name : #DiMetaFieldTypeOneToMany,
 	#superclass : #DiMetaFieldType,
 	#instVars : [
-		'collection'
+		'collection',
+		'relation'
 	],
 	#category : #'GToolkit4Directus-Meta Model'
 }
@@ -11,6 +12,11 @@ Class {
 DiMetaFieldTypeOneToMany class >> matchesName: aString [
 	<return: #Boolean>
 	^ aString = 'O2M' or: [ aString = 'o2m' ]
+]
+
+{ #category : #visitor }
+DiMetaFieldTypeOneToMany >> accept: aVisitor [
+	^ aVisitor visitDiMetaFieldTypeOneToMany: self
 ]
 
 { #category : #accessing }
@@ -23,6 +29,12 @@ DiMetaFieldTypeOneToMany >> collection [
 DiMetaFieldTypeOneToMany >> collection: aDiMetaCollection [ 
 	self assert: collection isNil.
 	collection := aDiMetaCollection
+]
+
+{ #category : #accessing }
+DiMetaFieldTypeOneToMany >> collectionName [
+	<return: #String>
+	^ self collection name
 ]
 
 { #category : #testing }
@@ -48,4 +60,16 @@ DiMetaFieldTypeOneToMany >> name [
 	^ self collection 
 		ifNotNil: [ :aCollection | aCollection name, ' (O2M)' ] 
 		ifNil: [ 'O2M' ]
+]
+
+{ #category : #accessing }
+DiMetaFieldTypeOneToMany >> relation [
+	<return: #DiMetaRelation>
+	^ relation
+]
+
+{ #category : #accessing }
+DiMetaFieldTypeOneToMany >> relation: aDiMetaRelation [ 
+	self assert: relation isNil.
+	relation := aDiMetaRelation
 ]

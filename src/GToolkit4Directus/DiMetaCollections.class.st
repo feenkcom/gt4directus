@@ -54,7 +54,7 @@ DiMetaCollections >> gtUMLFor: aView [
 		painting: [ :aMondrian | 
 			aMondrian nodes 
 				umlClassShapeWithName: [ :eachMetaCollection | eachMetaCollection name ];
-				with: (self data select: #isSystemCollection);
+				with: (self data reject: #isSystemCollection);
 				forEach: [ :eachMetaCollection | 
 					aMondrian nodes 
 						shape: [ :eachMetaField | 
@@ -76,6 +76,12 @@ DiMetaCollections >> gtUMLFor: aView [
 DiMetaCollections >> initialize [
 	super initialize.
 	data := #().
+]
+
+{ #category : #enumerating }
+DiMetaCollections >> named: aString [ 
+	<return: #DiMetaCollection>
+	^ self data detect: [ :eachCollection | eachCollection name = aString ]
 ]
 
 { #category : #convenient }

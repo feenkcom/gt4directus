@@ -37,7 +37,9 @@ DiCollectionRelationBuilder >> relateManyToOneForCollection: aDiMetaCollection f
 		ifNone: [ ^ self ].
 	aCollection := self collections data detect: [ :eachCollection | 
 		aRelation collectionOne = eachCollection name ].
-	aDiMetaField type collection: aCollection.
+	aDiMetaField type 
+		collection: aCollection;
+		relation: aRelation.
 ]
 
 { #category : #building }
@@ -48,7 +50,9 @@ DiCollectionRelationBuilder >> relateOneToManyForCollection: aDiMetaCollection f
 							eachRelation fieldOne = aDiMetaField name ] ].
 	aCollection := self collections data detect: [ :eachCollection | 
 		aRelation collectionMany = eachCollection name ].
-	aDiMetaField type collection: aCollection.
+	aDiMetaField type 
+		collection: aCollection;
+		relation: aRelation
 ]
 
 { #category : #accessing }

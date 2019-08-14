@@ -24,6 +24,24 @@ DiMetaField >> collectionNameOrType [
 	^ self collection ifNotNil: [ :aCollection | aCollection collection ] ifNil: [ self type ]
 ]
 
+{ #category : #'accessing - model' }
+DiMetaField >> getter [
+	"Return a Smalltalk getter name (method name)"
+	<return: #String>
+	^ String streamContents: [ :aStream | 
+		| aFirstChar | 
+		aFirstChar := false.
+		self name do: [ :eachCharacter | 
+			eachCharacter isLetter 
+				ifFalse: [ aFirstChar := true ]
+				ifTrue: [ aFirstChar 
+					ifTrue: [ 
+						aStream nextPut: eachCharacter asUppercase. 
+						aFirstChar := false. ]
+					ifFalse: [ 
+						aStream nextPut: eachCharacter ] ] ] ]
+]
+
 { #category : #testing }
 DiMetaField >> isRelatedToCollection: aDiMetaCollection [
 	<return: #Boolean>
@@ -59,6 +77,13 @@ DiMetaField >> printOn: aStream [
 		print: self name;
 		nextPutAll: ' of type ';
 		print: self type name
+]
+
+{ #category : #'accessing - model' }
+DiMetaField >> setter [
+	"Return a Smalltalk setter name (method name)"
+	<return: #String>
+	^ self getter, ':'
 ]
 
 { #category : #accessing }

@@ -17,6 +17,11 @@ DiMetaFieldType class >> typeNamed: aString [
 	^ DiMetaFieldUnrecognizedType new name: aString.
 ]
 
+{ #category : #visitor }
+DiMetaFieldType >> accept: aVisitor [
+	^ self subclassResponsibility
+]
+
 { #category : #testing }
 DiMetaFieldType >> isManyToOne [
 	^ false
