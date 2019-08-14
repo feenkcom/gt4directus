@@ -21,6 +21,7 @@ DiCollectionToClassBuilder >> build [
 { #category : #building }
 DiCollectionToClassBuilder >> buildCollection: aDiMetaCollection [
 	| aClassName theSlots aClass |
+	aDiMetaCollection isSystemCollection ifTrue: [ ^ self ].
 	aClassName := self collectionClassName: aDiMetaCollection.
 	theSlots := self collectionSlots: aDiMetaCollection.
 	aClass := self modelRootClass

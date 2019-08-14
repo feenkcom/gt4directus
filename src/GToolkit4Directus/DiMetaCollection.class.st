@@ -90,6 +90,12 @@ DiMetaCollection >> initialize [
 	translation := nil.
 ]
 
+{ #category : #testing }
+DiMetaCollection >> isSystemCollection [
+	<return: #Boolean>
+	^ self name beginsWith: 'directus_'
+]
+
 { #category : #accessing }
 DiMetaCollection >> managed [
 	^ managed

@@ -54,7 +54,7 @@ DiMetaCollections >> gtUMLFor: aView [
 		painting: [ :aMondrian | 
 			aMondrian nodes 
 				umlClassShapeWithName: [ :eachMetaCollection | eachMetaCollection name ];
-				with: self data;
+				with: (self data select: #isSystemCollection);
 				forEach: [ :eachMetaCollection | 
 					aMondrian nodes 
 						shape: [ :eachMetaField | 
