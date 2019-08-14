@@ -5,7 +5,8 @@ Class {
 		'collections',
 		'package',
 		'modelClassPrefix',
-		'modelRootClass'
+		'modelRootClass',
+		'jsonMappingClass'
 	],
 	#category : #'GToolkit4Directus-Builder'
 }
@@ -14,6 +15,7 @@ Class {
 DiCollectionToClassBuilder >> build [
 	self collections data do: [ :eachCollection | 
 		self buildCollection: eachCollection ].
+	self compileJsonMappingMainReadingMethod: self collections.
 ]
 
 { #category : #building }
@@ -26,6 +28,8 @@ DiCollectionToClassBuilder >> buildCollection: aDiMetaCollection [
 		classVariables: {  }
 		package: self package name.
 	self buildCollection: aDiMetaCollection class: aClass accessors: theSlots.
+	self buildJsonMappingForCollection: aDiMetaCollection class: aClass accessors: theSlots.
+	self buildJsonMappingForCollectionsOf: aDiMetaCollection class: aClass accessors: theSlots.
 ]
 
 { #category : #building }
@@ -38,6 +42,37 @@ DiCollectionToClassBuilder >> buildCollection: aDiMetaCollection class: aClass a
 			compile: eachSlotName, ': anObject', String cr, String tab, eachSlotName, ':= anObject' 
 			classified: 'accessing'.
 	]
+]
+
+{ #category : #'as yet unclassified' }
+DiCollectionToClassBuilder >> buildJsonMappingForCollection: aDiMetaCollection class: aClass accessors: theSlots [ 
+	| aJsonMappingClass aMethodBody |
+	aJsonMappingClass := self jsonMappingClass.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'mappingOf'; nextPutAll: aClass name; nextPutAll: 'For: aNeoJSONMapper'; cr;
+			tab; nextPutAll: 'aNeoJSONMapper'; cr;
+			tab; tab; nextPutAll: 'for: '; nextPutAll: aClass name; nextPutAll: ' do: [ :mapping |'; cr.
+		aDiMetaCollection fields fields paddedWith: theSlots do: [ :eachField :eachSlot | 
+			aStream
+				tab; tab; tab; nextPutAll: 'mapping mapAccessor: #'; nextPutAll: eachSlot; nextPutAll: ' to: #'; nextPutAll: eachField name; nextPut: $.; cr ].
+		aStream
+				tab; tab; nextPutAll: '].' ].
+	aJsonMappingClass compile: aMethodBody classified: 'mappings - models'.
+]
+
+{ #category : #'as yet unclassified' }
+DiCollectionToClassBuilder >> buildJsonMappingForCollectionsOf: aDiMetaCollection class: aClass accessors: theSlots [ 
+	| aJsonMappingClass aMethodBody |
+	aJsonMappingClass := self jsonMappingClass.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'collectionOf'; nextPutAll: aClass name; nextPutAll: 'For: aNeoJSONMapper'; cr;
+			tab; nextPutAll: 'aNeoJSONMapper'; cr;
+			tab; tab; nextPutAll: 'for: '; nextPutAll: '#CollectionOf'; nextPutAll: aClass name; nextPutAll: ' customDo: [ :mapping |'; cr;
+			tab; tab; tab; nextPutAll: 'mapping listOfElementSchema: '; nextPutAll: aClass name; nextPutAll: ' ].'; cr;
+			tab; nextPutAll: 'self mappingOf'; nextPutAll: aClass name; nextPutAll: 'For: aNeoJSONMapper.'; cr ].
+	aJsonMappingClass compile: aMethodBody classified: 'mappings - collections'.
 ]
 
 { #category : #'as yet unclassified' }
@@ -99,12 +134,62 @@ DiCollectionToClassBuilder >> collections: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+DiCollectionToClassBuilder >> compileJsonMappingClass [
+	| aClass |
+	aClass := Object 
+		subclass: self modelClassPrefix, 'JsonMapping'
+		slots: {  }
+		classVariables: {  }
+		package: self package name.
+	aClass class 
+		instanceVariableNames: 'uniqueInstance'.
+	aClass class 
+		compile: 'uniqueInstance
+	^ uniqueInstance ifNil: [ uniqueInstance := self new ]' 
+		classified: 'accessing'.
+	aClass class 
+		compile: 'resetUniqueInstance
+	uniqueInstance := nil' 
+		classified: 'cleanup'.
+	aClass class 
+		compile: 'cleanUp
+	self resetUniqueInstance' 
+		classified: 'cleanup'.
+	^ aClass
+]
+
+{ #category : #compiling }
+DiCollectionToClassBuilder >> compileJsonMappingMainReadingMethod: aDiMetaCollections [ 
+	| aJsonMappingClass aMethodBody |
+	aJsonMappingClass := self jsonMappingClass.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'read: aJsonSchema on: aReadStream'; cr;
+			tab; nextPutAll: '| aReader |'; cr;
+			tab; nextPutAll: 'aReader := (NeoJSONReader on: aReadStream).'; cr.
+		aDiMetaCollections do: [ :eachMetaCollection | 
+			| aClassName |
+			aClassName := self collectionClassName: eachMetaCollection.
+			aStream
+				tab; nextPutAll: 'self '; nextPutAll: 'mappingOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr;
+				tab; nextPutAll: 'self '; nextPutAll: 'collectionOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr ].
+		aStream
+				tab; nextPutAll: '^ aReader nextAs: aJsonSchema.'; cr ].
+	aJsonMappingClass compile: aMethodBody classified: 'reading'.
+]
+
+{ #category : #'as yet unclassified' }
 DiCollectionToClassBuilder >> compileModelRootClass [
 	^ Object 
 		subclass: self modelClassPrefix, 'Model'
 		slots: {  }
 		classVariables: {  }
 		package: self package name 
+]
+
+{ #category : #'as yet unclassified' }
+DiCollectionToClassBuilder >> jsonMappingClass [
+	^ jsonMappingClass ifNil: [ jsonMappingClass := self compileJsonMappingClass ]
 ]
 
 { #category : #building }

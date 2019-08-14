@@ -31,6 +31,11 @@ DiMetaCollections >> data: anObject [
 	data := anObject
 ]
 
+{ #category : #enumerating }
+DiMetaCollections >> do: aBlockClosure [ 
+	self data do: aBlockClosure
+]
+
 { #category : #'gt-extension' }
 DiMetaCollections >> gtDataFor: aView [
 	<gtView>
