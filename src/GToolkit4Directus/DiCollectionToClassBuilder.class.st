@@ -206,12 +206,13 @@ DiCollectionToClassBuilder >> compileJsonMappingMainReadingMethod: aDiMetaCollec
 			tab; nextPutAll: '| aReader |'; cr;
 			tab; nextPutAll: 'aReader := (NeoJSONReader on: aReadStream).'; cr.
 		aDiMetaCollections do: [ :eachMetaCollection | 
-			| aClassName |
-			aClassName := self collectionClassName: eachMetaCollection.
-			aStream
-				tab; nextPutAll: 'self '; nextPutAll: 'mappingOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr;
-				tab; nextPutAll: 'self '; nextPutAll: 'collectionOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr;
-				tab; nextPutAll: 'self '; nextPutAll: 'dataOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr ].
+			eachMetaCollection isSystemCollection ifFalse: [ 
+				| aClassName |
+				aClassName := self collectionClassName: eachMetaCollection.
+				aStream
+					tab; nextPutAll: 'self '; nextPutAll: 'mappingOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr;
+					tab; nextPutAll: 'self '; nextPutAll: 'collectionOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr;
+					tab; nextPutAll: 'self '; nextPutAll: 'dataOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr ] ].
 		aStream
 				tab; nextPutAll: '^ aReader nextAs: aJsonSchema.'; cr ].
 	aJsonMappingClass compile: aMethodBody classified: 'reading'.
