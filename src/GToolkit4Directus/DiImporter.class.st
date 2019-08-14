@@ -96,6 +96,22 @@ DiImporter >> getElementsInCollection: name [
 ]
 
 { #category : #importing }
+DiImporter >> getElementsInCollection: name withQuery: keyedCollection [
+	| aResponse |
+	aResponse := self getResponse: {#items. name} withQuery: keyedCollection.
+	^ aResponse contents.
+
+]
+
+{ #category : #importing }
+DiImporter >> getElementsInCollection: name withStatus: status [
+	| aResponse |
+	aResponse := self getResponse: {#items. name}.
+	^ aResponse contents.
+
+]
+
+{ #category : #importing }
 DiImporter >> getRelations [
 	<return: #DiMetaRelations>
 	<return: #ZnResponse>
@@ -112,6 +128,19 @@ DiImporter >> getResponse: endpoint [
 	^ ZnClient new
 		url: projectURL;
 		addPath: endpoint;
+		headerAt: 'Authorization:' put: 'Bearer ', accessToken;
+		get;
+		response.
+]
+
+{ #category : #importing }
+DiImporter >> getResponse: endpoint withQuery: keyedCollection [
+	<return: #ZnResponse>
+	
+	^ ZnClient new
+		url: projectURL;
+		addPath: endpoint;
+		queryAddAll: keyedCollection;
 		headerAt: 'Authorization:' put: 'Bearer ', accessToken;
 		get;
 		response.
