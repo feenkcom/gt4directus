@@ -113,9 +113,19 @@ DiCollectionToClassBuilder >> modelClassPrefix [
 	^ modelClassPrefix ifNil: [ 'DiMo' ]
 ]
 
+{ #category : #accessing }
+DiCollectionToClassBuilder >> modelClassPrefix: anObject [
+	modelClassPrefix := anObject
+]
+
 { #category : #'as yet unclassified' }
 DiCollectionToClassBuilder >> modelRootClass [
 	^ modelRootClass ifNil: [ modelRootClass := self compileModelRootClass ].
+]
+
+{ #category : #accessing }
+DiCollectionToClassBuilder >> modelRootClass: anObject [
+	modelRootClass := anObject
 ]
 
 { #category : #accessing }
