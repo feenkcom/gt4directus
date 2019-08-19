@@ -24,6 +24,30 @@ DiExamples >> basicImporter [
 	^ anImporter
 ]
 
+{ #category : #'company - creating class model' }
+DiExamples >> buildCompanyModel [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self companyModelClassBuilder.
+	aBuilder build.
+	aModelClass := self class environment classNamed: 'DummyCompany'.
+	self assert: aModelClass isNotNil.
+	self assert: aModelClass isClass.
+	self assert: aModelClass selectors size equals: 8.
+	^ aModelClass
+]
+
+{ #category : #'company - creating class model' }
+DiExamples >> companyModelClassBuilder [
+	<gtExample>
+	| aMetaCollections aBuilder |
+	aMetaCollections := self metaCollectionsOfCompany.
+	aBuilder := self modelBuilder.
+	aBuilder collections: aMetaCollections.
+	self assert: aBuilder collections equals: aMetaCollections.
+	^ aBuilder
+]
+
 { #category : #server }
 DiExamples >> delegate [
 	<gtExample>
@@ -45,6 +69,23 @@ DiExamples >> delegate [
 		map: self publishPath
 		to: [ :aRequest :aResponse | self publishedResponse ]".
 	^ delegate
+]
+
+{ #category : #'model builder' }
+DiExamples >> dummyPackage [
+	<gtExample>
+	<after: #removeDummyPackage>
+	| aPackageName aPackage anOrganizer |
+	aPackageName := self dummyPackageName.
+	anOrganizer := RPackageOrganizer default.
+	aPackage := anOrganizer registerPackageNamed: aPackageName asSymbol.
+	self assert: (anOrganizer includesPackageNamed: aPackageName).
+	^ aPackage
+]
+
+{ #category : #'model builder' }
+DiExamples >> dummyPackageName [
+	^ 'Dummy-Package-For' , self class package name
 ]
 
 { #category : #server }
@@ -640,9 +681,31 @@ DiExamples >> metaRelationsOfParentSubsidiaryCompaniesStonJson [
 	^ anObject
 ]
 
+{ #category : #'model builder' }
+DiExamples >> modelBuilder [
+	<gtExample>
+	| aBuilder aPackage |
+	aBuilder := DiCollectionToClassBuilder new.
+	aPackage := self dummyPackage.
+	aBuilder package: aPackage.
+	aBuilder modelClassPrefix: 'Dummy'.
+	self assert: aBuilder package equals: aPackage.
+	self assert: aBuilder modelClassPrefix equals: 'Dummy'.
+	^ aBuilder
+]
+
 { #category : #server }
 DiExamples >> password [
 	^ 'my-password'
+]
+
+{ #category : #'model builder' }
+DiExamples >> removeDummyPackage [
+	| aPackageName aPackageOrNil anOrganizer |
+	aPackageName := self dummyPackageName.
+	anOrganizer := RPackageOrganizer default.
+	aPackageOrNil := anOrganizer unregisterPackageNamed: aPackageName.
+	^ aPackageOrNil
 ]
 
 { #category : #server }
