@@ -25,7 +25,7 @@ DiProtoDirectus >> authenticate [
 
 { #category : #authentication }
 DiProtoDirectus >> authenticateWithEmail: anEmail password: aPassword [
-	| aClient aResponse |
+	| aResponse aJsonObject |
 	accessToken ifNil: [ 
 		| aContent aJsonContent |
 		aContent := Dictionary new
@@ -33,19 +33,16 @@ DiProtoDirectus >> authenticateWithEmail: anEmail password: aPassword [
 			at: 'password' put: aPassword;
 			yourself.
 		aJsonContent := STONJSON toString: aContent.
-		aClient := ZnClient new
+		aResponse := ZnClient new
 			url: projectURL;
 			addPath: #(auth authenticate);
-    		entity: (ZnEntity 
-        		with: aJsonContent
-        		type: ZnMimeType applicationJson);
+    		entity: (ZnEntity json: aJsonContent);
 			post;
 			response.
-		
-		aClient isSuccess
+		aResponse isSuccess
    			ifTrue: [ 
-				aResponse := STONJSON fromString: aClient contents.
-				accessToken := (aResponse at: 'data') at: 'token'.
+				aJsonObject := STONJSON fromString: aResponse contents.
+				accessToken := (aJsonObject at: 'data') at: 'token'.
 		].
 	].
 ]
@@ -149,6 +146,12 @@ DiProtoDirectus >> getResponse: endpoint withQuery: keyedCollection [
 		headerAt: 'Authorization:' put: 'Bearer ', accessToken;
 		get;
 		response.
+]
+
+{ #category : #testing }
+DiProtoDirectus >> isAuthenticated [
+	<return: #Boolean>
+	^ accessToken isNotNil.
 ]
 
 { #category : #accessing }

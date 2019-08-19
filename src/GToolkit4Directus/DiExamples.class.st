@@ -12,27 +12,115 @@ Class {
 	#category : #'GToolkit4Directus-Examples'
 }
 
+{ #category : #importer }
+DiExamples >> basicImporter [
+	<gtExample>
+	| anImporter |
+	anImporter := DiDirectus new.
+	self assert: anImporter projectURL isNil.
+	self assert: anImporter email isNil.
+	self assert: anImporter password isNil.
+	self assert: anImporter isAuthenticated not.
+	^ anImporter
+]
+
 { #category : #server }
 DiExamples >> delegate [
 	<gtExample>
 	delegate ifNotNil: [ :aDelegate | ^ aDelegate ].
 	delegate := ZnDispatcherDelegate new.
-	"delegate 
-		map: self deletePathString
+	delegate 
+		map: '/auth/authenticate'
 		to: [ :aRequest :aResponse |
-			aResponse entity: (ZnEntity textCRLF: 'OK') ];
-		map: self listFilePath
+			aResponse entity: (ZnEntity json: '{"data":{"token":"my-token"}}') traceCr. ];
+		map: '/collections'
 		to: [ :aRequest :aResponse |
-			aResponse entity: (ZnEntity json: self listJsonContent) ];
-		map: self infoFilePath
+			aResponse entity: (ZnEntity json: self metaCollectionsOfCompanyJsonString) ];
+		map: '/relations'
 		to: [ :aRequest :aResponse |
-			aResponse entity: (ZnEntity json: self infoJsonContent) ];
+			aResponse entity: (ZnEntity json: self metaRelationsOfParentSubsidiaryCompaniesJsonString) ]";
 		map: self xdocPathString
 		to: [ :aRequest :aResponse |
 			aResponse entity: self documentsExamples documentWithFigureEntity ];
 		map: self publishPath
-		to: [ :aRequest :aResponse | self publishedResponse ]."
+		to: [ :aRequest :aResponse | self publishedResponse ]".
 	^ delegate
+]
+
+{ #category : #server }
+DiExamples >> email [
+	^ 'my@email.com'
+]
+
+{ #category : #'company - importer' }
+DiExamples >> importCompanyCollectionsWithRelations [
+	<gtExample>
+	| anImporter aMetaModel aCollection aRelation aField |
+	anImporter := self importer.
+	aMetaModel := anImporter getCollectionsWithRelations.
+	self assert: aMetaModel isNotNil.
+	aCollection := aMetaModel collections data first.
+	aRelation := aMetaModel relations data first.
+	aField := aCollection fieldNamed: 'parent_company'.
+	self assert: aField type collection equals: aCollection.
+	self assert: aField type relation equals: aRelation.
+	aField :=  aCollection fieldNamed: 'subsidiary_companies'.
+	self assert: aField type collection equals: aCollection.
+	self assert: aField type relation equals: aRelation.
+	^ aMetaModel
+]
+
+{ #category : #'company - importer' }
+DiExamples >> importCompanyMetaModel [
+	<gtExample>
+	| anImporter aMetaModel aCollection aField |
+	anImporter := self importer.
+	aMetaModel := anImporter getCollections.
+	self assert: aMetaModel isNotNil.
+	aCollection := aMetaModel data first.
+	aField := aCollection fieldNamed: 'parent_company'.
+	self assert: aField type collection isNil.
+	self assert: aField type relation isNil.
+	aField :=  aCollection fieldNamed: 'subsidiary_companies'.
+	self assert: aField type collection isNil.
+	self assert: aField type relation isNil.
+	^ aMetaModel
+]
+
+{ #category : #'company - importer' }
+DiExamples >> importCompanyRelations [
+	<gtExample>
+	| anImporter theCollections |
+	anImporter := self importer.
+	theCollections := anImporter getRelations.
+	self assert: theCollections isNotNil.
+	self assert: theCollections class equals: DiMetaRelations.
+	self assert: theCollections numberOfData equals: 1.
+	^ theCollections
+]
+
+{ #category : #importer }
+DiExamples >> importer [
+	<gtExample>
+	| anImporter |
+	anImporter := self importer_NotAuthenticated.
+	anImporter authenticate.
+	self assert: anImporter isAuthenticated.
+	^ anImporter
+]
+
+{ #category : #importer }
+DiExamples >> importer_NotAuthenticated [
+	<gtExample>
+	| anUrl anImporter |
+	anUrl := self serverUrl.
+	anImporter := self basicImporter.
+	anImporter projectURL: anUrl.
+	anImporter email: self email.
+	anImporter password: self password.
+	self assert: anImporter projectURL equals: anUrl.
+	self assert: anImporter isAuthenticated not.
+	^ anImporter
 ]
 
 { #category : #initialization }
@@ -550,6 +638,11 @@ DiExamples >> metaRelationsOfParentSubsidiaryCompaniesStonJson [
 	self assert: anObject keys size equals: 1.
 	self assert: anObject keys first equals: 'data'.
 	^ anObject
+]
+
+{ #category : #server }
+DiExamples >> password [
+	^ 'my-password'
 ]
 
 { #category : #server }
