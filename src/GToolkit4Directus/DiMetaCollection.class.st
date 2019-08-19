@@ -106,6 +106,15 @@ DiMetaCollection >> managed: anObject [
 	managed := anObject
 ]
 
+{ #category : #'accessing - model' }
+DiMetaCollection >> modelClassName [
+	"Return a model class name representing the collection.
+	The name is without a possible class prefix."
+	<return: #String>
+	^ String streamContents: [ :aStream | 
+		self printModelClassNameOn: aStream ]
+]
+
 { #category : #accessing }
 DiMetaCollection >> name [
 	^ collection
@@ -130,6 +139,21 @@ DiMetaCollection >> note: anObject [
 DiMetaCollection >> numberOfFields [
 	<return: #Integer>
 	^ self fields numberOfFields
+]
+
+{ #category : #printing }
+DiMetaCollection >> printModelClassNameOn: aStream [
+	| aFirstChar | 
+	aFirstChar := true.
+	self name do: [ :eachCharacter | 
+		eachCharacter isLetter 
+			ifFalse: [ aFirstChar := true ]
+			ifTrue: [ aFirstChar 
+				ifTrue: [ 
+					aStream nextPut: eachCharacter asUppercase. 
+					aFirstChar := false. ]
+				ifFalse: [ 
+					aStream nextPut: eachCharacter ] ] ]
 ]
 
 { #category : #printing }

@@ -90,6 +90,11 @@ DiMetaCollections >> numberOfData [
 ]
 
 { #category : #enumerating }
+DiMetaCollections >> reject: aBlock [
+	^ self data reject: aBlock
+]
+
+{ #category : #enumerating }
 DiMetaCollections >> selectInCollectionManyRelations: aCollectionOfMetaRelation [
 	<return: #Array of: #DiMetaCollection>
 	^ self data select: [ :eachCollection | 

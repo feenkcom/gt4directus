@@ -25,6 +25,7 @@ DiExamples >> metaCollection [
 	anObject := self mapping read: DiMetaCollection withMapping: #metaCollectionMappingFor: on: aJson readStream. 
 	self assert: anObject class equals: DiMetaCollection.
 	self assert: anObject fields numberOfFields equals: 11.
+	self assert: anObject modelClassName equals: 'App'.
 	^ anObject
 ]
 
@@ -157,6 +158,8 @@ DiExamples >> metaFieldOfName [
 	self assert: anObject note equals: 'The name of an app'.
 	self assert: anObject type isUnrecognized not.
 	self assert: anObject type name equals: 'String'.
+	self assert: anObject getter equals: #name.
+	self assert: anObject setter equals: #name:.
 	^ anObject
 ]
 
