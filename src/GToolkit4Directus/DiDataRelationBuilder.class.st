@@ -4,12 +4,6 @@ A given database data are received as a JSON string, that is transformed to a pa
 
 I first update one-to-many relations using ${class:DiDataRelationBuilderContext}$, followed by many-to-one relation updates using ${class:DiManyToOneRelationContext}$.
 
-The following example shows a meta-model without updated relation types: ${example:DiExamples>>#metaCollectionsWithRelationsOfCompany_NotComputed|codeExpanded=false|previewExpanded=true}$
-
-
-And the next example shows the same meta-model with updated relation types: ${example:DiExamples>>#metaCollectionsWithRelationsOfCompany|codeExpanded=false|previewExpanded=true}$
-
-
 "
 Class {
 	#name : #DiDataRelationBuilder,
