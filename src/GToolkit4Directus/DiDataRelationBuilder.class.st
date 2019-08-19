@@ -16,12 +16,13 @@ Class {
 
 { #category : #accessing }
 DiDataRelationBuilder >> data [
+	<return: #DiData>
 	^ data
 ]
 
 { #category : #accessing }
-DiDataRelationBuilder >> data: anObject [
-	data := anObject
+DiDataRelationBuilder >> data: aDiData [
+	data := aDiData
 ]
 
 { #category : #enumerating }
