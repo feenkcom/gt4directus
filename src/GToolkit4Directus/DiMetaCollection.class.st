@@ -11,13 +11,13 @@ Class {
 	#superclass : #DiMetaModel,
 	#instVars : [
 		'single',
-		'collection',
 		'icon',
 		'fields',
 		'translation',
 		'note',
 		'hidden',
-		'managed'
+		'managed',
+		'name'
 	],
 	#category : #'GToolkit4Directus-Meta Model'
 }
@@ -80,7 +80,7 @@ DiMetaCollection >> includesFieldOfType: aType [
 { #category : #initialization }
 DiMetaCollection >> initialize [
 	super initialize.
-	collection := '<uninitialized name>'.
+	name := '<uninitialized name>'.
 	fields := #().
 	hidden := false.
 	icon := 'question'.
@@ -117,12 +117,12 @@ DiMetaCollection >> modelClassName [
 
 { #category : #accessing }
 DiMetaCollection >> name [
-	^ collection
+	^ name
 ]
 
 { #category : #accessing }
 DiMetaCollection >> name: anObject [
-	collection := anObject
+	name := anObject
 ]
 
 { #category : #accessing }

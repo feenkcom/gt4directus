@@ -110,9 +110,8 @@ DiMetaModelMapping >> metaFieldsMappingFor: aNeoJSONMapper [
 				DiMetaFields new fields: anArray ].
 			mapping writer: [ :jsonWriter :list | 
 		jsonWriter writeListStreamingDo: [ :listWriter |
-			list do: [ :each | 
-				each isUserSnippet ifTrue: [
-					listWriter writeElement: each as: #MetaFieldNameAndValue ] ] ] ] ].
+			list do: [ :eachMetaField | 
+				listWriter writeElement: eachMetaField ] ] ] ].
 	self metaFieldMappingFor: aNeoJSONMapper.
 ]
 
@@ -156,4 +155,28 @@ DiMetaModelMapping >> readCollections: aJson [
 { #category : #reading }
 DiMetaModelMapping >> readRelations: aJson [
 	^ self read: DiMetaRelations withMapping: #metaRelationsMappingFor: on: aJson readStream.
+]
+
+{ #category : #writing }
+DiMetaModelMapping >> write: aXdObject mappedTo: mappingSymbol [ 
+	"Return a JSON string representation of the meta-model."
+	<return: #String>
+	^ self write: aXdObject mappedTo: mappingSymbol prettyPrint: false
+]
+
+{ #category : #writing }
+DiMetaModelMapping >> write: aXdObject mappedTo: aMappingSymbol prettyPrint: aBoolean [
+	"Return a JSON string representation of the meta-model."
+	<return: #String>
+	^ String streamContents: [ :aStream | | aJsonWriter |
+		aJsonWriter := (NeoJSONWriter on: aStream)
+			prettyPrint: aBoolean;
+			yourself.
+		self perform: aMappingSymbol with: aJsonWriter.
+		aJsonWriter nextPut: aXdObject ].
+]
+
+{ #category : #writing }
+DiMetaModelMapping >> writeCollections: aDiMetaCollections [
+	^ self write: aDiMetaCollections mappedTo: #metaCollectionsMappingFor:
 ]

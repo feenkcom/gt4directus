@@ -2,9 +2,14 @@
 I communicate with *Directus>https://directus.io* using RESTful API.
 You can find the API documentation at *https://docs.directus.io*.
 
+I am an abstract class. Subclasses must implement ${method:DiProtoDirectus>>#email}$ and ${method:DiProtoDirectus>>#password}$ methods.
+
+${class:DiProtoDirectus|show=#gtSubclassesFor:|height=200|expanded=true}$ subclasses:
+
+
 "
 Class {
-	#name : #DiImporter,
+	#name : #DiProtoDirectus,
 	#superclass : #Object,
 	#instVars : [
 		'accessToken',
@@ -14,12 +19,12 @@ Class {
 }
 
 { #category : #authentication }
-DiImporter >> authenticate [
+DiProtoDirectus >> authenticate [
 	self authenticateWithEmail: self email password: self password
 ]
 
 { #category : #authentication }
-DiImporter >> authenticateWithEmail: anEmail password: aPassword [
+DiProtoDirectus >> authenticateWithEmail: anEmail password: aPassword [
 	| aClient aResponse |
 	accessToken ifNil: [ 
 		| aContent aJsonContent |
@@ -46,13 +51,13 @@ DiImporter >> authenticateWithEmail: anEmail password: aPassword [
 ]
 
 { #category : #accessing }
-DiImporter >> email [
+DiProtoDirectus >> email [
 	<return: #String>
 	^ self subclassResponsibility
 ]
 
-{ #category : #importing }
-DiImporter >> get: endpoint [
+{ #category : #reading }
+DiProtoDirectus >> get: endpoint [
 	<return: #Dictionary or: nil>
 	
 	| aResponse |
@@ -62,8 +67,8 @@ DiImporter >> get: endpoint [
 		ifFalse: [ nil ].
 ]
 
-{ #category : #importing }
-DiImporter >> getCollections [
+{ #category : #reading }
+DiProtoDirectus >> getCollections [
 	<return: #DiMetaCollections>
 	<return: #ZnResponse>
 	| aResponse |
@@ -72,8 +77,8 @@ DiImporter >> getCollections [
 	^ DiMetaModelMapping uniqueInstance readCollections: aResponse contents.
 ]
 
-{ #category : #importing }
-DiImporter >> getCollectionsWithRelations [
+{ #category : #reading }
+DiProtoDirectus >> getCollectionsWithRelations [
 	<return: #DiMetaCollections>
 	<return: #ZnResponse>
 	| aCollectionOrResponse aRelationOrResponse |
@@ -87,32 +92,32 @@ DiImporter >> getCollectionsWithRelations [
 		buildRelations
 ]
 
-{ #category : #importing }
-DiImporter >> getElementsInCollection: name [
+{ #category : #reading }
+DiProtoDirectus >> getElementsInCollection: name [
 	| aResponse |
 	aResponse := self getResponse: {#items. name}.
 	^ aResponse contents.
 
 ]
 
-{ #category : #importing }
-DiImporter >> getElementsInCollection: name withQuery: keyedCollection [
+{ #category : #reading }
+DiProtoDirectus >> getElementsInCollection: name withQuery: keyedCollection [
 	| aResponse |
 	aResponse := self getResponse: {#items. name} withQuery: keyedCollection.
 	^ aResponse contents.
 
 ]
 
-{ #category : #importing }
-DiImporter >> getElementsInCollection: name withStatus: status [
+{ #category : #reading }
+DiProtoDirectus >> getElementsInCollection: name withStatus: status [
 	| aResponse |
 	aResponse := self getResponse: {#items. name}.
 	^ aResponse contents.
 
 ]
 
-{ #category : #importing }
-DiImporter >> getRelations [
+{ #category : #reading }
+DiProtoDirectus >> getRelations [
 	<return: #DiMetaRelations>
 	<return: #ZnResponse>
 	| aResponse |
@@ -121,8 +126,8 @@ DiImporter >> getRelations [
 	^ DiMetaModelMapping uniqueInstance readRelations: aResponse contents.
 ]
 
-{ #category : #importing }
-DiImporter >> getResponse: endpoint [
+{ #category : #reading }
+DiProtoDirectus >> getResponse: endpoint [
 	<return: #ZnResponse>
 	
 	^ ZnClient new
@@ -133,8 +138,8 @@ DiImporter >> getResponse: endpoint [
 		response.
 ]
 
-{ #category : #importing }
-DiImporter >> getResponse: endpoint withQuery: keyedCollection [
+{ #category : #reading }
+DiProtoDirectus >> getResponse: endpoint withQuery: keyedCollection [
 	<return: #ZnResponse>
 	
 	^ ZnClient new
@@ -147,23 +152,23 @@ DiImporter >> getResponse: endpoint withQuery: keyedCollection [
 ]
 
 { #category : #accessing }
-DiImporter >> password [
+DiProtoDirectus >> password [
 	<return: #String>
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-DiImporter >> projectURL [
+DiProtoDirectus >> projectURL [
 	<return: #ZnUrl>
 	^ projectURL
 ]
 
 { #category : #accessing }
-DiImporter >> projectURL: aZnUrl [
+DiProtoDirectus >> projectURL: aZnUrl [
 	projectURL := aZnUrl asZnUrl
 ]
 
 { #category : #authentication }
-DiImporter >> resetToken [
+DiProtoDirectus >> resetToken [
 	accessToken := nil
 ]
