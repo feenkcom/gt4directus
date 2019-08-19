@@ -51,6 +51,7 @@ DiMetaCollections >> gtUMLFor: aView [
 	self data ifNil: [ ^ aView empty ].
 	^ aView mondrian 
 		title: 'UML';
+		priority: 1;
 		painting: [ :aMondrian | 
 			aMondrian nodes 
 				umlClassShapeWithName: [ :eachMetaCollection | eachMetaCollection name ];
