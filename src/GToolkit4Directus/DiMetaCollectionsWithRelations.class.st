@@ -18,7 +18,7 @@ DiMetaCollectionsWithRelations >> buildModelInPackage: aRPackage [
 
 { #category : #building }
 DiMetaCollectionsWithRelations >> buildRelations [
-	DiCollectionRelationBuilder new
+	DiMetaModelRelationBuilder new
 		collections: self collections;
 		relations: self relations;
 		build.

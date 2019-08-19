@@ -1,3 +1,7 @@
+"
+I build a class model hierarchy based on ${class:DiMetaCollections}$.
+
+"
 Class {
 	#name : #DiCollectionToClassBuilder,
 	#superclass : #Object,

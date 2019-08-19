@@ -1,5 +1,9 @@
+"
+I update meta-model.
+I add coresponding ${class:DiCollection}$ and ${class:DiRelation}$ meta-model objects in to ${class:DiMetaFieldTypeManyToOne}$ and ${class:DiMetaFieldTypeOneToMany}$ objects.
+"
 Class {
-	#name : #DiCollectionRelationBuilder,
+	#name : #DiMetaModelRelationBuilder,
 	#superclass : #Object,
 	#instVars : [
 		'collections',
@@ -9,7 +13,7 @@ Class {
 }
 
 { #category : #building }
-DiCollectionRelationBuilder >> build [
+DiMetaModelRelationBuilder >> build [
 	self collections data do: [ :eachCollection | 
 		eachCollection fields fields do: [ :eachField |
 			eachField type isOneToMany ifTrue: [ self relateOneToManyForCollection: eachCollection field: eachField ].
@@ -18,17 +22,17 @@ DiCollectionRelationBuilder >> build [
 ]
 
 { #category : #accessing }
-DiCollectionRelationBuilder >> collections [
+DiMetaModelRelationBuilder >> collections [
 	^ collections
 ]
 
 { #category : #accessing }
-DiCollectionRelationBuilder >> collections: anObject [
+DiMetaModelRelationBuilder >> collections: anObject [
 	collections := anObject
 ]
 
 { #category : #building }
-DiCollectionRelationBuilder >> relateManyToOneForCollection: aDiMetaCollection field: aDiMetaField [ 
+DiMetaModelRelationBuilder >> relateManyToOneForCollection: aDiMetaCollection field: aDiMetaField [ 
 	| aRelation aCollection |
 	aRelation := self relations data 
 		detect: [ :eachRelation | 
@@ -43,7 +47,7 @@ DiCollectionRelationBuilder >> relateManyToOneForCollection: aDiMetaCollection f
 ]
 
 { #category : #building }
-DiCollectionRelationBuilder >> relateOneToManyForCollection: aDiMetaCollection field: aDiMetaField [ 
+DiMetaModelRelationBuilder >> relateOneToManyForCollection: aDiMetaCollection field: aDiMetaField [ 
 	| aRelation aCollection |
 	aRelation := self relations data detect: [ :eachRelation | 
 						eachRelation collectionOne = aDiMetaCollection name and: [ 
@@ -56,11 +60,11 @@ DiCollectionRelationBuilder >> relateOneToManyForCollection: aDiMetaCollection f
 ]
 
 { #category : #accessing }
-DiCollectionRelationBuilder >> relations [
+DiMetaModelRelationBuilder >> relations [
 	^ relations
 ]
 
 { #category : #accessing }
-DiCollectionRelationBuilder >> relations: anObject [
+DiMetaModelRelationBuilder >> relations: anObject [
 	relations := anObject
 ]
