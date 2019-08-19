@@ -63,15 +63,18 @@ DiMetaRelation >> gtRelationFor: aView [
 	<gtView>
 	^ aView columnedList
 		title: 'Description';
-		items: [ OrderPreservingDictionary new
-			at: 'Relation from' put: self fieldOne;
-			at: 'In one-collection' put: self collectionOne;
-			at: 'To field' put: self fieldMany;
-			at: 'In many-collection' put: self collectionMany;
-			at: 'Junction field' put: self junctionField;
-			associations ];
+		items: [ | aDictionary | 
+			aDictionary := OrderPreservingDictionary new.
+			aDictionary at: 'Relation from one-collection' put: self collectionOne.
+			self fieldOne ifNotNil: [ aDictionary at: 'and one-filed' put: self fieldOne ].
+			aDictionary
+				at: 'to many-collection' put: self collectionMany;
+				at: 'and many-field' put: self fieldMany.
+			self junctionField ifNotNil: [ aDictionary at: 'using junction field' put: self junctionField ].
+			aDictionary associations ];
 		column: 'Description' item: [ :anAssoc | anAssoc key ];
-		column: 'Value' item: [ :anAssoc | anAssoc value ]
+		column: 'Value' item: [ :anAssoc | anAssoc value ];
+		send: [ :anAssoc | anAssoc value ]
 ]
 
 { #category : #accessing }
@@ -86,15 +89,21 @@ DiMetaRelation >> junctionField: anObject [
 
 { #category : #printing }
 DiMetaRelation >> printOn: aStream [
+	self collectionOne ifNil: [ ^ super printOn: aStream ].
 	aStream 
 		nextPutAll: 'Relation from ';
-		print: self fieldOne;
-		nextPutAll: ' in collection ';
-		print: self collectionOne;
-		nextPutAll: ' to field ';
-		print: self fieldMany ;
-		nextPutAll: ' in collection ';
-		print: self collectionMany;
-		nextPutAll: ' junction field ';
-		print: self junctionField.
+		nextPutAll: self collectionOne.
+	self fieldOne ifNotNil: [ 
+		aStream 
+			nextPutAll: '>';
+			nextPutAll: self fieldOne ].
+	aStream
+		nextPutAll: ' one-to-many ';
+		nextPutAll: self collectionMany;
+		nextPutAll: '>';
+		nextPutAll: self fieldMany.
+	self junctionField ifNil: [ ^ self ].
+	aStream
+		nextPutAll: ', junction field ';
+		nextPutAll: self junctionField.
 ]
