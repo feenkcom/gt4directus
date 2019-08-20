@@ -225,11 +225,19 @@ DiCollectionToClassBuilder >> compileJsonMappingMainReadingMethod: aDiMetaCollec
 
 { #category : #'compiling - model' }
 DiCollectionToClassBuilder >> compileModelRootClass [
-	^ Object 
+	| aClass |
+	aClass := Object 
 		subclass: self modelClassPrefix, 'Model'
 		slots: {  }
 		classVariables: {  }
-		package: self packageTag categoryName
+		package: self packageTag categoryName.
+	aClass 
+		compile: 'collectionName', String cr, String tab, '^ self class collectionName'
+		classified: 'accessing'.
+	aClass class
+		compile: 'collectionName', String cr, String tab, '^ self subclassResponsibility'
+		classified: 'accessing'.
+	^ aClass
 ]
 
 { #category : #'compiling - package' }
