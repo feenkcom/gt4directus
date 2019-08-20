@@ -58,8 +58,8 @@ DiMetaFieldTypeOneToMany >> jsonName [
 DiMetaFieldTypeOneToMany >> name [
 	<return: #String>
 	^ self collection 
-		ifNotNil: [ :aCollection | aCollection name, ' (O2M)' ] 
-		ifNil: [ 'O2M' ]
+		ifNotNil: [ :aCollection | 'Collection of ', aCollection name ] 
+		ifNil: [ 'a Collection' ]
 ]
 
 { #category : #accessing }
