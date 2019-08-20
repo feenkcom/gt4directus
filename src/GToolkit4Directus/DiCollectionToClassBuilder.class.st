@@ -114,7 +114,7 @@ DiCollectionToClassBuilder >> compileClass: aClass accessors: theSlots [
 { #category : #'compiling - model' }
 DiCollectionToClassBuilder >> compileClass: aClass collectionName: aString [
 	aClass class
-		compile: 'collectionName', String cr, String tab, '^ ', aString asSymbol 
+		compile: 'collectionName', String cr, String tab, '^ #''', aString, ''''
 		classified: 'accessing'.
 ]
 
