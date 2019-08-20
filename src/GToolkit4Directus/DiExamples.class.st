@@ -74,7 +74,7 @@ DiExamples >> delegate [
 { #category : #'model builder' }
 DiExamples >> dummyPackage [
 	<gtExample>
-	<after: #removeDummyPackage>
+	"<after: #removeDummyPackage>"
 	| aPackageName aPackage anOrganizer |
 	aPackageName := self dummyPackageName.
 	anOrganizer := RPackageOrganizer default.

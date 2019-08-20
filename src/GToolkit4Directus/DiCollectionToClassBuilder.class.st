@@ -44,6 +44,7 @@ DiCollectionToClassBuilder >> buildModel: aDiMetaCollection [
 		slots: theSlots
 		classVariables: {}
 		package: self packageTag categoryName.
+	self compileClass: aClass collectionName: aDiMetaCollection name.
 	self compileClass: aClass accessors: theSlots.
 	self
 		compileJsonMappingForModelOf: aDiMetaCollection
@@ -108,6 +109,13 @@ DiCollectionToClassBuilder >> compileClass: aClass accessors: theSlots [
 			compile: eachSlotName, ': anObject', String cr, String tab, eachSlotName, ':= anObject' 
 			classified: 'accessing'.
 	]
+]
+
+{ #category : #'compiling - model' }
+DiCollectionToClassBuilder >> compileClass: aClass collectionName: aString [
+	aClass class
+		compile: 'collectionName', String cr, String tab, '^ ', aString asSymbol 
+		classified: 'accessing'.
 ]
 
 { #category : #'compiling - json mapping' }
