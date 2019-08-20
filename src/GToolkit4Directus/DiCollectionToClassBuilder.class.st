@@ -108,6 +108,10 @@ DiCollectionToClassBuilder >> compileClass: aClass accessors: theSlots [
 		aClass 
 			compile: eachSlotName, ': anObject', String cr, String tab, eachSlotName, ':= anObject' 
 			classified: 'accessing'.
+		"Generate also printOn: if there is a slot called name.
+		We likely wants this as a kind of builder extension (extra rules) in the future."
+		(eachSlotName = 'name') ifTrue: [ 
+			self compileClass: aClass printOnWithName: eachSlotName ].
 	]
 ]
 
@@ -116,6 +120,17 @@ DiCollectionToClassBuilder >> compileClass: aClass collectionName: aString [
 	aClass class
 		compile: 'collectionName', String cr, String tab, '^ #''', aString, ''''
 		classified: 'accessing'.
+]
+
+{ #category : #'compiling - model' }
+DiCollectionToClassBuilder >> compileClass: aClass printOnWithName: aSlotName [
+	"Generate also printOn: if there is a slot called name.
+	We likely wants this as a kind of builder extension (extra rules) in the future."
+	aClass 
+		compile: 'printOn: aStream', String cr, 
+			String tab, 'self name ifNil: [ ^ super printOn: aStream ].', String cr,
+			String tab, 'aStream nextPutAll: self name asString'
+		classified: 'printing'.
 ]
 
 { #category : #'compiling - json mapping' }
