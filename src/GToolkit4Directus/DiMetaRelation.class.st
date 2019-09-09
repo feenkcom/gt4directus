@@ -88,22 +88,68 @@ DiMetaRelation >> junctionField: anObject [
 ]
 
 { #category : #printing }
-DiMetaRelation >> printOn: aStream [
-	self collectionOne ifNil: [ ^ super printOn: aStream ].
+DiMetaRelation >> printBiDirectionalOn: aStream [
 	aStream 
-		nextPutAll: 'Relation from ';
-		nextPutAll: self collectionOne.
-	self fieldOne ifNotNil: [ 
-		aStream 
-			nextPutAll: '>';
-			nextPutAll: self fieldOne ].
-	aStream
-		nextPutAll: ' one-to-many ';
+		nextPutAll: 'Bi-Directional Relation: ';
+		nextPutAll: self collectionOne;
+		nextPutAll: '>';
+		nextPutAll: self fieldOne;
+		nextPutAll: ': Collection of ';
+		nextPutAll: self collectionMany;
+		nextPutAll: '; ';
 		nextPutAll: self collectionMany;
 		nextPutAll: '>';
-		nextPutAll: self fieldMany.
-	self junctionField ifNil: [ ^ self ].
-	aStream
+		nextPutAll: self fieldMany;
+		nextPutAll: ': ';
+		nextPutAll: self collectionOne.
+]
+
+{ #category : #printing }
+DiMetaRelation >> printManyToManyOn: aStream [
+	aStream 
+		nextPutAll: 'ManyToMany Relation: ';
+		nextPutAll: self collectionOne;
+		nextPutAll: '>';
+		nextPutAll: self fieldOne;
+		nextPutAll: ': Collection of ';
+		nextPutAll: self collectionMany;
+		nextPutAll: '; ';
+		nextPutAll: self collectionMany;
+		nextPutAll: '>';
+		nextPutAll: self fieldMany;
+		nextPutAll: ': Collection of ';
+		nextPutAll: self collectionOne;
 		nextPutAll: ', junction field ';
 		nextPutAll: self junctionField.
+]
+
+{ #category : #printing }
+DiMetaRelation >> printManyToOneOn: aStream [
+	aStream 
+		nextPutAll: 'ManyToOne Relation: ';
+		nextPutAll: self collectionMany;
+		nextPutAll: '>';
+		nextPutAll: self fieldMany;
+		nextPutAll: ': ';
+		nextPutAll: self collectionOne
+]
+
+{ #category : #printing }
+DiMetaRelation >> printOn: aStream [
+	self collectionOne ifNil: [ ^ super printOn: aStream ].
+	self fieldOne isNil ifTrue: [ ^ self printManyToOneOn: aStream ].
+	self fieldMany isNil ifTrue: [ ^ self printOneToManyOn: aStream ].
+	self junctionField ifNotNil: [ ^ self printManyToManyOn: aStream ].
+	self printBiDirectionalOn: aStream.
+]
+
+{ #category : #printing }
+DiMetaRelation >> printOneToManyOn: aStream [
+	aStream 
+		nextPutAll: 'OneToMany Relation: ';
+		nextPutAll: self collectionOne;
+		nextPutAll: '>';
+		nextPutAll: self fieldOne;
+		nextPutAll: ': Collection of ';
+		nextPutAll: self collectionMany
 ]

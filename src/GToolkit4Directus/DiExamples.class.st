@@ -4,25 +4,9 @@ See ${class:DiMetaCollections}$ for more details about the model.
 "
 Class {
 	#name : #DiExamples,
-	#superclass : #Object,
-	#instVars : [
-		'zincExamples',
-		'delegate'
-	],
+	#superclass : #DiCommonExamples,
 	#category : #'GToolkit4Directus-Examples'
 }
-
-{ #category : #importer }
-DiExamples >> basicImporter [
-	<gtExample>
-	| anImporter |
-	anImporter := DiDirectus new.
-	self assert: anImporter projectURL isNil.
-	self assert: anImporter email isNil.
-	self assert: anImporter password isNil.
-	self assert: anImporter isAuthenticated not.
-	^ anImporter
-]
 
 { #category : #'company - creating class model' }
 DiExamples >> buildCompanyModel [
@@ -33,7 +17,7 @@ DiExamples >> buildCompanyModel [
 	aModelClass := self class environment classNamed: 'DummyCompany'.
 	self assert: aModelClass isNotNil.
 	self assert: aModelClass isClass.
-	self assert: aModelClass selectors size equals: 8.
+	self assert: aModelClass selectors size equals: 9.
 	^ aModelClass
 ]
 
@@ -46,29 +30,6 @@ DiExamples >> companyModelClassBuilder [
 	aBuilder collections: aMetaCollections.
 	self assert: aBuilder collections equals: aMetaCollections.
 	^ aBuilder
-]
-
-{ #category : #server }
-DiExamples >> delegate [
-	<gtExample>
-	delegate ifNotNil: [ :aDelegate | ^ aDelegate ].
-	delegate := ZnDispatcherDelegate new.
-	delegate 
-		map: '/auth/authenticate'
-		to: [ :aRequest :aResponse |
-			aResponse entity: (ZnEntity json: '{"data":{"token":"my-token"}}') traceCr. ];
-		map: '/collections'
-		to: [ :aRequest :aResponse |
-			aResponse entity: (ZnEntity json: self metaCollectionsOfCompanyJsonString) ];
-		map: '/relations'
-		to: [ :aRequest :aResponse |
-			aResponse entity: (ZnEntity json: self metaRelationsOfParentSubsidiaryCompaniesJsonString) ]";
-		map: self xdocPathString
-		to: [ :aRequest :aResponse |
-			aResponse entity: self documentsExamples documentWithFigureEntity ];
-		map: self publishPath
-		to: [ :aRequest :aResponse | self publishedResponse ]".
-	^ delegate
 ]
 
 { #category : #'model builder' }
@@ -86,11 +47,6 @@ DiExamples >> dummyPackage [
 { #category : #'model builder' }
 DiExamples >> dummyPackageName [
 	^ 'Dummy-Package-For' , self class package name
-]
-
-{ #category : #server }
-DiExamples >> email [
-	^ 'my@email.com'
 ]
 
 { #category : #'company - importer' }
@@ -140,43 +96,16 @@ DiExamples >> importCompanyRelations [
 	^ theCollections
 ]
 
-{ #category : #importer }
-DiExamples >> importer [
-	<gtExample>
-	| anImporter |
-	anImporter := self importer_NotAuthenticated.
-	anImporter authenticate.
-	self assert: anImporter isAuthenticated.
-	^ anImporter
-]
-
-{ #category : #importer }
-DiExamples >> importer_NotAuthenticated [
-	<gtExample>
-	| anUrl anImporter |
-	anUrl := self serverUrl.
-	anImporter := self basicImporter.
-	anImporter projectURL: anUrl.
-	anImporter email: self email.
-	anImporter password: self password.
-	self assert: anImporter projectURL equals: anUrl.
-	self assert: anImporter isAuthenticated not.
-	^ anImporter
-]
-
-{ #category : #initialization }
-DiExamples >> initialize [
-	super initialize.
-	zincExamples := GtZnServerExamples new.
-]
-
-{ #category : #'reading - meta model' }
-DiExamples >> mapping [
-	<gtExample>
-	| aMapping |
-	aMapping := DiMetaModelMapping uniqueInstance.
-	self assert: aMapping isNotNil.
-	^ aMapping
+{ #category : #server }
+DiExamples >> initializeDelegate [
+	super initializeDelegate.
+	delegate
+		map: '/collections'
+		to: [ :aRequest :aResponse | 
+			aResponse entity: (ZnEntity json: self metaCollectionsOfCompanyJsonString) ];
+		map: '/relations'
+		to: [ :aRequest :aResponse | 
+			aResponse entity: (ZnEntity json: self metaRelationsOfParentSubsidiaryCompaniesJsonString) ]
 ]
 
 { #category : #'reading - meta model' }
@@ -376,11 +305,6 @@ DiExamples >> metaFieldOfCapitalCityJsonString [
 	^ '{"note":"The capital of a country","type":"string","field":"capital_city"}'
 ]
 
-{ #category : #'company - json data' }
-DiExamples >> metaFieldOfCompanyNameJsonString [
-	^ '{"note":"Name of the company including legal form","type":"string","field":"name"}'
-]
-
 { #category : #'reading - meta model' }
 DiExamples >> metaFieldOfDescription [
 	<gtExample>
@@ -436,11 +360,6 @@ DiExamples >> metaFieldOfDescriptionStonJson [
 	self assert: anObject isDictionary.
 	self assert: anObject keys size equals: 24.
 	^ anObject
-]
-
-{ #category : #'company - json data' }
-DiExamples >> metaFieldOfIdJsonString [
-	^ '{"note":"Collection ID","type":"integer","field":"id"}'
 ]
 
 { #category : #'json data' }
@@ -508,11 +427,6 @@ DiExamples >> metaFieldOfNameStonJson [
 	self assert: anObject isDictionary.
 	self assert: anObject keys size equals: 24.
 	^ anObject
-]
-
-{ #category : #'company - json data' }
-DiExamples >> metaFieldOfParentCompanyJsonString [
-	^ '{"note":"Company who owns this company","type":"m2o","field":"parent_company"}'
 ]
 
 { #category : #'company - json data' }
@@ -694,11 +608,6 @@ DiExamples >> modelBuilder [
 	^ aBuilder
 ]
 
-{ #category : #server }
-DiExamples >> password [
-	^ 'my-password'
-]
-
 { #category : #'model builder' }
 DiExamples >> removeDummyPackage [
 	| aPackageName aPackageOrNil anOrganizer |
@@ -706,31 +615,6 @@ DiExamples >> removeDummyPackage [
 	anOrganizer := RPackageOrganizer default.
 	aPackageOrNil := anOrganizer unregisterPackageNamed: aPackageName.
 	^ aPackageOrNil
-]
-
-{ #category : #server }
-DiExamples >> serverUrl [
-	<gtExample>
-	self startServer.
-	^ zincExamples serverUrl
-]
-
-{ #category : #server }
-DiExamples >> startServer [
-	<gtExample>
-	<after: #stopServer>
-	| aServer |
-	aServer := zincExamples server.
-	self assert: aServer isListening.
-	aServer delegate = self delegate ifFalse: [ 
-		aServer delegate: self delegate ].
-	self assert: aServer delegate equals: self delegate.
-	^ aServer
-]
-
-{ #category : #server }
-DiExamples >> stopServer [
-	^ zincExamples stopServer
 ]
 
 { #category : #'writing - meta model' }
