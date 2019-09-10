@@ -39,10 +39,13 @@ DiCollectionToClassBuilder >> build [
 	| theModelCollections |
 	theModelCollections := self collections reject: #isSystemCollection.
 	theModelCollections ifEmpty: [ ^ self ].
-	self makeOldModelObsolete.
-	self buildModels: theModelCollections.
-	self compileJsonMappingMainReadingMethod: theModelCollections.
-	self buildUsingExtensions
+	EpMonitor current disable. 
+	[ 
+		self makeOldModelObsolete.
+		self buildModels: theModelCollections.
+		self compileJsonMappingMainReadingMethod: theModelCollections.
+		self buildUsingExtensions 
+	] ensure: [ EpMonitor current enable ].
 ]
 
 { #category : #building }
