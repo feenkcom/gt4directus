@@ -17,9 +17,9 @@ DiAddTraitToCollectionExtension >> build [
 	aClassName := self builder collectionPrefixAndClassName: aCollection.
 	aClass := self class environment at: aClassName asSymbol ifAbsent: [ ^ self ].
 	(aClass traits includes: self traitClass) ifTrue: [ ^ self ]. 
-	EsCompany traits 
-		ifEmpty: [ aClass setTraitComposition: self traitClass ]
-		ifNotEmpty: [ aClass addToComposition: self traitClass ].
+	aClass traits 
+		ifEmpty: [ aClass setTraitComposition: self traitClass asTraitComposition ]
+		ifNotEmpty: [ aClass addToComposition: self traitClass asTraitComposition ].
 ]
 
 { #category : #accessing }

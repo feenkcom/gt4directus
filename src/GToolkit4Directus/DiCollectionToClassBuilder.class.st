@@ -339,7 +339,10 @@ DiCollectionToClassBuilder >> makeOldModelObsolete [
 	aPackageTag := self packageTag.
 	aPackageTag isEmpty ifTrue: [ ^ self ].
 	anObsoletePackageTag := self obsoletePackageTag.
-	aPackageTag classes do: [ :eachClass | eachClass tagWith: anObsoletePackageTag name ].
+	aPackageTag classes do: [ :eachClass | 
+		"TODO: for some reason we have issue moving classes around if they include Traits. We therefore remove the Traits."
+		eachClass setTraitComposition: #() asTraitComposition.
+		eachClass tagWith: anObsoletePackageTag name ].
 ]
 
 { #category : #accessing }
