@@ -95,8 +95,11 @@ DiData >> itemsOf: aCollectionName that: aBlockClosure [
 
 { #category : #initialization }
 DiData >> relate [
-	DiDataRelationBuilder new
-		data: self;
-		addExtension: DiAssignDataExtension new;
-		relate
+	self relationBuilder relate
+]
+
+{ #category : #initialization }
+DiData >> relationBuilder [
+	^ DiDataRelationBuilder new
+		data: self
 ]
