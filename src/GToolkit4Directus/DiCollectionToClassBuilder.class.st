@@ -19,10 +19,20 @@ Class {
 		'obsoletePackageTag',
 		'modelClassPrefix',
 		'modelRootClass',
-		'jsonMappingClass'
+		'jsonMappingClass',
+		'extensions'
 	],
 	#category : #'GToolkit4Directus-Builder'
 }
+
+{ #category : #accessing }
+DiCollectionToClassBuilder >> addExtension: anExtension [
+	self 
+		assert: [ anExtension isNotNil ] 
+		description: [ 'The builder extension must be non-nil' ].
+	anExtension builder: self.
+	self extensions add: anExtension
+]
 
 { #category : #building }
 DiCollectionToClassBuilder >> build [
@@ -31,7 +41,8 @@ DiCollectionToClassBuilder >> build [
 	theModelCollections ifEmpty: [ ^ self ].
 	self makeOldModelObsolete.
 	self buildModels: theModelCollections.
-	self compileJsonMappingMainReadingMethod: theModelCollections
+	self compileJsonMappingMainReadingMethod: theModelCollections.
+	self buildUsingExtensions
 ]
 
 { #category : #building }
@@ -60,6 +71,12 @@ DiCollectionToClassBuilder >> buildModel: aDiMetaCollection [
 DiCollectionToClassBuilder >> buildModels: theModelCollections [
 	theModelCollections
 		do: [ :eachCollection | self buildModel: eachCollection ]
+]
+
+{ #category : #building }
+DiCollectionToClassBuilder >> buildUsingExtensions [
+	self extensions
+		do: [ :eachBuilderExtension | eachBuilderExtension build ]
 ]
 
 { #category : #'accessing - model' }
@@ -281,6 +298,29 @@ DiCollectionToClassBuilder >> defaultObsoletePackageTagName [
 { #category : #defaults }
 DiCollectionToClassBuilder >> defaultPackageTagName [
 	^ #'Model'
+]
+
+{ #category : #accessing }
+DiCollectionToClassBuilder >> extensions [
+	^ extensions
+]
+
+{ #category : #accessing }
+DiCollectionToClassBuilder >> extensions: anObject [
+	extensions := anObject
+]
+
+{ #category : #initialization }
+DiCollectionToClassBuilder >> initialize [
+	super initialize.
+	collections := nil.
+	extensions := OrderedCollection new.
+	jsonMappingClass := nil.
+	modelClassPrefix := nil.
+	modelRootClass := nil.
+	obsoletePackageTag := nil.
+	package := nil.
+	packageTag := nil.
 ]
 
 { #category : #accessing }

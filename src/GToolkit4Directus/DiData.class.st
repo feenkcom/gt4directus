@@ -97,5 +97,6 @@ DiData >> itemsOf: aCollectionName that: aBlockClosure [
 DiData >> relate [
 	DiDataRelationBuilder new
 		data: self;
+		addExtension: DiAssignDataExtension new;
 		relate
 ]

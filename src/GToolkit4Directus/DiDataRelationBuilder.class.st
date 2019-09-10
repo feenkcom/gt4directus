@@ -9,10 +9,26 @@ Class {
 	#name : #DiDataRelationBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'data'
+		'data',
+		'extensions'
 	],
 	#category : #'GToolkit4Directus-Builder'
 }
+
+{ #category : #accessing }
+DiDataRelationBuilder >> addExtension: anExtension [
+	self 
+		assert: [ anExtension isNotNil ] 
+		description: [ 'The builder extension must be non-nil' ].
+	anExtension builder: self.
+	self extensions add: anExtension
+]
+
+{ #category : #building }
+DiDataRelationBuilder >> buildUsingExtensions [
+	self extensions
+		do: [ :eachBuilderExtension | eachBuilderExtension build ]
+]
 
 { #category : #accessing }
 DiDataRelationBuilder >> data [
@@ -23,6 +39,23 @@ DiDataRelationBuilder >> data [
 { #category : #accessing }
 DiDataRelationBuilder >> data: aDiData [
 	data := aDiData
+]
+
+{ #category : #accessing }
+DiDataRelationBuilder >> extensions [
+	^ extensions
+]
+
+{ #category : #accessing }
+DiDataRelationBuilder >> extensions: anObject [
+	extensions := anObject
+]
+
+{ #category : #initialization }
+DiDataRelationBuilder >> initialize [
+	super initialize.
+	data := nil.
+	extensions := OrderedCollection new.
 ]
 
 { #category : #enumerating }
@@ -39,6 +72,7 @@ DiDataRelationBuilder >> itemsOf: aString that: aBlockClosure [
 DiDataRelationBuilder >> relate [
 	self relateWithContextClass: DiOneToManyRelationContext.
 	self relateWithContextClass: DiManyToOneRelationContext.
+	self buildUsingExtensions.
 	^ self data
 ]
 

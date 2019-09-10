@@ -22,6 +22,26 @@ DiExamples >> buildCompanyModel [
 ]
 
 { #category : #'company - creating class model' }
+DiExamples >> buildCompanyModelWithUserData [
+	<gtExample>
+	| aBuilder aModelClass aSuperClass |
+	aBuilder := self companyModelClassBuilder.
+	aBuilder addExtension: DiUserDataExtension new.
+	aBuilder addExtension: DiDataAccessorExtension new.
+	aBuilder build.
+	aModelClass := self class environment classNamed: 'DummyCompany'.
+	aSuperClass := aModelClass superclass.
+	self assert: aSuperClass isNotNil.
+	self assert: aSuperClass isClass.
+	self assert: aSuperClass selectors size equals: 4.
+	self assert: aSuperClass selectors sorted first equals: 'collectionName'.
+	self assert: aSuperClass selectors sorted second equals: 'data'.
+	self assert: aSuperClass selectors sorted third equals: 'data:'.
+	self assert: aSuperClass selectors sorted fourth equals: 'userData'.
+	^ aSuperClass
+]
+
+{ #category : #'company - creating class model' }
 DiExamples >> companyModelClassBuilder [
 	<gtExample>
 	| aMetaCollections aBuilder |
@@ -613,6 +633,8 @@ DiExamples >> removeDummyPackage [
 	| aPackageName aPackageOrNil anOrganizer |
 	aPackageName := self dummyPackageName.
 	anOrganizer := RPackageOrganizer default.
+	aPackageOrNil := anOrganizer packageNamed: aPackageName ifAbsent: [ ^ nil ].
+	aPackageOrNil classes do: [ :eachClass | eachClass removeFromSystem ].
 	aPackageOrNil := anOrganizer unregisterPackageNamed: aPackageName.
 	^ aPackageOrNil
 ]
