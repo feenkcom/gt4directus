@@ -31,6 +31,11 @@ DiMetaCollections >> data: anObject [
 	data := anObject
 ]
 
+{ #category : #accessing }
+DiMetaCollections >> detect: aDetectBlock ifNone: aNoneBlock [
+	^ self data detect: aDetectBlock ifNone: aNoneBlock 
+]
+
 { #category : #enumerating }
 DiMetaCollections >> do: aBlockClosure [ 
 	self data do: aBlockClosure
