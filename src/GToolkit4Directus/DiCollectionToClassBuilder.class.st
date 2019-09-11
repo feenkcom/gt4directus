@@ -48,16 +48,20 @@ DiCollectionToClassBuilder >> build [
 	] ensure: [ EpMonitor current enable ].
 ]
 
+{ #category : #'compiling - class' }
+DiCollectionToClassBuilder >> buildClassDefinition: aClassName slots: theSlots [
+	^ self class environment 
+		at: aClassName asSymbol
+		ifPresent: [ :theClass | self updateClassDefinition: theClass slots: theSlots ]
+		ifAbsent: [ self compileClassDefinition: aClassName slots: theSlots ]
+]
+
 { #category : #building }
 DiCollectionToClassBuilder >> buildModel: aDiMetaCollection [
 	| aClassName theSlots aClass |
 	aClassName := self collectionPrefixAndClassName: aDiMetaCollection.
 	theSlots := self collectionSlots: aDiMetaCollection.
-	aClass := self modelRootClass
-		subclass: aClassName asSymbol
-		slots: theSlots
-		classVariables: {}
-		package: self packageTag categoryName.
+	aClass := self buildClassDefinition: aClassName slots: theSlots.
 	self compileClass: aClass collectionName: aDiMetaCollection name.
 	self compileClass: aClass accessors: theSlots.
 	self
@@ -151,6 +155,15 @@ DiCollectionToClassBuilder >> compileClass: aClass printOnWithName: aSlotName [
 			String tab, 'self name ifNil: [ ^ super printOn: aStream ].', String cr,
 			String tab, 'aStream nextPutAll: self name asString'
 		classified: 'printing'.
+]
+
+{ #category : #'compiling - class' }
+DiCollectionToClassBuilder >> compileClassDefinition: aClassName slots: theSlots [
+	^ self modelRootClass
+		subclass: aClassName asSymbol
+		slots: theSlots
+		classVariables: {}
+		package: self packageTag categoryName
 ]
 
 { #category : #'compiling - json mapping' }
@@ -342,9 +355,7 @@ DiCollectionToClassBuilder >> makeOldModelObsolete [
 	aPackageTag := self packageTag.
 	aPackageTag isEmpty ifTrue: [ ^ self ].
 	anObsoletePackageTag := self obsoletePackageTag.
-	aPackageTag classes do: [ :eachClass | 
-		"TODO: for some reason we have issue moving classes around if they include Traits. We therefore remove the Traits."
-		eachClass setTraitComposition: #() asTraitComposition.
+	aPackageTag classes do: [ :eachClass |
 		eachClass tagWith: anObsoletePackageTag name ].
 ]
 
@@ -397,4 +408,17 @@ DiCollectionToClassBuilder >> packageTag [
 { #category : #accessing }
 DiCollectionToClassBuilder >> packageTag: anObject [
 	packageTag := anObject
+]
+
+{ #category : #'compiling - class' }
+DiCollectionToClassBuilder >> updateClassDefinition: aClass slots: theSlots [
+	aClass tagWith: self packageTag categoryName.
+	theSlots sorted asArray = aClass instVarNames sorted asArray ifTrue: [ ^ aClass ].
+	theSlots do: [ :eachSlotName | 
+		(aClass definesSlotNamed: eachSlotName) ifFalse: [
+			aClass addInstVarNamed: eachSlotName ] ].
+	aClass instVarNames do: [ :eachVarName | 
+		(theSlots includes: eachVarName) ifFalse: [
+			aClass removeInstVarNamed: eachVarName ] ].
+	^ aClass
 ]
