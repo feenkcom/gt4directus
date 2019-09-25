@@ -35,10 +35,17 @@ DiMetaCollectionsWithRelations >> collections: anObject [
 ]
 
 { #category : #'gt-extension' }
-DiMetaCollectionsWithRelations >> gtDataFor: aView [
+DiMetaCollectionsWithRelations >> gtCollectionsFor: aView [
 	<gtView>
 	self collections ifNil: [ ^ aView empty ].
 	^ self collections gtDataFor: aView
+]
+
+{ #category : #'gt-extension' }
+DiMetaCollectionsWithRelations >> gtRelationsFor: aView [
+	<gtView>
+	self relations ifNil: [ ^ aView empty ].
+	^ self relations gtDataFor: aView
 ]
 
 { #category : #'gt-extension' }

@@ -1,8 +1,17 @@
 Class {
 	#name : #DiRing2Examples,
 	#superclass : #Object,
+	#instVars : [
+		'modelExamples'
+	],
 	#category : #'GToolkit4DirectusRing2-Examples'
 }
+
+{ #category : #initialization }
+DiRing2Examples >> initialize [
+	super initialize.
+	modelExamples := DiCompanyModelExamples new.
+]
 
 { #category : #'examples - model names and values' }
 DiRing2Examples >> modelPrefix [

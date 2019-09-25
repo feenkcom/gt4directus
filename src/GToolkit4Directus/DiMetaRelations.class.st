@@ -33,6 +33,12 @@ DiMetaRelations >> gtDataFor: aView [
 		items: [ self data ]
 ]
 
+{ #category : #initialization }
+DiMetaRelations >> initialize [
+	super initialize.
+	data := #().
+]
+
 { #category : #convenient }
 DiMetaRelations >> numberOfData [
 	^ self data size
