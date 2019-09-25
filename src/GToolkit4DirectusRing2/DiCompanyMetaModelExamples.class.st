@@ -1,23 +1,38 @@
 Class {
-	#name : #DiCompanyModelExamples,
+	#name : #DiCompanyMetaModelExamples,
 	#superclass : #Object,
 	#category : #'GToolkit4DirectusRing2-Examples'
 }
 
 { #category : #'examples - collections and relations' }
-DiCompanyModelExamples >> collectionsAndRelationsWithCompany [
+DiCompanyMetaModelExamples >> collectionsAndRelationsWithCompany [
 	<gtExample>
-	| aCollections |
+	| aCollections aField |
+	aCollections := self collectionsAndRelationsWithCompany_NotInitialized.
+	aCollections buildRelations.
+	aField := (aCollections collections data first fieldNamed: 'parent_company').
+	self assert: aField type collection isNotNil.
+	self assert: aField type relation isNotNil.
+	^ aCollections
+]
+
+{ #category : #'examples - collections and relations' }
+DiCompanyMetaModelExamples >> collectionsAndRelationsWithCompany_NotInitialized [
+	<gtExample>
+	| aCollections aField |
 	aCollections := self emptyCollectonsWithRelations.
 	aCollections collections: self collectionsWithCompany.
 	aCollections relations: self relationsWithParentCompany.
 	self assert: aCollections collections isNotNil.
 	self assert: aCollections relations isNotNil.
+	aField := (aCollections collections data first fieldNamed: 'parent_company').
+	self assert: aField type collection isNil.
+	self assert: aField type relation isNil.
 	^ aCollections
 ]
 
 { #category : #'examples - collections and relations' }
-DiCompanyModelExamples >> collectionsWithCompany [
+DiCompanyMetaModelExamples >> collectionsWithCompany [
 	<gtExample>
 	| aCollections |
 	aCollections := self emptyCollections.
@@ -27,7 +42,7 @@ DiCompanyModelExamples >> collectionsWithCompany [
 ]
 
 { #category : #'examples - collection' }
-DiCompanyModelExamples >> companyCollection [
+DiCompanyMetaModelExamples >> companyCollection [
 	<gtExample>
 	| aCollection |
 	aCollection := self emptyCollection.
@@ -39,7 +54,7 @@ DiCompanyModelExamples >> companyCollection [
 ]
 
 { #category : #'examples - collection' }
-DiCompanyModelExamples >> emptyCollection [
+DiCompanyMetaModelExamples >> emptyCollection [
 	<gtExample>
 	| aCollection |
 	aCollection := DiMetaCollection new.
@@ -49,7 +64,7 @@ DiCompanyModelExamples >> emptyCollection [
 ]
 
 { #category : #'examples - collections and relations' }
-DiCompanyModelExamples >> emptyCollections [
+DiCompanyMetaModelExamples >> emptyCollections [
 	<gtExample>
 	| aCollections |
 	aCollections := DiMetaCollections new.
@@ -58,7 +73,7 @@ DiCompanyModelExamples >> emptyCollections [
 ]
 
 { #category : #'examples - collections and relations' }
-DiCompanyModelExamples >> emptyCollectonsWithRelations [
+DiCompanyMetaModelExamples >> emptyCollectonsWithRelations [
 	<gtExample>
 	| aMeta |
 	aMeta := DiMetaCollectionsWithRelations new.
@@ -68,7 +83,7 @@ DiCompanyModelExamples >> emptyCollectonsWithRelations [
 ]
 
 { #category : #'examples - field' }
-DiCompanyModelExamples >> emptyField [
+DiCompanyMetaModelExamples >> emptyField [
 	<gtExample>
 	| aField |
 	aField := DiMetaField new.
@@ -79,7 +94,7 @@ DiCompanyModelExamples >> emptyField [
 ]
 
 { #category : #'examples - relation' }
-DiCompanyModelExamples >> emptyRelation [
+DiCompanyMetaModelExamples >> emptyRelation [
 	<gtExample>
 	| aRelation |
 	aRelation := DiMetaRelation new.
@@ -92,7 +107,7 @@ DiCompanyModelExamples >> emptyRelation [
 ]
 
 { #category : #'examples - collections and relations' }
-DiCompanyModelExamples >> emptyRelations [
+DiCompanyMetaModelExamples >> emptyRelations [
 	<gtExample>
 	| aRelations |
 	aRelations := DiMetaRelations new.
@@ -101,7 +116,7 @@ DiCompanyModelExamples >> emptyRelations [
 ]
 
 { #category : #'examples - field' }
-DiCompanyModelExamples >> idField [
+DiCompanyMetaModelExamples >> idField [
 	<gtExample>
 	| aField |
 	aField := self emptyField.
@@ -115,14 +130,14 @@ DiCompanyModelExamples >> idField [
 ]
 
 { #category : #'examples - type' }
-DiCompanyModelExamples >> integerType [
+DiCompanyMetaModelExamples >> integerType [
 	<gtExample>
 	^ DiMetaFieldTypeInteger new.
 	
 ]
 
 { #category : #'examples - type' }
-DiCompanyModelExamples >> manyToOneType [
+DiCompanyMetaModelExamples >> manyToOneType [
 	<gtExample>
 	| aType |
 	aType := DiMetaFieldTypeManyToOne new.
@@ -132,12 +147,13 @@ DiCompanyModelExamples >> manyToOneType [
 ]
 
 { #category : #'examples - collections and relations' }
-DiCompanyModelExamples >> model [
+DiCompanyMetaModelExamples >> metaModel [
+	<gtExample>
 	^ self collectionsAndRelationsWithCompany
 ]
 
 { #category : #'examples - field' }
-DiCompanyModelExamples >> nameField [
+DiCompanyMetaModelExamples >> nameField [
 	<gtExample>
 	| aField |
 	aField := self emptyField.
@@ -151,7 +167,7 @@ DiCompanyModelExamples >> nameField [
 ]
 
 { #category : #'examples - field' }
-DiCompanyModelExamples >> parentCompanyField [
+DiCompanyMetaModelExamples >> parentCompanyField [
 	<gtExample>
 	| aField |
 	aField := self emptyField.
@@ -165,7 +181,7 @@ DiCompanyModelExamples >> parentCompanyField [
 ]
 
 { #category : #'examples - relation' }
-DiCompanyModelExamples >> parentCompanyRelation [
+DiCompanyMetaModelExamples >> parentCompanyRelation [
 	<gtExample>
 	| aRelation |
 	aRelation := self emptyRelation.
@@ -179,7 +195,7 @@ DiCompanyModelExamples >> parentCompanyRelation [
 ]
 
 { #category : #'examples - collections and relations' }
-DiCompanyModelExamples >> relationsWithParentCompany [
+DiCompanyMetaModelExamples >> relationsWithParentCompany [
 	<gtExample>
 	| aRelations |
 	aRelations := self emptyRelations.
@@ -189,7 +205,7 @@ DiCompanyModelExamples >> relationsWithParentCompany [
 ]
 
 { #category : #'examples - type' }
-DiCompanyModelExamples >> stringType [
+DiCompanyMetaModelExamples >> stringType [
 	<gtExample>
 	^ DiMetaFieldTypeString new.
 	

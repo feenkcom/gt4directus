@@ -1,30 +1,21 @@
 Class {
-	#name : #DiRing2Examples,
+	#name : #DiRing2ModelBuilderExamples,
 	#superclass : #Object,
-	#instVars : [
-		'modelExamples'
-	],
 	#category : #'GToolkit4DirectusRing2-Examples'
 }
 
-{ #category : #initialization }
-DiRing2Examples >> initialize [
-	super initialize.
-	modelExamples := DiCompanyModelExamples new.
-]
-
 { #category : #'examples - model names and values' }
-DiRing2Examples >> modelPrefix [
+DiRing2ModelBuilderExamples >> modelPrefix [
 	^ 'DiDemo'
 ]
 
 { #category : #'examples - model names and values' }
-DiRing2Examples >> packageName [
+DiRing2ModelBuilderExamples >> packageName [
 	^ self modelPrefix, 'Package'
 ]
 
 { #category : #'examples - building models' }
-DiRing2Examples >> ring2BuilderWithCleanedRootModelClassHavingSuperclass [
+DiRing2ModelBuilderExamples >> ring2BuilderWithCleanedRootModelClassHavingSuperclass [
 	<gtExample>
 	| aBuilder aClass |
 	aBuilder := self ring2BuilderWithRootModelClass.
@@ -38,7 +29,7 @@ DiRing2Examples >> ring2BuilderWithCleanedRootModelClassHavingSuperclass [
 ]
 
 { #category : #'examples - building models' }
-DiRing2Examples >> ring2BuilderWithCleanedRootModelClassHavingSuperclassAndPackage [
+DiRing2ModelBuilderExamples >> ring2BuilderWithCleanedRootModelClassHavingSuperclassAndPackage [
 	<gtExample>
 	| aBuilder aClass aPackage |
 	aBuilder := self ring2BuilderWithCleanedRootModelClassHavingSuperclass.
@@ -53,7 +44,7 @@ DiRing2Examples >> ring2BuilderWithCleanedRootModelClassHavingSuperclassAndPacka
 ]
 
 { #category : #'examples - building models' }
-DiRing2Examples >> ring2BuilderWithRootModelClass [
+DiRing2ModelBuilderExamples >> ring2BuilderWithRootModelClass [
 	<gtExample>
 	| aBuilder aClass |
 	aBuilder := self ring2ModelBuilder.
@@ -66,7 +57,7 @@ DiRing2Examples >> ring2BuilderWithRootModelClass [
 ]
 
 { #category : #'examples - building models' }
-DiRing2Examples >> ring2BuilderWithRootModelClassHavingSuperclass [
+DiRing2ModelBuilderExamples >> ring2BuilderWithRootModelClassHavingSuperclass [
 	<gtExample>
 	| aBuilder aClass |
 	aBuilder := self ring2BuilderWithRootModelClass.
@@ -80,7 +71,7 @@ DiRing2Examples >> ring2BuilderWithRootModelClassHavingSuperclass [
 ]
 
 { #category : #'examples - building models' }
-DiRing2Examples >> ring2ModelBuilder [
+DiRing2ModelBuilderExamples >> ring2ModelBuilder [
 	<gtExample>
 	| aBuilder |
 	aBuilder := DiRing2ModelBuilder new.
@@ -89,6 +80,6 @@ DiRing2Examples >> ring2ModelBuilder [
 ]
 
 { #category : #'examples - model names and values' }
-DiRing2Examples >> rootModelClassName [
+DiRing2ModelBuilderExamples >> rootModelClassName [
 	^ self modelPrefix, 'Model'
 ]

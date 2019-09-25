@@ -7,6 +7,11 @@ Class {
 	#category : #'GToolkit4DirectusRing2-Model Builders'
 }
 
+{ #category : #enumerating }
+DiRing2ModelBuilder >> behaviorNamed: aString [ 
+	^ self ringEnvironment ask behaviorNamed: aString ifAbsent: nil
+]
+
 { #category : #cleaning }
 DiRing2ModelBuilder >> clean [
 	self ensureObjectAsSuperclass.
