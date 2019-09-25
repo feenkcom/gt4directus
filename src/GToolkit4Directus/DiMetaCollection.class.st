@@ -25,13 +25,14 @@ Class {
 { #category : #enumerating }
 DiMetaCollection >> collectFieldsRelatedToCollection: aDiMetaCollection [
 	<return: #Array of: #DiMetaField>
-	^ self fields collectFieldsRelatedToCollection: aDiMetaCollection
+	^ self fields select: [ :eachField | 
+		eachField isRelatedToCollection: aDiMetaCollection ]
 ]
 
 { #category : #enumerating }
 DiMetaCollection >> fieldNamed: aString [
 	<return: #DiMetaField>
-	^ self fields fieldNamed: aString
+	^ self fields detect: [ :eachField | eachField name = aString ]
 ]
 
 { #category : #accessing }
@@ -40,15 +41,22 @@ DiMetaCollection >> fields [
 ]
 
 { #category : #accessing }
-DiMetaCollection >> fields: anObject [
-	fields := anObject
+DiMetaCollection >> fields: anArray [
+	self 
+		assert: [ anArray isNotNil ] 
+		description: [ 'Fields must be a non-nil' ].
+	fields := anArray
 ]
 
 { #category : #'gt-extension' }
 DiMetaCollection >> gtFieldsFor: aView [
 	<gtView>
 	self fields ifNil: [ ^ aView empty ].
-	^ self fields gtFieldsFor: aView
+	^ aView columnedList
+		title: 'Fields';
+		items: [ self fields ];
+		column: 'Name' item: [ :aField | aField name ];
+		column: 'Type' item: [ :aField | aField type ifNotNil: #name ]
 ]
 
 { #category : #accessing }
@@ -74,7 +82,7 @@ DiMetaCollection >> icon: anObject [
 { #category : #testing }
 DiMetaCollection >> includesFieldOfType: aType [
 	<return: #Boolean>
-	^ self fields includesFieldOfType: aType
+	^ self fields anySatisfy: [ :eachField | eachField type = aType ]
 ]
 
 { #category : #initialization }
@@ -138,7 +146,7 @@ DiMetaCollection >> note: anObject [
 { #category : #convenience }
 DiMetaCollection >> numberOfFields [
 	<return: #Integer>
-	^ self fields numberOfFields
+	^ self fields size
 ]
 
 { #category : #printing }

@@ -135,7 +135,7 @@ DiExamples >> metaCollection [
 	aJson := self metaCollectionJsonString.
 	anObject := self mapping read: DiMetaCollection withMapping: #metaCollectionMappingFor: on: aJson readStream. 
 	self assert: anObject class equals: DiMetaCollection.
-	self assert: anObject fields numberOfFields equals: 11.
+	self assert: anObject numberOfFields equals: 11.
 	self assert: anObject modelClassName equals: 'App'.
 	^ anObject
 ]
@@ -452,17 +452,6 @@ DiExamples >> metaFieldOfNameStonJson [
 { #category : #'company - json data' }
 DiExamples >> metaFieldOfSubsidiaryCompaniesJsonString [
 	^ '{"note":"Companies that are owned by this company. To change this, select this company as parent in the subsidiary companies.","type":"O2M","field":"subsidiary_companies"}'
-]
-
-{ #category : #'reading - meta model' }
-DiExamples >> metaFieldsOfNameAndDescription [
-	<gtExample>
-	| aJson anObject |
-	aJson := self metaFieldsOfNameAndDescriptionJsonString.
-	anObject := self mapping read: DiMetaFields withMapping: #metaFieldsMappingFor: on: aJson readStream. 
-	self assert: anObject class equals: DiMetaFields.
-	self assert: anObject numberOfFields equals: 2.
-	^ anObject
 ]
 
 { #category : #'json data' }

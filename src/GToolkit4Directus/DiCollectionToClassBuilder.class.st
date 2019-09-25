@@ -241,7 +241,7 @@ DiCollectionToClassBuilder >> compileJsonMappingForModelOf: aDiMetaCollection cl
 			nextPutAll: 'mappingOf'; nextPutAll: (self collectionModelClassName: aDiMetaCollection); nextPutAll: 'For: aNeoJSONMapper'; cr;
 			tab; nextPutAll: 'aNeoJSONMapper'; cr;
 			tab; tab; nextPutAll: 'for: '; nextPutAll: aClass name; nextPutAll: ' do: [ :mapping |'; cr.
-		aDiMetaCollection fields fields paddedWith: theSlots do: [ :eachField :eachSlot | 
+		aDiMetaCollection fields paddedWith: theSlots do: [ :eachField :eachSlot | 
 			aStream
 				tab; tab; tab; nextPutAll: 'mapping mapAccessor: #'; nextPutAll: eachSlot; nextPutAll: ' to: #'; nextPutAll: eachField name; nextPut: $.; cr ].
 		aStream

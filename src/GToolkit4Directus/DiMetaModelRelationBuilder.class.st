@@ -21,7 +21,7 @@ Class {
 { #category : #building }
 DiMetaModelRelationBuilder >> build [
 	self collections data do: [ :eachCollection | 
-		eachCollection fields fields do: [ :eachField |
+		eachCollection fields do: [ :eachField |
 			eachField type isOneToMany ifTrue: [ self relateOneToManyForCollection: eachCollection field: eachField ].
 			eachField type isManyToOne ifTrue: [ self relateManyToOneForCollection: eachCollection field: eachField ].
 			 ] ].

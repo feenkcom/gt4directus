@@ -68,7 +68,7 @@ DiMetaCollections >> gtUMLFor: aView [
 							aText := (eachMetaField name asString, ': ', eachMetaField type name asString) asRopedText.
 							(aText from: eachMetaField name size + 2 to: aText size) foreground: Color lightGray.
 							BlTextElement new text: aText ];
-						with: eachMetaCollection fields fields.
+						with: eachMetaCollection fields.
 					aMondrian layout custom: BlLinearLayout vertical ].
 			aMondrian edges
 				fromNearestBounds;

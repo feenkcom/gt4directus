@@ -49,11 +49,33 @@ DiMetaModelMapping >> collectionOfMetaRelationMappingFor: aNeoJSONMapper [
 ]
 
 { #category : #mapping }
+DiMetaModelMapping >> dataOfFieldsMappingFor: aNeoJSONMapper [
+	aNeoJSONMapper
+		for: #DataOfFields customDo: [ :mapping |
+	      mapping reader: [ :jsonReader |
+				| anArray |
+				anArray := jsonReader listClass streamContents: [ :stream |
+					jsonReader parseMapDo: [
+						 | aDataPropertyName aMetaField |
+						aDataPropertyName := jsonReader parsePropertyName.
+						"self assert: aDataPropertyName equals: 'data'."
+						jsonReader expectChar: $:.
+						aMetaField := jsonReader nextAs: DiMetaField.
+						stream nextPut: aMetaField ] ].
+				anArray ].
+			mapping writer: [ :jsonWriter :list | 
+		jsonWriter writeListStreamingDo: [ :listWriter |
+			list do: [ :eachMetaField | 
+				listWriter writeElement: eachMetaField ] ] ] ].
+	self metaFieldMappingFor: aNeoJSONMapper.
+]
+
+{ #category : #mapping }
 DiMetaModelMapping >> metaCollectionMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: DiMetaCollection do: [ :mapping |
 	      mapping mapAccessor: #name to: #collection.
-	      (mapping mapAccessor: #fields) valueSchema: DiMetaFields.
+	      (mapping mapAccessor: #fields) valueSchema: #DataOfFields.
 	      mapping mapAccessor: #hidden.
 	      mapping mapAccessor: #icon.
 	      mapping mapAccessor: #managed.
@@ -61,7 +83,7 @@ DiMetaModelMapping >> metaCollectionMappingFor: aNeoJSONMapper [
 	      mapping mapAccessor: #single.
 	      mapping mapAccessor: #translation. 
 		].
-	self metaFieldsMappingFor: aNeoJSONMapper.
+	self dataOfFieldsMappingFor: aNeoJSONMapper.
 ]
 
 { #category : #mapping }
@@ -92,27 +114,6 @@ DiMetaModelMapping >> metaFieldTypeMappingFor: aNeoJSONMapper [
 	     mapping 
 			decoder: [ :aString | DiMetaFieldType typeNamed: aString ];
 			encoder: [ :aType | aType jsonName ] ].
-]
-
-{ #category : #mapping }
-DiMetaModelMapping >> metaFieldsMappingFor: aNeoJSONMapper [
-	aNeoJSONMapper
-		for: DiMetaFields customDo: [ :mapping |
-	      mapping reader: [ :jsonReader |
-				| anArray |
-				anArray := jsonReader listClass streamContents: [ :stream |
-					jsonReader parseMapDo: [
-						 | aMetaField |
-						jsonReader parsePropertyName.
-						jsonReader expectChar: $:.
-						aMetaField := jsonReader nextAs: DiMetaField.
-						stream nextPut: aMetaField ] ].
-				DiMetaFields new fields: anArray ].
-			mapping writer: [ :jsonWriter :list | 
-		jsonWriter writeListStreamingDo: [ :listWriter |
-			list do: [ :eachMetaField | 
-				listWriter writeElement: eachMetaField ] ] ] ].
-	self metaFieldMappingFor: aNeoJSONMapper.
 ]
 
 { #category : #mapping }
