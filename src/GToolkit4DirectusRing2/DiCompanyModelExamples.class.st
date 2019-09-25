@@ -5,17 +5,7 @@ Class {
 }
 
 { #category : #'examples - collections and relations' }
-DiCompanyModelExamples >> collectionsWithCompany [
-	<gtExample>
-	| aCollections |
-	aCollections := self emptyCollections.
-	aCollections data: { self companyCollection }.
-	self assert: aCollections data size equals: 1.
-	^ aCollections
-]
-
-{ #category : #'examples - collections and relations' }
-DiCompanyModelExamples >> collectonsAndRelationsWithCompany [
+DiCompanyModelExamples >> collectionsAndRelationsWithCompany [
 	<gtExample>
 	| aCollections |
 	aCollections := self emptyCollectonsWithRelations.
@@ -23,6 +13,16 @@ DiCompanyModelExamples >> collectonsAndRelationsWithCompany [
 	aCollections relations: self relationsWithParentCompany.
 	self assert: aCollections collections isNotNil.
 	self assert: aCollections relations isNotNil.
+	^ aCollections
+]
+
+{ #category : #'examples - collections and relations' }
+DiCompanyModelExamples >> collectionsWithCompany [
+	<gtExample>
+	| aCollections |
+	aCollections := self emptyCollections.
+	aCollections data: { self companyCollection }.
+	self assert: aCollections data size equals: 1.
 	^ aCollections
 ]
 
@@ -129,6 +129,11 @@ DiCompanyModelExamples >> manyToOneType [
 	self assert: aType collection isNil.
 	self assert: aType relation isNil.
 	^ aType
+]
+
+{ #category : #'examples - collections and relations' }
+DiCompanyModelExamples >> model [
+	^ self collectionsAndRelationsWithCompany
 ]
 
 { #category : #'examples - field' }
