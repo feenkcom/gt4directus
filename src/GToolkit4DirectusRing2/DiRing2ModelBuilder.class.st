@@ -90,11 +90,20 @@ DiRing2ModelBuilder >> ensurePackageNamed: aString [
 	^ self ringEnvironment ensurePackageNamed: aString
 ]
 
-{ #category : #accessing }
+{ #category : #'gt-extension' }
 DiRing2ModelBuilder >> gtBehaviorsFor: aView [
 	<gtView>
 	self ringEnvironment ifNil: [ ^ aView empty ].
-	^ self ringEnvironment gtBehaviorsFor: aView
+	^ (self ringEnvironment gtBehaviorsFor: aView)
+		actionButtonLabel: 'Install' action: [ :aBrTab | self installPackages ]
+]
+
+{ #category : #'gt-extension' }
+DiRing2ModelBuilder >> gtPackagesFor: aView [
+	<gtView>
+	self ringEnvironment ifNil: [ ^ aView empty ].
+	^ (self ringEnvironment gtPackagesFor: aView)
+		actionButtonLabel: 'Install' action: [ :aBrTab | self installPackages ]
 ]
 
 { #category : #initialization }
