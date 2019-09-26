@@ -12,23 +12,27 @@ DiInstanceVariablesAccessorsBuilderExtension >> build [
 
 { #category : #building }
 DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: aDiMetaField inClass: aRGBehavior ofCollection: aDiMetaCollection [ 
-	| aName aMethod aProtocolName aSourceCode aSetterName |
+	| aName aMethod aProtocolName aSourceCode aSetterName aMethodComment |
 	
 	(self canIncludeCollection: aDiMetaCollection field: aDiMetaField) ifFalse: [ ^ self ].
+
+	aMethodComment := aDiMetaField note isEmptyOrNil
+		ifTrue: [ '' ] 
+		ifFalse: [ String cr, String tab, '"', ((aDiMetaField note) copyReplaceAll: '"' with: ''''), '"' ].
+	aProtocolName := self naming accessorProtocolName: aDiMetaField.
 	
 	"Getter"
 	aName := self naming accessorName: aDiMetaField.
-	aProtocolName := self naming accessorProtocolName: aDiMetaField.
 	aMethod := aRGBehavior ensureLocalMethodNamed: aName.
 	aMethod protocol: aProtocolName.
-	aSourceCode := aName, String cr, String tab, '^ ', aName. 
+	aSourceCode := aName, aMethodComment, String cr, String tab, '^ ', aName. 
 	aMethod sourceCode: aSourceCode.
 	
 	"Setter"
 	aSetterName := aName, ':'.
 	aMethod := aRGBehavior ensureLocalMethodNamed: aSetterName.
 	aMethod protocol: aProtocolName.
-	aSourceCode := aSetterName, ' anObject', String cr, String tab, '^ ', aName. 
+	aSourceCode := aSetterName, ' anObject', aMethodComment, String cr, String tab, '^ ', aName. 
 	aMethod sourceCode: aSourceCode.
 	
 ]
