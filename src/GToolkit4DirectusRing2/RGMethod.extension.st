@@ -7,6 +7,8 @@ RGMethod >> gtSourceFor: aView [
 	^ aView textEditor
 		title: 'SourceCode';
 		look: BrGlamorousCodeEditorLook new;
-		styler: BrRBTextStyler new;
+		styler: (BrRBMethodBodyTextStyler new
+			methodPatternSource: '';
+			classOrMetaClass: self parent);
 		text: [ self sourceCode asRopedText ]
 ]
