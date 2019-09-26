@@ -13,6 +13,9 @@ DiInstanceVariablesAccessorsBuilderExtension >> build [
 { #category : #building }
 DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: aDiMetaField inClass: aRGBehavior ofCollection: aDiMetaCollection [ 
 	| aName aMethod aProtocolName aSourceCode aSetterName |
+	
+	(self canIncludeCollection: aDiMetaCollection field: aDiMetaField) ifFalse: [ ^ self ].
+	
 	"Getter"
 	aName := self naming accessorName: aDiMetaField.
 	aProtocolName := self naming accessorProtocolName: aDiMetaField.

@@ -4,7 +4,7 @@ Class {
 	#category : #'GToolkit4DirectusRing2-Examples'
 }
 
-{ #category : #'examples - collections and relations' }
+{ #category : #'examples - meta models' }
 DiCompanyMetaModelExamples >> collectionsAndRelationsWithCompany [
 	<gtExample>
 	| aCollections aField |
@@ -31,12 +31,55 @@ DiCompanyMetaModelExamples >> collectionsAndRelationsWithCompany_NotInitialized 
 	^ aCollections
 ]
 
+{ #category : #'examples - meta models' }
+DiCompanyMetaModelExamples >> collectionsAndRelationsWithSubsidiaryCompaniesField [
+	<gtExample>
+	| aCollections aField |
+	aCollections := self collectionsAndRelationsWithSubsidiaryCompanyField_NotInitialized.
+	aCollections buildRelations.
+	aField := (aCollections collections data first fieldNamed: 'parent_company').
+	self assert: aField type collection isNotNil.
+	self assert: aField type relation isNotNil.
+	aField := (aCollections collections data first fieldNamed: 'subsidiary_companies').
+	self assert: aField type collection isNotNil.
+	self assert: aField type relation isNotNil.
+	^ aCollections
+]
+
+{ #category : #'examples - collections and relations' }
+DiCompanyMetaModelExamples >> collectionsAndRelationsWithSubsidiaryCompanyField_NotInitialized [
+	<gtExample>
+	| aCollections aField |
+	aCollections := self emptyCollectonsWithRelations.
+	aCollections collections: self collectionsWithSubsidiaryCompaniesField.
+	aCollections relations: self relationsWithParentAndSubsidiaryCompanies.
+	self assert: aCollections collections isNotNil.
+	self assert: aCollections relations isNotNil.
+	aField := (aCollections collections data first fieldNamed: 'parent_company').
+	self assert: aField type collection isNil.
+	self assert: aField type relation isNil.
+	aField := (aCollections collections data first fieldNamed: 'subsidiary_companies').
+	self assert: aField type collection isNil.
+	self assert: aField type relation isNil.
+	^ aCollections
+]
+
 { #category : #'examples - collections and relations' }
 DiCompanyMetaModelExamples >> collectionsWithCompany [
 	<gtExample>
 	| aCollections |
 	aCollections := self emptyCollections.
 	aCollections data: { self companyCollection }.
+	self assert: aCollections data size equals: 1.
+	^ aCollections
+]
+
+{ #category : #'examples - collections and relations' }
+DiCompanyMetaModelExamples >> collectionsWithSubsidiaryCompaniesField [
+	<gtExample>
+	| aCollections |
+	aCollections := self emptyCollections.
+	aCollections data: { self companyCollectionWithSubsidiaryCompaniesField }.
 	self assert: aCollections data size equals: 1.
 	^ aCollections
 ]
@@ -50,6 +93,18 @@ DiCompanyMetaModelExamples >> companyCollection [
 	aCollection fields: { self idField. self nameField. self parentCompanyField }.
 	self assert: aCollection name equals: 'company'.
 	self assert: aCollection numberOfFields equals: 3.
+	^ aCollection
+]
+
+{ #category : #'examples - collection' }
+DiCompanyMetaModelExamples >> companyCollectionWithSubsidiaryCompaniesField [
+	<gtExample>
+	| aCollection |
+	aCollection := self emptyCollection.
+	aCollection name: 'company'.
+	aCollection fields: { self idField. self nameField. self parentCompanyField. self subsidiaryCompaniesField }.
+	self assert: aCollection name equals: 'company'.
+	self assert: aCollection numberOfFields equals: 4.
 	^ aCollection
 ]
 
@@ -146,12 +201,6 @@ DiCompanyMetaModelExamples >> manyToOneType [
 	^ aType
 ]
 
-{ #category : #'examples - collections and relations' }
-DiCompanyMetaModelExamples >> metaModel [
-	<gtExample>
-	^ self collectionsAndRelationsWithCompany
-]
-
 { #category : #'examples - field' }
 DiCompanyMetaModelExamples >> nameField [
 	<gtExample>
@@ -164,6 +213,26 @@ DiCompanyMetaModelExamples >> nameField [
 	self assert: aField note equals: 'Name of the company including legal form'.
 	self assert: aField type class equals: self stringType class.
 	^ aField
+]
+
+{ #category : #'examples - type' }
+DiCompanyMetaModelExamples >> oneToManyType [
+	<gtExample>
+	| aType |
+	aType := DiMetaFieldTypeOneToMany new.
+	self assert: aType collection isNil.
+	self assert: aType relation isNil.
+	^ aType
+]
+
+{ #category : #'examples - relation' }
+DiCompanyMetaModelExamples >> parentAndSubsidiaryCompaniesRelation [
+	<gtExample>
+	| aRelation |
+	aRelation := self parentCompanyRelation.
+	aRelation fieldOne: 'subsidiary_companies'.
+	self assert: aRelation fieldOne equals: 'subsidiary_companies'.
+	^ aRelation
 ]
 
 { #category : #'examples - field' }
@@ -195,6 +264,16 @@ DiCompanyMetaModelExamples >> parentCompanyRelation [
 ]
 
 { #category : #'examples - collections and relations' }
+DiCompanyMetaModelExamples >> relationsWithParentAndSubsidiaryCompanies [
+	<gtExample>
+	| aRelations |
+	aRelations := self emptyRelations.
+	aRelations data: { self parentAndSubsidiaryCompaniesRelation }.
+	self assert: aRelations data size equals: 1.
+	^ aRelations
+]
+
+{ #category : #'examples - collections and relations' }
 DiCompanyMetaModelExamples >> relationsWithParentCompany [
 	<gtExample>
 	| aRelations |
@@ -209,4 +288,18 @@ DiCompanyMetaModelExamples >> stringType [
 	<gtExample>
 	^ DiMetaFieldTypeString new.
 	
+]
+
+{ #category : #'examples - field' }
+DiCompanyMetaModelExamples >> subsidiaryCompaniesField [
+	<gtExample>
+	| aField |
+	aField := self emptyField.
+	aField name: 'subsidiary_companies'.
+	aField note: 'Companies that are owned by this company.'.
+	aField type: self oneToManyType.
+	self assert: aField name equals: 'subsidiary_companies'.
+	self assert: aField note equals: 'Companies that are owned by this company.'.
+	self assert: aField type class equals: self oneToManyType class.
+	^ aField
 ]

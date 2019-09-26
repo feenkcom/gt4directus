@@ -7,7 +7,8 @@ Class {
 		'metaModel',
 		'modelBuilder',
 		'packageName',
-		'modelClassPrefix'
+		'modelClassPrefix',
+		'filters'
 	],
 	#category : #'GToolkit4DirectusRing2-Model Builders'
 }
@@ -19,6 +20,15 @@ DiCollectionToModelBuilder >> addExtension: anExtension [
 		description: [ 'The builder extension must be non-nil' ].
 	anExtension builder: self.
 	self extensions add: anExtension
+]
+
+{ #category : #initialization }
+DiCollectionToModelBuilder >> addFilter: aFilter [
+	self 
+		assert: [ aFilter isNotNil ] 
+		description: [ 'The builder filter must be non-nil' ].
+	aFilter builder: self.
+	self filters add: aFilter
 ]
 
 { #category : #enumerating }
@@ -54,6 +64,13 @@ DiCollectionToModelBuilder >> buildUsingExtensions [
 		do: [ :eachBuilderExtension | eachBuilderExtension build ]
 ]
 
+{ #category : #filtering }
+DiCollectionToModelBuilder >> canIncludeCollection: aDiMetaCollection field: aDiMetaField [
+	<return: #Boolean>
+	^ self filters allSatisfy: [ :eachFilter | 
+		eachFilter canIncludeCollection: aDiMetaCollection field: aDiMetaField ]
+]
+
 { #category : #accessing }
 DiCollectionToModelBuilder >> collections [
 	^ self metaModel collections
@@ -69,9 +86,19 @@ DiCollectionToModelBuilder >> collectionsAndModelsDo: aBlockClosure [
 	]
 ]
 
+{ #category : #initialization }
+DiCollectionToModelBuilder >> excludeCollectionNamed: aCollectionName fieldNamed: aFieldName [
+	self addFilter: (DiExcludeCollectionFieldFilter new collectionName: aCollectionName; fieldName: aFieldName)
+]
+
 { #category : #accessing }
 DiCollectionToModelBuilder >> extensions [
 	^ extensions
+]
+
+{ #category : #accessing }
+DiCollectionToModelBuilder >> filters [
+	^ filters
 ]
 
 { #category : #accessing }
@@ -96,6 +123,7 @@ DiCollectionToModelBuilder >> initialize [
 	packageName := 'UninitializedDummyPackage'.
 	modelClassPrefix := ''.
 	extensions := OrderedCollection new.
+	filters := OrderedCollection new.
 
 ]
 

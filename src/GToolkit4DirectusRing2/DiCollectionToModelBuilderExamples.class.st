@@ -19,25 +19,39 @@ DiCollectionToModelBuilderExamples >> basicCollectionToModelBuilder [
 	^ aBuilder
 ]
 
-{ #category : #'examples - ring2 builder' }
-DiCollectionToModelBuilderExamples >> buildModel [
+{ #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithInstanceAndAccessorsVariables [
 	<gtExample>
 	| aBuilder aModelClass |
-	aBuilder := self collectionToModelBuilderWithMetaModel.
+	aBuilder := self collectionToModelBuilderWithSubsidiaryCompaniesFieldMetaModel.
+	aBuilder useInstanceVariableBuilder.
+	aBuilder useInstanceVariableAccessorsBuilder.
+	aBuilder excludeCollectionNamed: 'company' fieldNamed: 'subsidiary_companies'.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass instVarNames size equals: 3.
+	self assert: aModelClass localMethods size equals: 6.
+	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelClassesOnly [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
 	aBuilder build.
 	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 	self assert: aModelClass isNotNil.
 	self assert: aModelClass isClass.
 	self assert: aModelClass package name equals: self dummyPackageName.
-	"self assert: aModelClass selectors size equals: 9."
 	^ aBuilder
 ]
 
-{ #category : #'examples - ring2 builder' }
-DiCollectionToModelBuilderExamples >> buildModelWithAllInstanceAndAccessorsVariables [
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceAndAccessorsVariables [
 	<gtExample>
 	| aBuilder aModelClass |
-	aBuilder := self collectionToModelBuilderWithMetaModel.
+	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
 	aBuilder useInstanceVariableBuilder.
 	aBuilder useInstanceVariableAccessorsBuilder.
 	aBuilder build.
@@ -47,11 +61,11 @@ DiCollectionToModelBuilderExamples >> buildModelWithAllInstanceAndAccessorsVaria
 	^ aBuilder
 ]
 
-{ #category : #'examples - ring2 builder' }
-DiCollectionToModelBuilderExamples >> buildModelWithAllInstanceVariables [
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceVariables [
 	<gtExample>
 	| aBuilder aModelClass |
-	aBuilder := self collectionToModelBuilderWithMetaModel.
+	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
 	aBuilder useInstanceVariableBuilder.
 	aBuilder build.
 	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
@@ -72,13 +86,41 @@ DiCollectionToModelBuilderExamples >> collectionToModelBuilder [
 ]
 
 { #category : #'examples - ring2 builder' }
-DiCollectionToModelBuilderExamples >> collectionToModelBuilderWithMetaModel [
+DiCollectionToModelBuilderExamples >> collectionToModelBuilderWithCompanyMetaModel [
 	<gtExample>
 	| aBuilder |
 	aBuilder := self collectionToModelBuilder.
-	aBuilder metaModel: self metaModel.
+	aBuilder metaModel: self collectionsAndRelationsWithCompany.
 	self assert: aBuilder metaModel isNotNil.
 	^ aBuilder
+]
+
+{ #category : #'examples - ring2 builder' }
+DiCollectionToModelBuilderExamples >> collectionToModelBuilderWithSubsidiaryCompaniesFieldMetaModel [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self collectionToModelBuilder.
+	aBuilder metaModel: self collectionsAndRelationsWithSubsidiaryCompaniesField.
+	self assert: aBuilder metaModel isNotNil.
+	^ aBuilder
+]
+
+{ #category : #'examples - meta model' }
+DiCollectionToModelBuilderExamples >> collectionsAndRelationsWithCompany [
+	<gtExample>
+	| aModel |
+	aModel := metaModelExamples collectionsAndRelationsWithCompany.
+	self assert: aModel isNotNil.
+	^ aModel
+]
+
+{ #category : #'examples - meta model' }
+DiCollectionToModelBuilderExamples >> collectionsAndRelationsWithSubsidiaryCompaniesField [
+	<gtExample>
+	| aModel |
+	aModel := metaModelExamples collectionsAndRelationsWithSubsidiaryCompaniesField.
+	self assert: aModel isNotNil.
+	^ aModel
 ]
 
 { #category : #'examples - common names' }
@@ -95,13 +137,4 @@ DiCollectionToModelBuilderExamples >> dummyPackageName [
 DiCollectionToModelBuilderExamples >> initialize [
 	super initialize.
 	metaModelExamples := DiCompanyMetaModelExamples new.
-]
-
-{ #category : #'examples - meta model' }
-DiCollectionToModelBuilderExamples >> metaModel [
-	<gtExample>
-	| aModel |
-	aModel := metaModelExamples metaModel.
-	self assert: aModel isNotNil.
-	^ aModel
 ]

@@ -59,6 +59,29 @@ DiMetaCollection >> gtFieldsFor: aView [
 		column: 'Type' item: [ :aField | aField type ifNotNil: #name ]
 ]
 
+{ #category : #'gt-extension' }
+DiMetaCollection >> gtUMLFor: aView [
+	<gtView>
+	self fields ifNil: [ ^ aView empty ].
+	^ aView mondrian 
+		title: 'UML';
+		priority: 1;
+		painting: [ :aMondrian | 
+			aMondrian nodes 
+				umlClassShapeWithName: [ :eachMetaCollection | eachMetaCollection name ];
+				with: { self };
+				forEach: [ :eachMetaCollection | 
+					aMondrian nodes 
+						shape: [ :eachMetaField | 
+							| aText | 
+							aText := (eachMetaField name asString, ': ', eachMetaField type name asString) asRopedText.
+							(aText from: eachMetaField name size + 2 to: aText size) foreground: Color lightGray.
+							BlTextElement new text: aText ];
+						with: eachMetaCollection fields.
+					aMondrian layout custom: BlLinearLayout vertical ].
+		]
+]
+
 { #category : #accessing }
 DiMetaCollection >> hidden [
 	^ hidden

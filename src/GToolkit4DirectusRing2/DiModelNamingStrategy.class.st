@@ -1,9 +1,6 @@
 Class {
 	#name : #DiModelNamingStrategy,
-	#superclass : #Object,
-	#instVars : [
-		'builder'
-	],
+	#superclass : #DiCollectionToModelBuilderPart,
 	#category : #'GToolkit4DirectusRing2-Model Builders'
 }
 
@@ -15,16 +12,6 @@ DiModelNamingStrategy >> accessorName: aDiMetaField [
 { #category : #accessing }
 DiModelNamingStrategy >> accessorProtocolName: aDiMetaField [ 
 	^ 'accessing'
-]
-
-{ #category : #accessing }
-DiModelNamingStrategy >> builder [
-	^ builder
-]
-
-{ #category : #accessing }
-DiModelNamingStrategy >> builder: anObject [
-	builder := anObject
 ]
 
 { #category : #accessing }
