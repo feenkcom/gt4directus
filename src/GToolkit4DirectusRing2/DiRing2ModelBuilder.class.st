@@ -135,6 +135,12 @@ DiRing2ModelBuilder >> installPackages [
 ]
 
 { #category : #accessing }
+DiRing2ModelBuilder >> modelEnvironment [
+	<return: #RGEnvironment>
+	^ self ringEnvironment
+]
+
+{ #category : #accessing }
 DiRing2ModelBuilder >> ringEnvironment [
 	<return: #RGEnvironment>
 	^ ringEnvironment

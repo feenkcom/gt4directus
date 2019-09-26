@@ -8,7 +8,9 @@ RGBehavior >> gtDefinitionFor: aView [
 			priority: 1;
 			look: BrGlamorousCodeEditorLook new;
 			styler: BrRBTextStyler new;
-			text: [ self definition asRopedText  ]
+			text: [ self definition asRopedText  ];
+			actionButtonIcon: BrGlamorousIcons browse action: [ :aBrTab | 
+				Smalltalk at: self name asSymbol ifPresent: #browse ]
 ]
 
 { #category : #'*GToolkit4DirectusRing2' }

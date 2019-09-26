@@ -73,6 +73,41 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceVariables [
 	^ aBuilder
 ]
 
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithTrait [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
+	aBuilder useTrait: TDummyTraitOneExample inCollectionNamed: 'company'.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass isNotNil.
+	self assert: aModelClass isClass.
+	self assert: aModelClass package name equals: self dummyPackageName.
+	self assert: aModelClass usedTraits size equals: 1.
+	self assert: aModelClass usedTraits anyOne name equals: TDummyTraitOneExample name.
+	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithTwoTraits [
+	<gtExample>
+	| aBuilder aModelClass aCollection |
+	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
+	aBuilder useTrait: TDummyTraitOneExample inCollectionNamed: 'company'.
+	aBuilder useTrait: TDummyTraitTwoExample inCollectionNamed: 'company'.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass isNotNil.
+	self assert: aModelClass isClass.
+	self assert: aModelClass package name equals: self dummyPackageName.
+	self assert: aModelClass usedTraits size equals: 2.
+	aCollection := aModelClass usedTraits asArray sort: [ :a :b | a name < b name ].
+	self assert: aCollection first name equals: TDummyTraitOneExample name.
+	self assert: aCollection second name equals: TDummyTraitTwoExample name.
+	^ aBuilder
+]
+
 { #category : #'examples - ring2 builder' }
 DiCollectionToModelBuilderExamples >> collectionToModelBuilder [
 	<gtExample>

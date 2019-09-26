@@ -18,6 +18,12 @@ DiCollectionToModelBuilderPart >> builder: anObject [
 ]
 
 { #category : #enumerating }
+DiCollectionToModelBuilderPart >> collectionNamed: aString [
+	<return: #DiMetaCollection or: nil>
+	^ self builder collectionNamed: aString
+]
+
+{ #category : #enumerating }
 DiCollectionToModelBuilderPart >> collectionsAndModelsDo: aBlockClosure [ 
 	self builder collectionsAndModelsDo: aBlockClosure
 ]
@@ -25,6 +31,12 @@ DiCollectionToModelBuilderPart >> collectionsAndModelsDo: aBlockClosure [
 { #category : #enumerating }
 DiCollectionToModelBuilderPart >> collectionsDo: aBlockClosure [ 
 	self builder collections do: aBlockClosure
+]
+
+{ #category : #accessing }
+DiCollectionToModelBuilderPart >> modelEnvironment [
+	<return: #RGEnvironment>
+	^ self builder modelEnvironment 
 ]
 
 { #category : #accessing }

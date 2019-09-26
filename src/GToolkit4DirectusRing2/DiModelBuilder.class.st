@@ -8,3 +8,9 @@ Class {
 DiModelBuilder class >> ring2 [ 
 	^ DiRing2ModelBuilder new
 ]
+
+{ #category : #accessing }
+DiModelBuilder >> modelEnvironment [
+	<return: #RGEnvironment>
+	^ self subclassResponsibility
+]

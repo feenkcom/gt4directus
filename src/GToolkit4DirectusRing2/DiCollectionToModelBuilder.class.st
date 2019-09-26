@@ -179,6 +179,12 @@ DiCollectionToModelBuilder >> modelClassPrefix: aString [
 	modelClassPrefix := aString
 ]
 
+{ #category : #environment }
+DiCollectionToModelBuilder >> modelEnvironment [
+	<return: #RGEnvironment>
+	^ self modelBuilder modelEnvironment 
+]
+
 { #category : #accessing }
 DiCollectionToModelBuilder >> naming [
 	<return: #DiModelNamingStrategy>
@@ -216,4 +222,16 @@ DiCollectionToModelBuilder >> useInstanceVariableAccessorsBuilder [
 { #category : #initialization }
 DiCollectionToModelBuilder >> useInstanceVariableBuilder [
 	self addExtension: DiInstanceVariablesBuilderExtension new.
+]
+
+{ #category : #initialization }
+DiCollectionToModelBuilder >> useTrait: aTraitClass inCollectionNamed: aCollectionName [
+	self useTraitNamed: aTraitClass name inCollectionNamed: aCollectionName
+]
+
+{ #category : #initialization }
+DiCollectionToModelBuilder >> useTraitNamed: aTraitName inCollectionNamed: aCollectionName [
+	self addExtension: (DiAddTraitExtension new 
+		traitClassName: aTraitName; 
+		collectionName: aCollectionName)
 ]

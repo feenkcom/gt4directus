@@ -8,7 +8,7 @@ RGEnvironment >> gtBehaviorsFor: aView [
 		title: 'Behaviors';
 		priority: 1;
 		items: [ (behaviors asOrderedCollection reject: #isRGUnresolvedValue) 
-			sort: [ :a :b | a isRingResolved and: [ a name < b name ] ] ];
+			sort: [ :a :b | a isRingResolved and: [ a superclass isRingResolved and: [ a name < b name ] ] ] ];
 		column: 'Name' item: [ :aBehavior | aBehavior name ];
 		column: 'Superclass' item: [ :aBehavior | aBehavior superclass name ];
 		column: 'Package' item: [ :aBehavior | aBehavior package name ]
