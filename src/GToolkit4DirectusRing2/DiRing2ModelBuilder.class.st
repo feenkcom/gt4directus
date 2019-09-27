@@ -54,6 +54,8 @@ DiRing2ModelBuilder >> ensureClassNamed: aString [
 
 { #category : #model }
 DiRing2ModelBuilder >> ensureInstanceVariables: aCollection inBehavior: aRGBehavior [
+	"Return collection of existing behavior instance variables"
+	<return: #Array of: #String>
 	| aNewInstanceVariables aSortedVariables |
 	self 
 		assert: [ aCollection isCollection ] 
@@ -65,6 +67,7 @@ DiRing2ModelBuilder >> ensureInstanceVariables: aCollection inBehavior: aRGBehav
 	aNewInstanceVariables := aRGBehavior instVarNames union: aCollection.
 	aSortedVariables := aNewInstanceVariables sort: [ :a :b | a < b ].
 	aRGBehavior instanceVariables: aSortedVariables.
+	^ aRGBehavior instVarNames
 ]
 
 { #category : #model }

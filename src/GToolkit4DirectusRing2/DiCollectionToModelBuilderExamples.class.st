@@ -132,8 +132,10 @@ DiCollectionToModelBuilderExamples >> collectionToModelBuilder [
 	aBuilder := self basicCollectionToModelBuilder.
 	aBuilder packageName: self dummyPackageName.
 	aBuilder modelClassPrefix: self dummyModelClassPrefix.
+	aBuilder modelRootClassName: self dummyModelRootClassName.
 	self assert: aBuilder packageName equals: self dummyPackageName.
 	self assert: aBuilder modelClassPrefix equals: self dummyModelClassPrefix.
+	self assert: aBuilder modelRootClassName equals: self dummyModelRootClassName.
 	^ aBuilder
 ]
 
@@ -178,6 +180,11 @@ DiCollectionToModelBuilderExamples >> collectionsAndRelationsWithSubsidiaryCompa
 { #category : #'examples - common names' }
 DiCollectionToModelBuilderExamples >> dummyModelClassPrefix [
 	^ 'DiDummy'
+]
+
+{ #category : #'examples - common names' }
+DiCollectionToModelBuilderExamples >> dummyModelRootClassName [
+	^ 'DiDummyModel'
 ]
 
 { #category : #'examples - common names' }

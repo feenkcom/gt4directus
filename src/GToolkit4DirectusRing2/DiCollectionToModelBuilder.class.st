@@ -4,11 +4,12 @@ Class {
 	#instVars : [
 		'namingStrategy',
 		'extensions',
+		'filters',
 		'metaModel',
 		'modelBuilder',
 		'packageName',
 		'modelClassPrefix',
-		'filters'
+		'modelRootClassName'
 	],
 	#category : #'GToolkit4DirectusRing2-Model Builders'
 }
@@ -45,12 +46,14 @@ DiCollectionToModelBuilder >> build [
 
 { #category : #building }
 DiCollectionToModelBuilder >> buildBehavior: aDiMetaCollection [ 
-	| aClassName aClass aPackage |
+	| aClassName aClass aPackage aSuperClass |
 	aClassName := self naming collectionModelName: aDiMetaCollection.
 	aClass := self modelBuilder ensureClassNamed: aClassName.
 	aPackage := self modelBuilder ensurePackageNamed: self packageName.
 	aClass package: aPackage.
-	
+	aSuperClass := self modelBuilder ensureClassNamed: self modelRootClassName.
+	aSuperClass package: aPackage.
+	aClass superclass: aSuperClass.
 ]
 
 { #category : #building }
@@ -126,7 +129,8 @@ DiCollectionToModelBuilder >> initialize [
 	self initializeModelBuilder.
 	self initializeNamingStrategy.
 	packageName := 'UninitializedDummyPackage'.
-	modelClassPrefix := ''.
+	modelClassPrefix := 'UnitializedPrefix'.
+	modelRootClassName := modelClassPrefix, 'Model'.
 	extensions := OrderedCollection new.
 	filters := OrderedCollection new.
 
@@ -188,6 +192,20 @@ DiCollectionToModelBuilder >> modelClassPrefix: aString [
 DiCollectionToModelBuilder >> modelEnvironment [
 	<return: #RGEnvironment>
 	^ self modelBuilder modelEnvironment 
+]
+
+{ #category : #accessing }
+DiCollectionToModelBuilder >> modelRootClassName [
+	<return: #String>
+	^ modelRootClassName
+]
+
+{ #category : #accessing }
+DiCollectionToModelBuilder >> modelRootClassName: aString [
+	self 
+		assert: [ aString isNotNil and: [ aString isString and: [ aString isNotEmpty ] ] ] 
+		description: [ 'Model root class name must be a non-empty string' ].
+	modelRootClassName := aString
 ]
 
 { #category : #accessing }
