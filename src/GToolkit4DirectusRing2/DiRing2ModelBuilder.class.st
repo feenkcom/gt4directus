@@ -95,6 +95,38 @@ DiRing2ModelBuilder >> ensurePackageNamed: aString [
 	^ self ringEnvironment ensurePackageNamed: aString
 ]
 
+{ #category : #model }
+DiRing2ModelBuilder >> ensureTraitNamed: aString [
+	<return: #RGTrait>
+	self 
+		assert: [ aString isNotNil and: [ aString isNotEmpty ] ] 
+		description: [ 'Trait name must be non-nil and non-empty string' ].
+	^ self ringEnvironment ensureTraitNamed: aString
+]
+
+{ #category : #model }
+DiRing2ModelBuilder >> ensureTraitNamed: aTraitName inBehavior: aRGBehavior [
+	| aTrait |
+	self 
+		assert: [ aTraitName isNotNil ] 
+		description: [ 'Trait name must be non-nil' ].
+	self 
+		assert: [ aRGBehavior isNotNil ] 
+		description: [ 'Behavior name must be non-nil' ].
+		
+	(aRGBehavior usedTraits anySatisfy: [ :eachTrait | 
+		eachTrait name = aTraitName ]) ifTrue: [ ^ self ].
+	aTrait := self ensureTraitNamed: aTraitName.
+	aRGBehavior hasTraitComposition 
+		ifFalse: [ 
+			| aComposition |
+			aComposition := aRGBehavior defaultTraitComposition.
+			aComposition addTransformation: aTrait.
+			aRGBehavior traitComposition: aComposition ]
+		ifTrue: [ 
+			aRGBehavior traitComposition addTransformation: aTrait ]
+]
+
 { #category : #'gt-extension' }
 DiRing2ModelBuilder >> gtBehaviorsFor: aView [
 	<gtView>

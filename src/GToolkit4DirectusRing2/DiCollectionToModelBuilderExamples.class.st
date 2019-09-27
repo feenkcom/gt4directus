@@ -74,6 +74,23 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceVariables [
 ]
 
 { #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithDiscoveredTraits [
+	<gtExample>
+	| aBuilder aModelClass aCollection |
+	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
+	aBuilder discoverCollectionSystemTraits.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass isNotNil.
+	self assert: aModelClass isClass.
+	self assert: aModelClass package name equals: self dummyPackageName.
+	self assert: aModelClass usedTraits size equals: 1.
+	aCollection := aModelClass usedTraits asArray.
+	self assert: aCollection first name equals: TDiDummyCompany name.
+	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelWithTrait [
 	<gtExample>
 	| aBuilder aModelClass |

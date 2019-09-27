@@ -87,6 +87,11 @@ DiCollectionToModelBuilder >> collectionsAndModelsDo: aBlockClosure [
 ]
 
 { #category : #initialization }
+DiCollectionToModelBuilder >> discoverCollectionSystemTraits [
+	self addExtension: Di2TraitDiscoveryExtension new.
+]
+
+{ #category : #initialization }
 DiCollectionToModelBuilder >> excludeCollectionNamed: aCollectionName fieldNamed: aFieldName [
 	self addFilter: (DiExcludeCollectionFieldFilter new collectionName: aCollectionName; fieldName: aFieldName)
 ]

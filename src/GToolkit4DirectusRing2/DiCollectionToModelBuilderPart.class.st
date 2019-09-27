@@ -34,6 +34,12 @@ DiCollectionToModelBuilderPart >> collectionsDo: aBlockClosure [
 ]
 
 { #category : #accessing }
+DiCollectionToModelBuilderPart >> modelBuilder [
+	<return: #DiModelBuilder>
+	^ self builder modelBuilder
+]
+
+{ #category : #accessing }
 DiCollectionToModelBuilderPart >> modelEnvironment [
 	<return: #RGEnvironment>
 	^ self builder modelEnvironment 

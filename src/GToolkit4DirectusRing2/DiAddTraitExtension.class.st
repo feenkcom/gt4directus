@@ -27,18 +27,7 @@ DiAddTraitExtension >> collectionName: anObject [
 
 { #category : #building }
 DiAddTraitExtension >> ensureTraitInBehavior: aRGBehavior [ 
-	| aTrait |
-	(aRGBehavior usedTraits anySatisfy: [ :eachTrait | 
-		eachTrait name = self traitClassName ]) ifTrue: [ ^ self ].
-	aTrait := self modelEnvironment ensureTraitNamed: self traitClassName.
-	aRGBehavior hasTraitComposition 
-		ifFalse: [ 
-			| aComposition |
-			aComposition := aRGBehavior defaultTraitComposition.
-			aComposition addTransformation: aTrait.
-			aRGBehavior traitComposition: aComposition ]
-		ifTrue: [ 
-			aRGBehavior traitComposition addTransformation: aTrait ]
+	self modelBuilder ensureTraitNamed: self traitClassName inBehavior: aRGBehavior
 ]
 
 { #category : #accessing }
