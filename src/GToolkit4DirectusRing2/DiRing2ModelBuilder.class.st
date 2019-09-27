@@ -53,6 +53,21 @@ DiRing2ModelBuilder >> ensureClassNamed: aString [
 ]
 
 { #category : #model }
+DiRing2ModelBuilder >> ensureInstanceVariables: aCollection inBehavior: aRGBehavior [
+	| aNewInstanceVariables aSortedVariables |
+	self 
+		assert: [ aCollection isCollection ] 
+		description: [ 'Instance variables must be a collection' ].
+	self 
+		assert: [ aRGBehavior isNotNil ] 
+		description: [ 'Behavior name must be non-nil' ].
+	
+	aNewInstanceVariables := aRGBehavior instVarNames union: aCollection.
+	aSortedVariables := aNewInstanceVariables sort: [ :a :b | a < b ].
+	aRGBehavior instanceVariables: aSortedVariables.
+]
+
+{ #category : #model }
 DiRing2ModelBuilder >> ensureObject [
 	<return: #RGClass>
 	| aClass |

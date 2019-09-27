@@ -14,7 +14,7 @@ DiInstanceVariablesBuilderExtension >> build [
 DiInstanceVariablesBuilderExtension >> buildInstanceVariablesInClass: aRGBehavior ofCollection: aDiMetaCollection [ 
 	| theSlots |
 	theSlots := self collectionSlots: aDiMetaCollection.
-	aRGBehavior instanceVariables: theSlots.
+	self modelBuilder ensureInstanceVariables: theSlots inBehavior: aRGBehavior.
 ]
 
 { #category : #'meta model' }
