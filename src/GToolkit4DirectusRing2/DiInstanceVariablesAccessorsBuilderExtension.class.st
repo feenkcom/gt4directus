@@ -12,7 +12,7 @@ DiInstanceVariablesAccessorsBuilderExtension >> build [
 
 { #category : #building }
 DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: aDiMetaField inClass: aRGBehavior ofCollection: aDiMetaCollection [ 
-	| aName aMethod aProtocolName aSourceCode aSetterName aMethodComment |
+	| aName aProtocolName aSourceCode aSetterName aMethodComment |
 	
 	(self canIncludeCollection: aDiMetaCollection field: aDiMetaField) ifFalse: [ ^ self ].
 
@@ -23,17 +23,21 @@ DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: a
 	
 	"Getter"
 	aName := self naming accessorName: aDiMetaField.
-	aMethod := aRGBehavior ensureLocalMethodNamed: aName.
-	aMethod protocol: aProtocolName.
 	aSourceCode := aName, aMethodComment, String cr, String tab, '^ ', aName. 
-	aMethod sourceCode: aSourceCode.
+	self modelBuilder 
+		ensureLocalMethodNamed: aName 
+		withSourceCode: aSourceCode 
+		andProtocol: aProtocolName 
+		inBehavior: aRGBehavior.
 	
 	"Setter"
 	aSetterName := aName, ':'.
-	aMethod := aRGBehavior ensureLocalMethodNamed: aSetterName.
-	aMethod protocol: aProtocolName.
 	aSourceCode := aSetterName, ' anObject', aMethodComment, String cr, String tab, '^ ', aName. 
-	aMethod sourceCode: aSourceCode.
+	self modelBuilder 
+		ensureLocalMethodNamed: aSetterName 
+		withSourceCode: aSourceCode 
+		andProtocol: aProtocolName 
+		inBehavior: aRGBehavior.
 	
 ]
 

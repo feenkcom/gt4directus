@@ -68,6 +68,29 @@ DiRing2ModelBuilder >> ensureInstanceVariables: aCollection inBehavior: aRGBehav
 ]
 
 { #category : #model }
+DiRing2ModelBuilder >> ensureLocalMethodNamed: aMethodName withSourceCode: aSourceCode andProtocol: aProtocolName inBehavior: aRGBehavior [
+	<return: #RGMethod>
+	| aMethod |
+	self 
+		assert: [ aMethodName isNotNil and: [ aMethodName isString and: [ aMethodName isNotEmpty ] ] ] 
+		description: [ 'Method name must be a non-empty string' ].
+	self 
+		assert: [ aSourceCode isNotNil and: [ aSourceCode isString and: [ aSourceCode isNotEmpty ] ] ] 
+		description: [ 'Method source code must be a non-empty string' ].
+	self 
+		assert: [ aProtocolName isNotNil and: [ aProtocolName isString and: [ aProtocolName isNotEmpty ] ] ] 
+		description: [ 'Method protocol name must be a non-empty string' ].
+	self 
+		assert: [ aRGBehavior isNotNil ] 
+		description: [ 'Behavior name must be non-nil' ].
+	
+	aMethod := aRGBehavior ensureLocalMethodNamed: aMethodName.
+	aMethod protocol: aProtocolName.
+	aMethod sourceCode: aSourceCode.
+	^ aMethod
+]
+
+{ #category : #model }
 DiRing2ModelBuilder >> ensureObject [
 	<return: #RGClass>
 	| aClass |
