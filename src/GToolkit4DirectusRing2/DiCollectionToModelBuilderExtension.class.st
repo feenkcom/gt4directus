@@ -20,3 +20,8 @@ DiCollectionToModelBuilderExtension >> canIncludeCollection: aDiMetaCollection f
 	<return: #Boolean>
 	^ self builder canIncludeCollection: aDiMetaCollection field: aDiMetaField
 ]
+
+{ #category : #building }
+DiCollectionToModelBuilderExtension >> postInstall [
+	"It is called after a model installation. Subclasses can implement it."
+]

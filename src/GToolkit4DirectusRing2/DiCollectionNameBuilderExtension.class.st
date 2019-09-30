@@ -6,6 +6,7 @@ Class {
 
 { #category : #building }
 DiCollectionNameBuilderExtension >> build [
+	self buildInRootModelClass.
 	self collectionsAndModelsDo: [ :eachCollection :eachClass | 
 		self buildCollectionNameInClass: eachClass ofCollection: eachCollection ].
 ]
@@ -15,15 +16,29 @@ DiCollectionNameBuilderExtension >> buildCollectionNameInClass: eachClass ofColl
 
 	| aSourceCode aClassSide |
 	aClassSide := eachClass classSide.
-	self assert: [ aClassSide isRingResolved ] description: [ 'Class side must be resolved' ].
-	self 
-		assert: [ aClassSide name beginsWith: eachClass name ] 
-		description: [ 'Class side must start with same name as the instnace side' ].
-
 	aSourceCode := 'collectionName', String cr, String tab, '^ #''', eachCollection name, ''''. 
 	self modelBuilder 
 		ensureLocalMethodNamed: 'collectionName'
 		withSourceCode: aSourceCode 
 		andProtocol: self naming accessorProtocolName
 		inBehavior: aClassSide.
+]
+
+{ #category : #building }
+DiCollectionNameBuilderExtension >> buildInRootModelClass [
+	| aClass aSourceCode |
+	aClass := self builder modelRootClass.
+	aSourceCode := 'collectionName', String cr, String tab, '^ self subclassResponsibility'. 
+	self modelBuilder 
+		ensureLocalMethodNamed: 'collectionName'
+		withSourceCode: aSourceCode 
+		andProtocol: self naming accessorProtocolName
+		inBehavior: aClass classSide.
+	aSourceCode := 'collectionName', String cr, String tab, '^ self class collectionName'. 
+	self modelBuilder 
+		ensureLocalMethodNamed: 'collectionName'
+		withSourceCode: aSourceCode 
+		andProtocol: self naming accessorProtocolName
+		inBehavior: aClass.
+	
 ]

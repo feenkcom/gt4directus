@@ -45,18 +45,17 @@ DiCollectionToModelBuilder >> build [
 ]
 
 { #category : #building }
-DiCollectionToModelBuilder >> buildBehavior: aDiMetaCollection [ 
+DiCollectionToModelBuilder >> buildBehavior: aDiMetaCollection [
 	| aClassName aClass aPackage aSuperClass |
-	
-	(self canIncludeCollection: aDiMetaCollection) ifFalse: [^ self].
-	
+	(self canIncludeCollection: aDiMetaCollection)
+		ifFalse: [ ^ self ].
 	aClassName := self naming collectionModelName: aDiMetaCollection.
 	aClass := self modelBuilder ensureClassAndMetaClassNamed: aClassName.
 	aPackage := self modelBuilder ensurePackageNamed: self packageName.
 	aClass package: aPackage.
-	aSuperClass := self modelBuilder ensureClassAndMetaClassNamed: self modelRootClassName.
+	aSuperClass := self modelRootClass.
 	aSuperClass package: aPackage.
-	aClass superclass: aSuperClass.
+	aClass superclass: aSuperClass
 ]
 
 { #category : #building }
@@ -139,6 +138,7 @@ DiCollectionToModelBuilder >> gtBehaviorsFor: aView [
 	<gtView>
 	self modelBuilder ifNil: [ ^ aView empty ].
 	^ (self modelBuilder gtBehaviorsFor: aView)
+		actionButtonLabel: 'Install 2' action: [ :aBrTab | self install ]
 ]
 
 { #category : #accessing }
@@ -174,6 +174,7 @@ DiCollectionToModelBuilder >> initializeNamingStrategy [
 { #category : #building }
 DiCollectionToModelBuilder >> install [
 	self modelBuilder installPackages.
+	self extensions do: #postInstall.
 ]
 
 { #category : #accessing }
@@ -224,6 +225,13 @@ DiCollectionToModelBuilder >> modelEnvironment [
 	^ self modelBuilder modelEnvironment 
 ]
 
+{ #category : #building }
+DiCollectionToModelBuilder >> modelRootClass [
+	<return: #RGClass>
+	^ self modelBuilder
+		ensureClassAndMetaClassNamed: self modelRootClassName
+]
+
 { #category : #accessing }
 DiCollectionToModelBuilder >> modelRootClassName [
 	<return: #String>
@@ -265,6 +273,11 @@ DiCollectionToModelBuilder >> packageName: aString [
 		assert: [ aString isNotNil and: [ aString isString and: [ aString isNotEmpty ] ] ] 
 		description: [ 'Package name must be a non-empty string' ].
 	packageName := aString
+]
+
+{ #category : #initialization }
+DiCollectionToModelBuilder >> removeMethodsWithUndeclaredVariables [
+	self addExtension: DiRemoveMethodsWithUndeclaredVariablesExtension new.
 ]
 
 { #category : #initialization }
