@@ -15,11 +15,6 @@ DiModelNamingStrategy >> accessorProtocolName [
 ]
 
 { #category : #accessing }
-DiModelNamingStrategy >> accessorProtocolName: aDiMetaField [ 
-	^ 'accessing'
-]
-
-{ #category : #accessing }
 DiModelNamingStrategy >> collectionModelName: aDiMetaCollection [
 	^ self subclassResponsibility
 ]

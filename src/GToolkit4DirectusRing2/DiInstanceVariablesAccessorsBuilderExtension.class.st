@@ -19,7 +19,7 @@ DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: a
 	aMethodComment := aDiMetaField note isEmptyOrNil
 		ifTrue: [ '' ] 
 		ifFalse: [ String cr, String tab, '"', ((aDiMetaField note) copyReplaceAll: '"' with: ''''), '"' ].
-	aProtocolName := self naming accessorProtocolName: aDiMetaField.
+	aProtocolName := self naming accessorProtocolName.
 	
 	"Getter"
 	aName := self naming accessorName: aDiMetaField.
