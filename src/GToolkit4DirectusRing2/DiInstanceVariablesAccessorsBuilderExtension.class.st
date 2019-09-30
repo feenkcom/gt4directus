@@ -32,7 +32,7 @@ DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: a
 	
 	"Setter"
 	aSetterName := aName, ':'.
-	aSourceCode := aSetterName, ' anObject', aMethodComment, String cr, String tab, '^ ', aName. 
+	aSourceCode := aSetterName, ' anObject', aMethodComment, String cr, String tab, aName, ' := anObject'. 
 	self modelBuilder 
 		ensureLocalMethodNamed: aSetterName 
 		withSourceCode: aSourceCode 

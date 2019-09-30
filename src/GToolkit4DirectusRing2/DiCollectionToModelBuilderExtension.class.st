@@ -10,6 +10,12 @@ DiCollectionToModelBuilderExtension >> build [
 ]
 
 { #category : #filtering }
+DiCollectionToModelBuilderExtension >> canIncludeCollection: aDiMetaCollection [
+	<return: #Boolean>
+	^ self builder canIncludeCollection: aDiMetaCollection.
+]
+
+{ #category : #filtering }
 DiCollectionToModelBuilderExtension >> canIncludeCollection: aDiMetaCollection field: aDiMetaField [
 	<return: #Boolean>
 	^ self builder canIncludeCollection: aDiMetaCollection field: aDiMetaField

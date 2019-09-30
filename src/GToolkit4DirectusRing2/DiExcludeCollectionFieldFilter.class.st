@@ -9,6 +9,12 @@ Class {
 }
 
 { #category : #filtering }
+DiExcludeCollectionFieldFilter >> canIncludeCollection: aDiMetaCollection [
+	<return: #Boolean>
+	^ true.
+]
+
+{ #category : #filtering }
 DiExcludeCollectionFieldFilter >> canIncludeCollection: aDiMetaCollection field: aDiMetaField [
 	<return: #Boolean>
 	^ ((aDiMetaCollection name = self collectionName) and: [ 

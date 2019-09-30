@@ -5,7 +5,13 @@ Class {
 }
 
 { #category : #filtering }
+DiCollectionToModelBuilderFilter >> canIncludeCollection: aDiMetaCollection [
+	<return: #Boolean>
+	^ self subclassResponsibility.
+]
+
+{ #category : #filtering }
 DiCollectionToModelBuilderFilter >> canIncludeCollection: aDiMetaCollection field: aDiMetaField [
 	<return: #Boolean>
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]

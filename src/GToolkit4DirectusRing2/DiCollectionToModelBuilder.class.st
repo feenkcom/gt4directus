@@ -47,6 +47,9 @@ DiCollectionToModelBuilder >> build [
 { #category : #building }
 DiCollectionToModelBuilder >> buildBehavior: aDiMetaCollection [ 
 	| aClassName aClass aPackage aSuperClass |
+	
+	(self canIncludeCollection: aDiMetaCollection) ifFalse: [^ self].
+	
 	aClassName := self naming collectionModelName: aDiMetaCollection.
 	aClass := self modelBuilder ensureClassNamed: aClassName.
 	aPackage := self modelBuilder ensurePackageNamed: self packageName.
@@ -65,6 +68,13 @@ DiCollectionToModelBuilder >> buildBehaviors [
 DiCollectionToModelBuilder >> buildUsingExtensions [
 	self extensions
 		do: [ :eachBuilderExtension | eachBuilderExtension build ]
+]
+
+{ #category : #filtering }
+DiCollectionToModelBuilder >> canIncludeCollection: aDiMetaCollection [
+	<return: #Boolean>
+	^ self filters allSatisfy: [ :eachFilter | 
+		eachFilter canIncludeCollection: aDiMetaCollection ]
 ]
 
 { #category : #filtering }
@@ -97,6 +107,11 @@ DiCollectionToModelBuilder >> discoverCollectionSystemTraits [
 { #category : #initialization }
 DiCollectionToModelBuilder >> excludeCollectionNamed: aCollectionName fieldNamed: aFieldName [
 	self addFilter: (DiExcludeCollectionFieldFilter new collectionName: aCollectionName; fieldName: aFieldName)
+]
+
+{ #category : #initialization }
+DiCollectionToModelBuilder >> excludeSystemCollections [
+	self addFilter: (DiExcludeSystemCollections new)
 ]
 
 { #category : #initialization }
@@ -149,6 +164,11 @@ DiCollectionToModelBuilder >> initializeModelBuilder [
 { #category : #initialization }
 DiCollectionToModelBuilder >> initializeNamingStrategy [
 	self naming: DiCamelNamingStrategy new.
+]
+
+{ #category : #building }
+DiCollectionToModelBuilder >> install [
+	self modelBuilder installPackages.
 ]
 
 { #category : #accessing }

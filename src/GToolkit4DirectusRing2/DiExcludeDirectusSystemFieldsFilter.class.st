@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #filtering }
+DiExcludeDirectusSystemFieldsFilter >> canIncludeCollection: aDiMetaCollection [
+	<return: #Boolean>
+	^ true.
+]
+
+{ #category : #filtering }
 DiExcludeDirectusSystemFieldsFilter >> canIncludeCollection: aDiMetaCollection field: aDiMetaField [
 	<return: #Boolean>
 	^ (self systemFieldNames includes: aDiMetaField name) not
