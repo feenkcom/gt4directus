@@ -29,3 +29,8 @@ DiModelNamingStrategy >> modelClassPrefix [
 	<return: #String>
 	^ self builder modelClassPrefix
 ]
+
+{ #category : #accessing }
+DiModelNamingStrategy >> testingProtocolName [
+	^ 'testing'
+]

@@ -34,6 +34,15 @@ DiCollectionToModelBuilder >> addFilter: aFilter [
 ]
 
 { #category : #enumerating }
+DiCollectionToModelBuilder >> allModelNames [
+	| aSet |
+	aSet := Set new.
+	self collectionsAndModelsDo: [ :eachCollection :eachClass |
+		aSet add: eachClass name ].
+	^ aSet
+]
+
+{ #category : #enumerating }
 DiCollectionToModelBuilder >> behaviorNamed: aString [ 
 	^ self modelBuilder behaviorNamed: aString
 ]
@@ -101,6 +110,12 @@ DiCollectionToModelBuilder >> collectionsAndModelsDo: aBlockClosure [
 { #category : #initialization }
 DiCollectionToModelBuilder >> discoverCollectionSystemTraits [
 	self addExtension: Di2TraitDiscoveryExtension new.
+]
+
+{ #category : #model }
+DiCollectionToModelBuilder >> ensureClassAndMetaClassNamed: aString [ 
+	<return: #RGClass>
+	^ self modelBuilder ensureClassAndMetaClassNamed: aString 
 ]
 
 { #category : #initialization }
@@ -176,6 +191,11 @@ DiCollectionToModelBuilder >> initializeNamingStrategy [
 DiCollectionToModelBuilder >> install [
 	self modelBuilder installPackages.
 	self extensions do: #postInstall.
+]
+
+{ #category : #initialization }
+DiCollectionToModelBuilder >> markDeprecatedModels [
+	self addExtension: DiMarkDeprecatedModelClassesExtension new.
 ]
 
 { #category : #accessing }
