@@ -99,6 +99,11 @@ DiCollectionToModelBuilder >> excludeCollectionNamed: aCollectionName fieldNamed
 	self addFilter: (DiExcludeCollectionFieldFilter new collectionName: aCollectionName; fieldName: aFieldName)
 ]
 
+{ #category : #initialization }
+DiCollectionToModelBuilder >> excludeSystemFields [
+	self addFilter: (DiExcludeDirectusSystemFieldsFilter new)
+]
+
 { #category : #accessing }
 DiCollectionToModelBuilder >> extensions [
 	^ extensions
