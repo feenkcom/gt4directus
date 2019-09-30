@@ -25,6 +25,9 @@ DiRing2ModelBuilderExamples >> ring2BuilderWithCleanedRootModelClassHavingSuperc
 	self assert: aClass superclass isRingResolved.
 	self assert: aClass superclass name equals: 'Object'.
 	self assert: aClass metaclass isRingResolved.
+	self assert: aClass metaclass name equals: self rootModelClassName, ' class'.
+	self assert: aClass instanceSide equals: aClass.
+	self assert: aClass classSide equals: aClass metaclass.
 	^ aBuilder 
 ]
 

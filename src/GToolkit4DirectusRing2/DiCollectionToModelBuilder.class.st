@@ -51,10 +51,10 @@ DiCollectionToModelBuilder >> buildBehavior: aDiMetaCollection [
 	(self canIncludeCollection: aDiMetaCollection) ifFalse: [^ self].
 	
 	aClassName := self naming collectionModelName: aDiMetaCollection.
-	aClass := self modelBuilder ensureClassNamed: aClassName.
+	aClass := self modelBuilder ensureClassAndMetaClassNamed: aClassName.
 	aPackage := self modelBuilder ensurePackageNamed: self packageName.
 	aClass package: aPackage.
-	aSuperClass := self modelBuilder ensureClassNamed: self modelRootClassName.
+	aSuperClass := self modelBuilder ensureClassAndMetaClassNamed: self modelRootClassName.
 	aSuperClass package: aPackage.
 	aClass superclass: aSuperClass.
 ]

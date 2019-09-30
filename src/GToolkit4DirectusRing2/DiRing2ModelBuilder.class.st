@@ -31,16 +31,31 @@ DiRing2ModelBuilder >> ensureAllBehaviorsWithPackageNamed: aString [
 { #category : #model }
 DiRing2ModelBuilder >> ensureClassAndMetaClassNamed: aString [
 	<return: #RGClass>
-	| aClass |
+	| anInstaceSide aClassSide |
 	self 
 		assert: [ aString isNotNil and: [ aString isNotEmpty and: [ aString isString ] ] ] 
 		description: [ 'Class names must be non-nil and non-empty string' ].
 	self 
 		assert: [ (aString endsWith: ' class') not ] 
 		description: [ 'Only class name is permitted (without ''class'' part)' ].
-	aClass := self ensureClassNamed: aString.
-	self ensureClassNamed: aString, ' class'.
-	^ aClass
+	anInstaceSide := self ensureClassNamed: aString.
+	aClassSide := self ensureClassNamed: aString, ' class'.
+
+	self assert: [ anInstaceSide isRingResolved ] description: [ 'Instance side class must be resolved' ].
+	self 
+		assert: [ anInstaceSide name = aString ]
+		description: [ 'Instance side class name must be ', aString asString ].
+
+	self assert: [ aClassSide isRingResolved ] description: [ 'Class side must be resolved' ].
+	self 
+		assert: [ aClassSide name beginsWith: anInstaceSide name ] 
+		description: [ 'Class side must start with same name as the instnace side' ].
+
+	self 
+		assert: [ anInstaceSide classSide == aClassSide and: [ aClassSide instanceSide == anInstaceSide ] ] 
+		description: [ 'Instance side and class side must be consistent' ].
+		
+	^ anInstaceSide
 ]
 
 { #category : #model }

@@ -13,11 +13,17 @@ DiCollectionNameBuilderExtension >> build [
 { #category : #building }
 DiCollectionNameBuilderExtension >> buildCollectionNameInClass: eachClass ofCollection: eachCollection [
 
-	| aSourceCode |
-	aSourceCode := 'collectionName', String cr, String tab, '^ ''', eachCollection name, ''''. 
+	| aSourceCode aClassSide |
+	aClassSide := eachClass classSide.
+	self assert: [ aClassSide isRingResolved ] description: [ 'Class side must be resolved' ].
+	self 
+		assert: [ aClassSide name beginsWith: eachClass name ] 
+		description: [ 'Class side must start with same name as the instnace side' ].
+
+	aSourceCode := 'collectionName', String cr, String tab, '^ #''', eachCollection name, ''''. 
 	self modelBuilder 
 		ensureLocalMethodNamed: 'collectionName'
 		withSourceCode: aSourceCode 
-		andProtocol: (self naming accessorProtocolName) 
-		inBehavior: eachClass.
+		andProtocol: self naming accessorProtocolName
+		inBehavior: aClassSide.
 ]
