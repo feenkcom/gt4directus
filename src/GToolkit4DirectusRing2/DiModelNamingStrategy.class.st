@@ -10,6 +10,11 @@ DiModelNamingStrategy >> accessorName: aDiMetaField [
 ]
 
 { #category : #accessing }
+DiModelNamingStrategy >> accessorProtocolName [ 
+	^ 'accessing'
+]
+
+{ #category : #accessing }
 DiModelNamingStrategy >> accessorProtocolName: aDiMetaField [ 
 	^ 'accessing'
 ]

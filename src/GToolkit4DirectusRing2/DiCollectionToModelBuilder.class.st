@@ -268,6 +268,11 @@ DiCollectionToModelBuilder >> packageName: aString [
 ]
 
 { #category : #initialization }
+DiCollectionToModelBuilder >> useCollectionNameBuilder [
+	self addExtension: DiCollectionNameBuilderExtension new.
+]
+
+{ #category : #initialization }
 DiCollectionToModelBuilder >> useInstanceVariableAccessorsBuilder [
 	self addExtension: DiInstanceVariablesAccessorsBuilderExtension new.
 ]
