@@ -13,5 +13,5 @@ DiExcludeSystemCollections >> canIncludeCollection: aDiMetaCollection [
 { #category : #filtering }
 DiExcludeSystemCollections >> canIncludeCollection: aDiMetaCollection field: aDiMetaField [
 	<return: #Boolean>
-	^ aDiMetaCollection isSystemCollection not.
+	^ self canIncludeCollection: aDiMetaCollection.
 ]

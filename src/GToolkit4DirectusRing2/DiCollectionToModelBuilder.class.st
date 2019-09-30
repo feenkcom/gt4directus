@@ -110,6 +110,11 @@ DiCollectionToModelBuilder >> excludeCollectionNamed: aCollectionName fieldNamed
 ]
 
 { #category : #initialization }
+DiCollectionToModelBuilder >> excludeCollections: collectionNames [
+	self addFilter: (DiExcludeCollections new collectionNames: collectionNames)
+]
+
+{ #category : #initialization }
 DiCollectionToModelBuilder >> excludeSystemCollections [
 	self addFilter: (DiExcludeSystemCollections new)
 ]
