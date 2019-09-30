@@ -15,7 +15,7 @@ DiRemoveMethodsWithUndeclaredVariablesExtension >> postInstall [
 	aRootModel := self builder modelRootClass.
 	aRealClass := self class environment at: aRootModel name asSymbol.
 	aRealClass withAllSubclassesDo: [ :eachClass | 
-		eachClass methodDict do: [ :eachCompiledMethod | 
+		eachClass methodDict copy do: [ :eachCompiledMethod | 
 			eachCompiledMethod usesUndeclares ifTrue: [ 
 				eachCompiledMethod removeFromSystem ] ] ]
 ]

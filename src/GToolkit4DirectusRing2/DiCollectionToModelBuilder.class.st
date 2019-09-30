@@ -8,6 +8,7 @@ Class {
 		'metaModel',
 		'modelBuilder',
 		'packageName',
+		'packageTagName',
 		'modelClassPrefix',
 		'modelRootClassName'
 	],
@@ -46,15 +47,14 @@ DiCollectionToModelBuilder >> build [
 
 { #category : #building }
 DiCollectionToModelBuilder >> buildBehavior: aDiMetaCollection [
-	| aClassName aClass aPackage aSuperClass |
+	| aClassName aClass aSuperClass |
 	(self canIncludeCollection: aDiMetaCollection)
 		ifFalse: [ ^ self ].
 	aClassName := self naming collectionModelName: aDiMetaCollection.
 	aClass := self modelBuilder ensureClassAndMetaClassNamed: aClassName.
-	aPackage := self modelBuilder ensurePackageNamed: self packageName.
-	aClass package: aPackage.
+	aClass package: self modelPackage.
+	aClass tagWith: self packageTagName.
 	aSuperClass := self modelRootClass.
-	aSuperClass package: aPackage.
 	aClass superclass: aSuperClass
 ]
 
@@ -154,6 +154,7 @@ DiCollectionToModelBuilder >> initialize [
 	self initializeModelBuilder.
 	self initializeNamingStrategy.
 	packageName := 'UninitializedDummyPackage'.
+	packageTagName := 'Model'.
 	modelClassPrefix := 'UnitializedPrefix'.
 	modelRootClassName := modelClassPrefix, 'Model'.
 	extensions := OrderedCollection new.
@@ -226,10 +227,19 @@ DiCollectionToModelBuilder >> modelEnvironment [
 ]
 
 { #category : #building }
+DiCollectionToModelBuilder >> modelPackage [
+	^ self modelBuilder ensurePackageNamed: self packageName
+]
+
+{ #category : #building }
 DiCollectionToModelBuilder >> modelRootClass [
 	<return: #RGClass>
-	^ self modelBuilder
-		ensureClassAndMetaClassNamed: self modelRootClassName
+	| aClass |
+	aClass := self modelBuilder
+		ensureClassAndMetaClassNamed: self modelRootClassName.
+	aClass package: self modelPackage.
+	aClass tagWith: self packageTagName.
+	^ aClass
 ]
 
 { #category : #accessing }
@@ -273,6 +283,20 @@ DiCollectionToModelBuilder >> packageName: aString [
 		assert: [ aString isNotNil and: [ aString isString and: [ aString isNotEmpty ] ] ] 
 		description: [ 'Package name must be a non-empty string' ].
 	packageName := aString
+]
+
+{ #category : #accessing }
+DiCollectionToModelBuilder >> packageTagName [
+	<return: #String>
+	^ packageTagName
+]
+
+{ #category : #accessing }
+DiCollectionToModelBuilder >> packageTagName: aString [
+	self 
+		assert: [ aString isNotNil and: [ aString isString and: [ aString isNotEmpty ] ] ] 
+		description: [ 'Package tag name must be a non-empty string' ].
+	packageTagName := aString
 ]
 
 { #category : #initialization }
