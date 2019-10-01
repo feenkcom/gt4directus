@@ -153,7 +153,7 @@ DiCollectionToModelBuilder >> gtBehaviorsFor: aView [
 	<gtView>
 	self modelBuilder ifNil: [ ^ aView empty ].
 	^ (self modelBuilder gtBehaviorsFor: aView)
-		actionButtonLabel: 'Install 2' action: [ :aBrTab | self install ]
+		actionButtonLabel: 'Full Install' action: [ :aBrTab | self install ]
 ]
 
 { #category : #accessing }
@@ -161,6 +161,7 @@ DiCollectionToModelBuilder >> gtPackagesFor: aView [
 	<gtView>
 	self modelBuilder ifNil: [ ^ aView empty ].
 	^ (self modelBuilder gtPackagesFor: aView)
+		actionButtonLabel: 'Full Install' action: [ :aBrTab | self install ]
 ]
 
 { #category : #initialization }
