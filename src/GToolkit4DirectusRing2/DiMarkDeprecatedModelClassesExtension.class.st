@@ -8,7 +8,7 @@ Class {
 DiMarkDeprecatedModelClassesExtension >> build [
 	"do nothing"
 	| aRootModel aRealClass allModelNames |
-	aRootModel := self builder modelRootClass.
+	aRootModel := self modelRootClass.
 	aRealClass := self class environment at: aRootModel name asSymbol ifAbsent: [ ^ self ].
 	allModelNames := self builder allModelNames.
 	aRealClass allSubclassesDo: [ :eachClass | 

@@ -24,7 +24,8 @@ DiRing2ModelBuilder >> ensureAllBehaviorsWithPackageNamed: aString [
 	| aPackage |
 	aPackage := self ensurePackageNamed: aString.
 	self ringEnvironment behaviorsDo: [ :eachBehavior | 
-		self ensurePackage: aPackage forBehavior: eachBehavior ].
+		eachBehavior superclass isRingResolved ifTrue: [ 
+			self ensurePackage: aPackage forBehavior: eachBehavior ] ].
 	^ aPackage
 ]
 
@@ -56,6 +57,15 @@ DiRing2ModelBuilder >> ensureClassAndMetaClassNamed: aString [
 		description: [ 'Instance side and class side must be consistent' ].
 		
 	^ anInstaceSide
+]
+
+{ #category : #model }
+DiRing2ModelBuilder >> ensureClassComment: aString forBehavior: aBRBehavior [
+	| aComment |
+	aComment := aBRBehavior defaultCommentStubIn: aBRBehavior.
+	aComment content: aString.
+	aComment name: 'Comment of ', aBRBehavior name. 
+	aBRBehavior comment: aComment 
 ]
 
 { #category : #model }
@@ -120,9 +130,8 @@ DiRing2ModelBuilder >> ensureObject [
 DiRing2ModelBuilder >> ensureObject: anObjectRGBehavior asSuperClassFor: aRGBehavior [
 	anObjectRGBehavior == aRGBehavior ifTrue: [ ^ self ].
 	aRGBehavior hasResolvedSuperclass ifTrue: [ ^ self ].
-	aRGBehavior behaviorStrategy isClass ifFalse: [ ^ self ].
+	aRGBehavior isClass ifFalse: [ ^ self ].
 	aRGBehavior isRingResolved ifFalse: [ ^ self ].
-	aRGBehavior package isRingResolved ifFalse: [ ^ self ].
 	
 	aRGBehavior superclass: anObjectRGBehavior.
 	aRGBehavior metaclass superclass: anObjectRGBehavior metaclass.
@@ -133,14 +142,19 @@ DiRing2ModelBuilder >> ensureObjectAsSuperclass [
 	| anObject |
 	anObject := self ensureObject.
 	self ringEnvironment behaviorsDo: [ :eachBehavior | 
-		self ensureObject: anObject asSuperClassFor: eachBehavior ]
+		eachBehavior package isRingResolved ifTrue: [
+			self ensureObject: anObject asSuperClassFor: eachBehavior ] ]
+]
+
+{ #category : #model }
+DiRing2ModelBuilder >> ensureObjectAsSuperclassForBehavior: aRGBehavior [
+	self ensureObject: self ensureObject asSuperClassFor: aRGBehavior
 ]
 
 { #category : #model }
 DiRing2ModelBuilder >> ensurePackage: aPackage forBehavior: aRGBehavior [
 	aRGBehavior isRingResolved ifFalse: [ ^ self ].
 	aRGBehavior package isRingResolved ifTrue: [ ^ self ].
-	aRGBehavior superclass isRingResolved ifFalse: [ ^ self ].
 	aRGBehavior package: aPackage
 ]
 
@@ -151,6 +165,13 @@ DiRing2ModelBuilder >> ensurePackageNamed: aString [
 		assert: [ aString isNotNil and: [ aString isNotEmpty ] ] 
 		description: [ 'Package name must be non-nil and non-empty string' ].
 	^ self ringEnvironment ensurePackageNamed: aString
+]
+
+{ #category : #model }
+DiRing2ModelBuilder >> ensurePackageTagNamed: aPackageTagName forBehavior: aRGBehavior [
+	aRGBehavior isRingResolved ifFalse: [ ^ self ].
+	aRGBehavior package isRingResolved ifFalse: [ ^ self ].
+	aRGBehavior tagWith: aPackageTagName.
 ]
 
 { #category : #model }

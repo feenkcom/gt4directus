@@ -1,6 +1,15 @@
 Extension { #name : #RGBehavior }
 
 { #category : #'*GToolkit4DirectusRing2' }
+RGBehavior >> gtClassCommentFor: aView [
+	<gtView>
+	self hasComment ifFalse: [ ^ aView empty ].
+	^ (self comment gtContentFor: aView)
+		title: 'Comment';
+		priority: 3
+]
+
+{ #category : #'*GToolkit4DirectusRing2' }
 RGBehavior >> gtDefinitionFor: aView [
 	<gtView>
 	^ aView textEditor

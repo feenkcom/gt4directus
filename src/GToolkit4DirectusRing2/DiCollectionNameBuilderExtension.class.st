@@ -7,7 +7,7 @@ Class {
 { #category : #building }
 DiCollectionNameBuilderExtension >> build [
 	self buildInRootModelClass.
-	self collectionsAndModelsDo: [ :eachCollection :eachClass | 
+	self includedCollectionsAndModelsDo: [ :eachCollection :eachClass | 
 		self buildCollectionNameInClass: eachClass ofCollection: eachCollection ].
 ]
 
@@ -16,7 +16,7 @@ DiCollectionNameBuilderExtension >> buildCollectionNameInClass: eachClass ofColl
 	| aSourceCode aClassSide |
 	aClassSide := eachClass classSide.
 	aSourceCode := 'collectionName', String cr, String tab, '^ #''', eachCollection name, ''''. 
-	self modelBuilder 
+	self 
 		ensureLocalMethodNamed: 'collectionName'
 		withSourceCode: aSourceCode 
 		andProtocol: self naming accessorProtocolName
@@ -28,13 +28,13 @@ DiCollectionNameBuilderExtension >> buildInRootModelClass [
 	| aClass aSourceCode |
 	aClass := self builder modelRootClass.
 	aSourceCode := 'collectionName', String cr, String tab, '^ self subclassResponsibility'. 
-	self modelBuilder 
+	self 
 		ensureLocalMethodNamed: 'collectionName'
 		withSourceCode: aSourceCode 
 		andProtocol: self naming accessorProtocolName
 		inBehavior: aClass classSide.
 	aSourceCode := 'collectionName', String cr, String tab, '^ self class collectionName'. 
-	self modelBuilder 
+	self 
 		ensureLocalMethodNamed: 'collectionName'
 		withSourceCode: aSourceCode 
 		andProtocol: self naming accessorProtocolName

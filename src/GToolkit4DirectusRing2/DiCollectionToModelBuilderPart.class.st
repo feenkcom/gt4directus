@@ -1,6 +1,8 @@
 Class {
 	#name : #DiCollectionToModelBuilderPart,
 	#superclass : #Object,
+	#traits : 'TCollectionIterator + TModelBuilder',
+	#classTraits : 'TCollectionIterator classTrait + TModelBuilder classTrait',
 	#instVars : [
 		'builder'
 	],
@@ -23,31 +25,43 @@ DiCollectionToModelBuilderPart >> collectionNamed: aString [
 	^ self builder collectionNamed: aString
 ]
 
-{ #category : #enumerating }
-DiCollectionToModelBuilderPart >> collectionsAndFieldsAndModelsDo: aBlockClosure [ 
-	self builder collectionsAndFieldsAndModelsDo: aBlockClosure
+{ #category : #accessing }
+DiCollectionToModelBuilderPart >> collections [
+	<return: #Collection>
+	^ self builder collections
 ]
 
-{ #category : #enumerating }
-DiCollectionToModelBuilderPart >> collectionsAndModelsDo: aBlockClosure [ 
-	self builder collectionsAndModelsDo: aBlockClosure
+{ #category : #'building - model' }
+DiCollectionToModelBuilderPart >> ensureModelPackageForBehavior: aRGBehavior [
+	^ self builder ensureModelPackageForBehavior: aRGBehavior
 ]
 
-{ #category : #enumerating }
-DiCollectionToModelBuilderPart >> collectionsDo: aBlockClosure [ 
-	self builder collections do: aBlockClosure
+{ #category : #'building - model' }
+DiCollectionToModelBuilderPart >> ensurePackageAndTagForBehavior: aRGBehavior [
+	^ self builder ensurePackageAndTagForBehavior: aRGBehavior
+]
+
+{ #category : #'accessing - model' }
+DiCollectionToModelBuilderPart >> existingCollectionBehaviorOrNil: aDiMetaCollection [
+	^ self builder existingCollectionBehaviorOrNil: aDiMetaCollection
 ]
 
 { #category : #accessing }
 DiCollectionToModelBuilderPart >> modelBuilder [
 	<return: #DiModelBuilder>
-	^ self builder modelBuilder
+	^ self builder
 ]
 
 { #category : #accessing }
 DiCollectionToModelBuilderPart >> modelEnvironment [
 	<return: #RGEnvironment>
 	^ self builder modelEnvironment 
+]
+
+{ #category : #'accessing - model' }
+DiCollectionToModelBuilderPart >> modelRootClass [
+	<return: #RGClass>
+	^ self builder modelRootClass
 ]
 
 { #category : #accessing }

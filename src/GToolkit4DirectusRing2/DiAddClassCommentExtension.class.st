@@ -6,11 +6,7 @@ Class {
 
 { #category : #building }
 DiAddClassCommentExtension >> build [
-	self collectionsAndModelsDo: [ :eachCollection :eachClass | 
-		| aComment |
+	self includedCollectionsAndModelsDo: [ :eachCollection :eachClass | 
 		eachCollection note isEmptyOrNil ifFalse: [ 
-			aComment := eachClass defaultCommentStubIn: eachClass.
-			aComment content: eachCollection note.
-			aComment name: 'Comment of ', eachClass name. 
-			eachClass comment: aComment ] ]
+			self ensureClassComment: eachCollection note forBehavior: eachClass ] ]
 ]

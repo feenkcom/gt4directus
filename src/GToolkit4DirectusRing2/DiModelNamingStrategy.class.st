@@ -15,6 +15,11 @@ DiModelNamingStrategy >> accessorProtocolName [
 ]
 
 { #category : #accessing }
+DiModelNamingStrategy >> cleanupProtocolName [ 
+	^ 'cleanup'
+]
+
+{ #category : #accessing }
 DiModelNamingStrategy >> collectionModelName: aDiMetaCollection [
 	^ self subclassResponsibility
 ]
@@ -25,9 +30,29 @@ DiModelNamingStrategy >> fieldName: aDiMetaField [
 ]
 
 { #category : #accessing }
+DiModelNamingStrategy >> mappingCollectionsProtocolName [
+	^ 'mappings - collections'
+]
+
+{ #category : #accessing }
+DiModelNamingStrategy >> mappingDataProtocolName [
+	^ 'mappings - data'
+]
+
+{ #category : #accessing }
+DiModelNamingStrategy >> mappingModelsProtocolName [
+	^ 'mappings - models'
+]
+
+{ #category : #accessing }
 DiModelNamingStrategy >> modelClassPrefix [
 	<return: #String>
 	^ self builder modelClassPrefix
+]
+
+{ #category : #accessing }
+DiModelNamingStrategy >> readingProtocolName [
+	^ 'reading'
 ]
 
 { #category : #accessing }

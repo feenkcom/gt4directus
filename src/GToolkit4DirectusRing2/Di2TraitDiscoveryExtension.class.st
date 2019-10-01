@@ -6,7 +6,7 @@ Class {
 
 { #category : #building }
 Di2TraitDiscoveryExtension >> build [
-	self collectionsAndModelsDo: [ :aCollection :aBehavior | 
+	self includedCollectionsAndModelsDo: [ :aCollection :aBehavior | 
 		self mayUseSystemTraitInBehavior: aBehavior ofCollection: aCollection
 	].
 ]
@@ -17,5 +17,5 @@ Di2TraitDiscoveryExtension >> mayUseSystemTraitInBehavior: aRGBehavior ofCollect
 	aTraitName := 'T', aRGBehavior name.
 	(Smalltalk classOrTraitNamed: aTraitName) ifNotNil: [ :aClassOrTrait |
 		aClassOrTrait isTrait ifTrue: [ 
-			self modelBuilder ensureTraitNamed: aTraitName inBehavior: aRGBehavior ] ]
+			self ensureTraitNamed: aTraitName inBehavior: aRGBehavior ] ]
 ]

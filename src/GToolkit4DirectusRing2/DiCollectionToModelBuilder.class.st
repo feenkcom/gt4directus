@@ -1,6 +1,8 @@
 Class {
 	#name : #DiCollectionToModelBuilder,
 	#superclass : #Object,
+	#traits : 'TCollectionIterator + TModelBuilder',
+	#classTraits : 'TCollectionIterator classTrait + TModelBuilder classTrait',
 	#instVars : [
 		'namingStrategy',
 		'extensions',
@@ -45,11 +47,6 @@ DiCollectionToModelBuilder >> allModelNames [
 	self collectionsAndModelsDo: [ :eachCollection :eachClass |
 		aSet add: eachClass name ].
 	^ aSet
-]
-
-{ #category : #enumerating }
-DiCollectionToModelBuilder >> behaviorNamed: aString [ 
-	^ self modelBuilder behaviorNamed: aString
 ]
 
 { #category : #building }
@@ -102,32 +99,20 @@ DiCollectionToModelBuilder >> collections [
 	^ self metaModel collections
 ]
 
-{ #category : #enumerating }
-DiCollectionToModelBuilder >> collectionsAndFieldsAndModelsDo: aBlockClosure [ 
-	self collectionsAndModelsDo: [ :eachCollection :eachClass |
-		eachCollection fields do: [ :eachField |
-			aBlockClosure cull: eachCollection cull: eachField cull: eachClass ] ].
-]
-
-{ #category : #enumerating }
-DiCollectionToModelBuilder >> collectionsAndModelsDo: aBlockClosure [ 
-	self collections do: [ :eachCollection | 
-		| aClassName eachClass |
-		aClassName := self naming collectionModelName: eachCollection.
-		eachClass := self modelBuilder behaviorNamed: aClassName.
-		eachClass ifNotNil: [ aBlockClosure cull: eachCollection cull: eachClass ]
-	]
-]
-
 { #category : #initialization }
 DiCollectionToModelBuilder >> discoverCollectionSystemTraits [
 	self addExtension: Di2TraitDiscoveryExtension new.
 ]
 
-{ #category : #model }
-DiCollectionToModelBuilder >> ensureClassAndMetaClassNamed: aString [ 
-	<return: #RGClass>
-	^ self modelBuilder ensureClassAndMetaClassNamed: aString 
+{ #category : #'building - model' }
+DiCollectionToModelBuilder >> ensureModelPackageForBehavior: aRGBehavior [
+	self modelBuilder ensurePackage: self modelPackage forBehavior: aRGBehavior
+]
+
+{ #category : #'building - model' }
+DiCollectionToModelBuilder >> ensurePackageAndTagForBehavior: aRGBehavior [
+	self modelBuilder ensurePackage: self modelPackage forBehavior: aRGBehavior. 
+	self modelBuilder ensurePackageTagNamed: self packageTagName forBehavior: aRGBehavior
 ]
 
 { #category : #initialization }
@@ -148,6 +133,13 @@ DiCollectionToModelBuilder >> excludeSystemCollections [
 { #category : #initialization }
 DiCollectionToModelBuilder >> excludeSystemFields [
 	self addFilter: (DiExcludeDirectusSystemFieldsFilter new)
+]
+
+{ #category : #'accessing - model' }
+DiCollectionToModelBuilder >> existingCollectionBehaviorOrNil: aDiMetaCollection [
+	| aClassName |
+	aClassName := self naming collectionModelName: aDiMetaCollection.
+	^ self modelBuilder behaviorNamed: aClassName.
 ]
 
 { #category : #accessing }
@@ -259,22 +251,20 @@ DiCollectionToModelBuilder >> modelEnvironment [
 	^ self modelBuilder modelEnvironment 
 ]
 
-{ #category : #model }
+{ #category : #'building - model' }
 DiCollectionToModelBuilder >> modelPackage [
 	^ self modelBuilder ensurePackageNamed: self packageName
 ]
 
-{ #category : #model }
+{ #category : #'building - model' }
 DiCollectionToModelBuilder >> modelRootClass [
 	<return: #RGClass>
-	| aClass aSuperClass |
-	aClass := self modelBuilder
-		ensureClassAndMetaClassNamed: self modelRootClassName.
-	aClass package: self modelPackage.
-	aClass tagWith: self packageTagName.
-	aSuperClass := self modelBuilder ensureObject.
-	aClass superclass: aSuperClass.
-	aClass metaclass superclass: aSuperClass metaclass.
+	| aClass |
+	aClass := self behaviorNamed: self modelRootClassName.
+	aClass ifNotNil: [ ^ aClass ].
+	aClass := self ensureClassAndMetaClassNamed: self modelRootClassName.
+	self ensureObjectAsSuperclassForBehavior: aClass.
+	self ensurePackageAndTagForBehavior: aClass.
 	
 	^ aClass
 ]
@@ -354,6 +344,11 @@ DiCollectionToModelBuilder >> useInstanceVariableAccessorsBuilder [
 { #category : #initialization }
 DiCollectionToModelBuilder >> useInstanceVariableBuilder [
 	self addExtension: DiInstanceVariablesBuilderExtension new.
+]
+
+{ #category : #initialization }
+DiCollectionToModelBuilder >> useJsonMappingBuilder [
+	self addExtension: DiJsonMappingModelBuilderExtension new.
 ]
 
 { #category : #initialization }

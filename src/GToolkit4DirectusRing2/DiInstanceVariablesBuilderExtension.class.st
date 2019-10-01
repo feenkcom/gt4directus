@@ -6,7 +6,7 @@ Class {
 
 { #category : #building }
 DiInstanceVariablesBuilderExtension >> build [
-	self collectionsAndModelsDo: [ :eachCollection :eachClass | 
+	self includedCollectionsAndModelsDo: [ :eachCollection :eachClass | 
 		self buildInstanceVariablesInClass: eachClass ofCollection: eachCollection ].
 ]
 
@@ -14,7 +14,7 @@ DiInstanceVariablesBuilderExtension >> build [
 DiInstanceVariablesBuilderExtension >> buildInstanceVariablesInClass: aRGBehavior ofCollection: aDiMetaCollection [ 
 	| theSlots |
 	theSlots := self collectionSlots: aDiMetaCollection.
-	self modelBuilder ensureInstanceVariables: theSlots inBehavior: aRGBehavior.
+	self ensureInstanceVariables: theSlots inBehavior: aRGBehavior.
 ]
 
 { #category : #'meta model' }

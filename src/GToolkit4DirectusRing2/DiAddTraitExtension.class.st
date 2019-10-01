@@ -10,7 +10,7 @@ Class {
 
 { #category : #building }
 DiAddTraitExtension >> build [
-	self collectionsAndModelsDo: [ :aCollection :aBehavior | 
+	self includedCollectionsAndModelsDo: [ :aCollection :aBehavior | 
 		aCollection name = self collectionName ifTrue: [ 
 			self ensureTraitInBehavior: aBehavior ] ].
 ]
@@ -27,7 +27,7 @@ DiAddTraitExtension >> collectionName: anObject [
 
 { #category : #building }
 DiAddTraitExtension >> ensureTraitInBehavior: aRGBehavior [ 
-	self modelBuilder ensureTraitNamed: self traitClassName inBehavior: aRGBehavior
+	self ensureTraitNamed: self traitClassName inBehavior: aRGBehavior
 ]
 
 { #category : #accessing }
