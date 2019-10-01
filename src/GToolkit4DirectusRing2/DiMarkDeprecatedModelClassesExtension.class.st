@@ -13,17 +13,19 @@ DiMarkDeprecatedModelClassesExtension >> build [
 	allModelNames := self builder allModelNames.
 	aRealClass allSubclassesDo: [ :eachClass | 
 		(allModelNames includes: eachClass name) ifFalse: [ 
-			self markDeprecatedModelNamed: eachClass name ] ]
+			self markDeprecatedModel: eachClass ] ]
 ]
 
 { #category : #building }
-DiMarkDeprecatedModelClassesExtension >> markDeprecatedModelNamed: aString [ 
-	| aClass aSourceCode |
-	aClass := self builder ensureClassAndMetaClassNamed: aString.
+DiMarkDeprecatedModelClassesExtension >> markDeprecatedModel: aRealClass [ 
+	| aClass aSourceCode aMethod aPackage |
+	aClass := self builder ensureClassAndMetaClassNamed: aRealClass name.
 	aSourceCode := 'isDeprecated', String cr, String tab, '^ true'. 
-	self modelBuilder 
+	aMethod := self modelBuilder 
 		ensureLocalMethodNamed: 'isDeprecated'
 		withSourceCode: aSourceCode 
-		andProtocol: self naming testingProtocolName
+		andProtocol: self naming accessorProtocolName
 		inBehavior: aClass classSide.
+	aPackage := self builder modelPackage.
+	aMethod package: aPackage.
 ]
