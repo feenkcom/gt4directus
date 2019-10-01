@@ -98,6 +98,13 @@ DiCollectionToModelBuilder >> collections [
 ]
 
 { #category : #enumerating }
+DiCollectionToModelBuilder >> collectionsAndFieldsAndModelsDo: aBlockClosure [ 
+	self collectionsAndModelsDo: [ :eachCollection :eachClass |
+		eachCollection fields do: [ :eachField |
+			aBlockClosure cull: eachCollection cull: eachField cull: eachClass ] ].
+]
+
+{ #category : #enumerating }
 DiCollectionToModelBuilder >> collectionsAndModelsDo: aBlockClosure [ 
 	self collections do: [ :eachCollection | 
 		| aClassName eachClass |

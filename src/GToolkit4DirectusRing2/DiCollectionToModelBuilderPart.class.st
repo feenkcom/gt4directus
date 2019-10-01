@@ -24,6 +24,11 @@ DiCollectionToModelBuilderPart >> collectionNamed: aString [
 ]
 
 { #category : #enumerating }
+DiCollectionToModelBuilderPart >> collectionsAndFieldsAndModelsDo: aBlockClosure [ 
+	self builder collectionsAndFieldsAndModelsDo: aBlockClosure
+]
+
+{ #category : #enumerating }
 DiCollectionToModelBuilderPart >> collectionsAndModelsDo: aBlockClosure [ 
 	self builder collectionsAndModelsDo: aBlockClosure
 ]
