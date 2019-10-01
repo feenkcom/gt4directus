@@ -340,6 +340,11 @@ DiCollectionToModelBuilder >> useInstanceVariableBuilder [
 ]
 
 { #category : #initialization }
+DiCollectionToModelBuilder >> useOriginalFieldsBuilder [
+	self addExtension: DiOriginalFieldsBuilderExtension new.
+]
+
+{ #category : #initialization }
 DiCollectionToModelBuilder >> useTrait: aTraitClass inCollectionNamed: aCollectionName [
 	self useTraitNamed: aTraitClass name inCollectionNamed: aCollectionName
 ]

@@ -13,7 +13,6 @@ DiCollectionNameBuilderExtension >> build [
 
 { #category : #building }
 DiCollectionNameBuilderExtension >> buildCollectionNameInClass: eachClass ofCollection: eachCollection [
-
 	| aSourceCode aClassSide |
 	aClassSide := eachClass classSide.
 	aSourceCode := 'collectionName', String cr, String tab, '^ #''', eachCollection name, ''''. 
