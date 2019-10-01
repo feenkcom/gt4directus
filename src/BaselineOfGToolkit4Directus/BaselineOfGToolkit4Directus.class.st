@@ -17,7 +17,7 @@ BaselineOfGToolkit4Directus >> baseline: spec [
 				spec requires: #( 'GToolkit4Directus' ) ]
 	].
 
-	spec for: 'Ring2' do: [ 
+	spec for: #Ring2 do: [ 
 		spec
 			baseline: 'Ring2' with: [ 
 				spec repository: 'github://pavel-krivanek/Ring2/src' ];
