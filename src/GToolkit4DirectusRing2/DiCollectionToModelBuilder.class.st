@@ -16,6 +16,11 @@ Class {
 }
 
 { #category : #initialization }
+DiCollectionToModelBuilder >> addClassComments [
+	self addExtension: DiAddClassCommentExtension new.
+]
+
+{ #category : #initialization }
 DiCollectionToModelBuilder >> addExtension: anExtension [
 	self 
 		assert: [ anExtension isNotNil ] 
