@@ -17,3 +17,26 @@ RGPackageDefinition >> gtDefinedBehaviorsFor: aView [
 		actionButtonLabel: 'Install' action: [ :aBrTab | 
 			self isRingResolved ifTrue: [ self asMCSnapshot install ] ]
 ]
+
+{ #category : #'*GToolkit4DirectusRing2' }
+RGPackageDefinition >> gtExtensionMethodsFor: aView [
+	<gtView>
+	extensionMethods ifNil: [ ^ aView empty ].
+	^ aView columnedList
+		title: 'Extension Methods';
+		priority: 2;
+		items: [ self extensionMethods ];
+		column: 'Class' item: [ :aBehavior | aBehavior parent name ];
+		column: 'Name' item: [ :aBehavior | aBehavior name ]
+]
+
+{ #category : #'*GToolkit4DirectusRing2' }
+RGPackageDefinition >> gtTagsFor: aView [
+	<gtView>
+	tagsForClasses ifNil: [ ^ aView empty ].
+	^ aView columnedList
+		title: 'Tags';
+		priority: 3;
+		items: [ self tagsForClasses ];
+		column: 'Name' item: [ :aBehavior | aBehavior ]
+]

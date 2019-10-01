@@ -8,7 +8,7 @@ RGEnvironment >> gtBehaviorsFor: aView [
 		title: 'Behaviors';
 		priority: 1;
 		items: [ (behaviors asOrderedCollection reject: #isRGUnresolvedValue) 
-			sort: [ :a :b | a isRingResolved and: [ a superclass isRingResolved and: [ a name < b name ] ] ] ];
+			sort: [ :a :b | self gtPutBehavior: a before: b ] ];
 		column: 'Name' item: [ :aBehavior | aBehavior name ];
 		column: 'Superclass' item: [ :aBehavior | aBehavior superclass name ];
 		column: 'Package' item: [ :aBehavior | aBehavior package name ]
@@ -26,4 +26,18 @@ RGEnvironment >> gtPackagesFor: aView [
 		column: 'Name' item: [ :aPackage | aPackage name ];
 		column: 'Behaviors' item: [ :aPackage | aPackage definedBehaviors size ];
 		column: 'Extended Behaviors' item: [ :aPackage | aPackage extendedBehaviors size ]
+]
+
+{ #category : #'*GToolkit4DirectusRing2' }
+RGEnvironment >> gtPutBehavior: aFirst before: aSecond [
+	(aFirst isRingResolved and: [ aSecond isRingResolved not ]) ifTrue: [ ^ true ].
+	(aFirst isRingResolved not and: [ aSecond isRingResolved ]) ifTrue: [ ^ false ].
+	
+	(aFirst superclass isRingResolved and: [ aSecond superclass isRingResolved not ]) ifTrue: [ ^ true ].
+	(aFirst superclass isRingResolved not and: [ aSecond superclass isRingResolved ]) ifTrue: [ ^ false ].
+	
+	(aFirst package isRingResolved and: [ aSecond package isRingResolved not ]) ifTrue: [ ^ true ].
+	(aFirst package isRingResolved not and: [ aSecond package isRingResolved ]) ifTrue: [ ^ false ].
+	
+	^ aFirst name < aSecond name
 ]

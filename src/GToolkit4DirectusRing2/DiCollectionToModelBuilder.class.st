@@ -153,7 +153,7 @@ DiCollectionToModelBuilder >> gtBehaviorsFor: aView [
 	<gtView>
 	self modelBuilder ifNil: [ ^ aView empty ].
 	^ (self modelBuilder gtBehaviorsFor: aView)
-		actionButtonLabel: 'Install 2' action: [ :aBrTab | self install ]
+		actionButtonLabel: 'Full Install' action: [ :aBrTab | self install ]
 ]
 
 { #category : #accessing }
@@ -161,6 +161,7 @@ DiCollectionToModelBuilder >> gtPackagesFor: aView [
 	<gtView>
 	self modelBuilder ifNil: [ ^ aView empty ].
 	^ (self modelBuilder gtPackagesFor: aView)
+		actionButtonLabel: 'Full Install' action: [ :aBrTab | self install ]
 ]
 
 { #category : #initialization }
@@ -246,19 +247,23 @@ DiCollectionToModelBuilder >> modelEnvironment [
 	^ self modelBuilder modelEnvironment 
 ]
 
-{ #category : #building }
+{ #category : #model }
 DiCollectionToModelBuilder >> modelPackage [
 	^ self modelBuilder ensurePackageNamed: self packageName
 ]
 
-{ #category : #building }
+{ #category : #model }
 DiCollectionToModelBuilder >> modelRootClass [
 	<return: #RGClass>
-	| aClass |
+	| aClass aSuperClass |
 	aClass := self modelBuilder
 		ensureClassAndMetaClassNamed: self modelRootClassName.
 	aClass package: self modelPackage.
 	aClass tagWith: self packageTagName.
+	aSuperClass := self modelBuilder ensureObject.
+	aClass superclass: aSuperClass.
+	aClass metaclass superclass: aSuperClass metaclass.
+	
 	^ aClass
 ]
 

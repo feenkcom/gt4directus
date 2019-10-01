@@ -112,7 +112,7 @@ DiRing2ModelBuilder >> ensureLocalMethodNamed: aMethodName withSourceCode: aSour
 DiRing2ModelBuilder >> ensureObject [
 	<return: #RGClass>
 	| aClass |
-	aClass := self ensureClassNamed: 'Object'.
+	aClass := self ensureClassAndMetaClassNamed: 'Object'.
 	^ aClass
 ]
 
@@ -122,8 +122,10 @@ DiRing2ModelBuilder >> ensureObject: anObjectRGBehavior asSuperClassFor: aRGBeha
 	aRGBehavior hasResolvedSuperclass ifTrue: [ ^ self ].
 	aRGBehavior behaviorStrategy isClass ifFalse: [ ^ self ].
 	aRGBehavior isRingResolved ifFalse: [ ^ self ].
+	aRGBehavior package isRingResolved ifFalse: [ ^ self ].
 	
-	aRGBehavior superclass: anObjectRGBehavior
+	aRGBehavior superclass: anObjectRGBehavior.
+	aRGBehavior metaclass superclass: anObjectRGBehavior metaclass.
 ]
 
 { #category : #model }
