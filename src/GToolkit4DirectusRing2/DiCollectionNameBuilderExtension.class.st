@@ -44,7 +44,7 @@ DiCollectionNameBuilderExtension >> buildInRootModelClass [
 			nextPutAll: 'modelNamed: aCollectionName'; cr; 
 			tab; nextPutAll: 'self allSubclassesDo: [ :eachClass | '; cr;
 			tab; tab; nextPutAll: '(eachClass collectionName = aCollectionName) ifTrue: [ ^ eachClass ] ].'; cr;
-			tab; nextPutAll: 'self error: ''Cannot find a model of the given name'', aCollectionName.' ]. 
+			tab; nextPutAll: '^ nil' ]. 
 	self 
 		ensureLocalMethodNamed: 'modelNamed:'
 		withSourceCode: aSourceCode 
