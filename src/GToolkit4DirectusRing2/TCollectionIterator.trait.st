@@ -56,6 +56,24 @@ TCollectionIterator >> filtres [
 ]
 
 { #category : #enumerating }
+TCollectionIterator >> includedCollection: aDiMetaCollection fieldsDo: aDoBlock [
+	aDiMetaCollection fields do: [ :eachField | 
+		(self canIncludeCollection: aDiMetaCollection field: eachField) ifTrue: [ 
+			aDoBlock cull: eachField ] ]
+]
+
+{ #category : #enumerating }
+TCollectionIterator >> includedCollection: aDiMetaCollection fieldsDo: aDoBlock separatedBy: aSeparatorBlock [
+	| aBeforeFirst | 
+	aBeforeFirst := true.
+	self includedCollection: aDiMetaCollection fieldsDo: [ :eachField | 
+		aBeforeFirst
+			ifTrue: [ aBeforeFirst := false ]
+			ifFalse: [ aSeparatorBlock value ].
+		aDoBlock cull: eachField ]
+]
+
+{ #category : #enumerating }
 TCollectionIterator >> includedCollectionsAndFieldsAndModelsDo: aBlockClosure [ 
 	self includedCollectionsAndModelsDo: [ :eachCollection :eachClass |
 		eachCollection fields do: [ :eachField |

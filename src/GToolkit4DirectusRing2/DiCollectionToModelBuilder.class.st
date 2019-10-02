@@ -337,6 +337,11 @@ DiCollectionToModelBuilder >> useCollectionNameBuilder [
 ]
 
 { #category : #initialization }
+DiCollectionToModelBuilder >> useIncludedFieldsBuilder [
+	self addExtension: DiIncludedFieldsBuilderExtension new.
+]
+
+{ #category : #initialization }
 DiCollectionToModelBuilder >> useInstanceVariableAccessorsBuilder [
 	self addExtension: DiInstanceVariablesAccessorsBuilderExtension new.
 ]
