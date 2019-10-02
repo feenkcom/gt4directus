@@ -39,5 +39,15 @@ DiCollectionNameBuilderExtension >> buildInRootModelClass [
 		withSourceCode: aSourceCode 
 		andProtocol: self naming accessorProtocolName
 		inBehavior: aClass.
-	
+	aSourceCode := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'modelNamed: aCollectionName'; cr; 
+			tab; nextPutAll: 'self allSubclassesDo: [ :eachClass | '; cr;
+			tab; tab; nextPutAll: '(eachClass collectionName = aCollectionName) ifTrue: [ ^ eachClass ] ].'; cr;
+			tab; nextPutAll: 'self error: ''Cannot find a model of the given name'', aCollectionName.' ]. 
+	self 
+		ensureLocalMethodNamed: 'modelNamed:'
+		withSourceCode: aSourceCode 
+		andProtocol: self naming accessorProtocolName
+		inBehavior: aClass classSide.
 ]
