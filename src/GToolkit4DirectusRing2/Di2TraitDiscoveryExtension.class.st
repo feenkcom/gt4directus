@@ -6,13 +6,14 @@ Class {
 
 { #category : #building }
 Di2TraitDiscoveryExtension >> build [
+	self mayUseSystemTraitInBehavior: self modelRootClass. 
 	self includedCollectionsAndModelsDo: [ :aCollection :aBehavior | 
-		self mayUseSystemTraitInBehavior: aBehavior ofCollection: aCollection
+		self mayUseSystemTraitInBehavior: aBehavior
 	].
 ]
 
 { #category : #building }
-Di2TraitDiscoveryExtension >> mayUseSystemTraitInBehavior: aRGBehavior ofCollection: aDiMetaCollection [ 
+Di2TraitDiscoveryExtension >> mayUseSystemTraitInBehavior: aRGBehavior [ 
 	| aTraitName |
 	aTraitName := 'T', aRGBehavior name.
 	(Smalltalk classOrTraitNamed: aTraitName) ifNotNil: [ :aClassOrTrait |

@@ -51,6 +51,11 @@ DiModelNamingStrategy >> modelClassPrefix [
 ]
 
 { #category : #accessing }
+DiModelNamingStrategy >> printingProtocolName [
+	^ 'printing'
+]
+
+{ #category : #accessing }
 DiModelNamingStrategy >> readingProtocolName [
 	^ 'reading'
 ]

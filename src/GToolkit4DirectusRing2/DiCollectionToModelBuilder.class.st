@@ -357,6 +357,11 @@ DiCollectionToModelBuilder >> useJsonMappingBuilder [
 ]
 
 { #category : #initialization }
+DiCollectionToModelBuilder >> usePrintOnWithNameExtension [
+	self addExtension: DiPrintOnWithNameExtension new.
+]
+
+{ #category : #initialization }
 DiCollectionToModelBuilder >> useTrait: aTraitClass inCollectionNamed: aCollectionName [
 	self useTraitNamed: aTraitClass name inCollectionNamed: aCollectionName
 ]
