@@ -37,6 +37,12 @@ DiMetaFieldTypeOneToMany >> collectionName [
 	^ self collection name
 ]
 
+{ #category : #accessing }
+DiMetaFieldTypeOneToMany >> collectionOrNil [
+	<return: #DiMetaCollection or: nil>
+	^ self collection
+]
+
 { #category : #testing }
 DiMetaFieldTypeOneToMany >> isOneToMany [
 	^ true

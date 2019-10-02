@@ -367,3 +367,8 @@ DiCollectionToModelBuilder >> useTraitNamed: aTraitName inCollectionNamed: aColl
 		traitClassName: aTraitName; 
 		collectionName: aCollectionName)
 ]
+
+{ #category : #initialization }
+DiCollectionToModelBuilder >> useUserDataExtension [
+	self addExtension: Di2UserDataExtension new.
+]

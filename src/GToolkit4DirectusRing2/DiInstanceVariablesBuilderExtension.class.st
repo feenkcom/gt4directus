@@ -20,9 +20,8 @@ DiInstanceVariablesBuilderExtension >> buildInstanceVariablesInClass: aRGBehavio
 { #category : #'meta model' }
 DiInstanceVariablesBuilderExtension >> collectionSlots: aDiMetaCollection [ 
 	^ Array new: aDiMetaCollection numberOfFields streamContents: [ :aStream |
-		aDiMetaCollection fields do: [ :eachField | 
-			(self canIncludeCollection: aDiMetaCollection field: eachField) ifTrue: [
-				| aName | 
-				aName := self naming fieldName: eachField.
-				aStream nextPut: aName ] ] ]
+		self includedCollection: aDiMetaCollection fieldsDo: [ :eachField | 
+			| aName | 
+			aName := self naming fieldName: eachField.
+			aStream nextPut: aName ] ]
 ]

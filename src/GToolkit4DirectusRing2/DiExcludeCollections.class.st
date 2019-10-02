@@ -15,8 +15,12 @@ DiExcludeCollections >> canIncludeCollection: aDiMetaCollection [
 
 { #category : #filtering }
 DiExcludeCollections >> canIncludeCollection: aDiMetaCollection field: aDiMetaField [
+	"Exclude fields of a collection type that we exclude too"
 	<return: #Boolean>
-	^ self canIncludeCollection: aDiMetaCollection.
+	^ (self canIncludeCollection: aDiMetaCollection) and: [ 
+		aDiMetaField collectionOrNil 
+			ifNotNil: [ self canIncludeCollection: aDiMetaField collectionOrNil ]
+			ifNil: [ true ] ]
 ]
 
 { #category : #accessing }

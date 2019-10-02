@@ -37,6 +37,12 @@ DiMetaFieldTypeManyToOne >> collectionName [
 	^ self collection name
 ]
 
+{ #category : #accessing }
+DiMetaFieldTypeManyToOne >> collectionOrNil [
+	<return: #DiMetaCollection or: nil>
+	^ self collection
+]
+
 { #category : #testing }
 DiMetaFieldTypeManyToOne >> isManyToOne [
 	^ true

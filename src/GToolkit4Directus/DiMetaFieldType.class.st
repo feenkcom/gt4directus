@@ -22,6 +22,11 @@ DiMetaFieldType >> accept: aVisitor [
 	^ self subclassResponsibility
 ]
 
+{ #category : #accessing }
+DiMetaFieldType >> collectionOrNil [
+	^ nil
+]
+
 { #category : #testing }
 DiMetaFieldType >> isManyToOne [
 	^ false

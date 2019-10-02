@@ -78,6 +78,13 @@ DiRing2ModelBuilder >> ensureClassNamed: aString [
 ]
 
 { #category : #model }
+DiRing2ModelBuilder >> ensureInstanceVariable: aString inBehavior: aRGBehavior [
+	"Return collection of existing behavior instance variables"
+	<return: #Array of: #String>
+	^ self ensureInstanceVariables: { aString } inBehavior: aRGBehavior
+]
+
+{ #category : #model }
 DiRing2ModelBuilder >> ensureInstanceVariables: aCollection inBehavior: aRGBehavior [
 	"Return collection of existing behavior instance variables"
 	<return: #Array of: #String>

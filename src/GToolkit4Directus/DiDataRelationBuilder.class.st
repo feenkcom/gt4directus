@@ -81,13 +81,15 @@ DiDataRelationBuilder >> relateItem: aModel ofCollectionName: aCollectionName wi
 	| aCollection |
 	aCollection := self data collectionNamed: aCollectionName.
 	aCollection fields do: [ :eachField | 
-		| aContext |
-		aContext := aClass new
-			builder: self;
-			model: aModel;
-			collection: aCollection;
-			field: eachField.
-		eachField type accept: aContext.
+		(aModel class includedCollectionFields includes: eachField name) ifTrue: [ 
+			| aContext |
+			aContext := aClass new
+				builder: self;
+				model: aModel;
+				collection: aCollection;
+				field: eachField.
+			eachField type accept: aContext.
+		]
 	]
 ]
 

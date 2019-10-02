@@ -19,9 +19,9 @@ Class {
 }
 
 { #category : #accessing }
-DiMetaField >> collectionNameOrType [
-	<return: #String>
-	^ self collection ifNotNil: [ :aCollection | aCollection collection ] ifNil: [ self type ]
+DiMetaField >> collectionOrNil [
+	<return: #DiMetaCollection or: nil>
+	^ self type collectionOrNil
 ]
 
 { #category : #'accessing - model' }

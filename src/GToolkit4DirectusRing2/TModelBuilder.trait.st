@@ -19,6 +19,11 @@ TModelBuilder >> ensureClassComment: aString forBehavior: aBRBehavior [
 ]
 
 { #category : #'building - model' }
+TModelBuilder >> ensureInstanceVariable: aString inBehavior: aRGBehavior [
+	^ self modelBuilder ensureInstanceVariable: aString inBehavior: aRGBehavior
+]
+
+{ #category : #'building - model' }
 TModelBuilder >> ensureInstanceVariables: aCollection inBehavior: aRGBehavior [
 	^ self modelBuilder ensureInstanceVariables: aCollection inBehavior: aRGBehavior
 ]
