@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'collectionNames'
 	],
-	#category : #'GToolkit4DirectusRing2-Model Builders'
+	#category : #'GToolkit4DirectusRing2-Model Builder Extensions'
 }
 
 { #category : #filtering }

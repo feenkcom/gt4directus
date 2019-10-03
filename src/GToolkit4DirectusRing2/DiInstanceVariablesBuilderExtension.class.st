@@ -1,7 +1,22 @@
+"
+I build instance variables for each ${class:DiMetaCollection}$ class based on ${method:DiMetaCollection>>#fields}$ information, which is a collection of ${class:DiMetaField}$.
+
+!! Example
+
+Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+
+I build the following model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceVariables_Behavior|codeExpanded=false|previewExpanded=true}$
+
+Here you can browse the full model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceVariables|codeExpanded=false|previewExpanded=true}$
+
+
+"
 Class {
 	#name : #DiInstanceVariablesBuilderExtension,
 	#superclass : #DiCollectionToModelBuilderExtension,
-	#category : #'GToolkit4DirectusRing2-Model Builders'
+	#category : #'GToolkit4DirectusRing2-Model Builder Extensions'
 }
 
 { #category : #building }

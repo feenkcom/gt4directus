@@ -2,6 +2,7 @@
 I am an abstract model builder.
 I define common inteface for all model builders.
 My concrete subclasses knows how to build a Pharo code in an environment.
+My concrete subclasses are used by ${class:DiCollectionToModelBuilder}$.
 
 See my subclasses for specific examples: ${class:DiModelBuilder|show=gtSubclassesFor:|expanded=true}$
 

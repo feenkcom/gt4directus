@@ -1,7 +1,7 @@
 Class {
 	#name : #DiCollectionToModelBuilderExtension,
 	#superclass : #DiCollectionToModelBuilderPart,
-	#category : #'GToolkit4DirectusRing2-Model Builders'
+	#category : #'GToolkit4DirectusRing2-Model Builder Extensions'
 }
 
 { #category : #building }

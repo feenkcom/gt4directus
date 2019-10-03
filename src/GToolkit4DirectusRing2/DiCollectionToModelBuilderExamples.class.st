@@ -48,6 +48,19 @@ DiCollectionToModelBuilderExamples >> buildFullModelClassesOnly [
 ]
 
 { #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelClassesOnly_Behavior [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self buildFullModelClassesOnly.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass isNotNil.
+	self assert: aModelClass isClass.
+	self assert: aModelClass package name equals: self dummyPackageName.
+	^ aModelClass
+]
+
+{ #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceAndAccessorsVariables [
 	<gtExample>
 	| aBuilder aModelClass |
@@ -62,6 +75,17 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceAndAccessorsV
 ]
 
 { #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceAndAccessorsVariables_Behavior [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self buildFullModelWithAllInstanceAndAccessorsVariables.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass instVarNames size equals: 3.
+	self assert: aModelClass localMethods size equals: 6.
+	^ aModelClass
+]
+
+{ #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceVariables [
 	<gtExample>
 	| aBuilder aModelClass |
@@ -71,6 +95,16 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceVariables [
 	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 	self assert: aModelClass instVarNames size equals: 3.
 	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceVariables_Behavior [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self buildFullModelWithAllInstanceVariables.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass instVarNames size equals: 3.
+	^ aModelClass
 ]
 
 { #category : #'examples - full model' }

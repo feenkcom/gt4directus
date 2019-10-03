@@ -1,6 +1,6 @@
 "
 I represent a description of an object (database table).
-I use ${class:DiMetaFields}$ to keep all information about my fields (instance variables).
+I keep collection of ${class:DiMetaField}$ (instance variables).
 
 Example: ${example:DiExamples>>#metaCollection|noCode=true|previewHeight=500}$
 

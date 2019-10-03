@@ -9,7 +9,7 @@ RGEnvironment >> gtBehaviorsFor: aView [
 		priority: 1;
 		items: [ (behaviors asOrderedCollection reject: #isRGUnresolvedValue) 
 			sort: [ :a :b | self gtPutBehavior: a before: b ] ];
-		column: 'Name' item: [ :aBehavior | aBehavior name ];
+		column: 'Name' item: [ :aBehavior | aBehavior ];
 		column: 'Superclass' item: [ :aBehavior | aBehavior superclass name ];
 		column: 'Package' item: [ :aBehavior | aBehavior package name ]
 ]

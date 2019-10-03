@@ -1,3 +1,34 @@
+"
+I build a class model hierarchy based on ${class:DiMetaCollectionsWithRelations}$.
+I build a Pharo model (classes, Traits, methods, etc.) using ${class:DiModelBuilder}$ subclasses. 
+By default I use ${class:DiRing2ModelBuilder}$, see ${method:DiCollectionToModelBuilder>>#initializeModelBuilder}$.
+
+!! Example
+
+Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+
+I generate the following Pharo model: 
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly_Behavior|codeExpanded=false|previewExpanded=true}$
+
+Here you can browse the full model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly|codeExpanded=false|previewExpanded=true}$
+
+
+By default, I generate only the plain Pharo model (classes only). I can be extended by many ${class:DiCollectionToModelBuilderExtension}$ extensions and ${class:DiCollectionToModelBuilderFilter}$ filters. I also use ${class:DiModelNamingStrategy}$ naming strategy (by default ${class:DiCamelNamingStrategy}$, see ${method:DiCollectionToModelBuilder>>#initializeNamingStrategy}$). 
+
+As an example, the following example shows how to build a Pharo model with instance variables and accessors: 
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceAndAccessorsVariables|codeExpanded=false|previewExpanded=true}$
+
+!! Extensions
+
+For more extensions see ${class:DiCollectionToModelBuilderExtension|expanded=true|show=gtSubclassesFor:}$:
+
+!! Filteres
+
+For more filteres see ${class:DiCollectionToModelBuilderFilter|expanded=true|show=gtSubclassesFor:}$:
+
+
+"
 Class {
 	#name : #DiCollectionToModelBuilder,
 	#superclass : #Object,
