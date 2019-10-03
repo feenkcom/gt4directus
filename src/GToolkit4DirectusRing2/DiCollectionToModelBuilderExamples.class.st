@@ -42,6 +42,31 @@ DiCollectionToModelBuilderExamples >> buildFilteredModelWithInstanceAndAccessors
 	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 ]
 
+{ #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutCountry [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCountryAndCompany.
+	aBuilder useInstanceVariableBuilder.
+	aBuilder useInstanceVariableAccessorsBuilder.
+	aBuilder excludeCollections: #( 'country' ).
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Country'.
+	self assert: aModelClass isNil.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass instVarNames size equals: 4.
+	self assert: aModelClass localMethods size equals: 8.
+	^ aBuilder
+]
+
+{ #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutCountry_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFilteredModelWithoutCountry.
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+]
+
 { #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelClassesOnly [
 	<gtExample>
@@ -199,6 +224,16 @@ DiCollectionToModelBuilderExamples >> collectionToModelBuilderWithCompanyMetaMod
 ]
 
 { #category : #'examples - ring2 builder' }
+DiCollectionToModelBuilderExamples >> collectionToModelBuilderWithCountryAndCompany [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self collectionToModelBuilder.
+	aBuilder metaModel: self collectionsAndRelationsWithCountryAndCompany.
+	self assert: aBuilder metaModel isNotNil.
+	^ aBuilder
+]
+
+{ #category : #'examples - ring2 builder' }
 DiCollectionToModelBuilderExamples >> collectionToModelBuilderWithSubsidiaryCompaniesFieldMetaModel [
 	<gtExample>
 	| aBuilder |
@@ -213,6 +248,15 @@ DiCollectionToModelBuilderExamples >> collectionsAndRelationsWithCompany [
 	<gtExample>
 	| aModel |
 	aModel := metaModelExamples collectionsAndRelationsWithCompany.
+	self assert: aModel isNotNil.
+	^ aModel
+]
+
+{ #category : #'examples - meta model' }
+DiCollectionToModelBuilderExamples >> collectionsAndRelationsWithCountryAndCompany [
+	<gtExample>
+	| aModel |
+	aModel := metaModelExamples collectionsAndRelationsWithCountryAndCompany.
 	self assert: aModel isNotNil.
 	^ aModel
 ]

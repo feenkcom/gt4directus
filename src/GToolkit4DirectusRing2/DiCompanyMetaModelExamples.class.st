@@ -32,6 +32,51 @@ DiCompanyMetaModelExamples >> collectionsAndRelationsWithCompany_NotInitialized 
 ]
 
 { #category : #'examples - meta models' }
+DiCompanyMetaModelExamples >> collectionsAndRelationsWithCountryAndCompany [
+	<gtExample>
+	| aCollections aField |
+	aCollections := self collectionsAndRelationsWithCountryAndCompany_NotInitialized.
+	aCollections buildRelations.
+	aField := (aCollections collections data first fieldNamed: 'parent_company').
+	self assert: aField type collection isNotNil.
+	self assert: aField type relation isNotNil.
+	aField := (aCollections collections data first fieldNamed: 'subsidiary_companies').
+	self assert: aField type collection isNotNil.
+	self assert: aField type relation isNotNil.
+	aField := (aCollections collections data first fieldNamed: 'country').
+	self assert: aField type collection isNotNil.
+	self assert: aField type relation isNotNil.
+	aField := (aCollections collections data second fieldNamed: 'companies').
+	self assert: aField type collection isNotNil.
+	self assert: aField type relation isNotNil.
+	^ aCollections
+]
+
+{ #category : #'examples - collections and relations' }
+DiCompanyMetaModelExamples >> collectionsAndRelationsWithCountryAndCompany_NotInitialized [
+	<gtExample>
+	| aCollections aField |
+	aCollections := self emptyCollectonsWithRelations.
+	aCollections collections: self collectionsWithCountryAndCompany.
+	aCollections relations: self relationsWithCountriesAndParentAndSubsidiaryCompanies.
+	self assert: aCollections collections isNotNil.
+	self assert: aCollections relations isNotNil.
+	aField := (aCollections collections data first fieldNamed: 'parent_company').
+	self assert: aField type collection isNil.
+	self assert: aField type relation isNil.
+	aField := (aCollections collections data first fieldNamed: 'subsidiary_companies').
+	self assert: aField type collection isNil.
+	self assert: aField type relation isNil.
+	aField := (aCollections collections data first fieldNamed: 'country').
+	self assert: aField type collection isNil.
+	self assert: aField type relation isNil.
+	aField := (aCollections collections data second fieldNamed: 'companies').
+	self assert: aField type collection isNil.
+	self assert: aField type relation isNil.
+	^ aCollections
+]
+
+{ #category : #'examples - meta models' }
 DiCompanyMetaModelExamples >> collectionsAndRelationsWithSubsidiaryCompaniesField [
 	<gtExample>
 	| aCollections aField |
@@ -75,6 +120,16 @@ DiCompanyMetaModelExamples >> collectionsWithCompany [
 ]
 
 { #category : #'examples - collections and relations' }
+DiCompanyMetaModelExamples >> collectionsWithCountryAndCompany [
+	<gtExample>
+	| aCollections |
+	aCollections := self emptyCollections.
+	aCollections data: { self companyCollectionWithSubsidiaryCompaniesField. self countryCollection }.
+	self assert: aCollections data size equals: 2.
+	^ aCollections
+]
+
+{ #category : #'examples - collections and relations' }
 DiCompanyMetaModelExamples >> collectionsWithSubsidiaryCompaniesField [
 	<gtExample>
 	| aCollections |
@@ -90,7 +145,7 @@ DiCompanyMetaModelExamples >> companyCollection [
 	| aCollection |
 	aCollection := self emptyCollection.
 	aCollection name: 'company'.
-	aCollection fields: { self idField. self nameField. self parentCompanyField }.
+	aCollection fields: { self idField. self companyNameField. self parentCompanyField }.
 	self assert: aCollection name equals: 'company'.
 	self assert: aCollection numberOfFields equals: 3.
 	^ aCollection
@@ -102,10 +157,94 @@ DiCompanyMetaModelExamples >> companyCollectionWithSubsidiaryCompaniesField [
 	| aCollection |
 	aCollection := self emptyCollection.
 	aCollection name: 'company'.
-	aCollection fields: { self idField. self nameField. self parentCompanyField. self subsidiaryCompaniesField }.
+	aCollection fields: { self idField. self companyNameField. self parentCompanyField. self subsidiaryCompaniesField. self countryField }.
 	self assert: aCollection name equals: 'company'.
-	self assert: aCollection numberOfFields equals: 4.
+	self assert: aCollection numberOfFields equals: 5.
 	^ aCollection
+]
+
+{ #category : #'examples - field' }
+DiCompanyMetaModelExamples >> companyNameField [
+	<gtExample>
+	| aField |
+	aField := self emptyField.
+	aField name: 'name'.
+	aField note: 'Name of the company including legal form'.
+	aField type: self stringType.
+	self assert: aField name equals: 'name'.
+	self assert: aField note equals: 'Name of the company including legal form'.
+	self assert: aField type class equals: self stringType class.
+	^ aField
+]
+
+{ #category : #'examples - relation' }
+DiCompanyMetaModelExamples >> countryAndCompaniesRelation [
+	<gtExample>
+	| aRelation |
+	aRelation := self emptyRelation.
+	aRelation collectionOne: 'country'.
+	aRelation fieldOne: 'companies'.
+	aRelation collectionMany: 'company'.
+	aRelation fieldMany: 'country'.
+	self assert: aRelation collectionOne equals: 'country'.
+	self assert: aRelation fieldOne equals: 'companies'.
+	self assert: aRelation collectionMany equals: 'company'.
+	self assert: aRelation fieldMany equals: 'country'.
+	^ aRelation
+]
+
+{ #category : #'examples - collection' }
+DiCompanyMetaModelExamples >> countryCollection [
+	<gtExample>
+	| aCollection |
+	aCollection := self emptyCollection.
+	aCollection name: 'country'.
+	aCollection fields: { self idField. self countryNameField. self countryCompaniesField. }.
+	self assert: aCollection name equals: 'country'.
+	self assert: aCollection numberOfFields equals: 3.
+	^ aCollection
+]
+
+{ #category : #'examples - field' }
+DiCompanyMetaModelExamples >> countryCompaniesField [
+	<gtExample>
+	| aField |
+	aField := self emptyField.
+	aField name: 'companies'.
+	aField note: 'Companies belonging to the country.'.
+	aField type: self oneToManyType.
+	self assert: aField name equals: 'companies'.
+	self assert: aField note equals: 'Companies belonging to the country.'.
+	self assert: aField type class equals: self oneToManyType class.
+	^ aField
+]
+
+{ #category : #'examples - field' }
+DiCompanyMetaModelExamples >> countryField [
+	<gtExample>
+	| aField |
+	aField := self emptyField.
+	aField name: 'country'.
+	aField note: 'Belonging to the country'.
+	aField type: self manyToOneType.
+	self assert: aField name equals: 'country'.
+	self assert: aField note equals: 'Belonging to the country'.
+	self assert: aField type class equals: self manyToOneType class.
+	^ aField
+]
+
+{ #category : #'examples - field' }
+DiCompanyMetaModelExamples >> countryNameField [
+	<gtExample>
+	| aField |
+	aField := self emptyField.
+	aField name: 'name'.
+	aField note: 'Name of the country'.
+	aField type: self stringType.
+	self assert: aField name equals: 'name'.
+	self assert: aField note equals: 'Name of the country'.
+	self assert: aField type class equals: self stringType class.
+	^ aField
 ]
 
 { #category : #'examples - collection' }
@@ -201,20 +340,6 @@ DiCompanyMetaModelExamples >> manyToOneType [
 	^ aType
 ]
 
-{ #category : #'examples - field' }
-DiCompanyMetaModelExamples >> nameField [
-	<gtExample>
-	| aField |
-	aField := self emptyField.
-	aField name: 'name'.
-	aField note: 'Name of the company including legal form'.
-	aField type: self stringType.
-	self assert: aField name equals: 'name'.
-	self assert: aField note equals: 'Name of the company including legal form'.
-	self assert: aField type class equals: self stringType class.
-	^ aField
-]
-
 { #category : #'examples - type' }
 DiCompanyMetaModelExamples >> oneToManyType [
 	<gtExample>
@@ -261,6 +386,16 @@ DiCompanyMetaModelExamples >> parentCompanyRelation [
 	self assert: aRelation fieldMany equals: 'parent_company'.
 	self assert: aRelation collectionOne equals: 'company'.
 	^ aRelation
+]
+
+{ #category : #'examples - collections and relations' }
+DiCompanyMetaModelExamples >> relationsWithCountriesAndParentAndSubsidiaryCompanies [
+	<gtExample>
+	| aRelations |
+	aRelations := self emptyRelations.
+	aRelations data: { self parentAndSubsidiaryCompaniesRelation. self countryAndCompaniesRelation }.
+	self assert: aRelations data size equals: 2.
+	^ aRelations
 ]
 
 { #category : #'examples - collections and relations' }
