@@ -25,6 +25,11 @@ Class {
 	#category : #'GToolkit4Directus-Builder'
 }
 
+{ #category : #deprecation }
+DiCollectionToClassBuilder class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 DiCollectionToClassBuilder >> addExtension: anExtension [
 	self 

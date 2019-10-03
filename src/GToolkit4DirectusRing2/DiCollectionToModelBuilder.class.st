@@ -245,12 +245,6 @@ DiCollectionToModelBuilder >> modelClassPrefix: aString [
 	modelClassPrefix := aString
 ]
 
-{ #category : #environment }
-DiCollectionToModelBuilder >> modelEnvironment [
-	<return: #RGEnvironment>
-	^ self modelBuilder modelEnvironment 
-]
-
 { #category : #'building - model' }
 DiCollectionToModelBuilder >> modelPackage [
 	^ self modelBuilder ensurePackageNamed: self packageName

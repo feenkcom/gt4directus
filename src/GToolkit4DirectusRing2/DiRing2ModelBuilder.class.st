@@ -1,3 +1,20 @@
+"
+I am a concrete model builder.
+I build Pharo models (classes, Traits, packages, methods, etc.) in a Ring2 environment, see ${class:RGEnvironment}$.
+
+!! Examples 
+
+The following example shows a class and its metaclass without defined superclass:
+${example:DiRing2ModelBuilderExamples>>#ring2BuilderWithRootModelClass|codeExpanded=false|previewExpanded=true}$
+
+The following example shows the same class as above with defined superclass: 
+${example:DiRing2ModelBuilderExamples>>#ring2BuilderWithRootModelClassHavingSuperclass|codeExpanded=false|previewExpanded=true}$
+
+The following example shows the same class as above with defined superclass and package: 
+${example:DiRing2ModelBuilderExamples>>#ring2BuilderWithRootModelClassHavingSuperclassAndPackage|codeExpanded=false|previewExpanded=true}$
+
+
+"
 Class {
 	#name : #DiRing2ModelBuilder,
 	#superclass : #DiModelBuilder,
@@ -20,17 +37,20 @@ DiRing2ModelBuilder >> clean [
 
 { #category : #model }
 DiRing2ModelBuilder >> ensureAllBehaviorsWithPackageNamed: aString [
+	"Ensure that all behaviors with defined superclass have a package. 
+	It a behavior does not have a package, set the package named aString."
 	<return: #RGPackageDefinition>
 	| aPackage |
 	aPackage := self ensurePackageNamed: aString.
-	self ringEnvironment behaviorsDo: [ :eachBehavior | 
-		eachBehavior superclass isRingResolved ifTrue: [ 
-			self ensurePackage: aPackage forBehavior: eachBehavior ] ].
+	self instanceSideBehaviorsWithResolvedNameAndSuperclassDo: [ :eachBehavior | 
+		self ensurePackage: aPackage forBehavior: eachBehavior ].
 	^ aPackage
 ]
 
 { #category : #model }
 DiRing2ModelBuilder >> ensureClassAndMetaClassNamed: aString [
+	"Ensure a class and its metaclass (class side) of the given name aString.
+	Return the class with the given name aString."
 	<return: #RGClass>
 	| anInstaceSide aClassSide |
 	self 
@@ -61,6 +81,7 @@ DiRing2ModelBuilder >> ensureClassAndMetaClassNamed: aString [
 
 { #category : #model }
 DiRing2ModelBuilder >> ensureClassComment: aString forBehavior: aBRBehavior [
+	"Ensure a class comment aString of the given behavior."
 	| aComment |
 	aComment := aBRBehavior defaultCommentStubIn: aBRBehavior.
 	aComment content: aString.
@@ -70,18 +91,13 @@ DiRing2ModelBuilder >> ensureClassComment: aString forBehavior: aBRBehavior [
 
 { #category : #model }
 DiRing2ModelBuilder >> ensureClassNamed: aString [
+	"Ensure a class of the given name aString.
+	Return the existing or newcly created class."
 	<return: #RGClass or: #RGMetaClass>
 	self 
 		assert: [ aString isNotNil and: [ aString isNotEmpty ] ] 
 		description: [ 'Class names must be non-nil and non-empty string' ].
 	^ self ringEnvironment ensureClassNamed: aString
-]
-
-{ #category : #model }
-DiRing2ModelBuilder >> ensureInstanceVariable: aString inBehavior: aRGBehavior [
-	"Return collection of existing behavior instance variables"
-	<return: #Array of: #String>
-	^ self ensureInstanceVariables: { aString } inBehavior: aRGBehavior
 ]
 
 { #category : #model }
@@ -104,6 +120,8 @@ DiRing2ModelBuilder >> ensureInstanceVariables: aCollection inBehavior: aRGBehav
 
 { #category : #model }
 DiRing2ModelBuilder >> ensureLocalMethodNamed: aMethodName withSourceCode: aSourceCode andProtocol: aProtocolName inBehavior: aRGBehavior [
+	"Ensure a local method of the given name, source code, protocol name in the aRGBehavior.
+	Return the object representing the method."
 	<return: #RGMethod>
 	| aMethod |
 	self 
@@ -134,23 +152,24 @@ DiRing2ModelBuilder >> ensureObject [
 ]
 
 { #category : #model }
-DiRing2ModelBuilder >> ensureObject: anObjectRGBehavior asSuperClassFor: aRGBehavior [
-	anObjectRGBehavior == aRGBehavior ifTrue: [ ^ self ].
+DiRing2ModelBuilder >> ensureObject: aSuperclassRGBehavior asSuperClassFor: aRGBehavior [
+	aSuperclassRGBehavior == aRGBehavior ifTrue: [ ^ self ].
 	aRGBehavior hasResolvedSuperclass ifTrue: [ ^ self ].
 	aRGBehavior isClass ifFalse: [ ^ self ].
 	aRGBehavior isRingResolved ifFalse: [ ^ self ].
 	
-	aRGBehavior superclass: anObjectRGBehavior.
-	aRGBehavior metaclass superclass: anObjectRGBehavior metaclass.
+	aRGBehavior superclass: aSuperclassRGBehavior.
+	aRGBehavior metaclass superclass: aSuperclassRGBehavior metaclass.
 ]
 
 { #category : #model }
 DiRing2ModelBuilder >> ensureObjectAsSuperclass [
+	<return: #RGClass>
 	| anObject |
 	anObject := self ensureObject.
-	self ringEnvironment behaviorsDo: [ :eachBehavior | 
-		eachBehavior package isRingResolved ifTrue: [
-			self ensureObject: anObject asSuperClassFor: eachBehavior ] ]
+	self instanceSideBehaviorsWithResolvedNameDo: [ :eachBehavior | 
+		self ensureObject: anObject asSuperClassFor: eachBehavior ].
+	^ anObject
 ]
 
 { #category : #model }
@@ -250,6 +269,24 @@ DiRing2ModelBuilder >> installPackage: aPackage [
 DiRing2ModelBuilder >> installPackages [
 	self ringEnvironment packagesDo: [ :eachPackage | 
 		self installPackage: eachPackage ] 
+]
+
+{ #category : #enumerating }
+DiRing2ModelBuilder >> instanceSideBehaviorsDo: aBlock [
+	self ringEnvironment behaviorsDo: [ :eachBehavior | 
+		eachBehavior instanceSide = eachBehavior ifTrue: [ aBlock cull: eachBehavior ] ].
+]
+
+{ #category : #enumerating }
+DiRing2ModelBuilder >> instanceSideBehaviorsWithResolvedNameAndSuperclassDo: aBlock [
+	self instanceSideBehaviorsWithResolvedNameDo: [ :eachBehavior | 
+		eachBehavior superclass isRingResolved ifTrue: [ aBlock cull: eachBehavior ] ].
+]
+
+{ #category : #enumerating }
+DiRing2ModelBuilder >> instanceSideBehaviorsWithResolvedNameDo: aBlock [
+	self instanceSideBehaviorsDo: [ :eachBehavior | 
+		eachBehavior isRingResolved ifTrue: [ aBlock cull: eachBehavior ] ].
 ]
 
 { #category : #accessing }

@@ -52,12 +52,6 @@ DiCollectionToModelBuilderPart >> modelBuilder [
 	^ self builder
 ]
 
-{ #category : #accessing }
-DiCollectionToModelBuilderPart >> modelEnvironment [
-	<return: #RGEnvironment>
-	^ self builder modelEnvironment 
-]
-
 { #category : #'accessing - model' }
 DiCollectionToModelBuilderPart >> modelRootClass [
 	<return: #RGClass>
