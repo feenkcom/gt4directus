@@ -34,6 +34,14 @@ DiCollectionToModelBuilderExamples >> buildFilteredModelWithInstanceAndAccessors
 	^ aBuilder
 ]
 
+{ #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithInstanceAndAccessorsVariables_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFilteredModelWithInstanceAndAccessorsVariables.
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+]
+
 { #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelClassesOnly [
 	<gtExample>
@@ -50,14 +58,10 @@ DiCollectionToModelBuilderExamples >> buildFullModelClassesOnly [
 { #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelClassesOnly_Behavior [
 	<gtExample>
-	| aBuilder aModelClass |
+	| aBuilder |
 	aBuilder := self buildFullModelClassesOnly.
 	aBuilder build.
-	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
-	self assert: aModelClass isNotNil.
-	self assert: aModelClass isClass.
-	self assert: aModelClass package name equals: self dummyPackageName.
-	^ aModelClass
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 ]
 
 { #category : #'examples - full model' }
@@ -77,12 +81,9 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceAndAccessorsV
 { #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceAndAccessorsVariables_Behavior [
 	<gtExample>
-	| aBuilder aModelClass |
+	| aBuilder |
 	aBuilder := self buildFullModelWithAllInstanceAndAccessorsVariables.
-	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
-	self assert: aModelClass instVarNames size equals: 3.
-	self assert: aModelClass localMethods size equals: 6.
-	^ aModelClass
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 ]
 
 { #category : #'examples - full model' }
@@ -100,11 +101,9 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceVariables [
 { #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceVariables_Behavior [
 	<gtExample>
-	| aBuilder aModelClass |
+	| aBuilder |
 	aBuilder := self buildFullModelWithAllInstanceVariables.
-	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
-	self assert: aModelClass instVarNames size equals: 3.
-	^ aModelClass
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 ]
 
 { #category : #'examples - full model' }
@@ -141,6 +140,14 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithTrait [
 ]
 
 { #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithTrait_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithTrait.
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+]
+
+{ #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelWithTwoTraits [
 	<gtExample>
 	| aBuilder aModelClass aCollection |
@@ -157,6 +164,14 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithTwoTraits [
 	self assert: aCollection first name equals: TDummyTraitOneExample name.
 	self assert: aCollection second name equals: TDummyTraitTwoExample name.
 	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithTwoTraits_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithTwoTraits.
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 ]
 
 { #category : #'examples - ring2 builder' }
