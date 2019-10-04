@@ -1,11 +1,11 @@
 Class {
-	#name : #DiTraitDiscoveryExtension,
+	#name : #DiTraitDiscoveryExtensionOld,
 	#superclass : #DiCollectionToClassBuilderExtension,
 	#category : #'GToolkit4Directus-Builder'
 }
 
 { #category : #building }
-DiTraitDiscoveryExtension >> build [
+DiTraitDiscoveryExtensionOld >> build [
 	self builder modelRootClass withAllSubclassesDo: [ :eachClass | 
 		| traitName trait |
 		traitName := 'T', eachClass name.

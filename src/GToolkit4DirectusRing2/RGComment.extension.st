@@ -8,5 +8,6 @@ RGComment >> gtContentFor: aView [
 	^ aView textEditor
 		title: 'Content';
 		priority: 1;
+		glamorousCodeFont;
 		text: [ self content ]
 ]

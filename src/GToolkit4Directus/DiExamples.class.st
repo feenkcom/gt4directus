@@ -26,7 +26,7 @@ DiExamples >> buildCompanyModelWithUserData [
 	<gtExample>
 	| aBuilder aModelClass aSuperClass |
 	aBuilder := self companyModelClassBuilder.
-	aBuilder addExtension: DiUserDataExtension new.
+	aBuilder addExtension: DiUserDataExtensionOld new.
 	aBuilder addExtension: DiDataAccessorExtension new.
 	aBuilder build.
 	aModelClass := self class environment classNamed: 'DummyCompany'.

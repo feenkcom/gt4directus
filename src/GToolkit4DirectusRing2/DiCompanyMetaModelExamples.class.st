@@ -211,6 +211,7 @@ DiCompanyMetaModelExamples >> companyCollection [
 	| aCollection |
 	aCollection := self emptyCollection.
 	aCollection name: 'company'.
+	aCollection note: 'I represent a legal company'.
 	aCollection fields: { self idField. self companyNameField. self parentCompanyField }.
 	self assert: aCollection name equals: 'company'.
 	self assert: aCollection numberOfFields equals: 3.
@@ -223,6 +224,7 @@ DiCompanyMetaModelExamples >> companyCollectionWithSubsidiaryCompaniesField [
 	| aCollection |
 	aCollection := self emptyCollection.
 	aCollection name: 'company'.
+	aCollection note: 'I represent a legal company'.
 	aCollection fields: { self idField. self companyNameField. self parentCompanyField. self subsidiaryCompaniesField. self countryField }.
 	self assert: aCollection name equals: 'company'.
 	self assert: aCollection numberOfFields equals: 5.

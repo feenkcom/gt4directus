@@ -66,6 +66,13 @@ TCollectionIterator >> filtres [
 	^ self explicitRequirement
 ]
 
+{ #category : #testing }
+TCollectionIterator >> hasModels [
+	<return: #Boolean>
+	self collectionsAndModelsDo: [ ^ true ].
+	^ false
+]
+
 { #category : #enumerating }
 TCollectionIterator >> includedCollection: aDiMetaCollection fieldsDo: aDoBlock [
 	aDiMetaCollection fields do: [ :eachField | 

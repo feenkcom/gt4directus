@@ -12,6 +12,10 @@ RGBehavior >> gtClassCommentFor: aView [
 { #category : #'*GToolkit4DirectusRing2' }
 RGBehavior >> gtDefinitionFor: aView [
 	<gtView>
+	| aLabel | 
+	aLabel := self instanceSide == self 
+		ifTrue: [ 'Class side' ]
+		ifFalse: [ 'Instance side' ].
 	^ aView textEditor
 			title: 'Definition';
 			priority: 1;
@@ -19,7 +23,11 @@ RGBehavior >> gtDefinitionFor: aView [
 			styler: (BrRBTextStyler new environment: self environment);
 			text: [ self definition asRopedText  ];
 			actionButtonIcon: BrGlamorousIcons browse action: [ :aBrTab | 
-				Smalltalk at: self name asSymbol ifPresent: #browse ]
+				Smalltalk at: self name asSymbol ifPresent: #browse ];
+			actionButtonLabel: aLabel action: [ :aBrTab |
+				self instanceSide == self
+					ifTrue: [ aBrTab phlow spawnObject: self classSide ]
+					ifFalse: [ aBrTab phlow spawnObject: self instanceSide ] ]
 ]
 
 { #category : #'*GToolkit4DirectusRing2' }
