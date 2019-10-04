@@ -1,3 +1,28 @@
+"
+I add a class comment if ${class:DiMetaCollection}$ has a defined note.
+
+!! Example
+
+Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+
+that have the following note:
+${example:DiCompanyMetaModelExamples>>#companyCollection|previewShow=gtNoteFor:|previewHeight=50|noCode=true|codeExpanded=false|previewExpanded=true}$
+
+I add the following class comment:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithClassComment_Behavior|previewShow=gtClassCommentFor:|previewHeight=50|noCode=true|codeExpanded=false|previewExpanded=true}$
+
+Into the following model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithClassComment_Behavior|codeExpanded=false|previewExpanded=true}$
+
+Here you can browse the full model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithClassComment|codeExpanded=false|previewExpanded=true}$
+
+You can compare the model above with the standard build without my extension: 
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly|codeExpanded=false|previewExpanded=true}$
+
+
+
+"
 Class {
 	#name : #DiAddClassCommentExtension,
 	#superclass : #DiCollectionToModelBuilderExtension,

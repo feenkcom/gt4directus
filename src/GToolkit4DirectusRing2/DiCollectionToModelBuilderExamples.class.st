@@ -248,6 +248,28 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithAllInstanceVariables_Beh
 ]
 
 { #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithClassComment [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
+	aBuilder addClassComments.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass isNotNil.
+	self assert: aModelClass comment content isNotNil.
+	self assert: aModelClass comment content isNotEmpty.
+	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithClassComment_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithClassComment.
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+]
+
+{ #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelWithDiscoveredTraits [
 	<gtExample>
 	| aBuilder aModelClass aCollection |
@@ -262,6 +284,27 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithDiscoveredTraits [
 	aCollection := aModelClass usedTraits asArray.
 	self assert: aCollection first name equals: TDiDummyCompany name.
 	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithPrintOnMethod [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
+	aBuilder usePrintOnWithNameExtension.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass isNotNil.
+	self assert: (aModelClass localMethods anySatisfy: [ :eachMethod | eachMethod name = 'printOn:' ]).
+	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithPrintOnMethod_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithPrintOnMethod.
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 ]
 
 { #category : #'examples - full model' }
@@ -313,6 +356,32 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithTwoTraits_Behavior [
 	| aBuilder |
 	aBuilder := self buildFullModelWithTwoTraits.
 	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithUserDataMethod [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
+	aBuilder useUserDataExtension.
+	aBuilder build.
+	aModelClass := aBuilder modelRootClass.
+	self assert: aModelClass isNotNil.
+	self assert: aModelClass isClass.
+	self assert: aModelClass package name equals: self dummyPackageName.
+	self assert: (aModelClass instVarNames includes: 'userData').
+	self assert: (aModelClass localMethods anySatisfy: [ :eachMethod | eachMethod name = 'userData' ]).
+	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithUserDataMethod_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithUserDataMethod.
+	aBuilder useUserDataExtension.
+	aBuilder build.
+	^ aBuilder modelRootClass
 ]
 
 { #category : #'examples - ring2 builder' }

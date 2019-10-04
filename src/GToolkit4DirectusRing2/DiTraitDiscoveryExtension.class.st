@@ -1,11 +1,11 @@
 Class {
-	#name : #Di2TraitDiscoveryExtension,
+	#name : #DiTraitDiscoveryExtension,
 	#superclass : #DiCollectionToModelBuilderExtension,
 	#category : #'GToolkit4DirectusRing2-Model Builder Extensions'
 }
 
 { #category : #building }
-Di2TraitDiscoveryExtension >> build [
+DiTraitDiscoveryExtension >> build [
 	self mayUseSystemTraitInBehavior: self modelRootClass. 
 	self includedCollectionsAndModelsDo: [ :aCollection :aBehavior | 
 		self mayUseSystemTraitInBehavior: aBehavior
@@ -13,7 +13,7 @@ Di2TraitDiscoveryExtension >> build [
 ]
 
 { #category : #building }
-Di2TraitDiscoveryExtension >> mayUseSystemTraitInBehavior: aRGBehavior [ 
+DiTraitDiscoveryExtension >> mayUseSystemTraitInBehavior: aRGBehavior [ 
 	| aTraitName |
 	aTraitName := 'T', aRGBehavior name.
 	(Smalltalk classOrTraitNamed: aTraitName) ifNotNil: [ :aClassOrTrait |

@@ -49,14 +49,38 @@ DiMetaCollection >> fields: anArray [
 ]
 
 { #category : #'gt-extension' }
+DiMetaCollection >> gtCanDisplayField: aFieldOne before: aFieldTwo [
+	(aFieldOne isSystemField and: [ aFieldTwo isSystemField not ]) ifTrue: [ ^ false ].
+	(aFieldOne isSystemField not and: [ aFieldTwo isSystemField ]) ifTrue: [ ^ true ].
+	^ aFieldOne name < aFieldTwo name
+]
+
+{ #category : #'gt-extension' }
 DiMetaCollection >> gtFieldsFor: aView [
 	<gtView>
 	self fields ifNil: [ ^ aView empty ].
 	^ aView columnedList
 		title: 'Fields';
+		priority: 2;
 		items: [ self fields ];
 		column: 'Name' item: [ :aField | aField name ];
 		column: 'Type' item: [ :aField | aField type ifNotNil: #name ]
+]
+
+{ #category : #accessing }
+DiMetaCollection >> gtNoteFor: aView [
+	<gtView>
+	note ifNil: [ ^ aView empty ].
+	^ aView textEditor
+		title: 'Note';
+		priority: 3;
+		glamorousCodeFont;
+		text: [ self note ]
+]
+
+{ #category : #'gt-extension' }
+DiMetaCollection >> gtSortedFields [
+	^ self fields sorted: [ :a :b | self gtCanDisplayField: a before: b ].
 ]
 
 { #category : #'gt-extension' }
@@ -75,9 +99,11 @@ DiMetaCollection >> gtUMLFor: aView [
 						shape: [ :eachMetaField | 
 							| aText | 
 							aText := (eachMetaField name asString, ': ', eachMetaField type name asString) asRopedText.
-							(aText from: eachMetaField name size + 2 to: aText size) foreground: Color lightGray.
+							eachMetaField isSystemField 
+								ifTrue: [ aText foreground: Color lightGray ]
+								ifFalse: [ (aText from: eachMetaField name size + 2 to: aText size) foreground: Color lightGray ].
 							BlTextElement new text: aText ];
-						with: eachMetaCollection fields.
+						with: (eachMetaCollection gtSortedFields).
 					aMondrian layout custom: BlLinearLayout vertical ].
 		]
 ]

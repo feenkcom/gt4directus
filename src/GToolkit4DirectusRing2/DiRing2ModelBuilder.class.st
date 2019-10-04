@@ -248,6 +248,14 @@ DiRing2ModelBuilder >> gtPackagesFor: aView [
 		actionButtonLabel: 'Install' action: [ :aBrTab | self installPackages ]
 ]
 
+{ #category : #accessing }
+DiRing2ModelBuilder >> gtTreeBehaviorsFor: aView [
+	<gtView>
+	self ringEnvironment ifNil: [ ^ aView empty ].
+	^ (self ringEnvironment gtTreeBehaviorsFor: aView)
+		actionButtonLabel: 'Install' action: [ :aBrTab | self installPackages ]
+]
+
 { #category : #initialization }
 DiRing2ModelBuilder >> initialize [
 	super initialize.

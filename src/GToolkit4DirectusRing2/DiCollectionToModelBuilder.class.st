@@ -123,7 +123,7 @@ DiCollectionToModelBuilder >> collections [
 
 { #category : #initialization }
 DiCollectionToModelBuilder >> discoverCollectionSystemTraits [
-	self addExtension: Di2TraitDiscoveryExtension new.
+	self addExtension: DiTraitDiscoveryExtension new.
 ]
 
 { #category : #'building - model' }
@@ -191,12 +191,23 @@ DiCollectionToModelBuilder >> gtPackagesFor: aView [
 ]
 
 { #category : #accessing }
+DiCollectionToModelBuilder >> gtTreeBehaviorsFor: aView [
+	<gtView>
+	self modelBuilder ifNil: [ ^ aView empty ].
+	^ (self modelBuilder gtTreeBehaviorsFor: aView)
+		title: 'Model';
+		priority: 3;
+		items: [ self hasModels ifTrue: [ { self modelRootClass } ] ifFalse: [ #() ] ];
+		actionButtonLabel: 'Full Install' action: [ :aBrTab | self install ]
+]
+
+{ #category : #accessing }
 DiCollectionToModelBuilder >> gtUMLOfCollectionsFor: aView [
 	<gtView>
 	self metaModel ifNil: [ ^ aView empty ].
 	^ (self metaModel gtUMLFor: aView)
 		title: 'Collections';
-		priority: 3;
+		priority: 4;
 		actionButtonLabel: 'Details' action: [ :aBrTab | 
 			aBrTab phlow spawnObject: self metaModel ]
 ]
@@ -402,5 +413,5 @@ DiCollectionToModelBuilder >> useTraitNamed: aTraitName inCollectionNamed: aColl
 
 { #category : #initialization }
 DiCollectionToModelBuilder >> useUserDataExtension [
-	self addExtension: Di2UserDataExtension new.
+	self addExtension: DiUserDataExtension new.
 ]
