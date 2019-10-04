@@ -70,7 +70,7 @@ DiRing2ModelBuilder >> ensureClassAndMetaClassNamed: aString [
 	self assert: [ aClassSide isRingResolved ] description: [ 'Class side must be resolved' ].
 	self 
 		assert: [ aClassSide name beginsWith: anInstaceSide name ] 
-		description: [ 'Class side must start with same name as the instnace side' ].
+		description: [ 'Class side must start with same name as the instance side' ].
 
 	self 
 		assert: [ anInstaceSide classSide == aClassSide and: [ aClassSide instanceSide == anInstaceSide ] ] 
