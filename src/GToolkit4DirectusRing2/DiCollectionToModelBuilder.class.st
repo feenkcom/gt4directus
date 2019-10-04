@@ -142,6 +142,13 @@ DiCollectionToModelBuilder >> existingCollectionBehaviorOrNil: aDiMetaCollection
 	^ self modelBuilder behaviorNamed: aClassName.
 ]
 
+{ #category : #building }
+DiCollectionToModelBuilder >> exportToJavascript [
+	| jsExporter |
+	jsExporter := DiModelToJavascriptExporter new.
+	jsExporter export: self modelBuilder.
+]
+
 { #category : #accessing }
 DiCollectionToModelBuilder >> extensions [
 	^ extensions
