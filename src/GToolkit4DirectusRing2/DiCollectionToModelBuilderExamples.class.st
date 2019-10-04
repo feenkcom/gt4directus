@@ -84,6 +84,57 @@ DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutCountry_Unfiltere
 ]
 
 { #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutSystemCollections [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCountryAndCompanyAndDirectusUser.
+	aBuilder useInstanceVariableBuilder.
+	aBuilder useInstanceVariableAccessorsBuilder.
+	aBuilder excludeSystemCollections.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass instVarNames size equals: 5.
+	self assert: aModelClass localMethods size equals: 10.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Country'.
+	self assert: aModelClass instVarNames size equals: 3.
+	self assert: aModelClass localMethods size equals: 6.
+	self assert: aBuilder allModelNames size equals: 2.
+	^ aBuilder
+]
+
+{ #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutSystemCollections_Unfiltered [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCountryAndCompanyAndDirectusUser.
+	aBuilder useInstanceVariableBuilder.
+	aBuilder useInstanceVariableAccessorsBuilder.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass instVarNames size equals: 5.
+	self assert: aModelClass localMethods size equals: 10.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Country'.
+	self assert: aModelClass instVarNames size equals: 3.
+	self assert: aModelClass localMethods size equals: 6.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'DirectusUser'.
+	self assert: aModelClass instVarNames size equals: 2.
+	self assert: aModelClass localMethods size equals: 4.
+	self assert: aBuilder allModelNames size equals: 3.
+	^ aBuilder
+]
+
+{ #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutSystemCollections_Unfiltered_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFilteredModelWithoutSystemCollections_Unfiltered.
+	aBuilder useInstanceVariableBuilder.
+	aBuilder useInstanceVariableAccessorsBuilder.
+	aBuilder build.
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'DirectusUser'.
+]
+
+{ #category : #'examples - filtered model' }
 DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutSystemFields [
 	<gtExample>
 	| aBuilder aModelClass |
@@ -299,6 +350,16 @@ DiCollectionToModelBuilderExamples >> collectionToModelBuilderWithCountryAndComp
 ]
 
 { #category : #'examples - ring2 builder' }
+DiCollectionToModelBuilderExamples >> collectionToModelBuilderWithCountryAndCompanyAndDirectusUser [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self collectionToModelBuilder.
+	aBuilder metaModel: self collectionsAndRelationsWithCountryAndCompanyAndDirectusUser.
+	self assert: aBuilder metaModel isNotNil.
+	^ aBuilder
+]
+
+{ #category : #'examples - ring2 builder' }
 DiCollectionToModelBuilderExamples >> collectionToModelBuilderWithCountryAndCompanyAndSystemFields [
 	<gtExample>
 	| aBuilder |
@@ -337,21 +398,20 @@ DiCollectionToModelBuilderExamples >> collectionsAndRelationsWithCountryAndCompa
 ]
 
 { #category : #'examples - meta model' }
+DiCollectionToModelBuilderExamples >> collectionsAndRelationsWithCountryAndCompanyAndDirectusUser [
+	<gtExample>
+	| aModel |
+	aModel := metaModelExamples collectionsAndRelationsWithCountryAndCompanyAndDirectusUser.
+	self assert: aModel isNotNil.
+	^ aModel
+]
+
+{ #category : #'examples - meta model' }
 DiCollectionToModelBuilderExamples >> collectionsAndRelationsWithCountryAndCompanyAndSystemFields [
 	<gtExample>
 	| aModel |
-	aModel := self collectionsAndRelationsWithCountryAndCompany.
-	aModel collectionsDo: [ :eachCollection | 
-		| anOriginalFieldSize theSystemFields |
-		anOriginalFieldSize := eachCollection numberOfFields.
-		theSystemFields := DiMetaField systemFieldNames collect: [ :eachFieldName | 
-			DiMetaField new
-				name: eachFieldName;
-				note: 'System field';
-				type: (DiMetaFieldType typeNamed: eachFieldName) ].
-		eachCollection fields: (eachCollection fields, theSystemFields).
-		self assert: eachCollection numberOfFields equals: anOriginalFieldSize + theSystemFields size
-	].
+	aModel := metaModelExamples collectionsAndRelationsWithCountryAndCompanyAndSystemFields.
+	self assert: aModel isNotNil.
 	^ aModel
 ]
 

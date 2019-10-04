@@ -3,6 +3,17 @@ Trait {
 	#category : #'GToolkit4DirectusRing2-Model Builders'
 }
 
+{ #category : #enumerating }
+TCollectionIterator >> allModelNames [
+	"Return all existing model behavior names (class names)."
+	<return: #Set of: #String>
+	| aSet |
+	aSet := Set new.
+	self collectionsAndModelsDo: [ :eachCollection :eachClass |
+		aSet add: eachClass name ].
+	^ aSet
+]
+
 { #category : #filtering }
 TCollectionIterator >> canIncludeCollection: aDiMetaCollection [
 	<return: #Boolean>

@@ -71,15 +71,6 @@ DiCollectionToModelBuilder >> addFilter: aFilter [
 	self filters add: aFilter
 ]
 
-{ #category : #enumerating }
-DiCollectionToModelBuilder >> allModelNames [
-	| aSet |
-	aSet := Set new.
-	self collectionsAndModelsDo: [ :eachCollection :eachClass |
-		aSet add: eachClass name ].
-	^ aSet
-]
-
 { #category : #building }
 DiCollectionToModelBuilder >> build [
 	self buildBehaviors.
