@@ -1,7 +1,23 @@
+"
+I build instance variable accessors for each ${class:DiMetaCollection}$ class based on ${method:DiMetaCollection>>#fields}$ information, which is a collection of ${class:DiMetaField}$.
+The instance variables should be generated before my execution using ${class:DiInstanceVariablesBuilderExtension}$.
+
+!! Example
+
+Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+
+I build the following model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceAndAccessorsVariables_Behavior|codeExpanded=false|previewExpanded=true}$
+
+Here you can browse the full model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceAndAccessorsVariables|codeExpanded=false|previewExpanded=true}$
+
+
+"
 Class {
 	#name : #DiInstanceVariablesAccessorsBuilderExtension,
 	#superclass : #DiCollectionToModelBuilderExtension,
-	#category : #'GToolkit4DirectusRing2-Model Builders'
+	#category : #'GToolkit4DirectusRing2-Model Builder Extensions'
 }
 
 { #category : #building }

@@ -9,14 +9,6 @@ Class {
 }
 
 { #category : #building }
-DiMetaCollectionsWithRelations >> buildModelInPackage: aRPackage [
-	DiCollectionToClassBuilder new
-		collections: self collections;
-		package: aRPackage;
-		build
-]
-
-{ #category : #building }
 DiMetaCollectionsWithRelations >> buildRelations [
 	DiMetaModelRelationBuilder new
 		collections: self collections;
@@ -32,6 +24,12 @@ DiMetaCollectionsWithRelations >> collections [
 { #category : #accessing }
 DiMetaCollectionsWithRelations >> collections: anObject [
 	collections := anObject
+]
+
+{ #category : #enumerating }
+DiMetaCollectionsWithRelations >> collectionsDo: aBlockClosure [ 
+	"Enumerate collections"
+	self collections collectionsDo: aBlockClosure 
 ]
 
 { #category : #'gt-extension' }

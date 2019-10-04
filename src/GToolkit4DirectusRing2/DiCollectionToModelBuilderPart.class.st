@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : #'GToolkit4DirectusRing2-Model Builders'
+	#category : #'GToolkit4DirectusRing2-Model Builder Extensions'
 }
 
 { #category : #accessing }
@@ -50,12 +50,6 @@ DiCollectionToModelBuilderPart >> existingCollectionBehaviorOrNil: aDiMetaCollec
 DiCollectionToModelBuilderPart >> modelBuilder [
 	<return: #DiModelBuilder>
 	^ self builder
-]
-
-{ #category : #accessing }
-DiCollectionToModelBuilderPart >> modelEnvironment [
-	<return: #RGEnvironment>
-	^ self builder modelEnvironment 
 ]
 
 { #category : #'accessing - model' }

@@ -19,6 +19,11 @@ Class {
 }
 
 { #category : #accessing }
+DiMetaField class >> systemFieldNames [
+	^ #('created_by' 'created_on' 'modified_by' 'modified_on' 'updated_on' 'updated_by' 'status')
+]
+
+{ #category : #accessing }
 DiMetaField >> collectionOrNil [
 	<return: #DiMetaCollection or: nil>
 	^ self type collectionOrNil
@@ -46,6 +51,12 @@ DiMetaField >> getter [
 DiMetaField >> isRelatedToCollection: aDiMetaCollection [
 	<return: #Boolean>
 	^ self type isRelatedToCollection: aDiMetaCollection
+]
+
+{ #category : #testing }
+DiMetaField >> isSystemField [
+	<return: #Boolean>
+	^ self class systemFieldNames includes: self name
 ]
 
 { #category : #accessing }

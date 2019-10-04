@@ -21,6 +21,12 @@ DiMetaCollections >> collectFieldsRelatedToCollection: aDiMetaCollection [
 		eachCollection collectFieldsRelatedToCollection: aDiMetaCollection ]
 ]
 
+{ #category : #enumerating }
+DiMetaCollections >> collectionsDo: aBlockClosure [ 
+	"Enumerate collections"
+	self data do: aBlockClosure
+]
+
 { #category : #accessing }
 DiMetaCollections >> data [
 	^ data
@@ -60,7 +66,7 @@ DiMetaCollections >> gtUMLFor: aView [
 		painting: [ :aMondrian | 
 			aMondrian nodes 
 				umlClassShapeWithName: [ :eachMetaCollection | eachMetaCollection name ];
-				with: (self data reject: #isSystemCollection);
+				with: (self data "reject: #isSystemCollection");
 				forEach: [ :eachMetaCollection | 
 					aMondrian nodes 
 						shape: [ :eachMetaField | 

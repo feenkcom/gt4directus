@@ -16,7 +16,7 @@ RGBehavior >> gtDefinitionFor: aView [
 			title: 'Definition';
 			priority: 1;
 			look: BrGlamorousCodeEditorLook new;
-			styler: BrRBTextStyler new;
+			styler: (BrRBTextStyler new environment: self environment);
 			text: [ self definition asRopedText  ];
 			actionButtonIcon: BrGlamorousIcons browse action: [ :aBrTab | 
 				Smalltalk at: self name asSymbol ifPresent: #browse ]

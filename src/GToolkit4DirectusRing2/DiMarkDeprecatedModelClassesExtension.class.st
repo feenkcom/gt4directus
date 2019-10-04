@@ -1,7 +1,7 @@
 Class {
 	#name : #DiMarkDeprecatedModelClassesExtension,
 	#superclass : #DiCollectionToModelBuilderExtension,
-	#category : #'GToolkit4DirectusRing2-Model Builders'
+	#category : #'GToolkit4DirectusRing2-Model Builder Extensions'
 }
 
 { #category : #building }
@@ -10,7 +10,7 @@ DiMarkDeprecatedModelClassesExtension >> build [
 	| aRootModel aRealClass allModelNames |
 	aRootModel := self modelRootClass.
 	aRealClass := self class environment at: aRootModel name asSymbol ifAbsent: [ ^ self ].
-	allModelNames := self builder allModelNames.
+	allModelNames := self allModelNames.
 	aRealClass allSubclassesDo: [ :eachClass | 
 		self markDeprecatedModel: eachClass as: ((allModelNames includes: eachClass name) not)].
 ]
