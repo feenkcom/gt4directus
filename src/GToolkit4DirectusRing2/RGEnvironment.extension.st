@@ -7,7 +7,10 @@ RGEnvironment >> gtBehaviorsFor: aView [
 	^ aView columnedList
 		title: 'Behaviors';
 		priority: 1;
-		items: [ (behaviors asOrderedCollection reject: #isRGUnresolvedValue) 
+		items: [ (behaviors asOrderedCollection 
+			reject: [ :aBehavior | 
+				aBehavior isRGUnresolvedValue or: [ 
+					aBehavior isRingResolved not ]]) 
 			sort: [ :a :b | self gtPutBehavior: a before: b ] ];
 		column: 'Name' item: [ :aBehavior | aBehavior ];
 		column: 'Superclass' item: [ :aBehavior | aBehavior superclass name ];
@@ -21,7 +24,10 @@ RGEnvironment >> gtPackagesFor: aView [
 	^ aView columnedList
 		title: 'Packages';
 		priority: 2;
-		items: [ (packages asOrderedCollection reject: #isRGUnresolvedValue)
+		items: [ (packages asOrderedCollection 
+			reject: [ :aBehavior |  
+				aBehavior isRGUnresolvedValue or: [ 
+					aBehavior isRingResolved not ] ] )
 			sort: [ :a :b | a isRingResolved and: [ a name < b name ] ] ];
 		column: 'Name' item: [ :aPackage | aPackage name ];
 		column: 'Behaviors' item: [ :aPackage | aPackage definedBehaviors size ];

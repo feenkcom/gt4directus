@@ -21,6 +21,12 @@ DiMetaCollections >> collectFieldsRelatedToCollection: aDiMetaCollection [
 		eachCollection collectFieldsRelatedToCollection: aDiMetaCollection ]
 ]
 
+{ #category : #enumerating }
+DiMetaCollections >> collectionsDo: aBlockClosure [ 
+	"Enumerate collections"
+	self data do: aBlockClosure
+]
+
 { #category : #accessing }
 DiMetaCollections >> data [
 	^ data

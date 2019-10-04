@@ -199,6 +199,17 @@ DiCollectionToModelBuilder >> gtPackagesFor: aView [
 		actionButtonLabel: 'Full Install' action: [ :aBrTab | self install ]
 ]
 
+{ #category : #accessing }
+DiCollectionToModelBuilder >> gtUMLOfCollectionsFor: aView [
+	<gtView>
+	self metaModel ifNil: [ ^ aView empty ].
+	^ (self metaModel gtUMLFor: aView)
+		title: 'Collections';
+		priority: 3;
+		actionButtonLabel: 'Details' action: [ :aBrTab | 
+			aBrTab phlow spawnObject: self metaModel ]
+]
+
 { #category : #initialization }
 DiCollectionToModelBuilder >> initialize [
 	super initialize.
