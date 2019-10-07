@@ -111,6 +111,24 @@ DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutCountry_Unfiltere
 ]
 
 { #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutCountry_WithRemoveUndeclaredVariables [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCountryAndCompany.
+	aBuilder useInstanceVariableBuilder.
+	aBuilder useInstanceVariableAccessorsBuilder.
+	aBuilder excludeCollections: #( 'country' ).
+	aBuilder removeMethodsWithUndeclaredVariables.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Country'.
+	self assert: aModelClass isNil.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass instVarNames size equals: 4.
+	self assert: aModelClass localMethods size equals: 8.
+	^ aBuilder
+]
+
+{ #category : #'examples - filtered model' }
 DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutSystemCollections [
 	<gtExample>
 	| aBuilder aModelClass |
