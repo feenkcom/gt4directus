@@ -1,3 +1,18 @@
+"
+I build a JSON-to-Model reader that uses ${class:NeoJSONReader}$.
+
+!! Example 
+
+Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+
+I build the following JSON-to-Model reader:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithJsonMapping_Behavior|codeExpanded=false|previewExpanded=true}$
+
+Here you can browse the full model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithJsonMapping|codeExpanded=false|previewExpanded=true}$
+
+
+"
 Class {
 	#name : #DiJsonMappingModelBuilderExtension,
 	#superclass : #DiCollectionToModelBuilderExtension,
@@ -18,7 +33,8 @@ DiJsonMappingModelBuilderExtension >> build [
 DiJsonMappingModelBuilderExtension >> buildClassComment [
 	| aString |
 	aString := 'I am responsible for reading a JSON string representing model data.', String cr, 
-		'I use ${class:', NeoJSONReader name, '}$.', String cr.
+		'I use ${class:', NeoJSONReader name, '}$.', String cr,
+		'The object model is ${class:', self builder modelRootClassName, '$}.', String cr.
 	self ensureClassComment: aString forBehavior: self jsonMappingClass
 ]
 

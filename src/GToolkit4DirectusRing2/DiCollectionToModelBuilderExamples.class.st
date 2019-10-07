@@ -362,6 +362,29 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithDiscoveredTraits_Behavio
 ]
 
 { #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithJsonMapping [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
+	aBuilder useInstanceVariableBuilder.
+	aBuilder useInstanceVariableAccessorsBuilder.
+	aBuilder useJsonMappingBuilder.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'JsonMapping'.
+	self assert: aModelClass instVarNames size equals: 0.
+	self assert: aModelClass localMethods size equals: 4.
+	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithJsonMapping_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithJsonMapping.
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'JsonMapping'.
+]
+
+{ #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelWithPrintOnMethod [
 	<gtExample>
 	| aBuilder aModelClass |
