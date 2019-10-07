@@ -1,3 +1,9 @@
+"
+I keep both, ${class:DiMetaCollections}$ and ${class:DiMetaRelations}$ instances.
+I am able to update the relations in ${class:DiMetaField}$ instances, using ${method:DiMetaCollectionsWithRelations>>#buildRelations}$.
+
+
+"
 Class {
 	#name : #DiMetaCollectionsWithRelations,
 	#superclass : #Object,

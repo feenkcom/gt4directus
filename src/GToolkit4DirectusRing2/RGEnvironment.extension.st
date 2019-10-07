@@ -1,6 +1,12 @@
 Extension { #name : #RGEnvironment }
 
 { #category : #'*GToolkit4DirectusRing2' }
+RGEnvironment >> gtBehaviorNamed: aString ifAbsent: aBlockClosure [ 
+	<return: #RGBehaviorFactory>
+	^ self ask behaviorNamed: aString ifAbsent: aBlockClosure
+]
+
+{ #category : #'*GToolkit4DirectusRing2' }
 RGEnvironment >> gtBehaviorsFor: aView [
 	<gtView>
 	behaviors ifNil: [ ^ aView empty ].
@@ -46,4 +52,22 @@ RGEnvironment >> gtPutBehavior: aFirst before: aSecond [
 	(aFirst package isRingResolved not and: [ aSecond package isRingResolved ]) ifTrue: [ ^ false ].
 	
 	^ aFirst name < aSecond name
+]
+
+{ #category : #'*GToolkit4DirectusRing2' }
+RGEnvironment >> gtTreeBehaviorsFor: aView [
+	<gtView>
+	behaviors ifNil: [ ^ aView empty ].
+	^ aView columnedTree
+		title: 'Tree Behaviors';
+		priority: 3;
+		items: [ (behaviors asOrderedCollection 
+			select: [ :aBehavior | 
+				aBehavior isRGUnresolvedValue not and: [ 
+					aBehavior isRingResolved and: [
+						aBehavior superclass isRingResolved not ]]]) 
+			sort: [ :a :b | self gtPutBehavior: a before: b ] ];
+		children: [ :aBehavior | aBehavior subclasses ];
+		column: 'Name' item: [ :aBehavior | aBehavior ];
+		column: 'Package' item: [ :aBehavior | aBehavior package name ]
 ]

@@ -20,6 +20,33 @@ DiCollectionToModelBuilderExamples >> basicCollectionToModelBuilder [
 ]
 
 { #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithIncludedCollectionFields [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCountryAndCompany.
+	aBuilder useInstanceVariableBuilder.
+	aBuilder useInstanceVariableAccessorsBuilder.
+	aBuilder excludeCollections: #( 'country' ).
+	aBuilder useIncludedFieldsBuilder.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass instVarNames size equals: 4.
+	self assert: aModelClass localMethods size equals: 8.
+	self assert: aModelClass classSide instVarNames size equals: 0.
+	self assert: aModelClass classSide localMethods size equals: 1.
+	self assert: aModelClass classSide localMethods anyOne name equals: 'includedCollectionFields'.
+	^ aBuilder
+]
+
+{ #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithIncludedCollectionFields_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFilteredModelWithIncludedCollectionFields.
+	^ (aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company') classSide.
+]
+
+{ #category : #'examples - filtered model' }
 DiCollectionToModelBuilderExamples >> buildFilteredModelWithInstanceAndAccessorsVariables [
 	<gtExample>
 	| aBuilder aModelClass |
@@ -29,8 +56,8 @@ DiCollectionToModelBuilderExamples >> buildFilteredModelWithInstanceAndAccessors
 	aBuilder excludeCollectionNamed: 'company' fieldNamed: 'subsidiary_companies'.
 	aBuilder build.
 	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
-	self assert: aModelClass instVarNames size equals: 3.
-	self assert: aModelClass localMethods size equals: 6.
+	self assert: aModelClass instVarNames size equals: 4.
+	self assert: aModelClass localMethods size equals: 8.
 	^ aBuilder
 ]
 
@@ -80,6 +107,24 @@ DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutCountry_Unfiltere
 	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 	self assert: aModelClass instVarNames size equals: 5.
 	self assert: aModelClass localMethods size equals: 10.
+	^ aBuilder
+]
+
+{ #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithoutCountry_WithRemoveUndeclaredVariables [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCountryAndCompany.
+	aBuilder useInstanceVariableBuilder.
+	aBuilder useInstanceVariableAccessorsBuilder.
+	aBuilder excludeCollections: #( 'country' ).
+	aBuilder removeMethodsWithUndeclaredVariables.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Country'.
+	self assert: aModelClass isNil.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass instVarNames size equals: 4.
+	self assert: aModelClass localMethods size equals: 8.
 	^ aBuilder
 ]
 
@@ -270,9 +315,50 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithClassComment_Behavior [
 ]
 
 { #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithDeprecatedCountry [
+	<gtExample>
+	| aTargetEnvironmentBuilder aBuilder aModelClass aTargetEnvironment |
+	aTargetEnvironmentBuilder := self collectionToModelBuilderWithCountryAndCompany.
+	aTargetEnvironmentBuilder build.
+	aTargetEnvironment := aTargetEnvironmentBuilder modelBuilder ringEnvironment.
+	aBuilder := self collectionToModelBuilderWithCountryAndCompany.
+	aBuilder excludeCollections: #( 'country' ).
+	aBuilder addExtension: (DiMarkDeprecatedModelClassesExtension new targetEnvironment: aTargetEnvironment).
+	aBuilder build.
+	self assert: aBuilder allModelNames size equals: 1.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass classSide instVarNames size equals: 0.
+	self assert: aModelClass classSide localMethods size equals: 1.
+	self assert: aModelClass classSide localMethods anyOne name equals: 'isDeprecated'.
+	self assert: aModelClass classSide localMethods anyOne sourceCode equals: 'isDeprecated', String cr, String tab, '^ false'.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Country'.
+	self assert: aModelClass classSide instVarNames size equals: 0.
+	self assert: aModelClass classSide localMethods size equals: 1.
+	self assert: aModelClass classSide localMethods anyOne name equals: 'isDeprecated'.
+	self assert: aModelClass classSide localMethods anyOne sourceCode equals: 'isDeprecated', String cr, String tab, '^ true'.
+	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithDeprecatedCountry_ClassSideCompanyBehavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithDeprecatedCountry.
+	^ (aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company') classSide.
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithDeprecatedCountry_ClassSideCountryBehavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithDeprecatedCountry.
+	^ (aBuilder behaviorNamed: self dummyModelClassPrefix, 'Country') classSide.
+]
+
+{ #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelWithDiscoveredTraits [
 	<gtExample>
-	| aBuilder aModelClass aCollection |
+	| aBuilder aModelClass |
 	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
 	aBuilder discoverCollectionSystemTraits.
 	aBuilder build.
@@ -281,9 +367,39 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithDiscoveredTraits [
 	self assert: aModelClass isClass.
 	self assert: aModelClass package name equals: self dummyPackageName.
 	self assert: aModelClass usedTraits size equals: 1.
-	aCollection := aModelClass usedTraits asArray.
-	self assert: aCollection first name equals: TDiDummyCompany name.
+	self assert: aModelClass usedTraits anyOne name equals: TDiDummyCompany name.
 	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithDiscoveredTraits_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithDiscoveredTraits.
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithJsonMapping [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
+	aBuilder useInstanceVariableBuilder.
+	aBuilder useInstanceVariableAccessorsBuilder.
+	aBuilder useJsonMappingBuilder.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'JsonMapping'.
+	self assert: aModelClass instVarNames size equals: 0.
+	self assert: aModelClass localMethods size equals: 4.
+	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithJsonMapping_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithJsonMapping.
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'JsonMapping'.
 ]
 
 { #category : #'examples - full model' }
@@ -312,14 +428,14 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithTrait [
 	<gtExample>
 	| aBuilder aModelClass |
 	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
-	aBuilder useTrait: TDummyTraitOneExample inCollectionNamed: 'company'.
+	aBuilder useTrait: TDiDummyTraitOneExample inCollectionNamed: 'company'.
 	aBuilder build.
 	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 	self assert: aModelClass isNotNil.
 	self assert: aModelClass isClass.
 	self assert: aModelClass package name equals: self dummyPackageName.
 	self assert: aModelClass usedTraits size equals: 1.
-	self assert: aModelClass usedTraits anyOne name equals: TDummyTraitOneExample name.
+	self assert: aModelClass usedTraits anyOne name equals: TDiDummyTraitOneExample name.
 	^ aBuilder
 ]
 
@@ -336,8 +452,8 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithTwoTraits [
 	<gtExample>
 	| aBuilder aModelClass aCollection |
 	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
-	aBuilder useTrait: TDummyTraitOneExample inCollectionNamed: 'company'.
-	aBuilder useTrait: TDummyTraitTwoExample inCollectionNamed: 'company'.
+	aBuilder useTrait: TDiDummyTraitOneExample inCollectionNamed: 'company'.
+	aBuilder useTrait: TDiDummyTraitTwoExample inCollectionNamed: 'company'.
 	aBuilder build.
 	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 	self assert: aModelClass isNotNil.
@@ -345,8 +461,8 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithTwoTraits [
 	self assert: aModelClass package name equals: self dummyPackageName.
 	self assert: aModelClass usedTraits size equals: 2.
 	aCollection := aModelClass usedTraits asArray sort: [ :a :b | a name < b name ].
-	self assert: aCollection first name equals: TDummyTraitOneExample name.
-	self assert: aCollection second name equals: TDummyTraitTwoExample name.
+	self assert: aCollection first name equals: TDiDummyTraitOneExample name.
+	self assert: aCollection second name equals: TDiDummyTraitTwoExample name.
 	^ aBuilder
 ]
 

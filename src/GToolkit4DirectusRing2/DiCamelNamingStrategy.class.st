@@ -1,3 +1,7 @@
+"
+I implement a camel naming strategy, e.g., I convert a string ==here_it_is== as ==HereItIs== in case of a model name and ==hereItIs== in case of a method name.
+
+"
 Class {
 	#name : #DiCamelNamingStrategy,
 	#superclass : #DiModelNamingStrategy,

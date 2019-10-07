@@ -9,7 +9,7 @@ TCollectionIterator >> allModelNames [
 	<return: #Set of: #String>
 	| aSet |
 	aSet := Set new.
-	self collectionsAndModelsDo: [ :eachCollection :eachClass |
+	self includedCollectionsAndModelsDo: [ :eachCollection :eachClass |
 		aSet add: eachClass name ].
 	^ aSet
 ]
@@ -61,7 +61,7 @@ TCollectionIterator >> existingCollectionBehaviorOrNil: aDiMetaCollection [
 ]
 
 { #category : #accessing }
-TCollectionIterator >> filtres [
+TCollectionIterator >> filters [
 	<return: #Collection>
 	^ self explicitRequirement
 ]

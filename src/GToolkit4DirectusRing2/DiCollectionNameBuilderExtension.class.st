@@ -1,3 +1,25 @@
+"
+I add a ==collectionName== method to models in order to easily associate to which ${class:DiMetaCollection}$ belongs.
+Someone can then call ==modelNamed:== with ${class:DiMetaCollection}$'s name on the model root class in order to identify the correct model class.
+
+!! Example
+
+Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+
+I build the following root model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithPrintOnMethod_Behavior|codeExpanded=false|previewExpanded=true}$
+
+Here you can browse the full model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithPrintOnMethod|codeExpanded=false|previewExpanded=true}$
+
+You can compare the model above with the standard build without my extension: 
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly|codeExpanded=false|previewExpanded=true}$
+
+!! Related
+
+Similarly, ${class:DiIncludedFieldsBuilderExtension}$ add a method that returns ${class:DiMetaField}$ objects considered (included) during the model (class) build.
+
+"
 Class {
 	#name : #DiCollectionNameBuilderExtension,
 	#superclass : #DiCollectionToModelBuilderExtension,
