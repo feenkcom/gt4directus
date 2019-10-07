@@ -78,6 +78,46 @@ DiModelToJavascriptExporter >> putBehavior: aFirst before: aSecond [
 ]
 
 { #category : #writing }
+DiModelToJavascriptExporter >> writeAccessorsFor: variables [
+	self for: variables do: [ :aVariable |
+		jsStream
+			nextPutAll: String crlf;
+			nextPutAll: String tab;
+			nextPutAll: 'get '; 
+			nextPutAll: aVariable;
+			nextPutAll: '{';
+			nextPutAll: String crlf;
+			nextPutAll: String tab;
+			nextPutAll: String tab;
+			nextPutAll: 'return this.';
+			nextPutAll: aVariable;
+			nextPutAll: String crlf;
+			nextPutAll: String tab;
+			nextPutAll: '}'.
+		jsStream
+			nextPutAll: String crlf;
+			nextPutAll: String crlf;
+			nextPutAll: String tab;
+			nextPutAll: 'set '; 
+			nextPutAll: aVariable;
+			nextPutAll: '(';
+			nextPutAll: aVariable;
+			nextPutAll: '){';
+			nextPutAll: String crlf;
+			nextPutAll: String tab;
+			nextPutAll: String tab;
+			nextPutAll: 'this.';
+			nextPutAll: aVariable;
+			nextPutAll: ' = ';
+			nextPutAll: aVariable;
+			nextPutAll: String crlf;
+			nextPutAll: String tab;
+			nextPutAll: '}'.
+	]
+	separatedBy: [jsStream nextPutAll: String crlf.].
+]
+
+{ #category : #writing }
 DiModelToJavascriptExporter >> writeClassDefinitionOf: aClass [
 	jsStream
 		nextPutAll: 'class ';
@@ -90,7 +130,6 @@ DiModelToJavascriptExporter >> writeClassDefinitionOf: aClass [
 	self writeClassVariablesDeclarationOf: aClass.
 	jsStream
 		nextPutAll: '}'.
-	self halt.
 ]
 
 { #category : #writing }
@@ -106,17 +145,21 @@ DiModelToJavascriptExporter >> writeClassInheritanceOf: aClass [
 
 { #category : #writing }
 DiModelToJavascriptExporter >> writeClassVariablesDeclarationOf: aClass [
-	| instVarNames |
+	self writeConstructorFor: aClass allInstVarNames.
+	self writeAccessorsFor: aClass allInstVarNames.
+]
+
+{ #category : #writing }
+DiModelToJavascriptExporter >> writeConstructorFor: variables [
 	jsStream
 		nextPutAll: String tab;
 		nextPutAll: 'constructor('.
-	instVarNames := aClass allInstVarNames.
-	self for: instVarNames do: [ :aVariable | jsStream nextPutAll: aVariable ] separatedBy: [jsStream nextPutAll: ', '].
+	self for: variables do: [ :aVariable | jsStream nextPutAll: aVariable ] separatedBy: [jsStream nextPutAll: ', '].
 	jsStream
 		nextPutAll: '){';
 		nextPutAll: String crlf;
 		nextPutAll: String crlf.
-	self for: instVarNames do: [ 
+	self for: variables do: [ 
 		:aVariable | 
 			jsStream
 				nextPutAll: String tab;
@@ -124,11 +167,14 @@ DiModelToJavascriptExporter >> writeClassVariablesDeclarationOf: aClass [
 				nextPutAll: 'this.';
 				nextPutAll: aVariable;
 				nextPutAll: ' = ';
-				nextPutAll: aVariable. 
+				nextPutAll: aVariable;
+				nextPutAll: ';'.
 	] separatedBy: [jsStream nextPutAll: String crlf].
 	jsStream
+		nextPutAll: String crlf;
 		nextPutAll: String tab;
-		nextPutAll: '}'.
+		nextPutAll: '}';
+		nextPutAll: String crlf.
 ]
 
 { #category : #writing }
