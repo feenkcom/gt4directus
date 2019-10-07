@@ -167,7 +167,8 @@ DiCollectionToModelBuilder >> existingCollectionBehaviorOrNil: aDiMetaCollection
 { #category : #building }
 DiCollectionToModelBuilder >> exportToJavascript [
 	| jsExporter |
-	jsExporter := DiModelToJavascriptExporter new.
+	jsExporter := DiModelToJavascriptExporter new
+		modelClassPrefix: self modelClassPrefix.
 	jsExporter export: self modelBuilder.
 ]
 
