@@ -20,6 +20,33 @@ DiCollectionToModelBuilderExamples >> basicCollectionToModelBuilder [
 ]
 
 { #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithIncludedCollectionFields [
+	<gtExample>
+	| aBuilder aModelClass |
+	aBuilder := self collectionToModelBuilderWithCountryAndCompany.
+	aBuilder useInstanceVariableBuilder.
+	aBuilder useInstanceVariableAccessorsBuilder.
+	aBuilder excludeCollections: #( 'country' ).
+	aBuilder useIncludedFieldsBuilder.
+	aBuilder build.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass instVarNames size equals: 4.
+	self assert: aModelClass localMethods size equals: 8.
+	self assert: aModelClass classSide instVarNames size equals: 0.
+	self assert: aModelClass classSide localMethods size equals: 1.
+	self assert: aModelClass classSide localMethods anyOne name equals: 'includedCollectionFields'.
+	^ aBuilder
+]
+
+{ #category : #'examples - filtered model' }
+DiCollectionToModelBuilderExamples >> buildFilteredModelWithIncludedCollectionFields_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFilteredModelWithIncludedCollectionFields.
+	^ (aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company') classSide.
+]
+
+{ #category : #'examples - filtered model' }
 DiCollectionToModelBuilderExamples >> buildFilteredModelWithInstanceAndAccessorsVariables [
 	<gtExample>
 	| aBuilder aModelClass |
@@ -267,6 +294,47 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithClassComment_Behavior [
 	| aBuilder |
 	aBuilder := self buildFullModelWithClassComment.
 	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithDeprecatedCountry [
+	<gtExample>
+	| aTargetEnvironmentBuilder aBuilder aModelClass aTargetEnvironment |
+	aTargetEnvironmentBuilder := self collectionToModelBuilderWithCountryAndCompany.
+	aTargetEnvironmentBuilder build.
+	aTargetEnvironment := aTargetEnvironmentBuilder modelBuilder ringEnvironment.
+	aBuilder := self collectionToModelBuilderWithCountryAndCompany.
+	aBuilder excludeCollections: #( 'country' ).
+	aBuilder addExtension: (DiMarkDeprecatedModelClassesExtension new targetEnvironment: aTargetEnvironment).
+	aBuilder build.
+	self assert: aBuilder allModelNames size equals: 1.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
+	self assert: aModelClass classSide instVarNames size equals: 0.
+	self assert: aModelClass classSide localMethods size equals: 1.
+	self assert: aModelClass classSide localMethods anyOne name equals: 'isDeprecated'.
+	self assert: aModelClass classSide localMethods anyOne sourceCode equals: 'isDeprecated', String cr, String tab, '^ false'.
+	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Country'.
+	self assert: aModelClass classSide instVarNames size equals: 0.
+	self assert: aModelClass classSide localMethods size equals: 1.
+	self assert: aModelClass classSide localMethods anyOne name equals: 'isDeprecated'.
+	self assert: aModelClass classSide localMethods anyOne sourceCode equals: 'isDeprecated', String cr, String tab, '^ true'.
+	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithDeprecatedCountry_ClassSideCompanyBehavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithDeprecatedCountry.
+	^ (aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company') classSide.
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithDeprecatedCountry_ClassSideCountryBehavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithDeprecatedCountry.
+	^ (aBuilder behaviorNamed: self dummyModelClassPrefix, 'Country') classSide.
 ]
 
 { #category : #'examples - full model' }

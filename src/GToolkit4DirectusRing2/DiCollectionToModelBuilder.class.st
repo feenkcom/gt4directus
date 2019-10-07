@@ -203,7 +203,7 @@ DiCollectionToModelBuilder >> gtTreeBehaviorsFor: aView [
 	self modelBuilder ifNil: [ ^ aView empty ].
 	^ (self modelBuilder gtTreeBehaviorsFor: aView)
 		title: 'Model';
-		priority: 3;
+		priority: 0;
 		items: [ self hasModels ifTrue: [ { self modelRootClass } ] ifFalse: [ #() ] ];
 		actionButtonLabel: 'Full Install' action: [ :aBrTab | self install ]
 ]
