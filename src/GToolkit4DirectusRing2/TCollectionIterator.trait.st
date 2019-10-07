@@ -61,7 +61,7 @@ TCollectionIterator >> existingCollectionBehaviorOrNil: aDiMetaCollection [
 ]
 
 { #category : #accessing }
-TCollectionIterator >> filtres [
+TCollectionIterator >> filters [
 	<return: #Collection>
 	^ self explicitRequirement
 ]

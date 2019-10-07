@@ -1,3 +1,11 @@
+"
+I am an abstract ${class:DiCollectionToModelBuilder}$ part.
+I hold the builder in ${method:DiCollectionToModelBuilderPart>>#builder}$ and I offer some common methods to access and build model.
+
+See ${class:DiCollectionToModelBuilderPart|expanded=true|show=gtSubclassesFor:}$ for specific builder parts.
+
+
+"
 Class {
 	#name : #DiCollectionToModelBuilderPart,
 	#superclass : #Object,
@@ -44,6 +52,12 @@ DiCollectionToModelBuilderPart >> ensurePackageAndTagForBehavior: aRGBehavior [
 { #category : #'accessing - model' }
 DiCollectionToModelBuilderPart >> existingCollectionBehaviorOrNil: aDiMetaCollection [
 	^ self builder existingCollectionBehaviorOrNil: aDiMetaCollection
+]
+
+{ #category : #accessing }
+DiCollectionToModelBuilderPart >> filters [
+	<return: #Collection>
+	^ self builder filters
 ]
 
 { #category : #accessing }

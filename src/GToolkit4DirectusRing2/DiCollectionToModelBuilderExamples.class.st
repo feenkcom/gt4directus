@@ -56,8 +56,8 @@ DiCollectionToModelBuilderExamples >> buildFilteredModelWithInstanceAndAccessors
 	aBuilder excludeCollectionNamed: 'company' fieldNamed: 'subsidiary_companies'.
 	aBuilder build.
 	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
-	self assert: aModelClass instVarNames size equals: 3.
-	self assert: aModelClass localMethods size equals: 6.
+	self assert: aModelClass instVarNames size equals: 4.
+	self assert: aModelClass localMethods size equals: 8.
 	^ aBuilder
 ]
 
