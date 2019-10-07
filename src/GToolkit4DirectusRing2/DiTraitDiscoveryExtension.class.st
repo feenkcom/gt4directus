@@ -1,3 +1,19 @@
+"
+I add ${class:Trait}$ to all ${class:DiMetaCollection}$ models of the same name, prefixed by ==T== character.
+If there is a model class called ==MyCompany== and the target environment includes a ==TMyCompany== Trait, the model class uses the Trait.
+
+!! Example
+
+Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+
+and considering that ${class:TDiDummyCompany}$ Trait exists, I build the following model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithDiscoveredTraits_Behavior|codeExpanded=false|previewExpanded=true}$
+
+Here you can browse the full model:
+${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithDiscoveredTraits|codeExpanded=false|previewExpanded=true}$
+
+
+"
 Class {
 	#name : #DiTraitDiscoveryExtension,
 	#superclass : #DiCollectionToModelBuilderExtension,

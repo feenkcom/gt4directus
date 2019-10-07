@@ -340,7 +340,7 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithDeprecatedCountry_ClassS
 { #category : #'examples - full model' }
 DiCollectionToModelBuilderExamples >> buildFullModelWithDiscoveredTraits [
 	<gtExample>
-	| aBuilder aModelClass aCollection |
+	| aBuilder aModelClass |
 	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
 	aBuilder discoverCollectionSystemTraits.
 	aBuilder build.
@@ -349,9 +349,16 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithDiscoveredTraits [
 	self assert: aModelClass isClass.
 	self assert: aModelClass package name equals: self dummyPackageName.
 	self assert: aModelClass usedTraits size equals: 1.
-	aCollection := aModelClass usedTraits asArray.
-	self assert: aCollection first name equals: TDiDummyCompany name.
+	self assert: aModelClass usedTraits anyOne name equals: TDiDummyCompany name.
 	^ aBuilder
+]
+
+{ #category : #'examples - full model' }
+DiCollectionToModelBuilderExamples >> buildFullModelWithDiscoveredTraits_Behavior [
+	<gtExample>
+	| aBuilder |
+	aBuilder := self buildFullModelWithDiscoveredTraits.
+	^ aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 ]
 
 { #category : #'examples - full model' }
@@ -380,14 +387,14 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithTrait [
 	<gtExample>
 	| aBuilder aModelClass |
 	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
-	aBuilder useTrait: TDummyTraitOneExample inCollectionNamed: 'company'.
+	aBuilder useTrait: TDiDummyTraitOneExample inCollectionNamed: 'company'.
 	aBuilder build.
 	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 	self assert: aModelClass isNotNil.
 	self assert: aModelClass isClass.
 	self assert: aModelClass package name equals: self dummyPackageName.
 	self assert: aModelClass usedTraits size equals: 1.
-	self assert: aModelClass usedTraits anyOne name equals: TDummyTraitOneExample name.
+	self assert: aModelClass usedTraits anyOne name equals: TDiDummyTraitOneExample name.
 	^ aBuilder
 ]
 
@@ -404,8 +411,8 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithTwoTraits [
 	<gtExample>
 	| aBuilder aModelClass aCollection |
 	aBuilder := self collectionToModelBuilderWithCompanyMetaModel.
-	aBuilder useTrait: TDummyTraitOneExample inCollectionNamed: 'company'.
-	aBuilder useTrait: TDummyTraitTwoExample inCollectionNamed: 'company'.
+	aBuilder useTrait: TDiDummyTraitOneExample inCollectionNamed: 'company'.
+	aBuilder useTrait: TDiDummyTraitTwoExample inCollectionNamed: 'company'.
 	aBuilder build.
 	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'Company'.
 	self assert: aModelClass isNotNil.
@@ -413,8 +420,8 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithTwoTraits [
 	self assert: aModelClass package name equals: self dummyPackageName.
 	self assert: aModelClass usedTraits size equals: 2.
 	aCollection := aModelClass usedTraits asArray sort: [ :a :b | a name < b name ].
-	self assert: aCollection first name equals: TDummyTraitOneExample name.
-	self assert: aCollection second name equals: TDummyTraitTwoExample name.
+	self assert: aCollection first name equals: TDiDummyTraitOneExample name.
+	self assert: aCollection second name equals: TDiDummyTraitTwoExample name.
 	^ aBuilder
 ]
 
