@@ -5,6 +5,9 @@ Class {
 		'jsStream',
 		'modelClassPrefix'
 	],
+	#classInstVars : [
+		'tabIndent'
+	],
 	#category : #'GToolkit4DirectusRing2-Exporters'
 }
 
@@ -26,6 +29,17 @@ DiModelToJavascriptExporter >> export: aModel [
 		sort: [ :a :b | self putBehavior: a before: b ].
 	
 	^ self onTempStreamDo: [ behaviors do: [ :aBehavior | self convertClass: aBehavior] ].
+]
+
+{ #category : #'as yet unclassified' }
+DiModelToJavascriptExporter >> for: elements do: aDoBlock separatedBy: aSeparatorBlock [
+	| aBeforeFirst | 
+	aBeforeFirst := true.
+	elements do: [ :anElement | 
+		aBeforeFirst
+			ifTrue: [ aBeforeFirst := false ]
+			ifFalse: [ aSeparatorBlock value ].
+		aDoBlock cull: anElement ]
 ]
 
 { #category : #accessing }
@@ -70,11 +84,13 @@ DiModelToJavascriptExporter >> writeClassDefinitionOf: aClass [
 		nextPutAll: aClass name.
 	self writeClassInheritanceOf: aClass.
 	jsStream
-		nextPutAll: '{'.
+		nextPutAll: '{';
+		nextPutAll: String crlf;
+		nextPutAll: String crlf.
 	self writeClassVariablesDeclarationOf: aClass.
-	self writeMethodsOf: aClass.
 	jsStream
 		nextPutAll: '}'.
+	self halt.
 ]
 
 { #category : #writing }
@@ -90,12 +106,31 @@ DiModelToJavascriptExporter >> writeClassInheritanceOf: aClass [
 
 { #category : #writing }
 DiModelToJavascriptExporter >> writeClassVariablesDeclarationOf: aClass [
+	| instVarNames |
+	jsStream
+		nextPutAll: String tab;
+		nextPutAll: 'constructor('.
+	instVarNames := aClass allInstVarNames.
+	self for: instVarNames do: [ :aVariable | jsStream nextPutAll: aVariable ] separatedBy: [jsStream nextPutAll: ', '].
+	jsStream
+		nextPutAll: '){';
+		nextPutAll: String crlf;
+		nextPutAll: String crlf.
+	self for: instVarNames do: [ 
+		:aVariable | 
+			jsStream
+				nextPutAll: String tab;
+				nextPutAll: String tab;
+				nextPutAll: 'this.';
+				nextPutAll: aVariable;
+				nextPutAll: ' = ';
+				nextPutAll: aVariable. 
+	] separatedBy: [jsStream nextPutAll: String crlf].
+	jsStream
+		nextPutAll: String tab;
+		nextPutAll: '}'.
 ]
 
 { #category : #writing }
 DiModelToJavascriptExporter >> writeMetaClassDefinitionOf: aClass [
-]
-
-{ #category : #writing }
-DiModelToJavascriptExporter >> writeMethodsOf: aClass [
 ]
