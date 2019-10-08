@@ -23,6 +23,7 @@ DiJavascriptModelStream >> contents [
 DiJavascriptModelStream >> curlies: aBlock [
 	self nextPut: ${.
 	self increaseTabLevel.
+	self newline.
 	aBlock cull: self.
 	self decreaseTabLevel.
 	self newline.
@@ -51,6 +52,12 @@ DiJavascriptModelStream >> intialize [
 	stream := '' writeStream.
 ]
 
+{ #category : #'as yet unclassified' }
+DiJavascriptModelStream >> line: aLine [
+	self newlineIndent.
+	^ self nextPutAll: aLine; nextPut: $;; newline.
+]
+
 { #category : #writing }
 DiJavascriptModelStream >> newline [
 	^ self nextPutAll: String crlf.
@@ -69,4 +76,11 @@ DiJavascriptModelStream >> nextPut: character [
 { #category : #writing }
 DiJavascriptModelStream >> nextPutAll: string [
 	^ stream nextPutAll: string
+]
+
+{ #category : #writing }
+DiJavascriptModelStream >> parantheses: aBlock [
+	self nextPut: $(.
+	aBlock cull: self.
+	self nextPut: $).	
 ]

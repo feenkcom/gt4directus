@@ -74,58 +74,37 @@ DiModelToJavascriptExporter >> putBehavior: aFirst before: aSecond [
 
 { #category : #writing }
 DiModelToJavascriptExporter >> writeAccessorsFor: variables [
-	self for: variables do: [ :aVariable |
+	variables do: [ :aVariable |
 		jsStream
 			newline;
+			code: 'get ', aVariable;
 			curlies: [ 
-				jsStream code: 'get ', aVariable ].
+				jsStream code: 'return this.', aVariable, ';'.
+			].
 		jsStream
-			nextPutAll: String crlf;
-			nextPutAll: String crlf;
-			nextPutAll: String tab;
-			nextPutAll: 'set '; 
-			nextPutAll: aVariable;
-			nextPutAll: '(';
-			nextPutAll: aVariable;
-			nextPutAll: '){';
-			nextPutAll: String crlf;
-			nextPutAll: String tab;
-			nextPutAll: String tab;
-			nextPutAll: 'this.';
-			nextPutAll: aVariable;
-			nextPutAll: ' = ';
-			nextPutAll: aVariable;
-			nextPutAll: String crlf;
-			nextPutAll: String tab;
-			nextPutAll: '}'.
-	]
-	separatedBy: [jsStream nextPutAll: String crlf.].
+			newline;
+			code: 'set ', aVariable, '(', aVariable, ')';
+			curlies: [ 
+				jsStream code: 'this.', aVariable, ' = ', aVariable, ';'.
+			].
+	].
 ]
 
 { #category : #writing }
 DiModelToJavascriptExporter >> writeClassDefinitionOf: aClass [
 	jsStream
-		nextPutAll: 'class ';
-		nextPutAll: aClass name.
+		code: 'class ', aClass name.
 	self writeClassInheritanceOf: aClass.
-	jsStream
-		nextPutAll: '{';
-		nextPutAll: String crlf;
-		nextPutAll: String crlf.
-	self writeClassVariablesDeclarationOf: aClass.
-	jsStream
-		nextPutAll: '}'.
+	jsStream curlies: [ 
+		self writeClassVariablesDeclarationOf: aClass.
+	].
 ]
 
 { #category : #writing }
 DiModelToJavascriptExporter >> writeClassInheritanceOf: aClass [
 	| superclassName |
 	superclassName := aClass superclass name.
-	(superclassName beginsWith: modelClassPrefix) ifTrue: [ 
-		jsStream
-			nextPutAll: ' extends ';
-			nextPutAll: superclassName.
-		].
+	(superclassName beginsWith: modelClassPrefix) ifTrue: [ jsStream code: ' extends ', superclassName.].
 ]
 
 { #category : #writing }
@@ -136,28 +115,11 @@ DiModelToJavascriptExporter >> writeClassVariablesDeclarationOf: aClass [
 
 { #category : #writing }
 DiModelToJavascriptExporter >> writeConstructorFor: variables [
-	jsStream
-		nextPutAll: String tab;
-		nextPutAll: 'constructor('.
-	self for: variables do: [ :aVariable | jsStream nextPutAll: aVariable ] separatedBy: [jsStream nextPutAll: ', '].
-	jsStream
-		nextPutAll: '){';
-		nextPutAll: String crlf;
-		nextPutAll: String crlf.
-	self for: variables do: [ 
-		:aVariable | 
-			jsStream
-				nextPutAll: String tab;
-				nextPutAll: String tab;
-				nextPutAll: 'this.';
-				nextPutAll: aVariable;
-				nextPutAll: ' = ';
-				nextPutAll: aVariable;
-				nextPutAll: ';'.
-	] separatedBy: [jsStream nextPutAll: String crlf].
-	jsStream
-		nextPutAll: String crlf;
-		nextPutAll: String tab;
-		nextPutAll: '}';
-		nextPutAll: String crlf.
+	jsStream code: 'constructor'.
+	jsStream parantheses: [ 
+		self for: variables do: [ :aVariable | jsStream nextPutAll: aVariable ] separatedBy: [jsStream nextPutAll: ', ']].
+	jsStream curlies: [
+		variables do: [ 
+		:aVariable | jsStream line: 'this.', aVariable, ' = ', aVariable.]
+	].
 ]
