@@ -11,6 +11,11 @@ Class {
 	#category : #'GToolkit4DirectusRing2-Exporters'
 }
 
+{ #category : #accessing }
+DiModelToJavascriptExporter >> contents [
+	^ jsStream contents.
+]
+
 { #category : #writing }
 DiModelToJavascriptExporter >> convertClass: aClass [
 	self writeClassDefinitionOf: aClass.
@@ -126,7 +131,5 @@ DiModelToJavascriptExporter >> writeConstructorFor: variables [
 	jsStream parantheses: [ 
 		self for: variables do: [ :aVariable | jsStream nextPutAll: aVariable ] separatedBy: [jsStream nextPutAll: ', ']].
 	jsStream curlies: [
-		variables do: [ 
-		:aVariable | jsStream line: 'this.', aVariable, ' = ', aVariable.]
-	].
+		variables do: [ :aVariable | jsStream line: 'this.', aVariable, ' = ', aVariable.] ].
 ]
