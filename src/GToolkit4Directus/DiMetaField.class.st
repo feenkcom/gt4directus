@@ -20,7 +20,7 @@ Class {
 
 { #category : #accessing }
 DiMetaField class >> systemFieldNames [
-	^ #('created_by' 'created_on' 'modified_by' 'modified_on' 'updated_on' 'updated_by' 'status')
+	^ #('created_by' 'created_on' 'modified_by' 'modified_on' 'updated_on' 'updated_by')
 ]
 
 { #category : #accessing }
