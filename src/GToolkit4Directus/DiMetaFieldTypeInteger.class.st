@@ -26,3 +26,10 @@ DiMetaFieldTypeInteger >> name [
 	<return: #String>
 	^ 'Integer'
 ]
+
+{ #category : #'accessing - model' }
+DiMetaFieldTypeInteger >> pharoTypeName [
+	"Return a class name (if possible) representing the meta field type"
+	<return: #Symbol>
+	^ Integer name
+]

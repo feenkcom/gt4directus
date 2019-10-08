@@ -79,6 +79,13 @@ DiMetaField >> note: anObject [
 	note := anObject
 ]
 
+{ #category : #'accessing - model' }
+DiMetaField >> pharoTypeName [
+	"Return a class name (if possible) representing the meta field type"
+	<return: #Symbol>
+	^ self type pharoTypeName
+]
+
 { #category : #printing }
 DiMetaField >> printOn: aStream [
 	self name ifNil: [ ^ super printOn: aStream ].

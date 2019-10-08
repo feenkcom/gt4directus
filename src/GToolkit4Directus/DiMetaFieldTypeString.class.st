@@ -26,3 +26,10 @@ DiMetaFieldTypeString >> name [
 	<return: #String>
 	^ 'String'
 ]
+
+{ #category : #'accessing - model' }
+DiMetaFieldTypeString >> pharoTypeName [
+	"Return a class name (if possible) representing the meta field type"
+	<return: #Symbol>
+	^ String name
+]

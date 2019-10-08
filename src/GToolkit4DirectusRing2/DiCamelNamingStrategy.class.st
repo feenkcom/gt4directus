@@ -12,11 +12,18 @@ Class {
 DiCamelNamingStrategy >> collectionBasicModelName: aDiMetaCollection [
 	"A model (class) name without a possible prefix"
 	<return: #String>
+	self 
+		assert: [ aDiMetaCollection isNotNil ]
+		description: [ 'Meta collection must be non-nil' ].
 	^ aDiMetaCollection modelClassName
 ]
 
 { #category : #accessing }
 DiCamelNamingStrategy >> collectionModelName: aDiMetaCollection [ 
+	<return: #String>
+	self 
+		assert: [ aDiMetaCollection isNotNil ]
+		description: [ 'Meta collection must be non-nil' ].
 	^ String streamContents: [ :aStream | 
 		aStream 
 			nextPutAll: self modelClassPrefix;

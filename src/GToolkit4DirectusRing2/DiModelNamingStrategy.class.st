@@ -26,6 +26,7 @@ DiModelNamingStrategy >> cleanupProtocolName [
 
 { #category : #accessing }
 DiModelNamingStrategy >> collectionModelName: aDiMetaCollection [
+	<return: #String>
 	^ self subclassResponsibility
 ]
 
