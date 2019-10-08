@@ -21,13 +21,9 @@ DiJavascriptModelStream >> contents [
 
 { #category : #writing }
 DiJavascriptModelStream >> curlies: aBlock [
-	self nextPut: ${.
-	self increaseTabLevel.
-	self newline.
+	self code: '{'; increaseTabLevel; newline.
 	aBlock cull: self.
-	self decreaseTabLevel.
-	self newline.
-	self nextPut: $}.	
+	self decreaseTabLevel; code: '}'.
 ]
 
 { #category : #'as yet unclassified' }
@@ -47,12 +43,6 @@ DiJavascriptModelStream >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-DiJavascriptModelStream >> intialize [
-	level := 0.
-	stream := '' writeStream.
-]
-
-{ #category : #'as yet unclassified' }
 DiJavascriptModelStream >> line: aLine [
 	self newlineIndent.
 	^ self nextPutAll: aLine; nextPut: $;; newline.
@@ -66,6 +56,11 @@ DiJavascriptModelStream >> newline [
 { #category : #writing }
 DiJavascriptModelStream >> newlineIndent [
 	level timesRepeat: [ self nextPut: Character tab ].
+]
+
+{ #category : #writing }
+DiJavascriptModelStream >> newlines: count [
+	^ count timesRepeat: [ self newline ].
 ]
 
 { #category : #writing }

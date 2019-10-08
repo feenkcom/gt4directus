@@ -13,24 +13,22 @@ Class {
 
 { #category : #writing }
 DiModelToJavascriptExporter >> convertClass: aClass [
-	(aClass hasResolvedSuperclass) ifFalse: [^ self].
-	aClass isMetaclass
-		ifFalse: [ self writeClassDefinitionOf: aClass. ].
-	
+	self writeClassDefinitionOf: aClass.
 ]
 
 { #category : #exporting }
-DiModelToJavascriptExporter >> export: aModel [
-	| behaviors |
-	behaviors := ((aModel ringEnvironment ask behaviors asOrderedCollection)
-		reject: [ :aBehavior | 
-			aBehavior isRGUnresolvedValue or: [ aBehavior isRingResolved not ]])
-		sort: [ :a :b | self putBehavior: a before: b ].
-	
-	^ self onTempStreamDo: [ behaviors do: [ :aBehavior | self convertClass: aBehavior] ].
+DiModelToJavascriptExporter >> export: builder [
+	^ self onTempStreamDo: [ 
+		self convertClass: builder modelRootClass.
+		jsStream newlines: 2.
+		builder includedCollectionsAndModelsDo: [ :aMetaCollection :aBehavior | 
+			self convertClass: aBehavior.
+			jsStream newlines: 2.
+		]
+	].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #formatting }
 DiModelToJavascriptExporter >> for: elements do: aDoBlock separatedBy: aSeparatorBlock [
 	| aBeforeFirst | 
 	aBeforeFirst := true.
@@ -39,6 +37,15 @@ DiModelToJavascriptExporter >> for: elements do: aDoBlock separatedBy: aSeparato
 			ifTrue: [ aBeforeFirst := false ]
 			ifFalse: [ aSeparatorBlock value ].
 		aDoBlock cull: anElement ]
+]
+
+{ #category : #accessing }
+DiModelToJavascriptExporter >> gtContentsFor: aView [
+	<gtView>
+	^ aView textEditor
+		title: 'Contents';
+		styler: JSParser gtStyler;
+		text: [jsStream contents].
 ]
 
 { #category : #accessing }
@@ -55,7 +62,6 @@ DiModelToJavascriptExporter >> modelClassPrefix: anObject [
 DiModelToJavascriptExporter >> onTempStreamDo: aBlock [
 	jsStream := DiJavascriptModelStream new.
 	aBlock value.
-	^ jsStream contents.
 ]
 
 { #category : #sorting }
@@ -77,15 +83,15 @@ DiModelToJavascriptExporter >> writeAccessorsFor: variables [
 	variables do: [ :aVariable |
 		jsStream
 			newline;
-			code: 'get ', aVariable;
+			code: 'get ', aVariable, '()';
 			curlies: [ 
-				jsStream code: 'return this.', aVariable, ';'.
+				jsStream line: 'return this.', aVariable.
 			].
 		jsStream
 			newline;
 			code: 'set ', aVariable, '(', aVariable, ')';
 			curlies: [ 
-				jsStream code: 'this.', aVariable, ' = ', aVariable, ';'.
+				jsStream line: 'this.', aVariable, ' = ', aVariable.
 			].
 	].
 ]
@@ -97,6 +103,7 @@ DiModelToJavascriptExporter >> writeClassDefinitionOf: aClass [
 	self writeClassInheritanceOf: aClass.
 	jsStream curlies: [ 
 		self writeClassVariablesDeclarationOf: aClass.
+		jsStream newline.
 	].
 ]
 

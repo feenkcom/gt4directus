@@ -169,7 +169,8 @@ DiCollectionToModelBuilder >> exportToJavascript [
 	| jsExporter |
 	jsExporter := DiModelToJavascriptExporter new
 		modelClassPrefix: self modelClassPrefix.
-	jsExporter export: self modelBuilder.
+	jsExporter export: self.
+	^ jsExporter. 
 ]
 
 { #category : #accessing }
