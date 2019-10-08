@@ -27,9 +27,9 @@ DiMetaFieldTypeString >> name [
 	^ 'String'
 ]
 
-{ #category : #'accessing - model' }
-DiMetaFieldTypeString >> pharoTypeName [
+{ #category : #'as yet unclassified' }
+DiMetaFieldTypeString >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>
-	^ String name
+	^ String name asSymbol
 ]

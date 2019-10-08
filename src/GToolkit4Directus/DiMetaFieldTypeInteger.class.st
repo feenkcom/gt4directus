@@ -27,9 +27,9 @@ DiMetaFieldTypeInteger >> name [
 	^ 'Integer'
 ]
 
-{ #category : #'accessing - model' }
-DiMetaFieldTypeInteger >> pharoTypeName [
+{ #category : #'as yet unclassified' }
+DiMetaFieldTypeInteger >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>
-	^ Integer name
+	^ Integer name asSymbol
 ]

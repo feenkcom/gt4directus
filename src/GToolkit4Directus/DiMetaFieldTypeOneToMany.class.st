@@ -68,15 +68,6 @@ DiMetaFieldTypeOneToMany >> name [
 		ifNil: [ 'a Collection' ]
 ]
 
-{ #category : #'accessing - model' }
-DiMetaFieldTypeOneToMany >> pharoTypeName [
-	"Return a class name (if possible) representing the meta field type"
-	<return: #Symbol>
-	^ self collection 
-		ifNotNil: [ :aCollection | aCollection modelClassName asSymbol ] 
-		ifNil: [ Object name ]
-]
-
 { #category : #accessing }
 DiMetaFieldTypeOneToMany >> relation [
 	<return: #DiMetaRelation>
@@ -87,4 +78,13 @@ DiMetaFieldTypeOneToMany >> relation [
 DiMetaFieldTypeOneToMany >> relation: aDiMetaRelation [ 
 	self assert: relation isNil.
 	relation := aDiMetaRelation
+]
+
+{ #category : #'as yet unclassified' }
+DiMetaFieldTypeOneToMany >> typeNameUsingNaming: aDiNamingStrategy [ 
+	"Return a class name (if possible) representing the meta field type"
+	<return: #Symbol>
+	^ self collection 
+		ifNotNil: [ :aCollection | aCollection typeNameUsingNaming: aDiNamingStrategy ] 
+		ifNil: [ Collection name asSymbol ]
 ]
