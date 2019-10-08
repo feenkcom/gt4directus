@@ -113,7 +113,7 @@ DiMetaField >> typeName [
 	^ self type name
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - model' }
 DiMetaField >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>

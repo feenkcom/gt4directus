@@ -65,7 +65,7 @@ DiMetaFieldType >> name: aString [
 	"Subclasses can override it"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - model' }
 DiMetaFieldType >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>

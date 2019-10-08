@@ -42,7 +42,7 @@ DiMetaFieldUnrecognizedType >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - model' }
 DiMetaFieldUnrecognizedType >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>

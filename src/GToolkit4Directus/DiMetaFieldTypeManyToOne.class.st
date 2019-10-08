@@ -80,7 +80,7 @@ DiMetaFieldTypeManyToOne >> relation: aDiMetaRelation [
 	relation := aDiMetaRelation
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - model' }
 DiMetaFieldTypeManyToOne >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>
