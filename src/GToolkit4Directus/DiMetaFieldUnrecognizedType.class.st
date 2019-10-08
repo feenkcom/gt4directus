@@ -43,8 +43,8 @@ DiMetaFieldUnrecognizedType >> name: anObject [
 ]
 
 { #category : #'accessing - model' }
-DiMetaFieldUnrecognizedType >> pharoTypeName [
+DiMetaFieldUnrecognizedType >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>
-	^ Object name
+	^ Object name asSymbol
 ]

@@ -28,8 +28,8 @@ DiMetaFieldTypeString >> name [
 ]
 
 { #category : #'accessing - model' }
-DiMetaFieldTypeString >> pharoTypeName [
+DiMetaFieldTypeString >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>
-	^ String name
+	^ String name asSymbol
 ]

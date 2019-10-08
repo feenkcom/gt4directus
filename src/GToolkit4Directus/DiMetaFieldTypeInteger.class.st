@@ -28,8 +28,8 @@ DiMetaFieldTypeInteger >> name [
 ]
 
 { #category : #'accessing - model' }
-DiMetaFieldTypeInteger >> pharoTypeName [
+DiMetaFieldTypeInteger >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>
-	^ Integer name
+	^ Integer name asSymbol
 ]

@@ -36,9 +36,7 @@ DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: a
 	aProtocolName := self naming accessorProtocolName.
 
 	"Type"
-	aType := aDiMetaField collectionOrNil
-		ifNotNil: [ (self naming collectionModelName: aDiMetaField collectionOrNil) asSymbol ]
-		ifNil: [ aDiMetaField pharoTypeName ].
+	aType := aDiMetaField typeNameUsingNaming: self naming.
 	
 	"Getter"
 	aName := self naming accessorName: aDiMetaField.

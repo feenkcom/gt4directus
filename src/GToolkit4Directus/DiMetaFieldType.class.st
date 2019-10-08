@@ -66,7 +66,7 @@ DiMetaFieldType >> name: aString [
 ]
 
 { #category : #'accessing - model' }
-DiMetaFieldType >> pharoTypeName [
+DiMetaFieldType >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>
 	^ self subclassResponsibility

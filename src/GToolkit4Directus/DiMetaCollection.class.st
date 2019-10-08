@@ -240,3 +240,10 @@ DiMetaCollection >> translation [
 DiMetaCollection >> translation: anObject [
 	translation := anObject
 ]
+
+{ #category : #'accessing - model' }
+DiMetaCollection >> typeNameUsingNaming: aDiNamingStrategy [ 
+	"Return a class name (if possible) representing the meta field type"
+	<return: #Symbol>
+	^ (aDiNamingStrategy collectionModelName: self) asSymbol
+]

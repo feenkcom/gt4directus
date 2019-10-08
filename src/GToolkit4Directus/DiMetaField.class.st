@@ -79,13 +79,6 @@ DiMetaField >> note: anObject [
 	note := anObject
 ]
 
-{ #category : #'accessing - model' }
-DiMetaField >> pharoTypeName [
-	"Return a class name (if possible) representing the meta field type"
-	<return: #Symbol>
-	^ self type pharoTypeName
-]
-
 { #category : #printing }
 DiMetaField >> printOn: aStream [
 	self name ifNil: [ ^ super printOn: aStream ].
@@ -118,4 +111,11 @@ DiMetaField >> type: anObject [
 DiMetaField >> typeName [
 	<return: #String>
 	^ self type name
+]
+
+{ #category : #'accessing - model' }
+DiMetaField >> typeNameUsingNaming: aDiNamingStrategy [ 
+	"Return a class name (if possible) representing the meta field type"
+	<return: #Symbol>
+	^ self type typeNameUsingNaming: aDiNamingStrategy 
 ]
