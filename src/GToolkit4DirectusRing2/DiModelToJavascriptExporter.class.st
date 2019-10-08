@@ -14,8 +14,7 @@ Class {
 { #category : #writing }
 DiModelToJavascriptExporter >> convertClass: aClass [
 	(aClass hasResolvedSuperclass) ifFalse: [^ self].
-	aClass isMetaclass 
-		ifTrue: [ self writeMetaClassDefinitionOf: aClass. ]
+	aClass isMetaclass
 		ifFalse: [ self writeClassDefinitionOf: aClass. ].
 	
 ]
@@ -54,13 +53,9 @@ DiModelToJavascriptExporter >> modelClassPrefix: anObject [
 
 { #category : #writing }
 DiModelToJavascriptExporter >> onTempStreamDo: aBlock [
-	| saveStream |
-	saveStream := jsStream.
-	jsStream := '' writeStream.
-	[
-		aBlock value.
-		^ jsStream contents
-	] ensure: [ jsStream := saveStream ]
+	jsStream := DiJavascriptModelStream new.
+	aBlock value.
+	^ jsStream contents.
 ]
 
 { #category : #sorting }
@@ -81,19 +76,9 @@ DiModelToJavascriptExporter >> putBehavior: aFirst before: aSecond [
 DiModelToJavascriptExporter >> writeAccessorsFor: variables [
 	self for: variables do: [ :aVariable |
 		jsStream
-			nextPutAll: String crlf;
-			nextPutAll: String tab;
-			nextPutAll: 'get '; 
-			nextPutAll: aVariable;
-			nextPutAll: '{';
-			nextPutAll: String crlf;
-			nextPutAll: String tab;
-			nextPutAll: String tab;
-			nextPutAll: 'return this.';
-			nextPutAll: aVariable;
-			nextPutAll: String crlf;
-			nextPutAll: String tab;
-			nextPutAll: '}'.
+			newline;
+			curlies: [ 
+				jsStream code: 'get ', aVariable ].
 		jsStream
 			nextPutAll: String crlf;
 			nextPutAll: String crlf;
@@ -175,8 +160,4 @@ DiModelToJavascriptExporter >> writeConstructorFor: variables [
 		nextPutAll: String tab;
 		nextPutAll: '}';
 		nextPutAll: String crlf.
-]
-
-{ #category : #writing }
-DiModelToJavascriptExporter >> writeMetaClassDefinitionOf: aClass [
 ]
