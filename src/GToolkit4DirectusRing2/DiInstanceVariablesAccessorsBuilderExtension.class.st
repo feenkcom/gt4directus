@@ -37,7 +37,7 @@ DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: a
 
 	"Type"
 	aType := aDiMetaField collectionOrNil
-		ifNotNil: [ self naming collectionModelName: aDiMetaField collectionOrNil ]
+		ifNotNil: [ (self naming collectionModelName: aDiMetaField collectionOrNil) asSymbol ]
 		ifNil: [ aDiMetaField pharoTypeName ].
 	
 	"Getter"
