@@ -1,3 +1,16 @@
+"
+I export a model provided by ${class:DiCollectionToModelBuilder}$ into a JavaScript source code.
+
+!! Example 
+
+I export the following model 
+${example:DiJavascripModelExporterExamples>>#companyAndCountryBuilder|previewExpanded=true|codeExpanded=false}$
+
+into the following JavaScript code:
+${example:DiJavascripModelExporterExamples>>#companyAndCountryBuilder|previewExpanded=true|codeExpanded=false}$
+
+
+"
 Class {
 	#name : #DiModelToJavascriptExporter,
 	#superclass : #Object,

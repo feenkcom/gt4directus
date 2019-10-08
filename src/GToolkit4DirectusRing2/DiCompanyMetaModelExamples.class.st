@@ -1,3 +1,7 @@
+"
+I exemplify meta models, subclasses of ${class:DiMetaModel}$. 
+ 
+"
 Class {
 	#name : #DiCompanyMetaModelExamples,
 	#superclass : #Object,

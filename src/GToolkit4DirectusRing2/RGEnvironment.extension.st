@@ -68,6 +68,7 @@ RGEnvironment >> gtTreeBehaviorsFor: aView [
 						aBehavior superclass isRingResolved not ]]]) 
 			sort: [ :a :b | self gtPutBehavior: a before: b ] ];
 		children: [ :aBehavior | aBehavior subclasses ];
+		expandUpTo: 1;
 		column: 'Name' item: [ :aBehavior | aBehavior ];
 		column: 'Package' item: [ :aBehavior | aBehavior package name ]
 ]
