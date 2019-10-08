@@ -68,6 +68,15 @@ DiMetaFieldTypeManyToOne >> name [
 		ifNil: [ 'an Object' ]
 ]
 
+{ #category : #'accessing - model' }
+DiMetaFieldTypeManyToOne >> pharoTypeName [
+	"Return a class name (if possible) representing the meta field type"
+	<return: #Symbol>
+	^ self collection 
+		ifNotNil: [ :aCollection | aCollection modelClassName asSymbol ] 
+		ifNil: [ Object name ]
+]
+
 { #category : #accessing }
 DiMetaFieldTypeManyToOne >> relation [
 	<return: #DiMetaRelation>

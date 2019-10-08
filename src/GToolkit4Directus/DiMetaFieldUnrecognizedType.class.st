@@ -41,3 +41,10 @@ DiMetaFieldUnrecognizedType >> name [
 DiMetaFieldUnrecognizedType >> name: anObject [
 	name := anObject
 ]
+
+{ #category : #'accessing - model' }
+DiMetaFieldUnrecognizedType >> pharoTypeName [
+	"Return a class name (if possible) representing the meta field type"
+	<return: #Symbol>
+	^ Object name
+]

@@ -64,3 +64,10 @@ DiMetaFieldType >> name [
 DiMetaFieldType >> name: aString [
 	"Subclasses can override it"
 ]
+
+{ #category : #'accessing - model' }
+DiMetaFieldType >> pharoTypeName [
+	"Return a class name (if possible) representing the meta field type"
+	<return: #Symbol>
+	^ self subclassResponsibility
+]

@@ -28,25 +28,37 @@ DiInstanceVariablesAccessorsBuilderExtension >> build [
 
 { #category : #building }
 DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: aDiMetaField inClass: aRGBehavior ofCollection: aDiMetaCollection [ 
-	| aName aProtocolName aSourceCode aSetterName aMethodComment |
+	| aName aType aVariableName aProtocolName aSourceCode aSetterName aMethodComment |
 	
 	aMethodComment := aDiMetaField note isEmptyOrNil
 		ifTrue: [ '' ] 
 		ifFalse: [ String cr, String tab, '"', ((aDiMetaField note) copyReplaceAll: '"' with: ''''), '"' ].
 	aProtocolName := self naming accessorProtocolName.
+
+	"Type"
+	aType := aDiMetaField collectionOrNil
+		ifNotNil: [ self naming collectionModelName: aDiMetaField collectionOrNil ]
+		ifNil: [ aDiMetaField pharoTypeName ].
 	
 	"Getter"
 	aName := self naming accessorName: aDiMetaField.
-	aSourceCode := aName, aMethodComment, String cr, String tab, '^ ', aName. 
+	aSourceCode := aName, aMethodComment, String cr, 
+		String tab, '<return: ', aType printString, '>', String cr, 
+		String tab, '<metaField: ', aDiMetaField name printString, '>', String cr, 
+		String tab, '^ ', aName. 
 	self modelBuilder 
 		ensureLocalMethodNamed: aName 
 		withSourceCode: aSourceCode 
 		andProtocol: aProtocolName 
 		inBehavior: aRGBehavior.
-	
+
 	"Setter"
+	aVariableName := (aType first isVowel ifTrue: [ 'an' ] ifFalse: [ 'a' ]), aType asString.
 	aSetterName := aName, ':'.
-	aSourceCode := aSetterName, ' anObject', aMethodComment, String cr, String tab, aName, ' := anObject'. 
+	aSourceCode := aSetterName, ' ', aVariableName, aMethodComment, String cr, 
+		String tab, '<input: ', aType printString, '>', String cr, 
+		String tab, '<metaField: ', aDiMetaField name printString, '>', String cr, 
+		String tab, aName, ' := ', aVariableName. 
 	self modelBuilder 
 		ensureLocalMethodNamed: aSetterName 
 		withSourceCode: aSourceCode 
