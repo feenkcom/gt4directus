@@ -49,6 +49,11 @@ DiMetaFieldTypeManyToOne >> isManyToOne [
 ]
 
 { #category : #testing }
+DiMetaFieldTypeManyToOne >> isModelType [
+	^ true
+]
+
+{ #category : #testing }
 DiMetaFieldTypeManyToOne >> isRelatedToCollection: aDiMetaCollection [
 	<return: #Boolean>
 	^ self collection isNotNil and: [ self collection name = aDiMetaCollection name ]

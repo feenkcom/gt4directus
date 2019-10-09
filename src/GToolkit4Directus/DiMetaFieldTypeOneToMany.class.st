@@ -44,6 +44,11 @@ DiMetaFieldTypeOneToMany >> collectionOrNil [
 ]
 
 { #category : #testing }
+DiMetaFieldTypeOneToMany >> isModelType [
+	^ true
+]
+
+{ #category : #testing }
 DiMetaFieldTypeOneToMany >> isOneToMany [
 	^ true
 ]

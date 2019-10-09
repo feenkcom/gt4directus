@@ -48,6 +48,11 @@ DiMetaField >> getter [
 ]
 
 { #category : #testing }
+DiMetaField >> isModelType [
+	^ self type isModelType
+]
+
+{ #category : #testing }
 DiMetaField >> isRelatedToCollection: aDiMetaCollection [
 	<return: #Boolean>
 	^ self type isRelatedToCollection: aDiMetaCollection
