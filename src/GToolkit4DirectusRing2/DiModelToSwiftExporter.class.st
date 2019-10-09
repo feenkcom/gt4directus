@@ -1,18 +1,5 @@
-"
-I export a model provided by ${class:DiCollectionToModelBuilder}$ into a JavaScript source code.
-
-!! Example 
-
-I export the following model 
-${example:DiJavascripModelExporterExamples>>#companyAndCountryBuilder|previewExpanded=true|codeExpanded=false}$
-
-into the following JavaScript code:
-${example:DiJavascripModelExporterExamples>>#companyAndCountryBuilder|previewExpanded=true|codeExpanded=false}$
-
-
-"
 Class {
-	#name : #DiModelToJavascriptExporter,
+	#name : #DiModelToSwiftExporter,
 	#superclass : #DiModelExporter,
 	#classInstVars : [
 		'tabIndent'
@@ -21,13 +8,19 @@ Class {
 }
 
 { #category : #writing }
-DiModelToJavascriptExporter >> convertClass: aClass [
-	self writeClassDefinitionOf: aClass.
+DiModelToSwiftExporter >> convertClass: aClass [
+	stream
+		code: 'class ', aClass name.
+	self writeClassInheritanceOf: aClass.
+	stream curlies: [ 
+		self writeClassVariablesDeclarationOf: aClass.
+		stream newline.
+	].
 	stream newlines: 2.
 ]
 
 { #category : #accessing }
-DiModelToJavascriptExporter >> gtContentsFor: aView [
+DiModelToSwiftExporter >> gtContentsFor: aView [
 	<gtView>
 	^ aView textEditor
 		title: 'Contents';
@@ -36,7 +29,7 @@ DiModelToJavascriptExporter >> gtContentsFor: aView [
 ]
 
 { #category : #sorting }
-DiModelToJavascriptExporter >> putBehavior: aFirst before: aSecond [
+DiModelToSwiftExporter >> putBehavior: aFirst before: aSecond [
 	(aFirst isRingResolved and: [ aSecond isRingResolved not ]) ifTrue: [ ^ true ].
 	(aFirst isRingResolved not and: [ aSecond isRingResolved ]) ifTrue: [ ^ false ].
 	
@@ -50,7 +43,7 @@ DiModelToJavascriptExporter >> putBehavior: aFirst before: aSecond [
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeAccessorsFor: variables [
+DiModelToSwiftExporter >> writeAccessorsFor: variables [
 	variables do: [ :aVariable |
 		stream
 			newline;
@@ -68,31 +61,20 @@ DiModelToJavascriptExporter >> writeAccessorsFor: variables [
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeClassDefinitionOf: aClass [
-	stream
-		code: 'class ', aClass name.
-	self writeClassInheritanceOf: aClass.
-	stream curlies: [ 
-		self writeClassVariablesDeclarationOf: aClass.
-		stream newline.
-	].
-]
-
-{ #category : #writing }
-DiModelToJavascriptExporter >> writeClassInheritanceOf: aClass [
+DiModelToSwiftExporter >> writeClassInheritanceOf: aClass [
 	| superclassName |
 	superclassName := aClass superclass name.
 	(superclassName beginsWith: modelClassPrefix) ifTrue: [ stream code: ' extends ', superclassName.].
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeClassVariablesDeclarationOf: aClass [
+DiModelToSwiftExporter >> writeClassVariablesDeclarationOf: aClass [
 	self writeConstructorFor: aClass allInstVarNames.
 	self writeAccessorsFor: aClass allInstVarNames.
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeConstructorFor: variables [
+DiModelToSwiftExporter >> writeConstructorFor: variables [
 	stream code: 'constructor'.
 	stream parantheses: [ 
 		self for: variables do: [ :aVariable | stream nextPutAll: aVariable ] separatedBy: [stream nextPutAll: ', ']].
