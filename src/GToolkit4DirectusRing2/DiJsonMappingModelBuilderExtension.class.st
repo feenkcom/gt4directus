@@ -26,6 +26,7 @@ DiJsonMappingModelBuilderExtension >> build [
 		self buildCollectionMappingForCollection: eachCollection behavior: eachBehavior.
 		self buildDataMappingForCollection: eachCollection behavior: eachBehavior. ].
 	self buildReadingMethod.
+	self buildModelReadingMethods.
 	self buildClassComment.
 ]
 
@@ -87,6 +88,37 @@ DiJsonMappingModelBuilderExtension >> buildDataMappingForCollection: aDiMetaColl
 ]
 
 { #category : #building }
+DiJsonMappingModelBuilderExtension >> buildJsonMappingClassSide: aClass [
+	self
+		ensureInstanceVariables: #('uniqueInstance')
+		inBehavior: aClass classSide.
+	self
+		ensureLocalMethodNamed: 'uniqueInstance'
+		withSourceCode:
+			'uniqueInstance' , String cr , String tab
+				, '^ uniqueInstance ifNil: [ uniqueInstance := self new ]'
+		andProtocol: self naming accessorProtocolName
+		inBehavior: aClass classSide.
+	self
+		ensureLocalMethodNamed: 'default'
+		withSourceCode: 'default' , String cr , String tab , '^ self uniqueInstance'
+		andProtocol: self naming accessorProtocolName
+		inBehavior: aClass classSide.
+	self
+		ensureLocalMethodNamed: 'resetUniqueInstance'
+		withSourceCode:
+			'resetUniqueInstance' , String cr , String tab
+				, 'uniqueInstance := nil'
+		andProtocol: self naming cleanupProtocolName
+		inBehavior: aClass classSide.
+	self
+		ensureLocalMethodNamed: 'cleanUp'
+		withSourceCode: 'cleanUp' , String cr , String tab , 'self resetUniqueInstance'
+		andProtocol: self naming cleanupProtocolName
+		inBehavior: aClass classSide
+]
+
+{ #category : #building }
 DiJsonMappingModelBuilderExtension >> buildModelMappingForCollection: aDiMetaCollection behavior: aRGBehavior [ 
 	| aJsonMappingClass aMethodName aMethodBody |
 	aJsonMappingClass := self jsonMappingClass.
@@ -106,6 +138,43 @@ DiJsonMappingModelBuilderExtension >> buildModelMappingForCollection: aDiMetaCol
 		withSourceCode: aMethodBody 
 		andProtocol: self naming mappingModelsProtocolName 
 		inBehavior: aJsonMappingClass
+]
+
+{ #category : #building }
+DiJsonMappingModelBuilderExtension >> buildModelReadingMethods [
+	| aModelClass aMethodName aMethodBody |
+	aModelClass := self modelRootClass.
+	aMethodName := 'dataSchemaName'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'dataSchemaName'; cr;
+			tab; nextPutAll: '^ #DataOf, self name'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming readingProtocolName 
+		inBehavior: aModelClass classSide.
+	aMethodName := 'readJson:on:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'readJson: aSchema on: aJsonString'; cr;
+			tab; nextPutAll: '^ EsJsonMapping uniqueInstance read: aSchema on: aJsonString readStream'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming readingProtocolName 
+		inBehavior: aModelClass classSide.
+	aMethodName := 'readJsonData:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'readJsonData: aJsonString'; cr;
+			tab; nextPutAll: '<return: #Array of: #'; nextPutAll: aModelClass name; nextPutAll: '>'; cr;
+			tab; nextPutAll: '^ self readJson: self dataSchemaName on: aJsonString'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming readingProtocolName 
+		inBehavior: aModelClass classSide.
 ]
 
 { #category : #building }
@@ -142,22 +211,7 @@ DiJsonMappingModelBuilderExtension >> jsonMappingClass [
 	aClass := self ensureClassAndMetaClassNamed: self jsonModelClassName.
 	self ensureObjectAsSuperclassForBehavior: aClass.
 	self ensurePackageAndTagForBehavior: aClass.
-	self ensureInstanceVariables: #( 'uniqueInstance' ) inBehavior: aClass classSide.
-	self 
-		ensureLocalMethodNamed: 'uniqueInstance' 
-		withSourceCode: 'uniqueInstance', String cr, String tab, '^ uniqueInstance ifNil: [ uniqueInstance := self new ]' 
-		andProtocol: self naming accessorProtocolName 
-		inBehavior: aClass classSide.
-	self 
-		ensureLocalMethodNamed: 'resetUniqueInstance' 
-		withSourceCode: 'resetUniqueInstance', String cr, String tab, 'uniqueInstance := nil' 
-		andProtocol: self naming cleanupProtocolName 
-		inBehavior: aClass classSide.
-	self 
-		ensureLocalMethodNamed: 'cleanUp' 
-		withSourceCode: 'cleanUp', String cr, String tab, 'self resetUniqueInstance' 
-		andProtocol: self naming cleanupProtocolName 
-		inBehavior: aClass classSide.
+	self buildJsonMappingClassSide: aClass.
 	^ aClass
 ]
 
