@@ -19,12 +19,28 @@ DiModelToSwiftExporter >> convertClass: aClass [
 	stream newlines: 2.
 ]
 
+{ #category : #writing }
+DiModelToSwiftExporter >> convertRootClass: aRootClass [
+	stream code: '
+	struct Meta: Codable {
+    var offset: Int
+    var page: Int
+    var pageCount: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case offset
+        case page
+        case pageCount = "page_count"
+    }
+}'
+]
+
 { #category : #accessing }
 DiModelToSwiftExporter >> gtContentsFor: aView [
 	<gtView>
 	^ aView textEditor
 		title: 'Contents';
-		styler: JSParser gtStyler;
+		"styler: JSParser gtStyler;"
 		text: [stream contents].
 ]
 

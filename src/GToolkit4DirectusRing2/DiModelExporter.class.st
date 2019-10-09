@@ -18,10 +18,15 @@ DiModelExporter >> convertClass: aClass [
 	self subclassResponsibility.
 ]
 
+{ #category : #'as yet unclassified' }
+DiModelExporter >> convertRootClass: aRootClass [
+	self subclassResponsibility.
+]
+
 { #category : #exporting }
 DiModelExporter >> export: builder [
 	^ self onTempStreamDo: [ 
-		self convertClass: builder modelRootClass.
+		self convertRootClass: builder modelRootClass.
 		builder includedCollectionsAndModelsDo: [ :aMetaCollection :aBehavior | 
 			self convertClass: aBehavior.
 		]

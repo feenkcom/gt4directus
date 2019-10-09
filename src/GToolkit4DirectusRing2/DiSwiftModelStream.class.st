@@ -1,5 +1,5 @@
 Class {
-	#name : #DiJavascriptModelStream,
+	#name : #DiSwiftModelStream,
 	#superclass : #DiModelStream,
 	#instVars : [
 		'stream'
@@ -8,25 +8,25 @@ Class {
 }
 
 { #category : #writing }
-DiJavascriptModelStream >> code: snippet [
+DiSwiftModelStream >> code: snippet [
 	self newlineIndent.
 	^ self nextPutAll: snippet.
 ]
 
 { #category : #writing }
-DiJavascriptModelStream >> curlies: aBlock [
+DiSwiftModelStream >> curlies: aBlock [
 	self nextPut: ${; increaseTabLevel; newline.
 	aBlock cull: self.
 	self decreaseTabLevel; code: '}'.
 ]
 
 { #category : #writing }
-DiJavascriptModelStream >> indent [
-	self nextPut: Character tab.
+DiSwiftModelStream >> indent [
+	self nextPut: Character space; nextPut: Character space.
 ]
 
 { #category : #writing }
-DiJavascriptModelStream >> line: aLine [
+DiSwiftModelStream >> line: aLine [
 	self newlineIndent.
 	^ self nextPutAll: aLine; nextPut: $;; newline.
 ]
