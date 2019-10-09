@@ -36,6 +36,11 @@ DiModelNamingStrategy >> fieldName: aDiMetaField [
 ]
 
 { #category : #accessing }
+DiModelNamingStrategy >> initializationProtocolName [
+	^ 'initialization'
+]
+
+{ #category : #accessing }
 DiModelNamingStrategy >> mappingCollectionsProtocolName [
 	^ 'mappings - collections'
 ]
@@ -57,6 +62,12 @@ DiModelNamingStrategy >> modelClassPrefix [
 ]
 
 { #category : #accessing }
+DiModelNamingStrategy >> modelInstanceName: aModelName [
+	<return: #String>
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 DiModelNamingStrategy >> printingProtocolName [
 	^ 'printing'
 ]
@@ -69,4 +80,9 @@ DiModelNamingStrategy >> readingProtocolName [
 { #category : #accessing }
 DiModelNamingStrategy >> testingProtocolName [
 	^ 'testing'
+]
+
+{ #category : #accessing }
+DiModelNamingStrategy >> writingProtocolName [
+	^ 'writing'
 ]

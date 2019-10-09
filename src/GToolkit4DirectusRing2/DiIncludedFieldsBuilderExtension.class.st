@@ -31,14 +31,17 @@ DiIncludedFieldsBuilderExtension >> build [
 
 { #category : #building }
 DiIncludedFieldsBuilderExtension >> buildInClass: eachClass ofCollection: eachCollection [
-	| aSourceCode |.
+	| aSortedFieldNames aSourceCode |.
+	aSortedFieldNames := SortedCollection new.
+	self 
+		includedCollection: eachCollection 
+		fieldsDo: [ :eachField | aSortedFieldNames add: eachField name ].
 	aSourceCode := String streamContents: [ :aStream | 
 		aStream nextPutAll: 'includedCollectionFields'; cr. 
 		aStream tab; nextPutAll: '^ #( '.
-		self 
-			includedCollection: eachCollection 
-			fieldsDo: [ :eachField |
-				aStream nextPut: $'; nextPutAll: eachField name; nextPut: $' ]
+		aSortedFieldNames 
+			do: [ :eachFieldName |
+				aStream nextPut: $'; nextPutAll: eachFieldName; nextPut: $' ]
 			separatedBy: [ aStream space ].
 		aStream nextPutAll: ' )' ].
 	self modelBuilder 
