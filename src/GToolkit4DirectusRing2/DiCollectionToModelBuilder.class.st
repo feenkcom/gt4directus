@@ -173,6 +173,15 @@ DiCollectionToModelBuilder >> exportToJavascript [
 	^ jsExporter. 
 ]
 
+{ #category : #building }
+DiCollectionToModelBuilder >> exportToSwift [
+	| swiftExporter |
+	swiftExporter := DiModelToSwiftExporter new
+		modelClassPrefix: self modelClassPrefix.
+	swiftExporter export: self.
+	^ swiftExporter. 
+]
+
 { #category : #accessing }
 DiCollectionToModelBuilder >> extensions [
 	^ extensions
