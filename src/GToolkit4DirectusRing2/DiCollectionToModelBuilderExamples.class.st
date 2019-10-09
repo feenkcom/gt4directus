@@ -1,3 +1,8 @@
+"
+I exemplify ${class:DiCollectionToModelBuilder}$.
+
+
+"
 Class {
 	#name : #DiCollectionToModelBuilderExamples,
 	#superclass : #Object,

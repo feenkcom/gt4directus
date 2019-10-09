@@ -1,5 +1,7 @@
 "
 Test Pharo meta-model to Javascript generation.
+I exemplify ${class:DiModelToJavascriptExporter}$.
+
 "
 Class {
 	#name : #DiJavascripModelExporterExamples,

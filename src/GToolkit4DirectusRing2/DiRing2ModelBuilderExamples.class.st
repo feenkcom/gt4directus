@@ -1,3 +1,7 @@
+"
+I exemplify ${class:DiRing2ModelBuilder}$.
+
+"
 Class {
 	#name : #DiRing2ModelBuilderExamples,
 	#superclass : #Object,
