@@ -26,6 +26,11 @@ DiModelToJavascriptExporter >> convertClass: aClass [
 	stream newlines: 2.
 ]
 
+{ #category : #writing }
+DiModelToJavascriptExporter >> convertRootClass: aRootClass [
+	self convertClass: aRootClass.
+]
+
 { #category : #accessing }
 DiModelToJavascriptExporter >> gtContentsFor: aView [
 	<gtView>
