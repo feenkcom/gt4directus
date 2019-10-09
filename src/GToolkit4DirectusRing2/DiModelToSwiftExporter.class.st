@@ -9,30 +9,30 @@ Class {
 
 { #category : #writing }
 DiModelToSwiftExporter >> convertClass: aClass [
-	stream
-		code: 'class ', aClass name.
-	self writeClassInheritanceOf: aClass.
-	stream curlies: [ 
-		self writeClassVariablesDeclarationOf: aClass.
-		stream newline.
-	].
-	stream newlines: 2.
+	self writeClassResponse: aClass.
+	stream newline.
+	self writeClassDefinition: aClass.
 ]
 
 { #category : #writing }
 DiModelToSwiftExporter >> convertRootClass: aRootClass [
 	stream code: '
-	struct Meta: Codable {
-    var offset: Int
-    var page: Int
-    var pageCount: Int
+struct Meta: Codable {
+  var offset: Int
+  var page: Int
+  var pageCount: Int
     
-    enum CodingKeys: String, CodingKey {
-        case offset
-        case page
-        case pageCount = "page_count"
-    }
+  enum CodingKeys: String, CodingKey {
+    case offset
+    case page
+    case pageCount = "page_count"
+  }
 }'
+]
+
+{ #category : #writing }
+DiModelToSwiftExporter >> extractName: aClass [
+	^ (aClass name) copyFrom: (modelClassPrefix size + 1) to: (aClass name) size.
 ]
 
 { #category : #accessing }
@@ -44,56 +44,33 @@ DiModelToSwiftExporter >> gtContentsFor: aView [
 		text: [stream contents].
 ]
 
-{ #category : #sorting }
-DiModelToSwiftExporter >> putBehavior: aFirst before: aSecond [
-	(aFirst isRingResolved and: [ aSecond isRingResolved not ]) ifTrue: [ ^ true ].
-	(aFirst isRingResolved not and: [ aSecond isRingResolved ]) ifTrue: [ ^ false ].
-	
-	(aFirst superclass isRingResolved and: [ aSecond superclass isRingResolved not ]) ifTrue: [ ^ true ].
-	(aFirst superclass isRingResolved not and: [ aSecond superclass isRingResolved ]) ifTrue: [ ^ false ].
-	
-	(aFirst package isRingResolved and: [ aSecond package isRingResolved not ]) ifTrue: [ ^ true ].
-	(aFirst package isRingResolved not and: [ aSecond package isRingResolved ]) ifTrue: [ ^ false ].
-	
-	^ aFirst name < aSecond name
+{ #category : #writing }
+DiModelToSwiftExporter >> writeClassDefinition: aClass [
 ]
 
 { #category : #writing }
-DiModelToSwiftExporter >> writeAccessorsFor: variables [
-	variables do: [ :aVariable |
-		stream
-			newline;
-			code: 'get ', aVariable, '()';
-			curlies: [ 
-				stream line: 'return this.', aVariable.
-			].
-		stream
-			newline;
-			code: 'set ', aVariable, '(', aVariable, ')';
-			curlies: [ 
-				stream line: 'this.', aVariable, ' = ', aVariable.
-			].
-	].
-]
-
-{ #category : #writing }
-DiModelToSwiftExporter >> writeClassInheritanceOf: aClass [
-	| superclassName |
-	superclassName := aClass superclass name.
-	(superclassName beginsWith: modelClassPrefix) ifTrue: [ stream code: ' extends ', superclassName.].
+DiModelToSwiftExporter >> writeClassResponse: aClass [
+	| className |
+	className := self extractName: aClass.
+	stream
+		code: 'struct ', className, 'Response: Codable';
+		curlies: [  
+			stream 
+				line: 'var meta: Meta';
+				line: 'var data: [', className, ']'.
+		].
 ]
 
 { #category : #writing }
 DiModelToSwiftExporter >> writeClassVariablesDeclarationOf: aClass [
-	self writeConstructorFor: aClass allInstVarNames.
-	self writeAccessorsFor: aClass allInstVarNames.
+	self writeVariablesFor: aClass allInstVarNames.
+	self writeMappingFor: aClass allInstVarNames.
 ]
 
 { #category : #writing }
-DiModelToSwiftExporter >> writeConstructorFor: variables [
-	stream code: 'constructor'.
-	stream parantheses: [ 
-		self for: variables do: [ :aVariable | stream nextPutAll: aVariable ] separatedBy: [stream nextPutAll: ', ']].
-	stream curlies: [
-		variables do: [ :aVariable | stream line: 'this.', aVariable, ' = ', aVariable.] ].
+DiModelToSwiftExporter >> writeMappingFor: aClass [
+]
+
+{ #category : #writing }
+DiModelToSwiftExporter >> writeVariablesFor: aClass [
 ]

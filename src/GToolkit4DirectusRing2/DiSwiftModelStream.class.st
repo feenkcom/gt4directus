@@ -22,11 +22,11 @@ DiSwiftModelStream >> curlies: aBlock [
 
 { #category : #writing }
 DiSwiftModelStream >> indent [
-	self nextPut: Character space; nextPut: Character space.
+	self nextPut: Character tab.
 ]
 
 { #category : #writing }
 DiSwiftModelStream >> line: aLine [
 	self newlineIndent.
-	^ self nextPutAll: aLine; nextPut: $;; newline.
+	^ self nextPutAll: aLine; newline.
 ]

@@ -27,6 +27,7 @@ DiModelExporter >> convertRootClass: aRootClass [
 DiModelExporter >> export: builder [
 	^ self onTempStreamDo: [ 
 		self convertRootClass: builder modelRootClass.
+		stream newlines: 2.
 		builder includedCollectionsAndModelsDo: [ :aMetaCollection :aBehavior | 
 			self convertClass: aBehavior.
 		]
