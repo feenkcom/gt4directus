@@ -51,7 +51,7 @@ DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: a
 		inBehavior: aRGBehavior.
 
 	"Setter"
-	aVariableName := (aType first isVowel ifTrue: [ 'an' ] ifFalse: [ 'a' ]), aType asString.
+	aVariableName := self naming modelInstanceName: aType.
 	aSetterName := aName, ':'.
 	aSourceCode := aSetterName, ' ', aVariableName, aMethodComment, String cr, 
 		String tab, '<input: ', aType printString, '>', String cr, 

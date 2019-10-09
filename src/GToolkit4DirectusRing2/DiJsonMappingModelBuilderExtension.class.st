@@ -25,7 +25,9 @@ DiJsonMappingModelBuilderExtension >> build [
 		self buildModelMappingForCollection: eachCollection behavior: eachBehavior.
 		self buildCollectionMappingForCollection: eachCollection behavior: eachBehavior.
 		self buildDataMappingForCollection: eachCollection behavior: eachBehavior. ].
+	self buildMappingMethod.
 	self buildReadingMethod.
+	self buildWritingMethod.
 	self buildModelReadingMethods.
 	self buildClassComment.
 ]
@@ -119,6 +121,28 @@ DiJsonMappingModelBuilderExtension >> buildJsonMappingClassSide: aClass [
 ]
 
 { #category : #building }
+DiJsonMappingModelBuilderExtension >> buildMappingMethod [
+	| aJsonMappingClass aMethodName aMethodBody |
+	aJsonMappingClass := self jsonMappingClass.
+	aMethodName := 'initializeMappingsFor:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'initializeMappingsFor: aMapper'; cr.
+		self includedCollectionsDo: [ :eachMetaCollection | 
+			| aClassName |
+			aClassName := self naming collectionModelName: eachMetaCollection.
+			aStream
+				tab; nextPutAll: 'self '; nextPutAll: 'mappingOf'; nextPutAll: aClassName; nextPutAll: 'For: aMapper.'; cr;
+				tab; nextPutAll: 'self '; nextPutAll: 'collectionOf'; nextPutAll: aClassName; nextPutAll: 'For: aMapper.'; cr;
+				tab; nextPutAll: 'self '; nextPutAll: 'dataOf'; nextPutAll: aClassName; nextPutAll: 'For: aMapper.'; cr ] ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming initializationProtocolName 
+		inBehavior: aJsonMappingClass
+]
+
+{ #category : #building }
 DiJsonMappingModelBuilderExtension >> buildModelMappingForCollection: aDiMetaCollection behavior: aRGBehavior [ 
 	| aJsonMappingClass aMethodName aMethodBody |
 	aJsonMappingClass := self jsonMappingClass.
@@ -128,7 +152,7 @@ DiJsonMappingModelBuilderExtension >> buildModelMappingForCollection: aDiMetaCol
 			nextPutAll: aMethodName; nextPutAll: ' aNeoJSONMapper'; cr;
 			tab; nextPutAll: 'aNeoJSONMapper'; cr;
 			tab; tab; nextPutAll: 'for: '; nextPutAll: aRGBehavior name; nextPutAll: ' do: [ :mapping |'; cr.
-		aDiMetaCollection fields do: [ :eachField | 
+		self includedCollection: aDiMetaCollection fieldsDo: [ :eachField | 
 			aStream
 				tab; tab; tab; nextPutAll: 'mapping mapAccessor: #'''; nextPutAll: (self naming fieldName: eachField); nextPutAll: ''' to: #'''; nextPutAll: eachField name; nextPutAll: '''.'; cr ].
 		aStream
@@ -186,21 +210,62 @@ DiJsonMappingModelBuilderExtension >> buildReadingMethod [
 		aStream 
 			nextPutAll: 'read: aJsonSchema on: aReadStream'; cr;
 			tab; nextPutAll: '| aReader |'; cr;
-			tab; nextPutAll: 'aReader := (NeoJSONReader on: aReadStream).'; cr.
-		self includedCollectionsDo: [ :eachMetaCollection | 
-			| aClassName |
-			aClassName := self naming collectionModelName: eachMetaCollection.
-			aStream
-				tab; nextPutAll: 'self '; nextPutAll: 'mappingOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr;
-				tab; nextPutAll: 'self '; nextPutAll: 'collectionOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr;
-				tab; nextPutAll: 'self '; nextPutAll: 'dataOf'; nextPutAll: aClassName; nextPutAll: 'For: aReader.'; cr ].
-		aStream
-				tab; nextPutAll: '^ aReader nextAs: aJsonSchema.'; cr ].
+			tab; nextPutAll: 'aReader := (NeoJSONReader on: aReadStream).'; cr;
+			tab; nextPutAll: 'self initializeMappingsFor: aReader.';
+			tab; nextPutAll: '^ aReader nextAs: aJsonSchema.'; cr ].
 	self 
 		ensureLocalMethodNamed: aMethodName
 		withSourceCode: aMethodBody 
 		andProtocol: self naming readingProtocolName 
 		inBehavior: aJsonMappingClass
+]
+
+{ #category : #building }
+DiJsonMappingModelBuilderExtension >> buildWritingMethod [
+	| aModelInstanceName aJsonMappingClass aMethodName aMethodBody |
+	aJsonMappingClass := self jsonMappingClass.
+	aModelInstanceName := self naming modelInstanceName: self modelRootClass name.
+	
+	aMethodName := 'write:on:prettyPrint:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'write: '; nextPutAll: aModelInstanceName; nextPutAll: ' on: aWriteStream prettyPrint: aBoolean'; cr;
+			tab; nextPutAll: '| aWriter |'; cr;
+			tab; nextPutAll: 'aWriter := (NeoJSONWriter on: aWriteStream).'; cr;
+			tab; nextPutAll: 'aWriter prettyPrint: aBoolean.'; cr;
+			tab; nextPutAll: 'self initializeMappingsFor: aWriter.'; cr;
+			tab; nextPutAll: 'aWriter nextPut: '; nextPutAll: aModelInstanceName; nextPutAll: '.'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming writingProtocolName 
+		inBehavior: aJsonMappingClass.
+		
+	aMethodName := 'writePretty:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'writePretty: '; nextPutAll: aModelInstanceName; cr;
+			tab; nextPutAll: '<return: #String>'; cr;
+			tab; nextPutAll: '^ String streamContents: [ :aStream | '; cr;
+			tab; tab; nextPutAll: 'self write: '; nextPutAll: aModelInstanceName; nextPutAll:' on: aStream prettyPrint: true ]'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming writingProtocolName 
+		inBehavior: aJsonMappingClass.
+		
+	aMethodName := 'write:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'write: '; nextPutAll: aModelInstanceName; cr;
+			tab; nextPutAll: '<return: #String>'; cr;
+			tab; nextPutAll: '^ String streamContents: [ :aStream | '; cr;
+			tab; tab; nextPutAll: 'self write: '; nextPutAll: aModelInstanceName; nextPutAll:' on: aStream prettyPrint: false ]'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming writingProtocolName 
+		inBehavior: aJsonMappingClass.
 ]
 
 { #category : #building }

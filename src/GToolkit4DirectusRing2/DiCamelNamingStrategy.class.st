@@ -35,3 +35,12 @@ DiCamelNamingStrategy >> collectionModelName: aDiMetaCollection [
 DiCamelNamingStrategy >> fieldName: aDiMetaField [ 
 	^ aDiMetaField getter
 ]
+
+{ #category : #accessing }
+DiCamelNamingStrategy >> modelInstanceName: aModelName [
+	<return: #String>
+	self 
+		assert: [ aModelName isString and: [ aModelName isNotEmpty ] ] 
+		description: [ 'Model name must be a non-empty string' ].
+	^ (aModelName first isVowel ifTrue: [ 'an' ] ifFalse: [ 'a' ]), aModelName asString.
+]
