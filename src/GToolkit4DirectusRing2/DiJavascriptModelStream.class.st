@@ -21,7 +21,7 @@ DiJavascriptModelStream >> contents [
 
 { #category : #writing }
 DiJavascriptModelStream >> curlies: aBlock [
-	self code: '{'; increaseTabLevel; newline.
+	self nextPut: ${; increaseTabLevel; newline.
 	aBlock cull: self.
 	self decreaseTabLevel; code: '}'.
 ]
