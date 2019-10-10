@@ -10,15 +10,15 @@ Class {
 { #category : #writing }
 DiModelToSwiftExporter >> convertClass: aDiMetaCollection [
 	self writeClassResponse: aDiMetaCollection.
-	stream newline.
+	stream newlines: 2.
 	self writeClassDefinition: aDiMetaCollection.
-	stream newline.
+	stream newlines: 2.
 ]
 
 { #category : #writing }
 DiModelToSwiftExporter >> convertRootClass: aRootClass [
 	stream code: '
-struct Meta: Codable {
+struct Meta: ', self modelRootClassName, ' {
   var offset: Int
   var page: Int
   var pageCount: Int
@@ -28,13 +28,9 @@ struct Meta: Codable {
     case page
     case pageCount = "page_count"
   }
-}'
-]
+}
 
-{ #category : #writing }
-DiModelToSwiftExporter >> extractName: aClass [
-	self shouldNotImplement.
-	^ (aClass name) copyFrom: (modelClassPrefix size + 1) to: (aClass name) size.
+'
 ]
 
 { #category : #accessing }
@@ -57,7 +53,7 @@ DiModelToSwiftExporter >> writeClassDefinition: aDiMetaCollection [
 	| className |
 	className := self naming collectionModelName: aDiMetaCollection.
 	stream
-		code: 'struct ', className, ': ', self modelRootClassName;
+		code: 'struct ', className, ': ', self modelRootClassName, ' ';
 		curlies: [ 
 			self writeVariablesFor: aDiMetaCollection.
 			stream newline.
@@ -72,7 +68,7 @@ DiModelToSwiftExporter >> writeClassResponse: aDiMetaCollection [
 	| className |
 	className := self naming collectionModelName: aDiMetaCollection.
 	stream
-		code: 'struct ', className, 'Response: ', (self modelRootClassName);
+		code: 'struct ', className, 'Response: ', (self modelRootClassName), ' ';
 		curlies: [  
 			stream 
 				line: 'var meta: Meta';
@@ -83,7 +79,7 @@ DiModelToSwiftExporter >> writeClassResponse: aDiMetaCollection [
 { #category : #writing }
 DiModelToSwiftExporter >> writeMappingFor: aDiMetaCollection [
 	stream 
-		code: 'enum CodingKeys: String, CodingKey';
+		code: 'enum CodingKeys: String, CodingKey ';
 		curlies: [ 
 			self includedCollection: aDiMetaCollection fieldsDo: [ :aDiMetaField | 
 				stream line: 'case ', (self naming fieldName: aDiMetaField), ' = "', aDiMetaField name, '"'.
@@ -98,5 +94,5 @@ DiModelToSwiftExporter >> writeVariablesFor: aDiMetaCollection [
 		fieldsDo: [ :aMetaField | 
 			| aType |
 			aType := aMetaField typeNameUsingNaming: self naming.
-			stream line: 'var ', (self naming fieldName: aMetaField), ':', aType ].
+			stream line: 'var ', (self naming fieldName: aMetaField), ': ', aType ].
 ]
