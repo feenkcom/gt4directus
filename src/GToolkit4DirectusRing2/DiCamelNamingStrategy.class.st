@@ -8,7 +8,7 @@ Class {
 	#category : #'GToolkit4DirectusRing2-Model Builder Extensions'
 }
 
-{ #category : #accessing }
+{ #category : #'accessing - model names' }
 DiCamelNamingStrategy >> collectionBasicModelName: aDiMetaCollection [
 	"A model (class) name without a possible prefix"
 	<return: #String>
@@ -18,7 +18,7 @@ DiCamelNamingStrategy >> collectionBasicModelName: aDiMetaCollection [
 	^ aDiMetaCollection modelClassName
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - model names' }
 DiCamelNamingStrategy >> collectionModelName: aDiMetaCollection [ 
 	<return: #String>
 	self 
@@ -31,12 +31,12 @@ DiCamelNamingStrategy >> collectionModelName: aDiMetaCollection [
 		]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - variable names' }
 DiCamelNamingStrategy >> fieldName: aDiMetaField [ 
 	^ aDiMetaField getter
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - variable names' }
 DiCamelNamingStrategy >> modelInstanceName: aModelName [
 	<return: #String>
 	self 

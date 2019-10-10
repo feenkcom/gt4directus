@@ -17,6 +17,13 @@ DiCollectionToModelBuilderExtension >> build [
 	self subclassResponsibility
 ]
 
+{ #category : #testing }
+DiCollectionToModelBuilderExtension >> isSourceCodeGenerator [
+	"This is kind of hack as we do not have a ${class:DiModelBuilder}$ for other languages at this moment."
+	<return: #Boolean>
+	^ false
+]
+
 { #category : #building }
 DiCollectionToModelBuilderExtension >> postInstall [
 	"It is called after a model installation. Subclasses can implement it."

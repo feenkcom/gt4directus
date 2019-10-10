@@ -395,7 +395,7 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithJsonMapping [
 	aBuilder build.
 	aModelClass := aBuilder behaviorNamed: self dummyModelClassPrefix, 'JsonMapping'.
 	self assert: aModelClass instVarNames size equals: 0.
-	self assert: aModelClass localMethods size equals: 4.
+	self assert: aModelClass localMethods size equals: 9.
 	^ aBuilder
 ]
 
@@ -513,6 +513,7 @@ DiCollectionToModelBuilderExamples >> collectionToModelBuilder [
 	aBuilder packageName: self dummyPackageName.
 	aBuilder modelClassPrefix: self dummyModelClassPrefix.
 	aBuilder modelRootClassName: self dummyModelRootClassName.
+	aBuilder usePharoModelBuilder.
 	self assert: aBuilder packageName equals: self dummyPackageName.
 	self assert: aBuilder modelClassPrefix equals: self dummyModelClassPrefix.
 	self assert: aBuilder modelRootClassName equals: self dummyModelRootClassName.

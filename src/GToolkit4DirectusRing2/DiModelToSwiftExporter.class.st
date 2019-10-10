@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #writing }
-DiModelToSwiftExporter >> convertClass: aClass [
-	self writeClassResponse: aClass.
+DiModelToSwiftExporter >> convertClass: aDiMetaCollection [
+	self writeClassResponse: aDiMetaCollection.
 	stream newline.
-	self writeClassDefinition: aClass.
+	self writeClassDefinition: aDiMetaCollection.
 	stream newline.
 ]
 
@@ -33,6 +33,7 @@ struct Meta: Codable {
 
 { #category : #writing }
 DiModelToSwiftExporter >> extractName: aClass [
+	self shouldNotImplement.
 	^ (aClass name) copyFrom: (modelClassPrefix size + 1) to: (aClass name) size.
 ]
 
@@ -41,7 +42,7 @@ DiModelToSwiftExporter >> gtContentsFor: aView [
 	<gtView>
 	^ aView textEditor
 		title: 'Contents';
-		"styler: JSParser gtStyler;"
+		styler: SwiftParser gtStyler;
 		text: [stream contents].
 ]
 
@@ -52,27 +53,26 @@ DiModelToSwiftExporter >> onTempStreamDo: aBlock [
 ]
 
 { #category : #writing }
-DiModelToSwiftExporter >> writeClassDefinition: aClass [
-	| className methods |
-	className := self extractName: aClass.
-	methods := (aClass localMethods) select: [ :aMethod | aMethod numArgs = 0 ].
+DiModelToSwiftExporter >> writeClassDefinition: aDiMetaCollection [
+	| className |
+	className := self naming collectionModelName: aDiMetaCollection.
 	stream
-		code: 'struct ', className, ': Codable';
+		code: 'struct ', className, ': ', self modelRootClassName;
 		curlies: [ 
-			self writeVariablesFor: methods.
+			self writeVariablesFor: aDiMetaCollection.
 			stream newline.
-			self writeMappingFor: methods.
+			self writeMappingFor: aDiMetaCollection.
 			stream newline.
 		].
 	
 ]
 
 { #category : #writing }
-DiModelToSwiftExporter >> writeClassResponse: aClass [
+DiModelToSwiftExporter >> writeClassResponse: aDiMetaCollection [
 	| className |
-	className := self extractName: aClass.
+	className := self naming collectionModelName: aDiMetaCollection.
 	stream
-		code: 'struct ', className, 'Response: Codable';
+		code: 'struct ', className, 'Response: ', (self modelRootClassName);
 		curlies: [  
 			stream 
 				line: 'var meta: Meta';
@@ -81,18 +81,22 @@ DiModelToSwiftExporter >> writeClassResponse: aClass [
 ]
 
 { #category : #writing }
-DiModelToSwiftExporter >> writeMappingFor: methods [
-	stream code: 'enum CodingKeys: String, CodingKey';
-	curlies: [ 
-		methods do: [ :aMethod | 
-			stream line: 'case ', aMethod selector, ':'.
-		].
-	]
+DiModelToSwiftExporter >> writeMappingFor: aDiMetaCollection [
+	stream 
+		code: 'enum CodingKeys: String, CodingKey';
+		curlies: [ 
+			self includedCollection: aDiMetaCollection fieldsDo: [ :aDiMetaField | 
+				stream line: 'case ', (self naming fieldName: aDiMetaField), ' = "', aDiMetaField name, '"'.
+			].
+		]
 ]
 
 { #category : #writing }
-DiModelToSwiftExporter >> writeVariablesFor: methods [
-	methods do: [ :aMethod | 
-		stream line: 'var ', aMethod selector, ':'.
-	].
+DiModelToSwiftExporter >> writeVariablesFor: aDiMetaCollection [
+	self 
+		includedCollection: aDiMetaCollection 
+		fieldsDo: [ :aMetaField | 
+			| aType |
+			aType := aMetaField typeNameUsingNaming: self naming.
+			stream line: 'var ', (self naming fieldName: aMetaField), ':', aType ].
 ]

@@ -15,6 +15,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+DiModelBuilder class >> null [ 
+	^ DiNullModelBuilder uniqueInstance
+]
+
+{ #category : #'instance creation' }
 DiModelBuilder class >> ring2 [ 
 	^ DiRing2ModelBuilder new
 ]

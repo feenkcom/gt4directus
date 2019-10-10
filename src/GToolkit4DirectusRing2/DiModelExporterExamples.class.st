@@ -4,7 +4,7 @@ I exemplify ${class:DiModelToJavascriptExporter}$.
 
 "
 Class {
-	#name : #DiJavascripModelExporterExamples,
+	#name : #DiModelExporterExamples,
 	#superclass : #Object,
 	#instVars : [
 		'builderExamples'
@@ -13,13 +13,13 @@ Class {
 }
 
 { #category : #examples }
-DiJavascripModelExporterExamples >> companyAndCountryBuilder [
+DiModelExporterExamples >> companyAndCountryBuilder [
 	<gtExample>
 	^ builderExamples buildFilteredModelWithoutCountry_Unfiltered.
 ]
 
 { #category : #examples }
-DiJavascripModelExporterExamples >> companyAndCountryExporter [
+DiModelExporterExamples >> companyAndCountryExporter [
 	<gtExample>
 	| exporter |
 	exporter := self companyAndCountryBuilder exportToJavascript.
@@ -28,7 +28,7 @@ DiJavascripModelExporterExamples >> companyAndCountryExporter [
 ]
 
 { #category : #initialization }
-DiJavascripModelExporterExamples >> initialize [
+DiModelExporterExamples >> initialize [
 	super initialize.
 	builderExamples := DiCollectionToModelBuilderExamples new.
 ]

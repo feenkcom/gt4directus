@@ -21,14 +21,20 @@ Class {
 }
 
 { #category : #writing }
-DiModelToJavascriptExporter >> convertClass: aClass [
-	self writeClassDefinitionOf: aClass.
+DiModelToJavascriptExporter >> convertClass: aDiMetaCollection [
+	self writeClassDefinitionOf: aDiMetaCollection.
 	stream newlines: 2.
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> convertRootClass: aRootClass [
-	self convertClass: aRootClass.
+DiModelToJavascriptExporter >> convertRootClass: aDiMetaCollection [
+	stream
+		code: 'class ', (self naming collectionModelName: aDiMetaCollection).
+	stream curlies: [ 
+		"self writeClassVariablesDeclarationOf: aDiMetaCollection."
+		"stream newline."
+	].
+	stream newlines: 2.
 ]
 
 { #category : #accessing }
@@ -61,52 +67,61 @@ DiModelToJavascriptExporter >> putBehavior: aFirst before: aSecond [
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeAccessorsFor: variables [
-	variables do: [ :aVariable |
+DiModelToJavascriptExporter >> writeAccessorsFor: aDiMetaCollection [
+	self 
+		includedCollection: aDiMetaCollection 
+		fieldsDo: [ :aMetaField |
 		stream
 			newline;
-			code: 'get ', aVariable, '()';
+			code: 'get ', (self naming accessorName: aMetaField), '()';
 			curlies: [ 
-				stream line: 'return this.', aVariable.
+				stream line: 'return this.', (self naming fieldName: aMetaField).
 			].
 		stream
 			newline;
-			code: 'set ', aVariable, '(', aVariable, ')';
+			code: 'set ', (self naming accessorName: aMetaField), '(', (self naming fieldName: aMetaField), ')';
 			curlies: [ 
-				stream line: 'this.', aVariable, ' = ', aVariable.
+				stream line: 'this.', (self naming fieldName: aMetaField), ' = ', (self naming fieldName: aMetaField).
 			].
 	].
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeClassDefinitionOf: aClass [
+DiModelToJavascriptExporter >> writeClassDefinitionOf: aDiMetaCollection [
 	stream
-		code: 'class ', aClass name.
-	self writeClassInheritanceOf: aClass.
+		code: 'class ', (self naming collectionModelName: aDiMetaCollection);
+		nextPutAll: ' extends ', self modelRootClassName.
 	stream curlies: [ 
-		self writeClassVariablesDeclarationOf: aClass.
+		self writeClassVariablesDeclarationOf: aDiMetaCollection.
 		stream newline.
 	].
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeClassInheritanceOf: aClass [
-	| superclassName |
-	superclassName := aClass superclass name.
-	(superclassName beginsWith: modelClassPrefix) ifTrue: [ stream code: ' extends ', superclassName.].
+DiModelToJavascriptExporter >> writeClassInheritanceOf: aDiMetaCollection [
+	self flag: #remove.
+	self shouldNotImplement.
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeClassVariablesDeclarationOf: aClass [
-	self writeConstructorFor: aClass allInstVarNames.
-	self writeAccessorsFor: aClass allInstVarNames.
+DiModelToJavascriptExporter >> writeClassVariablesDeclarationOf: aDiMetaCollection [
+	self writeConstructorFor: aDiMetaCollection.
+	self writeAccessorsFor: aDiMetaCollection.
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeConstructorFor: variables [
+DiModelToJavascriptExporter >> writeConstructorFor: aDiMetaCollection [
 	stream code: 'constructor'.
 	stream parantheses: [ 
-		self for: variables do: [ :aVariable | stream nextPutAll: aVariable ] separatedBy: [stream nextPutAll: ', ']].
+		self 
+			includedCollection: aDiMetaCollection 
+			fieldsDo: [ :aMetaField | stream nextPutAll: (self naming fieldName: aMetaField) ]
+			separatedBy: [ stream nextPutAll: ', ' ] ].
 	stream curlies: [
-		variables do: [ :aVariable | stream line: 'this.', aVariable, ' = ', aVariable.] ].
+		self 
+			includedCollection: aDiMetaCollection 
+			fieldsDo: [ :aMetaField | 
+				| aName | 
+				aName := (self naming fieldName: aMetaField).
+				stream line: 'this.', aName, ' = ', aName. ] ].
 ]

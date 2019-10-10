@@ -1,7 +1,8 @@
 "
-I build a class model hierarchy based on ${class:DiMetaCollectionsWithRelations}$.
-I build a Pharo model (classes, Traits, methods, etc.) using ${class:DiModelBuilder}$ subclasses. 
-By default I use ${class:DiRing2ModelBuilder}$, see ${method:DiCollectionToModelBuilder>>#initializeModelBuilder}$.
+I build a model based on ${class:DiMetaCollectionsWithRelations}$.
+
+By default, I build a Pharo model (classes, Traits, methods, etc.) using ${class:DiModelBuilder}$ subclasses. 
+By default, I use ${class:DiRing2ModelBuilder}$, see ${method:DiCollectionToModelBuilder>>#initializeModelBuilder}$.
 
 !! Example
 
@@ -48,12 +49,12 @@ Class {
 	#category : #'GToolkit4DirectusRing2-Model Builders'
 }
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> addClassComments [
 	self addExtension: DiAddClassCommentExtension new.
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions' }
 DiCollectionToModelBuilder >> addExtension: anExtension [
 	self 
 		assert: [ anExtension isNotNil ] 
@@ -62,7 +63,7 @@ DiCollectionToModelBuilder >> addExtension: anExtension [
 	self extensions add: anExtension
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - filteres' }
 DiCollectionToModelBuilder >> addFilter: aFilter [
 	self 
 		assert: [ aFilter isNotNil ] 
@@ -73,27 +74,8 @@ DiCollectionToModelBuilder >> addFilter: aFilter [
 
 { #category : #building }
 DiCollectionToModelBuilder >> build [
-	self buildBehaviors.
 	self buildUsingExtensions.
 	self modelBuilder clean.
-]
-
-{ #category : #building }
-DiCollectionToModelBuilder >> buildBehavior: aDiMetaCollection [
-	| aClassName aClass aSuperClass |
-	(self canIncludeCollection: aDiMetaCollection)
-		ifFalse: [ ^ self ].
-	aClassName := self naming collectionModelName: aDiMetaCollection.
-	aClass := self modelBuilder ensureClassAndMetaClassNamed: aClassName.
-	aClass package: self modelPackage.
-	aClass tagWith: self packageTagName.
-	aSuperClass := self modelRootClass.
-	aClass superclass: aSuperClass
-]
-
-{ #category : #building }
-DiCollectionToModelBuilder >> buildBehaviors [
-	self collections do: [ :eachCollection | self buildBehavior: eachCollection ]
 ]
 
 { #category : #building }
@@ -121,7 +103,7 @@ DiCollectionToModelBuilder >> collections [
 	^ self metaModel collections
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> discoverCollectionSystemTraits [
 	self addExtension: DiTraitDiscoveryExtension new.
 ]
@@ -137,22 +119,22 @@ DiCollectionToModelBuilder >> ensurePackageAndTagForBehavior: aRGBehavior [
 	self modelBuilder ensurePackageTagNamed: self packageTagName forBehavior: aRGBehavior
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - filteres' }
 DiCollectionToModelBuilder >> excludeCollectionNamed: aCollectionName fieldNamed: aFieldName [
 	self addFilter: (DiExcludeCollectionFieldFilter new collectionName: aCollectionName; fieldName: aFieldName)
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - filteres' }
 DiCollectionToModelBuilder >> excludeCollections: collectionNames [
 	self addFilter: (DiExcludeCollections new collectionNames: collectionNames)
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - filteres' }
 DiCollectionToModelBuilder >> excludeSystemCollections [
 	self addFilter: (DiExcludeSystemCollections new)
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - filteres' }
 DiCollectionToModelBuilder >> excludeSystemFields [
 	self addFilter: (DiExcludeDirectusSystemFieldsFilter new)
 ]
@@ -260,7 +242,7 @@ DiCollectionToModelBuilder >> install [
 	self extensions do: #postInstall.
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> markDeprecatedModels [
 	self addExtension: DiMarkDeprecatedModelClassesExtension new.
 ]
@@ -302,13 +284,14 @@ DiCollectionToModelBuilder >> modelClassPrefix [
 { #category : #accessing }
 DiCollectionToModelBuilder >> modelClassPrefix: aString [
 	self 
-		assert: [ aString isNotNil and: [ aString isString and: [ aString isNotEmpty ] ] ] 
-		description: [ 'Model class prefix must be a non-empty string' ].
+		assert: [ aString isNotNil and: [ aString isString ] ] 
+		description: [ 'Model class prefix must be a string' ].
 	modelClassPrefix := aString
 ]
 
 { #category : #'building - model' }
 DiCollectionToModelBuilder >> modelPackage [
+	<return: #RGPackageDefinition>
 	^ self modelBuilder ensurePackageNamed: self packageName
 ]
 
@@ -382,54 +365,88 @@ DiCollectionToModelBuilder >> packageTagName: aString [
 	packageTagName := aString
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> removeMethodsWithUndeclaredVariables [
 	self addExtension: DiRemoveMethodsWithUndeclaredVariablesExtension new.
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions - others' }
+DiCollectionToModelBuilder >> sourceCodeGenerator [
+	"This is kind of hack as we do not have a ${class:DiModelBuilder}$ for other languages at this moment."
+	<return: #DiModelExporter>
+	^ self extensions detect: #isSourceCodeGenerator
+]
+
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> useCollectionNameBuilder [
 	self addExtension: DiCollectionNameBuilderExtension new.
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> useIncludedFieldsBuilder [
 	self addExtension: DiIncludedFieldsBuilderExtension new.
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> useInstanceVariableAccessorsBuilder [
 	self addExtension: DiInstanceVariablesAccessorsBuilderExtension new.
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> useInstanceVariableBuilder [
 	self addExtension: DiInstanceVariablesBuilderExtension new.
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions - others' }
+DiCollectionToModelBuilder >> useJavaScriptGenerator [
+	self addExtension: DiModelToJavascriptExporter new.
+	self useNullModelBuilder.
+]
+
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> useJsonMappingBuilder [
 	self addExtension: DiJsonMappingModelBuilderExtension new.
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - model builder' }
+DiCollectionToModelBuilder >> useNullModelBuilder [
+	self modelBuilder: DiModelBuilder null.
+]
+
+{ #category : #'initialization - extensions - pharo' }
+DiCollectionToModelBuilder >> usePharoModelBuilder [
+	self addExtension: DiPharoModelBuilderExtension new.
+]
+
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> usePrintOnWithNameExtension [
 	self addExtension: DiPrintOnWithNameExtension new.
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - model builder' }
+DiCollectionToModelBuilder >> useRing2ModelBuilder [
+	self modelBuilder: DiModelBuilder ring2.
+]
+
+{ #category : #'initialization - extensions - others' }
+DiCollectionToModelBuilder >> useSwiftGenerator [
+	self addExtension: DiModelToSwiftExporter new.
+	self useNullModelBuilder.
+]
+
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> useTrait: aTraitClass inCollectionNamed: aCollectionName [
 	self useTraitNamed: aTraitClass name inCollectionNamed: aCollectionName
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> useTraitNamed: aTraitName inCollectionNamed: aCollectionName [
 	self addExtension: (DiAddTraitExtension new 
 		traitClassName: aTraitName; 
 		collectionName: aCollectionName)
 ]
 
-{ #category : #initialization }
+{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> useUserDataExtension [
 	self addExtension: DiUserDataExtension new.
 ]

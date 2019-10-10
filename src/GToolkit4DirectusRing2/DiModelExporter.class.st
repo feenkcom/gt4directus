@@ -1,12 +1,22 @@
 Class {
 	#name : #DiModelExporter,
-	#superclass : #Object,
+	#superclass : #DiCollectionToModelBuilderExtension,
 	#instVars : [
 		'stream',
 		'modelClassPrefix'
 	],
 	#category : #'GToolkit4DirectusRing2-Exporters'
 }
+
+{ #category : #exporting }
+DiModelExporter >> build [
+	self onTempStreamDo: [ 
+		self convertRootClass: (DiMetaCollection new name: self modelRootClassName).
+		self includedCollectionsDo: [ :aMetaCollection | 
+			self convertClass: aMetaCollection.
+		]
+	].
+]
 
 { #category : #accessing }
 DiModelExporter >> contents [
@@ -43,6 +53,13 @@ DiModelExporter >> for: elements do: aDoBlock separatedBy: aSeparatorBlock [
 			ifTrue: [ aBeforeFirst := false ]
 			ifFalse: [ aSeparatorBlock value ].
 		aDoBlock cull: anElement ]
+]
+
+{ #category : #testing }
+DiModelExporter >> isSourceCodeGenerator [
+	"This is kind of hack as we do not have a ${class:DiModelBuilder}$ for other languages at this moment."
+	<return: #Boolean>
+	^ true
 ]
 
 { #category : #accessing }

@@ -67,13 +67,31 @@ DiCollectionToModelBuilderPart >> modelBuilder [
 ]
 
 { #category : #'accessing - model' }
+DiCollectionToModelBuilderPart >> modelPackage [
+	<return: #RGPackageDefinition>
+	^ self builder modelPackage
+]
+
+{ #category : #'accessing - model' }
 DiCollectionToModelBuilderPart >> modelRootClass [
 	<return: #RGClass>
 	^ self builder modelRootClass
+]
+
+{ #category : #'accessing - model' }
+DiCollectionToModelBuilderPart >> modelRootClassName [
+	<return: #String>
+	^ self builder modelRootClassName
 ]
 
 { #category : #accessing }
 DiCollectionToModelBuilderPart >> naming [
 	<return: #DiModelNamingStrategy>
 	^ self builder naming
+]
+
+{ #category : #'accessing - model' }
+DiCollectionToModelBuilderPart >> packageTagName [
+	<return: #String>
+	^ self builder packageTagName
 ]
