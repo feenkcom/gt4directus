@@ -146,24 +146,6 @@ DiCollectionToModelBuilder >> existingCollectionBehaviorOrNil: aDiMetaCollection
 	^ self modelBuilder behaviorNamed: aClassName.
 ]
 
-{ #category : #building }
-DiCollectionToModelBuilder >> exportToJavascript [
-	| jsExporter |
-	jsExporter := DiModelToJavascriptExporter new
-		modelClassPrefix: self modelClassPrefix.
-	jsExporter export: self.
-	^ jsExporter. 
-]
-
-{ #category : #building }
-DiCollectionToModelBuilder >> exportToSwift [
-	| swiftExporter |
-	swiftExporter := DiModelToSwiftExporter new
-		modelClassPrefix: self modelClassPrefix.
-	swiftExporter export: self.
-	^ swiftExporter. 
-]
-
 { #category : #accessing }
 DiCollectionToModelBuilder >> extensions [
 	^ extensions
@@ -399,7 +381,7 @@ DiCollectionToModelBuilder >> useInstanceVariableBuilder [
 
 { #category : #'initialization - extensions - others' }
 DiCollectionToModelBuilder >> useJavaScriptGenerator [
-	self addExtension: DiModelToJavascriptExporter new.
+	self addExtension: DiModelToJavaScriptExporter new.
 	self useNullModelBuilder.
 ]
 

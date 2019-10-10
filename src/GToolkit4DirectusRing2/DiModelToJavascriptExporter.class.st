@@ -12,7 +12,7 @@ ${example:DiJavascripModelExporterExamples>>#companyAndCountryBuilder|previewExp
 
 "
 Class {
-	#name : #DiModelToJavascriptExporter,
+	#name : #DiModelToJavaScriptExporter,
 	#superclass : #DiModelExporter,
 	#classInstVars : [
 		'tabIndent'
@@ -21,13 +21,13 @@ Class {
 }
 
 { #category : #writing }
-DiModelToJavascriptExporter >> convertClass: aDiMetaCollection [
+DiModelToJavaScriptExporter >> convertClass: aDiMetaCollection [
 	self writeClassDefinitionOf: aDiMetaCollection.
 	stream newlines: 2.
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> convertRootClass: aDiMetaCollection [
+DiModelToJavaScriptExporter >> convertRootClass: aDiMetaCollection [
 	stream
 		code: 'class ', (self naming collectionModelName: aDiMetaCollection).
 	stream curlies: [ 
@@ -38,7 +38,7 @@ DiModelToJavascriptExporter >> convertRootClass: aDiMetaCollection [
 ]
 
 { #category : #accessing }
-DiModelToJavascriptExporter >> gtContentsFor: aView [
+DiModelToJavaScriptExporter >> gtContentsFor: aView [
 	<gtView>
 	^ aView textEditor
 		title: 'Contents';
@@ -47,13 +47,13 @@ DiModelToJavascriptExporter >> gtContentsFor: aView [
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> onTempStreamDo: aBlock [
+DiModelToJavaScriptExporter >> onTempStreamDo: aBlock [
 	stream := DiJavascriptModelStream new.
 	aBlock value.
 ]
 
 { #category : #sorting }
-DiModelToJavascriptExporter >> putBehavior: aFirst before: aSecond [
+DiModelToJavaScriptExporter >> putBehavior: aFirst before: aSecond [
 	(aFirst isRingResolved and: [ aSecond isRingResolved not ]) ifTrue: [ ^ true ].
 	(aFirst isRingResolved not and: [ aSecond isRingResolved ]) ifTrue: [ ^ false ].
 	
@@ -67,7 +67,7 @@ DiModelToJavascriptExporter >> putBehavior: aFirst before: aSecond [
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeAccessorsFor: aDiMetaCollection [
+DiModelToJavaScriptExporter >> writeAccessorsFor: aDiMetaCollection [
 	self 
 		includedCollection: aDiMetaCollection 
 		fieldsDo: [ :aMetaField |
@@ -87,7 +87,7 @@ DiModelToJavascriptExporter >> writeAccessorsFor: aDiMetaCollection [
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeClassDefinitionOf: aDiMetaCollection [
+DiModelToJavaScriptExporter >> writeClassDefinitionOf: aDiMetaCollection [
 	stream
 		code: 'class ', (self naming collectionModelName: aDiMetaCollection);
 		nextPutAll: ' extends ', self modelRootClassName.
@@ -98,19 +98,19 @@ DiModelToJavascriptExporter >> writeClassDefinitionOf: aDiMetaCollection [
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeClassInheritanceOf: aDiMetaCollection [
+DiModelToJavaScriptExporter >> writeClassInheritanceOf: aDiMetaCollection [
 	self flag: #remove.
 	self shouldNotImplement.
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeClassVariablesDeclarationOf: aDiMetaCollection [
+DiModelToJavaScriptExporter >> writeClassVariablesDeclarationOf: aDiMetaCollection [
 	self writeConstructorFor: aDiMetaCollection.
 	self writeAccessorsFor: aDiMetaCollection.
 ]
 
 { #category : #writing }
-DiModelToJavascriptExporter >> writeConstructorFor: aDiMetaCollection [
+DiModelToJavaScriptExporter >> writeConstructorFor: aDiMetaCollection [
 	stream code: 'constructor'.
 	stream parantheses: [ 
 		self 
