@@ -92,7 +92,6 @@ DiModelToSwiftExporter >> writeVariablesFor: aDiMetaCollection [
 	self 
 		includedCollection: aDiMetaCollection 
 		fieldsDo: [ :aMetaField | 
-			| aType |
-			aType := aMetaField typeNameUsingNaming: self naming.
-			stream line: 'var ', (self naming fieldName: aMetaField), ': ', aType ].
+			stream line: 'var ', (self naming fieldName: aMetaField), ': ', 
+				(aMetaField type accept: (DiSwiftTypeVisitor new builder: self builder; field: aMetaField)) ].
 ]

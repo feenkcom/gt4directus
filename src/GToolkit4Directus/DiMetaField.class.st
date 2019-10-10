@@ -13,7 +13,8 @@ Class {
 	#instVars : [
 		'note',
 		'type',
-		'name'
+		'name',
+		'required'
 	],
 	#category : #'GToolkit4Directus-Meta Model'
 }
@@ -93,6 +94,17 @@ DiMetaField >> printOn: aStream [
 		print: self name;
 		nextPutAll: ' of type ';
 		print: self type name
+]
+
+{ #category : #accessing }
+DiMetaField >> required [
+	<return: #Boolean>
+	^ required
+]
+
+{ #category : #accessing }
+DiMetaField >> required: aBoolean [
+	required := aBoolean
 ]
 
 { #category : #'accessing - model' }
