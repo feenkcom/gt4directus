@@ -57,6 +57,5 @@ DiModelExporter >> modelClassPrefix: anObject [
 
 { #category : #writing }
 DiModelExporter >> onTempStreamDo: aBlock [
-	stream := DiJavascriptModelStream new.
-	aBlock value.
+	self subclassResponsibility.
 ]

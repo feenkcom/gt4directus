@@ -12,6 +12,7 @@ DiModelToSwiftExporter >> convertClass: aClass [
 	self writeClassResponse: aClass.
 	stream newline.
 	self writeClassDefinition: aClass.
+	stream newline.
 ]
 
 { #category : #writing }
@@ -45,7 +46,25 @@ DiModelToSwiftExporter >> gtContentsFor: aView [
 ]
 
 { #category : #writing }
+DiModelToSwiftExporter >> onTempStreamDo: aBlock [
+	stream := DiSwiftModelStream new.
+	aBlock value.
+]
+
+{ #category : #writing }
 DiModelToSwiftExporter >> writeClassDefinition: aClass [
+	| className methods |
+	className := self extractName: aClass.
+	methods := (aClass localMethods) select: [ :aMethod | aMethod numArgs = 0 ].
+	stream
+		code: 'struct ', className, ': Codable';
+		curlies: [ 
+			self writeVariablesFor: methods.
+			stream newline.
+			self writeMappingFor: methods.
+			stream newline.
+		].
+	
 ]
 
 { #category : #writing }
@@ -62,15 +81,18 @@ DiModelToSwiftExporter >> writeClassResponse: aClass [
 ]
 
 { #category : #writing }
-DiModelToSwiftExporter >> writeClassVariablesDeclarationOf: aClass [
-	self writeVariablesFor: aClass allInstVarNames.
-	self writeMappingFor: aClass allInstVarNames.
+DiModelToSwiftExporter >> writeMappingFor: methods [
+	stream code: 'enum CodingKeys: String, CodingKey';
+	curlies: [ 
+		methods do: [ :aMethod | 
+			stream line: 'case ', aMethod selector, ':'.
+		].
+	]
 ]
 
 { #category : #writing }
-DiModelToSwiftExporter >> writeMappingFor: aClass [
-]
-
-{ #category : #writing }
-DiModelToSwiftExporter >> writeVariablesFor: aClass [
+DiModelToSwiftExporter >> writeVariablesFor: methods [
+	methods do: [ :aMethod | 
+		stream line: 'var ', aMethod selector, ':'.
+	].
 ]

@@ -40,6 +40,12 @@ DiModelToJavascriptExporter >> gtContentsFor: aView [
 		text: [stream contents].
 ]
 
+{ #category : #writing }
+DiModelToJavascriptExporter >> onTempStreamDo: aBlock [
+	stream := DiJavascriptModelStream new.
+	aBlock value.
+]
+
 { #category : #sorting }
 DiModelToJavascriptExporter >> putBehavior: aFirst before: aSecond [
 	(aFirst isRingResolved and: [ aSecond isRingResolved not ]) ifTrue: [ ^ true ].
