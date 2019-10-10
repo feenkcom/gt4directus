@@ -31,6 +31,11 @@ DiModelNamingStrategy >> collectionModelName: aDiMetaCollection [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'accessing - protocol names' }
+DiModelNamingStrategy >> convertingProtocolName [
+	^ 'converting'
+]
+
 { #category : #'accessing - variable names' }
 DiModelNamingStrategy >> fieldName: aDiMetaField [
 	<return: #String>

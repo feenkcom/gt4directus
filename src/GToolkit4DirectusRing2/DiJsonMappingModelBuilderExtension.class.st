@@ -30,6 +30,7 @@ DiJsonMappingModelBuilderExtension >> build [
 	self buildReadingMethod.
 	self buildWritingMethod.
 	self buildModelReadingMethods.
+	self buildModelWritingMethods.
 	self buildClassComment.
 ]
 
@@ -238,6 +239,34 @@ DiJsonMappingModelBuilderExtension >> buildModelReadingMethods [
 		withSourceCode: aMethodBody 
 		andProtocol: self naming readingProtocolName 
 		inBehavior: aModelClass classSide.
+]
+
+{ #category : #building }
+DiJsonMappingModelBuilderExtension >> buildModelWritingMethods [
+	| aModelClass aMethodName aMethodBody |
+	aModelClass := self modelRootClass.
+	aMethodName := 'asJson'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'asJson'; cr;
+			tab; nextPutAll: '<return: #String>'; cr;
+			tab; nextPutAll: '^ '; nextPutAll: self jsonModelClassName; nextPutAll: ' default write: self' ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming convertingProtocolName 
+		inBehavior: aModelClass.
+	aMethodName := 'asPrettyJson'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'asPrettyJson'; cr;
+			tab; nextPutAll: '<return: #String>'; cr;
+			tab; nextPutAll: '^ '; nextPutAll: self jsonModelClassName; nextPutAll: ' default writePretty: self' ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming convertingProtocolName 
+		inBehavior: aModelClass.
 ]
 
 { #category : #building }
