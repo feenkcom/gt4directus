@@ -52,7 +52,7 @@ DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: a
 
 	"Setter"
 	aVariableName := self naming modelInstanceName: aType.
-	aSetterName := aName, ':'.
+	aSetterName := self naming setterName: aDiMetaField.
 	aSourceCode := aSetterName, ' ', aVariableName, aMethodComment, String cr, 
 		String tab, '<input: ', aType printString, '>', String cr, 
 		String tab, '<metaField: ', aDiMetaField name printString, '>', String cr, 

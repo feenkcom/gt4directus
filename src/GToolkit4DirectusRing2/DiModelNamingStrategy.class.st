@@ -11,6 +11,7 @@ Class {
 
 { #category : #accessing }
 DiModelNamingStrategy >> accessorName: aDiMetaField [
+	<return: #String>
 	^ self fieldName: aDiMetaField
 ]
 
@@ -32,6 +33,7 @@ DiModelNamingStrategy >> collectionModelName: aDiMetaCollection [
 
 { #category : #accessing }
 DiModelNamingStrategy >> fieldName: aDiMetaField [
+	<return: #String>
 	^ self subclassResponsibility
 ]
 
@@ -75,6 +77,12 @@ DiModelNamingStrategy >> printingProtocolName [
 { #category : #accessing }
 DiModelNamingStrategy >> readingProtocolName [
 	^ 'reading'
+]
+
+{ #category : #accessing }
+DiModelNamingStrategy >> setterName: aDiMetaField [
+	<return: #String>
+	^ (self accessorName: aDiMetaField), ':'
 ]
 
 { #category : #accessing }

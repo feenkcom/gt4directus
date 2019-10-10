@@ -26,6 +26,7 @@ DiJsonMappingModelBuilderExtension >> build [
 		self buildCollectionMappingForCollection: eachCollection behavior: eachBehavior.
 		self buildDataMappingForCollection: eachCollection behavior: eachBehavior. ].
 	self buildMappingMethod.
+	self buildConvertToIdsMethod.
 	self buildReadingMethod.
 	self buildWritingMethod.
 	self buildModelReadingMethods.
@@ -60,6 +61,26 @@ DiJsonMappingModelBuilderExtension >> buildCollectionMappingForCollection: aDiMe
 ]
 
 { #category : #building }
+DiJsonMappingModelBuilderExtension >> buildConvertToIdsMethod [
+	| aJsonMappingClass aMethodName aMethodBody |
+	aJsonMappingClass := self jsonMappingClass.
+	aMethodName := 'convertToIds:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'convertToIds: anObject'; cr;
+			tab; nextPutAll: 'anObject ifNil: [ ^ anObject ].'; cr;
+			tab; nextPutAll: 'anObject isInteger ifTrue: [ ^ anObject ].'; cr;
+			tab; nextPutAll: '(anObject isCollection and: [ anObject isEmpty ]) ifTrue: [ ^ anObject ].';
+			tab; nextPutAll: '(anObject isCollection ifTrue: [ ^ anObject collect: #id ]).'; cr;
+			tab; nextPutAll: '^ anObject id'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming writingProtocolName 
+		inBehavior: aJsonMappingClass
+]
+
+{ #category : #building }
 DiJsonMappingModelBuilderExtension >> buildDataMappingForCollection: aDiMetaCollection behavior: aRGBehavior [ 
 	| aJsonMappingClass aMethodName aMethodBody |
 	aJsonMappingClass := self jsonMappingClass.
@@ -87,6 +108,20 @@ DiJsonMappingModelBuilderExtension >> buildDataMappingForCollection: aDiMetaColl
 		withSourceCode: aMethodBody 
 		andProtocol: self naming mappingDataProtocolName 
 		inBehavior: aJsonMappingClass
+]
+
+{ #category : #building }
+DiJsonMappingModelBuilderExtension >> buildIdOrObjectMappingForCollection: aDiMetaCollection field: eachField on: aStream [
+			| aValueName anObjectName | 
+			anObjectName := self naming modelInstanceName: (self naming collectionModelName: aDiMetaCollection).
+			aValueName := 'aValue'.
+			aStream
+				tab; tab; tab; nextPutAll: 'mapping'; cr;
+				tab; tab; tab; tab; nextPutAll: 'mapProperty: '; print: eachField name asSymbol; cr;
+				tab; tab; tab; tab; nextPutAll: 'getter: [ :'; nextPutAll: anObjectName; nextPutAll: ' |'; cr;
+				tab; tab; tab; tab; tab; nextPutAll: 'self convertToIds: '; nextPutAll: anObjectName; nextPutAll:' '; nextPutAll: (self naming accessorName: eachField); nextPutAll: ' ]'; cr;
+				tab; tab; tab; tab; nextPutAll: 'setter: [ :'; nextPutAll: anObjectName; nextPutAll: ' :'; nextPutAll: aValueName; nextPutAll: ' | '; nextPutAll: anObjectName; nextPutAll: ' '; nextPutAll: (self naming setterName: eachField); nextPutAll: ' '; nextPutAll: aValueName; nextPutAll: ' ].'; cr
+		
 ]
 
 { #category : #building }
@@ -148,13 +183,17 @@ DiJsonMappingModelBuilderExtension >> buildModelMappingForCollection: aDiMetaCol
 	aJsonMappingClass := self jsonMappingClass.
 	aMethodName := 'mappingOf', (self naming collectionModelName: aDiMetaCollection), 'For:'.
 	aMethodBody := String streamContents: [ :aStream | 
+		| anObjectName |
 		aStream 
 			nextPutAll: aMethodName; nextPutAll: ' aNeoJSONMapper'; cr;
 			tab; nextPutAll: 'aNeoJSONMapper'; cr;
 			tab; tab; nextPutAll: 'for: '; nextPutAll: aRGBehavior name; nextPutAll: ' do: [ :mapping |'; cr.
+		anObjectName := self naming modelInstanceName: (self naming collectionModelName: aDiMetaCollection).
 		self includedCollection: aDiMetaCollection fieldsDo: [ :eachField | 
-			aStream
-				tab; tab; tab; nextPutAll: 'mapping mapAccessor: #'''; nextPutAll: (self naming fieldName: eachField); nextPutAll: ''' to: #'''; nextPutAll: eachField name; nextPutAll: '''.'; cr ].
+			eachField isModelType 
+				ifTrue: [ self buildIdOrObjectMappingForCollection: aDiMetaCollection field: eachField on: aStream ] 
+				ifFalse: [ self buildSimpleMappingForCollection: aDiMetaCollection field: eachField on: aStream ]
+		].
 		aStream
 				tab; tab; nextPutAll: '].' ].
 	self 
@@ -218,6 +257,19 @@ DiJsonMappingModelBuilderExtension >> buildReadingMethod [
 		withSourceCode: aMethodBody 
 		andProtocol: self naming readingProtocolName 
 		inBehavior: aJsonMappingClass
+]
+
+{ #category : #building }
+DiJsonMappingModelBuilderExtension >> buildSimpleMappingForCollection: aDiMetaCollection field: eachField on: aStream [
+			| aValueName anObjectName | 
+			anObjectName := self naming modelInstanceName: (self naming collectionModelName: aDiMetaCollection).
+			aValueName := 'aValue'.
+			aStream
+				tab; tab; tab; nextPutAll: 'mapping'; cr;
+				tab; tab; tab; tab; nextPutAll: 'mapProperty: '; print: eachField name asSymbol; cr;
+				tab; tab; tab; tab; nextPutAll: 'getter: [ :'; nextPutAll: anObjectName; nextPutAll: ' | '; nextPutAll: anObjectName; nextPutAll:' '; nextPutAll: (self naming accessorName: eachField); nextPutAll: ' ]'; cr;
+				tab; tab; tab; tab; nextPutAll: 'setter: [ :'; nextPutAll: anObjectName; nextPutAll: ' :'; nextPutAll: aValueName; nextPutAll: ' | '; nextPutAll: anObjectName; nextPutAll: ' '; nextPutAll: (self naming setterName: eachField); nextPutAll: ' '; nextPutAll: aValueName; nextPutAll: ' ].'; cr
+		
 ]
 
 { #category : #building }

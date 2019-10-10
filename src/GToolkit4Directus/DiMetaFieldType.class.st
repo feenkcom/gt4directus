@@ -33,6 +33,11 @@ DiMetaFieldType >> isManyToOne [
 ]
 
 { #category : #testing }
+DiMetaFieldType >> isModelType [
+	^ false
+]
+
+{ #category : #testing }
 DiMetaFieldType >> isOneToMany [
 	^ false
 ]
