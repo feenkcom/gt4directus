@@ -5,6 +5,8 @@ ${class:DiDataRelationBuilder}$ uses my subclasses.
 Class {
 	#name : #DiDataRelationBuilderContext,
 	#superclass : #Object,
+	#traits : 'TDiMetaFieldTypeVisitor',
+	#classTraits : 'TDiMetaFieldTypeVisitor classTrait',
 	#instVars : [
 		'builder',
 		'values'
@@ -71,7 +73,7 @@ DiDataRelationBuilderContext >> values: anObject [
 	values := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #visiting }
 DiDataRelationBuilderContext >> visitDiMetaFieldTypeFile: aDiMetaFieldTypeFile [ 
 	"subclasses can do particular actions"
 ]

@@ -104,6 +104,7 @@ DiMetaModelMapping >> metaFieldMappingFor: aNeoJSONMapper [
 	      (mapping mapAccessor: #type) valueSchema: DiMetaFieldType.
 	      mapping mapAccessor: #name to: #field.
 			mapping mapAccessor: #required.
+			mapping mapAccessor: #unique.
 		].
 	self metaFieldTypeMappingFor: aNeoJSONMapper.
 ]

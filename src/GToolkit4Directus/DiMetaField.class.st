@@ -14,7 +14,8 @@ Class {
 		'note',
 		'type',
 		'name',
-		'required'
+		'required',
+		'unique'
 	],
 	#category : #'GToolkit4Directus-Meta Model'
 }
@@ -67,22 +68,24 @@ DiMetaField >> isSystemField [
 
 { #category : #accessing }
 DiMetaField >> name [
+	<return: #String>
 	^ name
 ]
 
 { #category : #accessing }
-DiMetaField >> name: anObject [
-	name := anObject
+DiMetaField >> name: aString [
+	name := aString
 ]
 
 { #category : #accessing }
 DiMetaField >> note [
+	<return: #String>
 	^ note
 ]
 
 { #category : #accessing }
-DiMetaField >> note: anObject [
-	note := anObject
+DiMetaField >> note: aString [
+	note := aString
 ]
 
 { #category : #printing }
@@ -116,12 +119,13 @@ DiMetaField >> setter [
 
 { #category : #accessing }
 DiMetaField >> type [
+	<return: #DiMetaFieldType>
 	^ type
 ]
 
 { #category : #accessing }
-DiMetaField >> type: anObject [
-	type := anObject
+DiMetaField >> type: aDiMetaFieldType [
+	type := aDiMetaFieldType
 ]
 
 { #category : #accessing }
@@ -135,4 +139,15 @@ DiMetaField >> typeNameUsingNaming: aDiNamingStrategy [
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>
 	^ self type typeNameUsingNaming: aDiNamingStrategy 
+]
+
+{ #category : #accessing }
+DiMetaField >> unique [
+	<return: #Boolean>
+	^ unique
+]
+
+{ #category : #accessing }
+DiMetaField >> unique: aBoolean [
+	unique := aBoolean
 ]

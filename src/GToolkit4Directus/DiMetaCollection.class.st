@@ -64,7 +64,9 @@ DiMetaCollection >> gtFieldsFor: aView [
 		priority: 2;
 		items: [ self fields ];
 		column: 'Name' item: [ :aField | aField name ];
-		column: 'Type' item: [ :aField | aField type ifNotNil: #name ]
+		column: 'Type' item: [ :aField | aField type ifNotNil: #name ];
+		column: 'Unique' item: [ :aField | aField unique ifTrue: [ 'unique' ] ifFalse: [ '' ] ] width: 50;
+		column: 'Required' item: [ :aField | aField required ifTrue: [ 'required' ] ifFalse: [ '' ] ] width: 50
 ]
 
 { #category : #accessing }
@@ -98,10 +100,7 @@ DiMetaCollection >> gtUMLFor: aView [
 					aMondrian nodes 
 						shape: [ :eachMetaField | 
 							| aText | 
-							aText := (eachMetaField name asString, ': ', eachMetaField type name asString) asRopedText.
-							eachMetaField isSystemField 
-								ifTrue: [ aText foreground: Color lightGray ]
-								ifFalse: [ (aText from: eachMetaField name size + 2 to: aText size) foreground: Color lightGray ].
+							aText := DiUMLMetaFieldNameAndTypeGenerator new field: eachMetaField; text.
 							BlTextElement new text: aText ];
 						with: (eachMetaCollection gtSortedFields).
 					aMondrian layout custom: BlLinearLayout vertical ].

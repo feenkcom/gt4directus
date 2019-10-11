@@ -1,6 +1,8 @@
 Class {
 	#name : #DiSwiftTypeVisitor,
 	#superclass : #DiCollectionToModelBuilderPart,
+	#traits : 'TDiMetaFieldTypeVisitor',
+	#classTraits : 'TDiMetaFieldTypeVisitor classTrait',
 	#instVars : [
 		'field'
 	],

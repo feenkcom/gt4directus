@@ -70,11 +70,10 @@ DiMetaCollections >> gtUMLFor: aView [
 				forEach: [ :eachMetaCollection | 
 					aMondrian nodes 
 						shape: [ :eachMetaField | 
-							| aText | 
-							aText := (eachMetaField name asString, ': ', eachMetaField type name asString) asRopedText.
-							eachMetaField isSystemField 
-								ifTrue: [ aText foreground: Color lightGray ]
-								ifFalse: [ (aText from: eachMetaField name size + 2 to: aText size) foreground: Color lightGray ].
+							| aText |
+							aText := DiUMLMetaFieldNameAndTypeGenerator new
+								field: eachMetaField;
+								text.
 							BlTextElement new text: aText ];
 						with: eachMetaCollection gtSortedFields.
 					aMondrian layout custom: BlLinearLayout vertical ].
