@@ -31,5 +31,5 @@ DiMetaFieldTypeFile >> name [
 DiMetaFieldTypeFile >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>
-	^ Integer name asSymbol
+	^ FileReference name asSymbol
 ]
