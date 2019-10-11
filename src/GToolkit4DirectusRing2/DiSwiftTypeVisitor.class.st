@@ -22,6 +22,11 @@ DiSwiftTypeVisitor >> field: aDiMetaField [
 ]
 
 { #category : #visiting }
+DiSwiftTypeVisitor >> visitDiMetaFieldTypeFile: aDiMetaFieldTypeFile [ 
+	^ self visitDiMetaFieldTypeInteger: aDiMetaFieldTypeFile
+]
+
+{ #category : #visiting }
 DiSwiftTypeVisitor >> visitDiMetaFieldTypeInteger: aDiMetaFieldTypeInteger [ 
 	^ self field required ifTrue: [ 'Int' ] ifFalse: [ 'Int?' ]
 ]
