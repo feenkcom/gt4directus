@@ -71,6 +71,11 @@ DiDataRelationBuilderContext >> values: anObject [
 	values := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+DiDataRelationBuilderContext >> visitDiMetaFieldTypeFile: aDiMetaFieldTypeFile [ 
+	"subclasses can do particular actions"
+]
+
 { #category : #visiting }
 DiDataRelationBuilderContext >> visitDiMetaFieldTypeInteger: aDiMetaFieldTypeInteger [ 
 	"subclasses can do particular actions"
