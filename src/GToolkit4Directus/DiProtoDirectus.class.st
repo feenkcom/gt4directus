@@ -18,39 +18,18 @@ Class {
 	#category : #'GToolkit4Directus-Importer'
 }
 
-{ #category : #authentication }
-DiProtoDirectus >> authenticate [
-	self authenticateWithEmail: self email password: self password
-]
-
-{ #category : #authentication }
-DiProtoDirectus >> authenticateWithEmail: anEmail password: aPassword [
-	| aResponse aJsonObject |
-	accessToken ifNil: [ 
-		| aContent aJsonContent |
-		aContent := Dictionary new
-			at: 'email' put: anEmail;
-			at: 'password' put: aPassword;
-			yourself.
-		aJsonContent := STONJSON toString: aContent.
-		aResponse := ZnClient new
-			url: projectURL;
-			addPath: #(auth authenticate);
-    		entity: (ZnEntity json: aJsonContent);
-			post;
-			response.
-		aResponse isSuccess
-   			ifTrue: [ 
-				aJsonObject := STONJSON fromString: aResponse contents.
-				accessToken := (aJsonObject at: 'data') at: 'token'.
-		].
-	].
+{ #category : #accessing }
+DiProtoDirectus >> accessToken [
+	<return: #String>
+	^ accessToken
 ]
 
 { #category : #accessing }
-DiProtoDirectus >> email [
-	<return: #String>
-	^ self subclassResponsibility
+DiProtoDirectus >> accessToken: aString [
+	self 
+		assert: [ aString isString and: [ aString isNotEmpty ] ] 
+		description: [ 'Access token must be non-empty string' ].
+	^ accessToken := aString
 ]
 
 { #category : #reading }
@@ -155,12 +134,6 @@ DiProtoDirectus >> isAuthenticated [
 ]
 
 { #category : #accessing }
-DiProtoDirectus >> password [
-	<return: #String>
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
 DiProtoDirectus >> projectURL [
 	<return: #ZnUrl>
 	^ projectURL
@@ -168,6 +141,9 @@ DiProtoDirectus >> projectURL [
 
 { #category : #accessing }
 DiProtoDirectus >> projectURL: aZnUrl [
+	self 
+		assert: [ aZnUrl isNotNil ] 
+		description: [ 'Project URL must be non-nil' ].
 	projectURL := aZnUrl asZnUrl
 ]
 

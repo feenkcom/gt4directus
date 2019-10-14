@@ -15,7 +15,7 @@ Notice, that the last example includes exact one-to-many and many-to-one data ty
 "
 Class {
 	#name : #DiDirectus,
-	#superclass : #DiProtoDirectus,
+	#superclass : #DiMonoliteDirectus,
 	#instVars : [
 		'email',
 		'password'
