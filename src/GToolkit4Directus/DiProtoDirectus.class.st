@@ -107,9 +107,9 @@ DiProtoDirectus >> getResponse: endpoint [
 	<return: #ZnResponse>
 	
 	^ ZnClient new
-		url: projectURL;
+		url: self projectURL;
 		addPath: endpoint;
-		headerAt: 'Authorization:' put: 'Bearer ', accessToken;
+		headerAt: 'Authorization:' put: 'Bearer ', self accessToken asString;
 		get;
 		response.
 ]

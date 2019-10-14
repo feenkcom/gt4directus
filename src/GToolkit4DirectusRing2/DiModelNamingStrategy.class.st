@@ -53,8 +53,13 @@ DiModelNamingStrategy >> mappingCollectionsProtocolName [
 ]
 
 { #category : #'accessing - protocol names' }
-DiModelNamingStrategy >> mappingDataProtocolName [
-	^ 'mappings - data'
+DiModelNamingStrategy >> mappingDataCollectionProtocolName [
+	^ 'mappings - data collection'
+]
+
+{ #category : #'accessing - protocol names' }
+DiModelNamingStrategy >> mappingDataItemProtocolName [
+	^ 'mappings - data item'
 ]
 
 { #category : #'accessing - protocol names' }

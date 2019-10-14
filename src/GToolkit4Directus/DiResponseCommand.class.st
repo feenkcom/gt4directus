@@ -63,6 +63,18 @@ DiResponseCommand >> endPoint [
 	^ self class endPoint
 ]
 
+{ #category : #'reading - directus' }
+DiResponseCommand >> getResponse [
+	<return: #ZnResponse>
+	^ self getResponse: self endPoint
+]
+
+{ #category : #'reading - directus' }
+DiResponseCommand >> getResponse: anEndPoint [
+	<return: #ZnResponse>
+	^ self directus getResponse: anEndPoint
+]
+
 { #category : #accessing }
 DiResponseCommand >> response [
 	<return: #ZnResponse>

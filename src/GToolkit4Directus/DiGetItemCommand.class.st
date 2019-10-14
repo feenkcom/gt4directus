@@ -34,10 +34,16 @@ DiGetItemCommand >> collectionName: aString [
 	collectionName := aString
 ]
 
+{ #category : #accessing }
+DiGetItemCommand >> endPoint [
+	<return: #Array>
+	^ super endPoint, { self collectionName. self itemId }
+]
+
 { #category : #execution }
 DiGetItemCommand >> execute [
 	self assertReadyForExecution.
-	response := self getResponse: self endPoint.
+	self response: self getResponse.
 	
 ]
 

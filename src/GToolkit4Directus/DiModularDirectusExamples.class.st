@@ -42,6 +42,27 @@ DiModularDirectusExamples >> email [
 	^ 'my@email.com'
 ]
 
+{ #category : #'example - commands' }
+DiModularDirectusExamples >> getItemOfCompany [
+	<gtExample>
+	| aDirectus aCommand |
+	self
+		mapEndPoint: (DiGetItemCommand endPoint, #( 'company' '1') )
+		to: [ :aRequest :aResponse | aResponse entity: (ZnEntity json: '{"data":{"token":"my-token"}}') ].
+	aDirectus := self localDirectus.
+	aCommand := DiGetItemCommand new.
+	aCommand directus: aDirectus.
+	aCommand collectionName: 'company'.
+	aCommand itemId: 1.
+	self assert: aCommand directus equals: aDirectus.
+	self assert: aCommand collectionName equals: 'company'.
+	self assert: aCommand itemId equals: '1'.
+	aCommand execute.
+	self assert: aCommand response isNotNil.
+	self assert: aCommand response isSuccess.
+	^ aCommand
+]
+
 { #category : #initialization }
 DiModularDirectusExamples >> initialize [
 	super initialize.
@@ -64,6 +85,24 @@ DiModularDirectusExamples >> localDirectus [
 	self assert: aDirectus accessToken isNil.
 	self assert: aDirectus projectURL equals: self serverUrl.
 	^ aDirectus
+]
+
+{ #category : #server }
+DiModularDirectusExamples >> mapEndPoint: anArray to: aBlock [
+	self delegate
+		map: (self mappingForEndPoint: anArray)
+		to: aBlock
+]
+
+{ #category : #server }
+DiModularDirectusExamples >> mappingForEndPoint: anArray [
+	<return: #String>
+	^ String streamContents: [ :aStream | 
+		aStream nextPut: $/.
+		anArray 
+			do: [ :eachEndPoint | 
+				aStream nextPutAll: eachEndPoint asString ]
+			separatedBy: [ aStream nextPut: $/ ] ]
 ]
 
 { #category : #accessing }

@@ -24,12 +24,14 @@ DiJsonMappingModelBuilderExtension >> build [
 	self includedCollectionsAndModelsDo: [ :eachCollection :eachBehavior | 
 		self buildModelMappingForCollection: eachCollection behavior: eachBehavior.
 		self buildCollectionMappingForCollection: eachCollection behavior: eachBehavior.
-		self buildDataMappingForCollection: eachCollection behavior: eachBehavior. ].
+		self buildDataItemMappingForCollection: eachCollection behavior: eachBehavior.
+		self buildDataCollectionMappingForCollection: eachCollection behavior: eachBehavior. ].
 	self buildMappingMethod.
 	self buildConvertToIdsMethod.
 	self buildReadingMethod.
 	self buildWritingMethod.
-	self buildModelReadingMethods.
+	self buildModelDataItemReadingMethods.
+	self buildModelDataCollectionReadingMethods.
 	self buildModelWritingMethods.
 	self buildClassComment.
 ]
@@ -82,15 +84,15 @@ DiJsonMappingModelBuilderExtension >> buildConvertToIdsMethod [
 ]
 
 { #category : #building }
-DiJsonMappingModelBuilderExtension >> buildDataMappingForCollection: aDiMetaCollection behavior: aRGBehavior [ 
+DiJsonMappingModelBuilderExtension >> buildDataCollectionMappingForCollection: aDiMetaCollection behavior: aRGBehavior [ 
 	| aJsonMappingClass aMethodName aMethodBody |
 	aJsonMappingClass := self jsonMappingClass.
-	aMethodName := 'dataOf', (self naming collectionModelName: aDiMetaCollection), 'For:'.
+	aMethodName := 'dataCollectionOf', (self naming collectionModelName: aDiMetaCollection), 'For:'.
 	aMethodBody := String streamContents: [ :aStream | 
 		aStream 
 			nextPutAll: aMethodName; nextPutAll: ' aNeoJSONMapper'; cr;
 			tab; nextPutAll: 'aNeoJSONMapper'; cr;
-			tab; tab; nextPutAll: 'for: '; nextPutAll: '#DataOf'; nextPutAll: (self naming collectionModelName: aDiMetaCollection); nextPutAll: ' customDo: [ :mapping |'; cr;
+			tab; tab; nextPutAll: 'for: '; nextPutAll: '#DataCollectionOf'; nextPutAll: (self naming collectionModelName: aDiMetaCollection); nextPutAll: ' customDo: [ :mapping |'; cr;
 			tab; tab; tab; nextPutAll: 'mapping reader: [ :jsonReader | '; cr;
 			tab; tab; tab; tab; nextPutAll: '| aResult |'; cr;
 			tab; tab; tab; tab; nextPutAll: 'jsonReader parseMapDo: ['; cr;
@@ -107,7 +109,37 @@ DiJsonMappingModelBuilderExtension >> buildDataMappingForCollection: aDiMetaColl
 	self 
 		ensureLocalMethodNamed: aMethodName
 		withSourceCode: aMethodBody 
-		andProtocol: self naming mappingDataProtocolName 
+		andProtocol: self naming mappingDataCollectionProtocolName 
+		inBehavior: aJsonMappingClass
+]
+
+{ #category : #building }
+DiJsonMappingModelBuilderExtension >> buildDataItemMappingForCollection: aDiMetaCollection behavior: aRGBehavior [ 
+	| aJsonMappingClass aMethodName aMethodBody |
+	aJsonMappingClass := self jsonMappingClass.
+	aMethodName := 'dataItemOf', (self naming collectionModelName: aDiMetaCollection), 'For:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: aMethodName; nextPutAll: ' aNeoJSONMapper'; cr;
+			tab; nextPutAll: 'aNeoJSONMapper'; cr;
+			tab; tab; nextPutAll: 'for: '; nextPutAll: '#DataItemOf'; nextPutAll: (self naming collectionModelName: aDiMetaCollection); nextPutAll: ' customDo: [ :mapping |'; cr;
+			tab; tab; tab; nextPutAll: 'mapping reader: [ :jsonReader | '; cr;
+			tab; tab; tab; tab; nextPutAll: '| aResult |'; cr;
+			tab; tab; tab; tab; nextPutAll: 'jsonReader parseMapDo: ['; cr;
+			tab; tab; tab; tab; tab; nextPutAll: '(jsonReader parsePropertyName asString = ''data'')'; cr;
+			tab; tab; tab; tab; tab; tab; nextPutAll: 'ifTrue: ['; cr;
+			tab; tab; tab; tab; tab; tab; tab; nextPutAll: 'jsonReader expectChar: $:.'; cr;
+			tab; tab; tab; tab; tab; tab; tab; nextPutAll: 'aResult := jsonReader nextAs: '; nextPutAll: (self naming collectionModelName: aDiMetaCollection); nextPutAll: ' ]'; cr;
+			tab; tab; tab; tab; tab; tab; nextPutAll: 'ifFalse: ['; cr;
+			tab; tab; tab; tab; tab; tab; tab; nextPutAll: 'jsonReader expectChar: $:.'; cr;
+			tab; tab; tab; tab; tab; tab; tab; nextPutAll: 'aResult := jsonReader next ] ].'; cr;
+			tab; tab; tab; tab; nextPutAll: 'aResult ].'; cr;
+			tab; tab; tab; nextPutAll: 'mapping writer: [ :jsonWriter :list |'; cr;
+			tab; tab; tab; tab; nextPutAll: 'self error: ''Writer not supported'' ] ]'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming mappingDataItemProtocolName 
 		inBehavior: aJsonMappingClass
 ]
 
@@ -170,12 +202,77 @@ DiJsonMappingModelBuilderExtension >> buildMappingMethod [
 			aStream
 				tab; nextPutAll: 'self '; nextPutAll: 'mappingOf'; nextPutAll: aClassName; nextPutAll: 'For: aMapper.'; cr;
 				tab; nextPutAll: 'self '; nextPutAll: 'collectionOf'; nextPutAll: aClassName; nextPutAll: 'For: aMapper.'; cr;
-				tab; nextPutAll: 'self '; nextPutAll: 'dataOf'; nextPutAll: aClassName; nextPutAll: 'For: aMapper.'; cr ] ].
+				tab; nextPutAll: 'self '; nextPutAll: 'dataCollectionOf'; nextPutAll: aClassName; nextPutAll: 'For: aMapper.'; cr;
+				tab; nextPutAll: 'self '; nextPutAll: 'dataItemOf'; nextPutAll: aClassName; nextPutAll: 'For: aMapper.'; cr ] ].
 	self 
 		ensureLocalMethodNamed: aMethodName
 		withSourceCode: aMethodBody 
 		andProtocol: self naming initializationProtocolName 
 		inBehavior: aJsonMappingClass
+]
+
+{ #category : #building }
+DiJsonMappingModelBuilderExtension >> buildModelDataCollectionReadingMethods [
+	| aModelClass aMethodName aMethodBody |
+	aModelClass := self modelRootClass.
+	aMethodName := 'dataCollectionSchemaName'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'dataCollectionSchemaName'; cr;
+			tab; nextPutAll: '^ #DataCollectionOf, self name'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming readingProtocolName 
+		inBehavior: aModelClass classSide.
+	aMethodName := 'readJson:on:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'readJson: aSchema on: aJsonString'; cr;
+			tab; nextPutAll: '^ EsJsonMapping uniqueInstance read: aSchema on: aJsonString readStream'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming readingProtocolName 
+		inBehavior: aModelClass classSide.
+	aMethodName := 'readJsonDataCollection:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'readJsonDataCollection: aJsonString'; cr;
+			tab; nextPutAll: '<return: #Array of: #'; nextPutAll: aModelClass name; nextPutAll: '>'; cr;
+			tab; nextPutAll: '^ self readJson: self dataCollectionSchemaName on: aJsonString'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming readingProtocolName 
+		inBehavior: aModelClass classSide.
+]
+
+{ #category : #building }
+DiJsonMappingModelBuilderExtension >> buildModelDataItemReadingMethods [
+	| aModelClass aMethodName aMethodBody |
+	aModelClass := self modelRootClass.
+	aMethodName := 'dataItemSchemaName'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'dataItemSchemaName'; cr;
+			tab; nextPutAll: '^ #DataItemOf, self name'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming readingProtocolName 
+		inBehavior: aModelClass classSide.
+	aMethodName := 'readJsonDataItem:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'readJsonDataItem: aJsonString'; cr;
+			tab; nextPutAll: '<return: #'; nextPutAll: aModelClass name; nextPutAll: '>'; cr;
+			tab; nextPutAll: '^ self readJson: self dataItemSchemaName on: aJsonString'; cr ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming readingProtocolName 
+		inBehavior: aModelClass classSide.
 ]
 
 { #category : #building }
@@ -202,43 +299,6 @@ DiJsonMappingModelBuilderExtension >> buildModelMappingForCollection: aDiMetaCol
 		withSourceCode: aMethodBody 
 		andProtocol: self naming mappingModelsProtocolName 
 		inBehavior: aJsonMappingClass
-]
-
-{ #category : #building }
-DiJsonMappingModelBuilderExtension >> buildModelReadingMethods [
-	| aModelClass aMethodName aMethodBody |
-	aModelClass := self modelRootClass.
-	aMethodName := 'dataSchemaName'.
-	aMethodBody := String streamContents: [ :aStream | 
-		aStream 
-			nextPutAll: 'dataSchemaName'; cr;
-			tab; nextPutAll: '^ #DataOf, self name'; cr ].
-	self 
-		ensureLocalMethodNamed: aMethodName
-		withSourceCode: aMethodBody 
-		andProtocol: self naming readingProtocolName 
-		inBehavior: aModelClass classSide.
-	aMethodName := 'readJson:on:'.
-	aMethodBody := String streamContents: [ :aStream | 
-		aStream 
-			nextPutAll: 'readJson: aSchema on: aJsonString'; cr;
-			tab; nextPutAll: '^ EsJsonMapping uniqueInstance read: aSchema on: aJsonString readStream'; cr ].
-	self 
-		ensureLocalMethodNamed: aMethodName
-		withSourceCode: aMethodBody 
-		andProtocol: self naming readingProtocolName 
-		inBehavior: aModelClass classSide.
-	aMethodName := 'readJsonData:'.
-	aMethodBody := String streamContents: [ :aStream | 
-		aStream 
-			nextPutAll: 'readJsonData: aJsonString'; cr;
-			tab; nextPutAll: '<return: #Array of: #'; nextPutAll: aModelClass name; nextPutAll: '>'; cr;
-			tab; nextPutAll: '^ self readJson: self dataSchemaName on: aJsonString'; cr ].
-	self 
-		ensureLocalMethodNamed: aMethodName
-		withSourceCode: aMethodBody 
-		andProtocol: self naming readingProtocolName 
-		inBehavior: aModelClass classSide.
 ]
 
 { #category : #building }

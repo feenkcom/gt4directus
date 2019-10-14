@@ -39,3 +39,31 @@ DiDecoradedCommand >> directus [
 	<return: #DiDirectus>
 	^ self command directus
 ]
+
+{ #category : #'accessing - directus' }
+DiDecoradedCommand >> directus: aDiProtoDirectus [
+	self command directus: aDiProtoDirectus
+]
+
+{ #category : #'gt-extension' }
+DiDecoradedCommand >> gtDecoratedCommands [
+	<return: #Array of: #DiCommand>
+	^ Array streamContents: [ :aStream | 
+		self putDecoratedCommandInto: aStream ]
+]
+
+{ #category : #'gt-extension' }
+DiDecoradedCommand >> gtDecoratedCommandsFor: aView [
+	<gtView>
+	self command ifNil: [ ^ aView empty ].
+	^ aView list
+		title: 'Commands';
+		items: [ self gtDecoratedCommands ]
+]
+
+{ #category : #'gt-extension' }
+DiDecoradedCommand >> putDecoratedCommandInto: aStream [
+	self command ifNil: [ ^ self ].
+	aStream nextPut: self command.
+	self command putDecoratedCommandInto: aStream.
+]

@@ -9,6 +9,8 @@ See ${class:DiCollectionToModelBuilderExtension|expanded=true|show=gtSubclassesF
 Class {
 	#name : #DiCollectionToModelBuilderExtension,
 	#superclass : #DiCollectionToModelBuilderPart,
+	#traits : 'TModelBuilder + TCollectionIterator',
+	#classTraits : 'TModelBuilder classTrait + TCollectionIterator classTrait',
 	#category : #'GToolkit4DirectusRing2-Model Builder Extensions'
 }
 

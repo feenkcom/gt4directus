@@ -15,6 +15,12 @@ TDiCommandResponse >> isForbiddenResponse [
 	^ self commandResponse code = 403
 ]
 
+{ #category : #'testing - response' }
+TDiCommandResponse >> isSuccessResponse [
+	<return: #Boolean>
+	^ self commandResponse isSuccess
+]
+
 { #category : #'accessing - response' }
 TDiCommandResponse >> responseContents [
 	^ self commandResponse contents
