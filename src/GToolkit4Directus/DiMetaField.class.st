@@ -49,6 +49,13 @@ DiMetaField >> getter [
 						aStream nextPut: eachCharacter ] ] ] ]
 ]
 
+{ #category : #initialization }
+DiMetaField >> initialize [
+	super initialize.
+	required := false.
+	unique := false.
+]
+
 { #category : #testing }
 DiMetaField >> isModelType [
 	^ self type isModelType

@@ -8,24 +8,9 @@ See ${class:DiCollectionToModelBuilderPart|expanded=true|show=gtSubclassesFor:}$
 "
 Class {
 	#name : #DiCollectionToModelBuilderPart,
-	#superclass : #Object,
-	#traits : 'TCollectionIterator + TModelBuilder',
-	#classTraits : 'TCollectionIterator classTrait + TModelBuilder classTrait',
-	#instVars : [
-		'builder'
-	],
+	#superclass : #DiBuilderExtension,
 	#category : #'GToolkit4DirectusRing2-Model Builder Extensions'
 }
-
-{ #category : #accessing }
-DiCollectionToModelBuilderPart >> builder [
-	^ builder
-]
-
-{ #category : #accessing }
-DiCollectionToModelBuilderPart >> builder: anObject [
-	builder := anObject
-]
 
 { #category : #enumerating }
 DiCollectionToModelBuilderPart >> collectionNamed: aString [

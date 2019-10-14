@@ -3,57 +3,13 @@ I exemplify Editorial Services.
 See ${class:DiMetaCollections}$ for more details about the model.
 "
 Class {
-	#name : #DiExamples,
-	#superclass : #DiCommonExamples,
+	#name : #DiImporterExamples,
+	#superclass : #DiCommonImporterExamples,
 	#category : #'GToolkit4Directus-Examples'
 }
 
-{ #category : #'company - creating class model' }
-DiExamples >> buildCompanyModel [
-	<gtExample>
-	| aBuilder aModelClass |
-	aBuilder := self companyModelClassBuilder.
-	aBuilder build.
-	aModelClass := self class environment classNamed: 'DummyCompany'.
-	self assert: aModelClass isNotNil.
-	self assert: aModelClass isClass.
-	self assert: aModelClass selectors size equals: 9.
-	^ aModelClass
-]
-
-{ #category : #'company - creating class model' }
-DiExamples >> buildCompanyModelWithUserData [
-	<gtExample>
-	| aBuilder aModelClass aSuperClass |
-	aBuilder := self companyModelClassBuilder.
-	aBuilder addExtension: DiUserDataExtensionOld new.
-	aBuilder addExtension: DiDataAccessorExtension new.
-	aBuilder build.
-	aModelClass := self class environment classNamed: 'DummyCompany'.
-	aSuperClass := aModelClass superclass.
-	self assert: aSuperClass isNotNil.
-	self assert: aSuperClass isClass.
-	self assert: aSuperClass selectors size equals: 4.
-	self assert: aSuperClass selectors sorted first equals: 'collectionName'.
-	self assert: aSuperClass selectors sorted second equals: 'data'.
-	self assert: aSuperClass selectors sorted third equals: 'data:'.
-	self assert: aSuperClass selectors sorted fourth equals: 'userData'.
-	^ aSuperClass
-]
-
-{ #category : #'company - creating class model' }
-DiExamples >> companyModelClassBuilder [
-	<gtExample>
-	| aMetaCollections aBuilder |
-	aMetaCollections := self metaCollectionsOfCompany.
-	aBuilder := self modelBuilder.
-	aBuilder collections: aMetaCollections.
-	self assert: aBuilder collections equals: aMetaCollections.
-	^ aBuilder
-]
-
 { #category : #'model builder' }
-DiExamples >> dummyPackage [
+DiImporterExamples >> dummyPackage [
 	<gtExample>
 	"<after: #removeDummyPackage>"
 	| aPackageName aPackage anOrganizer |
@@ -65,12 +21,12 @@ DiExamples >> dummyPackage [
 ]
 
 { #category : #'model builder' }
-DiExamples >> dummyPackageName [
+DiImporterExamples >> dummyPackageName [
 	^ 'Dummy-Package-For' , self class package name
 ]
 
 { #category : #'company - importer' }
-DiExamples >> importCompanyCollectionsWithRelations [
+DiImporterExamples >> importCompanyCollectionsWithRelations [
 	<gtExample>
 	| anImporter aMetaModel aCollection aRelation aField |
 	anImporter := self importer.
@@ -88,7 +44,7 @@ DiExamples >> importCompanyCollectionsWithRelations [
 ]
 
 { #category : #'company - importer' }
-DiExamples >> importCompanyMetaModel [
+DiImporterExamples >> importCompanyMetaModel [
 	<gtExample>
 	| anImporter aMetaModel aCollection aField |
 	anImporter := self importer.
@@ -105,7 +61,7 @@ DiExamples >> importCompanyMetaModel [
 ]
 
 { #category : #'company - importer' }
-DiExamples >> importCompanyRelations [
+DiImporterExamples >> importCompanyRelations [
 	<gtExample>
 	| anImporter theCollections |
 	anImporter := self importer.
@@ -117,7 +73,7 @@ DiExamples >> importCompanyRelations [
 ]
 
 { #category : #server }
-DiExamples >> initializeDelegate [
+DiImporterExamples >> initializeDelegate [
 	super initializeDelegate.
 	delegate
 		map: '/collections'
@@ -129,7 +85,7 @@ DiExamples >> initializeDelegate [
 ]
 
 { #category : #'reading - meta model' }
-DiExamples >> metaCollection [
+DiImporterExamples >> metaCollection [
 	<gtExample>
 	| aJson anObject |
 	aJson := self metaCollectionJsonString.
@@ -141,7 +97,7 @@ DiExamples >> metaCollection [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaCollectionCountryJsonString [
+DiImporterExamples >> metaCollectionCountryJsonString [
 	^ '{"collection":"country","fields":[', 
 			self metaFieldOfIdJsonString, ',',
 			self metaFieldOfCapitalCityJsonString, ',',
@@ -151,7 +107,7 @@ DiExamples >> metaCollectionCountryJsonString [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaCollectionCountryStonJson [
+DiImporterExamples >> metaCollectionCountryStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaCollectionCountryJsonString.
@@ -162,13 +118,13 @@ DiExamples >> metaCollectionCountryStonJson [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaCollectionJsonString [
+DiImporterExamples >> metaCollectionJsonString [
 	^ '{"single":false,"collection":"app","icon":null,"fields":{"description":{"note":"Describes, what the app does","auto_increment":false,"group":null,"type":"string","sort":11,"hidden_detail":false,"hidden_browse":false,"validation":null,"default_value":null,"readonly":false,"options":{"rows":8},"width":"full","length":"65535","primary_key":false,"interface":"textarea","unique":false,"required":false,"translation":null,"datatype":"TEXT","locked":0,"signed":true,"collection":"app","id":262,"field":"description"},"name":{"note":"The name of an app","auto_increment":false,"group":null,"type":"string","sort":8,"hidden_detail":false,"hidden_browse":false,"validation":null,"default_value":null,"readonly":false,"options":{"width":"auto","trim":true,"showCharacterCount":true,"formatValue":false},"width":"full","length":"200","primary_key":false,"interface":"text-input","unique":false,"required":true,"translation":null,"datatype":"VARCHAR","locked":0,"signed":true,"collection":"app","id":261,"field":"name"},"modified_on":{"note":"","auto_increment":false,"group":null,"type":"datetime_updated","sort":6,"hidden_detail":true,"hidden_browse":true,"validation":null,"default_value":null,"readonly":true,"options":null,"width":"full","length":null,"primary_key":false,"interface":"datetime-updated","unique":false,"required":false,"translation":null,"datatype":"DATETIME","locked":0,"signed":true,"collection":"app","id":220,"field":"modified_on"},"created_by":{"note":"","auto_increment":false,"group":null,"type":"user_created","sort":3,"hidden_detail":true,"hidden_browse":true,"validation":null,"default_value":null,"readonly":true,"options":{"display":"both","template":"{{first_name}} {{last_name}}"},"width":"full","length":"10","primary_key":false,"interface":"user-created","unique":false,"required":false,"translation":null,"datatype":"INT","locked":0,"signed":false,"collection":"app","id":217,"field":"created_by"},"id":{"note":"","auto_increment":true,"group":null,"type":"integer","sort":1,"hidden_detail":true,"hidden_browse":true,"validation":null,"default_value":null,"readonly":false,"options":null,"width":"full","length":"10","primary_key":true,"interface":"primary-key","unique":false,"required":true,"translation":null,"datatype":"INT","locked":0,"signed":false,"collection":"app","id":215,"field":"id"},"company":{"note":"The company that provides this app","auto_increment":false,"group":null,"type":"m2o","sort":7,"hidden_detail":false,"hidden_browse":false,"validation":null,"default_value":null,"readonly":false,"options":{"visible_fields":"name","placeholder":"Select one","template":"{{name}}","threshold":20},"width":"full","length":"10","primary_key":false,"interface":"many-to-one","unique":false,"required":true,"translation":null,"datatype":"INT","locked":0,"signed":false,"collection":"app","id":260,"field":"company"},"apple_store_rating":{"note":"The rating of an app from 0 to 5 in the Apple App Store","auto_increment":false,"group":null,"type":"decimal","sort":9,"hidden_detail":false,"hidden_browse":false,"validation":"/^5$|^[0-4](\\.\\d\\d?)?$/","default_value":null,"readonly":false,"options":{"display":"number","localized":true,"iconLeft":"star","active_color":"blue-500","max_stars":5},"width":"half-left","length":"3,2","primary_key":false,"interface":"numeric","unique":false,"required":false,"translation":null,"datatype":"DECIMAL","locked":0,"signed":true,"collection":"app","id":263,"field":"apple_store_rating"},"created_on":{"note":"","auto_increment":false,"group":null,"type":"datetime_created","sort":4,"hidden_detail":true,"hidden_browse":true,"validation":null,"default_value":null,"readonly":true,"options":null,"width":"full","length":null,"primary_key":false,"interface":"datetime-created","unique":false,"required":false,"translation":null,"datatype":"DATETIME","locked":0,"signed":true,"collection":"app","id":218,"field":"created_on"},"status":{"note":"","auto_increment":false,"group":null,"type":"status","sort":2,"hidden_detail":false,"hidden_browse":false,"validation":null,"default_value":"draft","readonly":false,"options":{"status_mapping":{"deleted":{"value":"deleted","browse_subdued":true,"text_color":"white","background_color":"red","browse_badge":true,"soft_delete":true,"name":"Deleted","published":false},"published":{"value":"published","browse_subdued":false,"text_color":"white","background_color":"accent","browse_badge":true,"soft_delete":false,"name":"Published","published":true},"draft":{"value":"draft","browse_subdued":true,"text_color":"white","background_color":"blue-grey-100","browse_badge":true,"soft_delete":false,"name":"Draft","published":false}}},"width":"full","length":"20","primary_key":false,"interface":"status","unique":false,"required":false,"translation":null,"datatype":"VARCHAR","locked":0,"signed":true,"collection":"app","id":216,"field":"status"},"play_store_rating":{"note":"The rating of an app from 0 to 5 in the Google Play Store","auto_increment":false,"group":null,"type":"decimal","sort":10,"hidden_detail":false,"hidden_browse":false,"validation":"/^5$|^[0-4](\\.\\d\\d?)?$/","default_value":null,"readonly":false,"options":{"display":"number","localized":true,"iconLeft":"star","active_color":"green","max_stars":5},"width":"half-right","length":"3,2","primary_key":false,"interface":"numeric","unique":false,"required":false,"translation":null,"datatype":"DECIMAL","locked":0,"signed":true,"collection":"app","id":264,"field":"play_store_rating"},"modified_by":{"note":"","auto_increment":false,"group":null,"type":"user_updated","sort":5,"hidden_detail":true,"hidden_browse":true,"validation":null,"default_value":null,"readonly":true,"options":{"display":"both","template":"{{first_name}} {{last_name}}"},"width":"full","length":"10","primary_key":false,"interface":"user-updated","unique":false,"required":false,"translation":null,"datatype":"INT","locked":0,"signed":false,"collection":"app","id":219,"field":"modified_by"}},"translation":null,"note":null,"hidden":false,"managed":true}'
 			
 ]
 
 { #category : #'company - reading' }
-DiExamples >> metaCollectionOfCompany [
+DiImporterExamples >> metaCollectionOfCompany [
 	<gtExample>
 	| aJson anObject |
 	aJson := self metaCollectionOfCompanyJsonString.
@@ -180,7 +136,7 @@ DiExamples >> metaCollectionOfCompany [
 ]
 
 { #category : #'company - json data' }
-DiExamples >> metaCollectionOfCompanyJsonString [
+DiImporterExamples >> metaCollectionOfCompanyJsonString [
 	^ '{"collection":"company","fields":{',
 			'"id":', self metaFieldOfIdJsonString, ',',
 			'"name":', self metaFieldOfCompanyNameJsonString, ',',
@@ -190,7 +146,7 @@ DiExamples >> metaCollectionOfCompanyJsonString [
 ]
 
 { #category : #'company - json data' }
-DiExamples >> metaCollectionOfCompanyStonJson [
+DiImporterExamples >> metaCollectionOfCompanyStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaCollectionOfCompanyJsonString.
@@ -201,7 +157,7 @@ DiExamples >> metaCollectionOfCompanyStonJson [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaCollectionStonJson [
+DiImporterExamples >> metaCollectionStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaCollectionJsonString.
@@ -212,13 +168,13 @@ DiExamples >> metaCollectionStonJson [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaCollectionTwoJsonString [
+DiImporterExamples >> metaCollectionTwoJsonString [
 	^ '{"single":false,"collection":"app_traffic_country","icon":null,"fields":{"modified_on":{"note":"","auto_increment":false,"group":null,"type":"datetime_updated","sort":6,"hidden_detail":true,"hidden_browse":true,"validation":null,"default_value":null,"readonly":true,"options":null,"width":"full","length":null,"primary_key":false,"interface":"datetime-updated","unique":false,"required":false,"translation":null,"datatype":"DATETIME","locked":0,"signed":true,"collection":"app_traffic_country","id":232,"field":"modified_on"},"created_by":{"note":"","auto_increment":false,"group":null,"type":"user_created","sort":3,"hidden_detail":true,"hidden_browse":true,"validation":null,"default_value":null,"readonly":true,"options":{"display":"both","template":"{{first_name}} {{last_name}}"},"width":"full","length":"10","primary_key":false,"interface":"user-created","unique":false,"required":false,"translation":null,"datatype":"INT","locked":0,"signed":false,"collection":"app_traffic_country","id":229,"field":"created_by"},"id":{"note":"","auto_increment":true,"group":null,"type":"integer","sort":1,"hidden_detail":true,"hidden_browse":true,"validation":null,"default_value":null,"readonly":false,"options":null,"width":"full","length":"10","primary_key":true,"interface":"primary-key","unique":false,"required":true,"translation":null,"datatype":"INT","locked":0,"signed":false,"collection":"app_traffic_country","id":227,"field":"id"},"play_store_downloads":{"note":"Count of app downloads from Play Store (country specific)","auto_increment":false,"group":null,"type":"integer","sort":12,"hidden_detail":false,"hidden_browse":false,"validation":null,"default_value":null,"readonly":false,"options":{"localized":true,"iconRight":"get_app","iconLeft":"android"},"width":"half-right","length":"20","primary_key":false,"interface":"numeric","unique":false,"required":false,"translation":null,"datatype":"BIGINT","locked":0,"signed":false,"collection":"app_traffic_country","id":239,"field":"play_store_downloads"},"created_on":{"note":"","auto_increment":false,"group":null,"type":"datetime_created","sort":4,"hidden_detail":true,"hidden_browse":true,"validation":null,"default_value":null,"readonly":true,"options":null,"width":"full","length":null,"primary_key":false,"interface":"datetime-created","unique":false,"required":false,"translation":null,"datatype":"DATETIME","locked":0,"signed":true,"collection":"app_traffic_country","id":230,"field":"created_on"},"apple_store_downloads":{"note":"Count of app downloads from Apple Store (country specific)","auto_increment":false,"group":null,"type":"integer","sort":11,"hidden_detail":false,"hidden_browse":false,"validation":null,"default_value":null,"readonly":false,"options":{"localized":true,"iconRight":"get_app","iconLeft":"phone_iphone"},"width":"half-left","length":"20","primary_key":false,"interface":"numeric","unique":false,"required":false,"translation":null,"datatype":"BIGINT","locked":0,"signed":false,"collection":"app_traffic_country","id":238,"field":"apple_store_downloads"},"status":{"note":"","auto_increment":false,"group":null,"type":"status","sort":2,"hidden_detail":false,"hidden_browse":false,"validation":null,"default_value":"draft","readonly":false,"options":{"status_mapping":{"deleted":{"value":"deleted","browse_subdued":true,"text_color":"white","background_color":"red","browse_badge":true,"soft_delete":true,"name":"Deleted","published":false},"published":{"value":"published","browse_subdued":false,"text_color":"white","background_color":"accent","browse_badge":true,"soft_delete":false,"name":"Published","published":true},"draft":{"value":"draft","browse_subdued":true,"text_color":"white","background_color":"blue-grey-100","browse_badge":true,"soft_delete":false,"name":"Draft","published":false}}},"width":"full","length":"20","primary_key":false,"interface":"status","unique":false,"required":false,"translation":null,"datatype":"VARCHAR","locked":0,"signed":true,"collection":"app_traffic_country","id":228,"field":"status"},"country":{"note":"Represented country","auto_increment":false,"group":null,"type":"m2o","sort":8,"hidden_detail":false,"hidden_browse":false,"validation":null,"default_value":null,"readonly":false,"options":{"showCharacterCount":true,"visible_fields":"iso_code, name","formatting":true,"limit":false,"width":"auto","threshold":20,"choices":[],"trim":true,"formatValue":false,"template":"{{iso_code}} {{name}}","placeholder":"Select one"},"width":"full","length":"10","primary_key":false,"interface":"many-to-one","unique":false,"required":true,"translation":null,"datatype":"INT","locked":0,"signed":true,"collection":"app_traffic_country","id":234,"field":"country"},"play_store_rank":{"note":"Rank of an app traffic in a country generated by Play Store","auto_increment":false,"group":null,"type":"integer","sort":10,"hidden_detail":false,"hidden_browse":false,"validation":null,"default_value":null,"readonly":false,"options":{"localized":true,"iconRight":"trending_up","iconLeft":"android"},"width":"half-right","length":"10","primary_key":false,"interface":"numeric","unique":false,"required":false,"translation":null,"datatype":"INT","locked":0,"signed":false,"collection":"app_traffic_country","id":258,"field":"play_store_rank"},"app_traffic_data":{"note":"","auto_increment":false,"group":null,"type":"m2o","sort":7,"hidden_detail":false,"hidden_browse":false,"validation":null,"default_value":null,"readonly":false,"options":{"visible_fields":"created_on, app","placeholder":"Select one","template":"{{app.name}} ({{created_on}})","threshold":20},"width":"full","length":"10","primary_key":false,"interface":"many-to-one","unique":false,"required":true,"translation":null,"datatype":"INT","locked":0,"signed":false,"collection":"app_traffic_country","id":259,"field":"app_traffic_data"},"apple_store_rank":{"note":"Rank of an app traffic in a country generated by Apple Store","auto_increment":false,"group":null,"type":"integer","sort":9,"hidden_detail":false,"hidden_browse":false,"validation":null,"default_value":null,"readonly":false,"options":{"localized":true,"iconRight":"trending_up","iconLeft":"phone_iphone"},"width":"half-left","length":"10","primary_key":false,"interface":"numeric","unique":false,"required":false,"translation":null,"datatype":"INT","locked":0,"signed":false,"collection":"app_traffic_country","id":257,"field":"apple_store_rank"},"modified_by":{"note":"","auto_increment":false,"group":null,"type":"user_updated","sort":5,"hidden_detail":true,"hidden_browse":true,"validation":null,"default_value":null,"readonly":true,"options":{"display":"both","template":"{{first_name}} {{last_name}}"},"width":"full","length":"10","primary_key":false,"interface":"user-updated","unique":false,"required":false,"translation":null,"datatype":"INT","locked":0,"signed":false,"collection":"app_traffic_country","id":231,"field":"modified_by"}},"translation":null,"note":null,"hidden":false,"managed":true}'
 			
 ]
 
 { #category : #'json data' }
-DiExamples >> metaCollectionTwoStonJson [
+DiImporterExamples >> metaCollectionTwoStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaCollectionTwoJsonString.
@@ -229,7 +185,7 @@ DiExamples >> metaCollectionTwoStonJson [
 ]
 
 { #category : #'reading - meta model' }
-DiExamples >> metaCollections [
+DiImporterExamples >> metaCollections [
 	<gtExample>
 	| aJson anObject |
 	aJson := self metaCollectionsJsonString.
@@ -240,12 +196,12 @@ DiExamples >> metaCollections [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaCollectionsJsonString [
+DiImporterExamples >> metaCollectionsJsonString [
 	^ '{"data":[', self metaCollectionJsonString, ',', self metaCollectionTwoJsonString, ']}'
 ]
 
 { #category : #'company - reading' }
-DiExamples >> metaCollectionsOfCompany [
+DiImporterExamples >> metaCollectionsOfCompany [
 	<gtExample>
 	| aJson anObject |
 	aJson := self metaCollectionsOfCompanyJsonString.
@@ -256,12 +212,12 @@ DiExamples >> metaCollectionsOfCompany [
 ]
 
 { #category : #'company - json data' }
-DiExamples >> metaCollectionsOfCompanyJsonString [
+DiImporterExamples >> metaCollectionsOfCompanyJsonString [
 	^ '{"data":[', self metaCollectionOfCompanyJsonString, ']}'			
 ]
 
 { #category : #'company - json data' }
-DiExamples >> metaCollectionsOfCompanyStonJson [
+DiImporterExamples >> metaCollectionsOfCompanyStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaCollectionsOfCompanyJsonString.
@@ -273,7 +229,7 @@ DiExamples >> metaCollectionsOfCompanyStonJson [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaCollectionsStonJson [
+DiImporterExamples >> metaCollectionsStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaCollectionsJsonString.
@@ -284,7 +240,7 @@ DiExamples >> metaCollectionsStonJson [
 ]
 
 { #category : #'company - reading' }
-DiExamples >> metaCollectionsWithRelationsOfCompany [
+DiImporterExamples >> metaCollectionsWithRelationsOfCompany [
 	<gtExample>
 	| aMetaModel aField aCollection aRelation |
 	aMetaModel := self metaCollectionsWithRelationsOfCompany_NotComputed.
@@ -301,7 +257,7 @@ DiExamples >> metaCollectionsWithRelationsOfCompany [
 ]
 
 { #category : #'company - reading' }
-DiExamples >> metaCollectionsWithRelationsOfCompany_NotComputed [
+DiImporterExamples >> metaCollectionsWithRelationsOfCompany_NotComputed [
 	<gtExample>
 	| theCollections theRelations aMetaModel aField |
 	theCollections := self metaCollectionsOfCompany.
@@ -321,12 +277,12 @@ DiExamples >> metaCollectionsWithRelationsOfCompany_NotComputed [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaFieldOfCapitalCityJsonString [
+DiImporterExamples >> metaFieldOfCapitalCityJsonString [
 	^ '{"note":"The capital of a country","type":"string","field":"capital_city"}'
 ]
 
 { #category : #'reading - meta model' }
-DiExamples >> metaFieldOfDescription [
+DiImporterExamples >> metaFieldOfDescription [
 	<gtExample>
 	| aJson anObject |
 	aJson := self metaFieldOfDescriptionJsonString.
@@ -340,7 +296,7 @@ DiExamples >> metaFieldOfDescription [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaFieldOfDescriptionJsonString [
+DiImporterExamples >> metaFieldOfDescriptionJsonString [
 	^ '{
 					"note" : "Describes, what the app does",
 					"auto_increment" : false,
@@ -372,7 +328,7 @@ DiExamples >> metaFieldOfDescriptionJsonString [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaFieldOfDescriptionStonJson [
+DiImporterExamples >> metaFieldOfDescriptionStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaFieldOfDescriptionJsonString.
@@ -383,12 +339,12 @@ DiExamples >> metaFieldOfDescriptionStonJson [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaFieldOfIsoCodeJsonString [
+DiImporterExamples >> metaFieldOfIsoCodeJsonString [
 	^ '{"note":"Alpha-2 Code (two letters) from ISO 3166","type":"string","field":"iso_code"}'
 ]
 
 { #category : #'reading - meta model' }
-DiExamples >> metaFieldOfName [
+DiImporterExamples >> metaFieldOfName [
 	<gtExample>
 	| aJson anObject |
 	aJson := self metaFieldOfNameJsonString.
@@ -404,7 +360,7 @@ DiExamples >> metaFieldOfName [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaFieldOfNameJsonString [
+DiImporterExamples >> metaFieldOfNameJsonString [
 	^ '{
 					"note" : "The name of an app",
 					"auto_increment" : false,
@@ -439,7 +395,7 @@ DiExamples >> metaFieldOfNameJsonString [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaFieldOfNameStonJson [
+DiImporterExamples >> metaFieldOfNameStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaFieldOfNameJsonString.
@@ -450,17 +406,17 @@ DiExamples >> metaFieldOfNameStonJson [
 ]
 
 { #category : #'company - json data' }
-DiExamples >> metaFieldOfSubsidiaryCompaniesJsonString [
+DiImporterExamples >> metaFieldOfSubsidiaryCompaniesJsonString [
 	^ '{"note":"Companies that are owned by this company. To change this, select this company as parent in the subsidiary companies.","type":"O2M","field":"subsidiary_companies"}'
 ]
 
 { #category : #'json data' }
-DiExamples >> metaFieldsOfNameAndDescriptionJsonString [
+DiImporterExamples >> metaFieldsOfNameAndDescriptionJsonString [
 	^ '{"description" : ', self metaFieldOfDescriptionJsonString, ', "name" : ', self metaFieldOfNameJsonString, '}'
 ]
 
 { #category : #'json data' }
-DiExamples >> metaFieldsOfNameAndDescriptionStonJson [
+DiImporterExamples >> metaFieldsOfNameAndDescriptionStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaFieldsOfNameAndDescriptionJsonString.
@@ -471,7 +427,7 @@ DiExamples >> metaFieldsOfNameAndDescriptionStonJson [
 ]
 
 { #category : #'reading - meta model' }
-DiExamples >> metaRelationOfFieldManyRole [
+DiImporterExamples >> metaRelationOfFieldManyRole [
 	<gtExample>
 	| aJson anObject |
 	aJson := self metaRelationOfFieldManyRoleJsonString.
@@ -486,12 +442,12 @@ DiExamples >> metaRelationOfFieldManyRole [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaRelationOfFieldManyRoleJsonString [
+DiImporterExamples >> metaRelationOfFieldManyRoleJsonString [
 	^ '{"junction_field":"user","collection_many":"directus_user_roles","field_many":"role","id":12,"collection_one":"directus_roles","field_one":"users"}'
 ]
 
 { #category : #'json data' }
-DiExamples >> metaRelationOfFieldManyRoleStonJson [
+DiImporterExamples >> metaRelationOfFieldManyRoleStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaRelationOfFieldManyRoleJsonString.
@@ -502,7 +458,7 @@ DiExamples >> metaRelationOfFieldManyRoleStonJson [
 ]
 
 { #category : #'reading - meta model' }
-DiExamples >> metaRelationOfFieldManyUser [
+DiImporterExamples >> metaRelationOfFieldManyUser [
 	<gtExample>
 	| aJson anObject |
 	aJson := self metaRelationOfFieldManyUserJsonString.
@@ -515,12 +471,12 @@ DiExamples >> metaRelationOfFieldManyUser [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaRelationOfFieldManyUserJsonString [
+DiImporterExamples >> metaRelationOfFieldManyUserJsonString [
 	^ '{"junction_field":null,"collection_many":"directus_activity_seen","field_many":"user","id":2,"collection_one":"directus_users","field_one":null}'
 ]
 
 { #category : #'json data' }
-DiExamples >> metaRelationOfFieldManyUserStonJson [
+DiImporterExamples >> metaRelationOfFieldManyUserStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaRelationOfFieldManyUserJsonString.
@@ -531,7 +487,7 @@ DiExamples >> metaRelationOfFieldManyUserStonJson [
 ]
 
 { #category : #'company - reading' }
-DiExamples >> metaRelationOfParentSubsidiaryCompanies [
+DiImporterExamples >> metaRelationOfParentSubsidiaryCompanies [
 	<gtExample>
 	| aJson anObject |
 	aJson := self metaRelationOfParentSubsidiaryCompaniesJsonString.
@@ -545,12 +501,12 @@ DiExamples >> metaRelationOfParentSubsidiaryCompanies [
 ]
 
 { #category : #'company - json data' }
-DiExamples >> metaRelationOfParentSubsidiaryCompaniesJsonString [
+DiImporterExamples >> metaRelationOfParentSubsidiaryCompaniesJsonString [
 	^ '{"field_one":"subsidiary_companies","collection_many":"company","field_many":"parent_company","collection_one":"company"}'
 ]
 
 { #category : #'reading - meta model' }
-DiExamples >> metaRelationsOfFieldManyUserAndRole [
+DiImporterExamples >> metaRelationsOfFieldManyUserAndRole [
 	<gtExample>
 	| aJson anObject |
 	aJson := self metaRelationsOfFieldManyUserAndRoleJsonString.
@@ -561,12 +517,12 @@ DiExamples >> metaRelationsOfFieldManyUserAndRole [
 ]
 
 { #category : #'json data' }
-DiExamples >> metaRelationsOfFieldManyUserAndRoleJsonString [
+DiImporterExamples >> metaRelationsOfFieldManyUserAndRoleJsonString [
 	^ '{"data":[', self metaRelationOfFieldManyUserJsonString, ',', self metaRelationOfFieldManyRoleJsonString, ']}'
 ]
 
 { #category : #'json data' }
-DiExamples >> metaRelationsOfFieldManyUserAndRoleStonJson [
+DiImporterExamples >> metaRelationsOfFieldManyUserAndRoleStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaRelationsOfFieldManyUserAndRoleJsonString.
@@ -577,7 +533,7 @@ DiExamples >> metaRelationsOfFieldManyUserAndRoleStonJson [
 ]
 
 { #category : #'company - reading' }
-DiExamples >> metaRelationsOfParentSubsidiaryCompanies [
+DiImporterExamples >> metaRelationsOfParentSubsidiaryCompanies [
 	<gtExample>
 	| aJson anObject |
 	aJson := self metaRelationsOfParentSubsidiaryCompaniesJsonString.
@@ -588,12 +544,12 @@ DiExamples >> metaRelationsOfParentSubsidiaryCompanies [
 ]
 
 { #category : #'company - json data' }
-DiExamples >> metaRelationsOfParentSubsidiaryCompaniesJsonString [
+DiImporterExamples >> metaRelationsOfParentSubsidiaryCompaniesJsonString [
 	^ '{"data":[', self metaRelationOfParentSubsidiaryCompaniesJsonString, ']}'			
 ]
 
 { #category : #'company - json data' }
-DiExamples >> metaRelationsOfParentSubsidiaryCompaniesStonJson [
+DiImporterExamples >> metaRelationsOfParentSubsidiaryCompaniesStonJson [
 	<gtExample>
 	| aString anObject |
 	aString := self metaRelationsOfParentSubsidiaryCompaniesJsonString.
@@ -605,20 +561,7 @@ DiExamples >> metaRelationsOfParentSubsidiaryCompaniesStonJson [
 ]
 
 { #category : #'model builder' }
-DiExamples >> modelBuilder [
-	<gtExample>
-	| aBuilder aPackage |
-	aBuilder := DiCollectionToClassBuilder new.
-	aPackage := self dummyPackage.
-	aBuilder package: aPackage.
-	aBuilder modelClassPrefix: 'Dummy'.
-	self assert: aBuilder package equals: aPackage.
-	self assert: aBuilder modelClassPrefix equals: 'Dummy'.
-	^ aBuilder
-]
-
-{ #category : #'model builder' }
-DiExamples >> removeDummyPackage [
+DiImporterExamples >> removeDummyPackage [
 	| aPackageName aPackageOrNil anOrganizer |
 	aPackageName := self dummyPackageName.
 	anOrganizer := RPackageOrganizer default.
@@ -626,26 +569,4 @@ DiExamples >> removeDummyPackage [
 	aPackageOrNil classes do: [ :eachClass | eachClass removeFromSystem ].
 	aPackageOrNil := anOrganizer unregisterPackageNamed: aPackageName.
 	^ aPackageOrNil
-]
-
-{ #category : #'writing - meta model' }
-DiExamples >> writeMetaCollection [
-	<gtExample>
-	<noTest>
-	| aJson anObject |
-	anObject := self metaCollection.
-	aJson := self mapping write: anObject mappedTo: #metaCollectionMappingFor:.
-	self assert: aJson equals: self metaCollectionJsonString.
-	^ anObject
-]
-
-{ #category : #'writing - meta model' }
-DiExamples >> writeMetaFieldOfName [
-	<gtExample>
-	<noTest>
-	| aJson anObject |
-	anObject := self metaFieldOfName.
-	aJson := self mapping write: anObject mappedTo: #metaFieldMappingFor:.
-	self assert: aJson equals: self metaFieldOfNameJsonString.
-	^ aJson
 ]

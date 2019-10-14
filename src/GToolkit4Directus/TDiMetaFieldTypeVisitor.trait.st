@@ -9,30 +9,30 @@ Trait {
 
 { #category : #visiting }
 TDiMetaFieldTypeVisitor >> visitDiMetaFieldTypeFile: aDiMetaFieldTypeFile [
-	^ self subclassResponsibility
+	^ self explicitRequirement
 ]
 
 { #category : #visiting }
 TDiMetaFieldTypeVisitor >> visitDiMetaFieldTypeInteger: aDiMetaFieldTypeInteger [
-	^ self subclassResponsibility
+	^ self explicitRequirement
 ]
 
 { #category : #visiting }
 TDiMetaFieldTypeVisitor >> visitDiMetaFieldTypeManyToOne: aDiMetaFieldTypeManyToOne [
-	^ self subclassResponsibility
+	^ self explicitRequirement
 ]
 
 { #category : #visiting }
 TDiMetaFieldTypeVisitor >> visitDiMetaFieldTypeOneToMany: aDiMetaFieldTypeOneToMany [
-	^ self subclassResponsibility
+	^ self explicitRequirement
 ]
 
 { #category : #visiting }
 TDiMetaFieldTypeVisitor >> visitDiMetaFieldTypeString: aDiMetaFieldTypeString [
-	^ self subclassResponsibility
+	^ self explicitRequirement
 ]
 
 { #category : #visiting }
 TDiMetaFieldTypeVisitor >> visitDiMetaFieldUnrecognizedType: aDiMetaFieldUnrecognizedType [
-	^ self subclassResponsibility
+	^ self explicitRequirement
 ]

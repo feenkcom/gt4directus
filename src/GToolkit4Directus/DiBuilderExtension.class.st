@@ -7,11 +7,6 @@ Class {
 	#category : #'GToolkit4Directus-Builder'
 }
 
-{ #category : #building }
-DiBuilderExtension >> build [
-	self subclassResponsibility
-]
-
 { #category : #accessing }
 DiBuilderExtension >> builder [
 	^ builder

@@ -1,32 +1,8 @@
 Class {
 	#name : #DiManyToOneModelExamples,
-	#superclass : #DiCommonExamples,
+	#superclass : #DiCommonImporterExamples,
 	#category : #'GToolkit4Directus-Examples'
 }
-
-{ #category : #'company - creating class model' }
-DiManyToOneModelExamples >> buildCompanyModel [
-	<gtExample>
-	| aBuilder aModelClass |
-	aBuilder := self companyModelClassBuilder.
-	aBuilder build.
-	aModelClass := self class environment classNamed: 'Dummy2Company'.
-	self assert: aModelClass isNotNil.
-	self assert: aModelClass isClass.
-	self assert: aModelClass selectors size equals: 7.
-	^ aModelClass
-]
-
-{ #category : #'company - creating class model' }
-DiManyToOneModelExamples >> companyModelClassBuilder [
-	<gtExample>
-	| aMetaCollections aBuilder |
-	aMetaCollections := self metaCollectionsOfCompany.
-	aBuilder := self modelBuilder.
-	aBuilder collections: aMetaCollections.
-	self assert: aBuilder collections equals: aMetaCollections.
-	^ aBuilder
-]
 
 { #category : #'model builder' }
 DiManyToOneModelExamples >> dummyPackage [
@@ -159,17 +135,4 @@ DiManyToOneModelExamples >> metaRelationsOfParentCompanyStonJson [
 	self assert: anObject keys size equals: 1.
 	self assert: anObject keys first equals: 'data'.
 	^ anObject
-]
-
-{ #category : #'model builder' }
-DiManyToOneModelExamples >> modelBuilder [
-	<gtExample>
-	| aBuilder aPackage |
-	aBuilder := DiCollectionToClassBuilder new.
-	aPackage := self dummyPackage.
-	aBuilder package: aPackage.
-	aBuilder modelClassPrefix: 'Dummy2'.
-	self assert: aBuilder package equals: aPackage.
-	self assert: aBuilder modelClassPrefix equals: 'Dummy2'.
-	^ aBuilder
 ]

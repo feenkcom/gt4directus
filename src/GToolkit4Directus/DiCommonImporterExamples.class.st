@@ -1,5 +1,5 @@
 Class {
-	#name : #DiCommonExamples,
+	#name : #DiCommonImporterExamples,
 	#superclass : #Object,
 	#instVars : [
 		'delegate',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #importer }
-DiCommonExamples >> basicImporter [
+DiCommonImporterExamples >> basicImporter [
 	<gtExample>
 	| anImporter |
 	anImporter := DiDirectus new.
@@ -21,7 +21,7 @@ DiCommonExamples >> basicImporter [
 ]
 
 { #category : #server }
-DiCommonExamples >> delegate [
+DiCommonImporterExamples >> delegate [
 	<gtExample>
 	delegate ifNotNil: [ :aDelegate | ^ aDelegate ].
 	delegate := ZnDispatcherDelegate new.
@@ -30,12 +30,12 @@ DiCommonExamples >> delegate [
 ]
 
 { #category : #server }
-DiCommonExamples >> email [
+DiCommonImporterExamples >> email [
 	^ 'my@email.com'
 ]
 
 { #category : #importer }
-DiCommonExamples >> importer [
+DiCommonImporterExamples >> importer [
 	<gtExample>
 	| anImporter |
 	anImporter := self importer_NotAuthenticated.
@@ -45,7 +45,7 @@ DiCommonExamples >> importer [
 ]
 
 { #category : #importer }
-DiCommonExamples >> importer_NotAuthenticated [
+DiCommonImporterExamples >> importer_NotAuthenticated [
 	<gtExample>
 	| anUrl anImporter |
 	anUrl := self serverUrl.
@@ -59,20 +59,20 @@ DiCommonExamples >> importer_NotAuthenticated [
 ]
 
 { #category : #initialization }
-DiCommonExamples >> initialize [
+DiCommonImporterExamples >> initialize [
 	super initialize.
 	zincExamples := GtZnServerExamples new.
 ]
 
 { #category : #server }
-DiCommonExamples >> initializeDelegate [
+DiCommonImporterExamples >> initializeDelegate [
 	delegate
 		map: '/auth/authenticate'
 		to: [ :aRequest :aResponse | aResponse entity: (ZnEntity json: '{"data":{"token":"my-token"}}') ]
 ]
 
 { #category : #'reading - meta model' }
-DiCommonExamples >> mapping [
+DiCommonImporterExamples >> mapping [
 	<gtExample>
 	| aMapping |
 	aMapping := DiMetaModelMapping uniqueInstance.
@@ -81,34 +81,34 @@ DiCommonExamples >> mapping [
 ]
 
 { #category : #'company - json data' }
-DiCommonExamples >> metaFieldOfCompanyNameJsonString [
+DiCommonImporterExamples >> metaFieldOfCompanyNameJsonString [
 	^ '{"note":"Name of the company including legal form","type":"string","field":"name"}'
 ]
 
 { #category : #'company - json data' }
-DiCommonExamples >> metaFieldOfIdJsonString [
+DiCommonImporterExamples >> metaFieldOfIdJsonString [
 	^ '{"note":"Collection ID","type":"integer","field":"id"}'
 ]
 
 { #category : #'company - json data' }
-DiCommonExamples >> metaFieldOfParentCompanyJsonString [
+DiCommonImporterExamples >> metaFieldOfParentCompanyJsonString [
 	^ '{"note":"Company who owns this company","type":"m2o","field":"parent_company"}'
 ]
 
 { #category : #server }
-DiCommonExamples >> password [
+DiCommonImporterExamples >> password [
 	^ 'my-password'
 ]
 
 { #category : #server }
-DiCommonExamples >> serverUrl [
+DiCommonImporterExamples >> serverUrl [
 	<gtExample>
 	self startServer.
 	^ zincExamples serverUrl
 ]
 
 { #category : #server }
-DiCommonExamples >> startServer [
+DiCommonImporterExamples >> startServer [
 	<gtExample>
 	<after: #stopServer>
 	| aServer |
@@ -121,6 +121,6 @@ DiCommonExamples >> startServer [
 ]
 
 { #category : #server }
-DiCommonExamples >> stopServer [
+DiCommonImporterExamples >> stopServer [
 	^ zincExamples stopServer
 ]
