@@ -2,7 +2,6 @@ Class {
 	#name : #DiGetItemCommand,
 	#superclass : #DiItemsCommand,
 	#instVars : [
-		'collectionName',
 		'itemId'
 	],
 	#category : #'GToolkit4Directus-Commands'
@@ -12,26 +11,9 @@ Class {
 DiGetItemCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
-		assert: [ self collectionName isString and: [ self collectionName isNotEmpty ] ]
-		description: [ 'Collection name must be a non-empty string' ].
-	self 
 		assert: [ self itemId isString and: [ self itemId isNotEmpty ] ]
 		description: [ 'Item ID must be string representing a natural number (integer)' ].
 	
-]
-
-{ #category : #accessing }
-DiGetItemCommand >> collectionName [
-	<return: #String>
-	^ collectionName
-]
-
-{ #category : #accessing }
-DiGetItemCommand >> collectionName: aString [
-	self 
-		assert: [ aString isString and: [ aString isNotEmpty ] ]
-		description: [ 'Collection name must be a non-empty string' ].
-	collectionName := aString
 ]
 
 { #category : #accessing }

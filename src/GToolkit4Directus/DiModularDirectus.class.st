@@ -61,6 +61,17 @@ DiModularDirectus >> getCollection: aCollectionName itemId: anItemId [
 ]
 
 { #category : #reading }
+DiModularDirectus >> getCollection: aCollectionName itemIds: aCollectionOfIds [
+	| aCommand |
+	aCommand := DiGetItemsCommand new
+		directus: self;
+		collectionName: aCollectionName;
+		itemIds: aCollectionOfIds.
+	self executeCommand: aCommand.
+	^ aCommand
+]
+
+{ #category : #reading }
 DiModularDirectus >> getModel: aModelClass itemId: anItemId [
 	"Return a model object"
 	| aCommand |
@@ -68,6 +79,18 @@ DiModularDirectus >> getModel: aModelClass itemId: anItemId [
 		directus: self;
 		modelClass: aModelClass;
 		itemId: anItemId.
+	self executeCommand: aCommand.
+	^ aCommand model
+]
+
+{ #category : #reading }
+DiModularDirectus >> getModel: aModelClass itemIds: aCollectionOfIds [
+	"Return a model object"
+	| aCommand |
+	aCommand := DiGetModelItemsCommand new
+		directus: self;
+		modelClass: aModelClass;
+		itemIds: aCollectionOfIds.
 	self executeCommand: aCommand.
 	^ aCommand model
 ]
