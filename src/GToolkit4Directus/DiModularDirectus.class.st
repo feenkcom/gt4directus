@@ -120,6 +120,45 @@ DiModularDirectus >> optionsAt: aKey put: aValue [
 	^ self options at: aKey put: aValue
 ]
 
+{ #category : #writing }
+DiModularDirectus >> postCollection: aCollectionName jsonContent: aJsonItem [
+	^ DiCreateItemsCommand new
+		directus: self;
+		collectionName: aCollectionName;
+		jsonContent: aJsonItem;
+		execute
+]
+
+{ #category : #writing }
+DiModularDirectus >> postEntity: aZnEntity at: anEndPoint [
+	<return: #ZnResponse>
+	
+	self 
+		assert: [ aZnEntity isNotNil ] 
+		description: [ 'Entity must be non-nil' ].
+	self 
+		assert: [ anEndPoint isCollection and: [ anEndPoint isNotEmpty ] ] 
+		description: [ 'End point must be a non-empty collection' ].
+	
+	^ ZnClient new
+		url: self projectURL;
+		addPath: anEndPoint;
+		headerAt: 'Authorization:' put: 'Bearer ', accessToken;
+		entity: aZnEntity;
+		post;
+		response.
+]
+
+{ #category : #writing }
+DiModularDirectus >> postJson: aJsonString at: anEndPoint [
+	| anEntity |
+	self 
+		assert: [ aJsonString isString and: [ aJsonString isNotEmpty ] ] 
+		description: [ 'JSON content must be a non-empty string' ].
+	anEntity := ZnEntity json: aJsonString.
+	^ self postEntity: anEntity at: anEndPoint.
+]
+
 { #category : #printing }
 DiModularDirectus >> printOn: aStream [
 	self projectURL ifNil: [ ^ super printOn: aStream ].

@@ -75,6 +75,16 @@ DiResponseCommand >> getResponse: anEndPoint [
 	^ self directus getResponse: anEndPoint
 ]
 
+{ #category : #'writing - directus' }
+DiResponseCommand >> postEntity: anEntity at: anEndPoint [
+	^ self directus postEntity: anEntity at: anEndPoint
+]
+
+{ #category : #'writing - directus' }
+DiResponseCommand >> postJson: aJsonString at: anEndPoint [
+	^ self directus postJson: aJsonString at: anEndPoint
+]
+
 { #category : #accessing }
 DiResponseCommand >> response [
 	<return: #ZnResponse>
