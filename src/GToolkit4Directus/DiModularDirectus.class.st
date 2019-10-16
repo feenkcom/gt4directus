@@ -121,6 +121,37 @@ DiModularDirectus >> optionsAt: aKey put: aValue [
 ]
 
 { #category : #writing }
+DiModularDirectus >> patchEntity: aZnEntity at: anEndPoint [
+	<return: #ZnResponse>
+	
+	self 
+		assert: [ aZnEntity isNotNil ] 
+		description: [ 'Entity must be non-nil' ].
+	self 
+		assert: [ anEndPoint isCollection and: [ anEndPoint isNotEmpty ] ] 
+		description: [ 'End point must be a non-empty collection' ].
+	
+	^ ZnClient new
+		url: self projectURL;
+		addPath: anEndPoint;
+		headerAt: 'Authorization:' put: 'Bearer ', accessToken;
+		entity: aZnEntity;
+		patch;
+		response.
+]
+
+{ #category : #writing }
+DiModularDirectus >> patchJson: aJsonString at: anEndPoint [
+	<return: #ZnResponse>
+	| anEntity |
+	self 
+		assert: [ aJsonString isString and: [ aJsonString isNotEmpty ] ] 
+		description: [ 'JSON content must be a non-empty string' ].
+	anEntity := ZnEntity json: aJsonString.
+	^ self patchEntity: anEntity at: anEndPoint.
+]
+
+{ #category : #writing }
 DiModularDirectus >> postCollection: aCollectionName jsonContent: aJsonItem [
 	^ DiStoreItemsCommand new
 		directus: self;
@@ -151,6 +182,7 @@ DiModularDirectus >> postEntity: aZnEntity at: anEndPoint [
 
 { #category : #writing }
 DiModularDirectus >> postJson: aJsonString at: anEndPoint [
+	<return: #ZnResponse>
 	| anEntity |
 	self 
 		assert: [ aJsonString isString and: [ aJsonString isNotEmpty ] ] 
@@ -188,6 +220,24 @@ DiModularDirectus >> reauthenticateOnForbiddenResponse [
 	aCommand authenticateCommand: self authenticateCommand.
 	aWrapperCommand ifNotNil: [ aCommand command: aWrapperCommand ].
 	self wrapperCommand: aCommand.
+]
+
+{ #category : #writing }
+DiModularDirectus >> updateCollection: aCollectionName itemId: anItemId jsonContent: aJsonItem [
+	^ DiUpdateItemCommand new
+		directus: self;
+		collectionName: aCollectionName;
+		jsonContent: aJsonItem;
+		itemId: anItemId;
+		execute
+]
+
+{ #category : #writing }
+DiModularDirectus >> updateModel: aModel [
+	^ DiUpdateModelItemCommand new
+		directus: self;
+		model: aModel;
+		execute
 ]
 
 { #category : #executing }

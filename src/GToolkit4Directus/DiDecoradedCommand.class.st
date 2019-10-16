@@ -71,6 +71,24 @@ DiDecoradedCommand >> gtDecoratedCommandsFor: aView [
 ]
 
 { #category : #'gt-extension' }
+DiDecoradedCommand >> gtJsonFor: aView [
+	<gtView>
+	self commandResponse ifNil: [ ^ aView empty ].
+	^ (self commandResponse gtJsonFor: aView)
+		actionButtonLabel: 'Details' action: [ :aBrTab | 
+			aBrTab phlow spawnObject: self commandResponse ]
+]
+
+{ #category : #'gt-extension' }
+DiDecoradedCommand >> gtResponseFor: aView [
+	<gtView>
+	self commandResponse ifNil: [ ^ aView empty ].
+	^ (self commandResponse gtResponseFor: aView)
+		actionButtonLabel: 'Details' action: [ :aBrTab | 
+			aBrTab phlow spawnObject: self commandResponse ]
+]
+
+{ #category : #'gt-extension' }
 DiDecoradedCommand >> putDecoratedCommandInto: aStream [
 	self command ifNil: [ ^ self ].
 	aStream nextPut: self command.

@@ -76,6 +76,34 @@ DiResponseCommand >> getResponse: anEndPoint [
 	^ self directus getResponse: anEndPoint
 ]
 
+{ #category : #'gt-extension' }
+DiResponseCommand >> gtJsonFor: aView [
+	<gtView>
+	self response ifNil: [ ^ aView empty ].
+	^ (self response gtJsonFor: aView)
+		actionButtonLabel: 'Details' action: [ :aBrTab | 
+			aBrTab phlow spawnObject: self response ]
+]
+
+{ #category : #'gt-extension' }
+DiResponseCommand >> gtResponseFor: aView [
+	<gtView>
+	self response ifNil: [ ^ aView empty ].
+	^ (self response gtResponseFor: aView)
+		actionButtonLabel: 'Details' action: [ :aBrTab | 
+			aBrTab phlow spawnObject: self response ]
+]
+
+{ #category : #'writing - directus' }
+DiResponseCommand >> patchEntity: anEntity at: anEndPoint [
+	^ self directus patchEntity: anEntity at: anEndPoint
+]
+
+{ #category : #'writing - directus' }
+DiResponseCommand >> patchJson: aJsonString at: anEndPoint [
+	^ self directus patchJson: aJsonString at: anEndPoint
+]
+
 { #category : #'writing - directus' }
 DiResponseCommand >> postEntity: anEntity at: anEndPoint [
 	^ self directus postEntity: anEntity at: anEndPoint
