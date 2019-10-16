@@ -122,7 +122,7 @@ DiModularDirectus >> optionsAt: aKey put: aValue [
 
 { #category : #writing }
 DiModularDirectus >> postCollection: aCollectionName jsonContent: aJsonItem [
-	^ DiCreateItemsCommand new
+	^ DiStoreItemsCommand new
 		directus: self;
 		collectionName: aCollectionName;
 		jsonContent: aJsonItem;
@@ -157,6 +157,14 @@ DiModularDirectus >> postJson: aJsonString at: anEndPoint [
 		description: [ 'JSON content must be a non-empty string' ].
 	anEntity := ZnEntity json: aJsonString.
 	^ self postEntity: anEntity at: anEndPoint.
+]
+
+{ #category : #writing }
+DiModularDirectus >> postModel: aModel [
+	^ DiStoreModelItemCommand new
+		directus: self;
+		model: aModel;
+		execute
 ]
 
 { #category : #printing }

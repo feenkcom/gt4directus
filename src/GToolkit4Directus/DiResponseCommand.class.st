@@ -24,6 +24,7 @@ DiResponseCommand class >> isAbstract [
 { #category : #asserting }
 DiResponseCommand >> assertReadyForExecution [
 	"Subclasses may assert if a command is ready for execution."
+	super assertReadyForExecution.
 	self 
 		assert: [ self directus isNotNil ]
 		description: [ 'Directus must be non-nil' ]

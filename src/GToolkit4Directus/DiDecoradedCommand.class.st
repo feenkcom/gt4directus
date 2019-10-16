@@ -14,6 +14,15 @@ DiDecoradedCommand class >> isAbstract [
 	^ self name = #DiDecoradedCommand
 ]
 
+{ #category : #asserting }
+DiDecoradedCommand >> assertReadyForExecution [
+	super assertReadyForExecution.
+	self 
+		assert: [ self command isNotNil ] 
+		description: [ 'Command must be non-nil' ].
+	self command assertReadyForExecution.
+]
+
 { #category : #accessing }
 DiDecoradedCommand >> command [
 	<return: #DiCommand>

@@ -7,6 +7,14 @@ Class {
 	#category : #'GToolkit4Directus-Commands'
 }
 
+{ #category : #asserting }
+DiRepeateOnFailure >> assertReadyForExecution [
+	super assertReadyForExecution.
+	self 
+		assert: [ self authenticateCommand isNotNil ] 
+		description: [ 'Authentication command must be non-nil' ].
+]
+
 { #category : #authentication }
 DiRepeateOnFailure >> authenticate [
 	self authenticateCommand execute
@@ -42,6 +50,7 @@ DiRepeateOnFailure >> deepCommand: aDiCommand parent: aDiParentCommand [
 
 { #category : #execution }
 DiRepeateOnFailure >> execute [
+	self assertReadyForExecution.
 	self isDirectusAuthenticated ifFalse: [ self authenticate ].
 	self isDirectusAuthenticated ifFalse: [ ^ self ].
 	self command execute.

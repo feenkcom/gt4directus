@@ -4,6 +4,11 @@ Class {
 	#category : #'GToolkit4Directus-Commands'
 }
 
+{ #category : #asserting }
+DiCommand >> assertReadyForExecution [
+	"Subclasses may define assertions"
+]
+
 { #category : #accessing }
 DiCommand >> deepCommand: aDiCommand parent: aDiParentCommand [
 	"Put the command at the bottom"

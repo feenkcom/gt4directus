@@ -16,6 +16,12 @@ TDiCommandResponse >> isForbiddenResponse [
 ]
 
 { #category : #'testing - response' }
+TDiCommandResponse >> isNoContentResponse [
+	<return: #Boolean>
+	^ self commandResponse isNoContent
+]
+
+{ #category : #'testing - response' }
 TDiCommandResponse >> isSuccessResponse [
 	<return: #Boolean>
 	^ self commandResponse isSuccess

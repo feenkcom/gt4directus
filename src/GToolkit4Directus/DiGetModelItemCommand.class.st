@@ -11,6 +11,7 @@ Class {
 { #category : #execution }
 DiGetModelItemCommand >> execute [
 	| aModel |
+	self assertReadyForExecution.
 	self command execute.
 	self isSuccessResponse ifFalse: [ ^ self ].
 	aModel := self modelClass readJsonDataItem: self responseContents.

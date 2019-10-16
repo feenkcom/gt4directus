@@ -1,5 +1,5 @@
 Class {
-	#name : #DiCreateItemsCommand,
+	#name : #DiStoreItemsCommand,
 	#superclass : #DiItemsCommand,
 	#instVars : [
 		'jsonContent'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #asserting }
-DiCreateItemsCommand >> assertReadyForExecution [
+DiStoreItemsCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
 		assert: [ self jsonContent isString and: [ self jsonContent isNotEmpty ] ] 
@@ -17,13 +17,13 @@ DiCreateItemsCommand >> assertReadyForExecution [
 ]
 
 { #category : #accessing }
-DiCreateItemsCommand >> endPoint [
+DiStoreItemsCommand >> endPoint [
 	<return: #Array>
 	^ super endPoint, { self collectionName }
 ]
 
 { #category : #execution }
-DiCreateItemsCommand >> execute [
+DiStoreItemsCommand >> execute [
 	| aResponse |
 	self assertReadyForExecution.
 	aResponse := self postJson: self jsonContent at: self endPoint.
@@ -31,13 +31,13 @@ DiCreateItemsCommand >> execute [
 ]
 
 { #category : #accessing }
-DiCreateItemsCommand >> jsonContent [
+DiStoreItemsCommand >> jsonContent [
 	<return: #String>
 	^ jsonContent
 ]
 
 { #category : #accessing }
-DiCreateItemsCommand >> jsonContent: aString [
+DiStoreItemsCommand >> jsonContent: aString [
 	self 
 		assert: [ aString isString and: [ aString isNotEmpty ] ] 
 		description: [ 'JSON content must be a non-empty string' ].
