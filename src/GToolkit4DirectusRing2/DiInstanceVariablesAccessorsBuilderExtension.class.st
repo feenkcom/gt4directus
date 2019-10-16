@@ -44,6 +44,7 @@ DiInstanceVariablesAccessorsBuilderExtension >> buildInstanceVariableAccessor: a
 		String tab, '<return: ', aType printString, '>', String cr, 
 		String tab, '<metaField: ', aDiMetaField name printString, '>', String cr, 
 		String tab, '<required: ', aDiMetaField required asString, '>', String cr, 
+		String tab, '<unique: ', aDiMetaField unique asString, '>', String cr, 
 		String tab, '^ ', aName. 
 	self modelBuilder 
 		ensureLocalMethodNamed: aName 

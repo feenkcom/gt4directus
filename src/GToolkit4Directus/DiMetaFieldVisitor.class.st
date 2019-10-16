@@ -1,3 +1,7 @@
+"
+I am an abstract visitor for ${class:DiMetaField}$ types ${class:DiMetaFieldType}$.
+
+"
 Class {
 	#name : #DiMetaFieldVisitor,
 	#superclass : #Object,
