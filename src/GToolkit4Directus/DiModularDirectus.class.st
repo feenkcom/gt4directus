@@ -248,6 +248,14 @@ DiModularDirectus >> updateModel: aModel [
 		execute
 ]
 
+{ #category : #writing }
+DiModularDirectus >> updateModels: aCollectionOfModels [
+	^ DiUpdateModelItemsCommand new
+		directus: self;
+		models: aCollectionOfModels;
+		execute
+]
+
 { #category : #executing }
 DiModularDirectus >> wrapperCommand [
 	<return: #DiDecoratedCommand>
