@@ -23,7 +23,7 @@ DiStoreModelItemsCommand >> execute [
 	self command execute.
 	self isSuccessResponse ifFalse: [ ^ self ].
 	self isNoContentResponse ifTrue: [ ^ self ].
-	aResult := self models anyOne class readJsonDataItem: self responseContents.
+	aResult := self models anyOne class readJsonDataCollection: self responseContents.
 	self 
 		assert: [ aResult isCollection and: [ aResult size = self models size ] ]
 		description: [ 'The received result should have the same amount of models' ].
