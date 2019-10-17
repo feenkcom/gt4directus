@@ -199,6 +199,14 @@ DiModularDirectus >> postModel: aModel [
 		execute
 ]
 
+{ #category : #writing }
+DiModularDirectus >> postModels: aCollectionOfModels [
+	^ DiStoreModelItemsCommand new
+		directus: self;
+		models: aCollectionOfModels;
+		execute
+]
+
 { #category : #printing }
 DiModularDirectus >> printOn: aStream [
 	self projectURL ifNil: [ ^ super printOn: aStream ].

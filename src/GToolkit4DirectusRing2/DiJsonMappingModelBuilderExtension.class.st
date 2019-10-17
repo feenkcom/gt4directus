@@ -327,6 +327,28 @@ DiJsonMappingModelBuilderExtension >> buildModelWritingMethods [
 		withSourceCode: aMethodBody 
 		andProtocol: self naming convertingProtocolName 
 		inBehavior: aModelClass.
+	aMethodName := 'asJsonCollection:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'asJsonCollection: aCollection'; cr;
+			tab; nextPutAll: '<return: #String>'; cr;
+			tab; nextPutAll: '^ '; nextPutAll: self jsonModelClassName; nextPutAll: ' default write: aCollection' ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming writingProtocolName 
+		inBehavior: aModelClass classSide.
+	aMethodName := 'asPrettyJsonCollection:'.
+	aMethodBody := String streamContents: [ :aStream | 
+		aStream 
+			nextPutAll: 'asPrettyJsonCollection: aCollection'; cr;
+			tab; nextPutAll: '<return: #String>'; cr;
+			tab; nextPutAll: '^ '; nextPutAll: self jsonModelClassName; nextPutAll: ' default writePretty: aCollection' ].
+	self 
+		ensureLocalMethodNamed: aMethodName
+		withSourceCode: aMethodBody 
+		andProtocol: self naming writingProtocolName 
+		inBehavior: aModelClass classSide.
 ]
 
 { #category : #building }
