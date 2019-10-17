@@ -85,14 +85,6 @@ DiProtoDirectus >> getElementsInCollection: name withQuery: keyedCollection [
 ]
 
 { #category : #reading }
-DiProtoDirectus >> getElementsInCollection: name withStatus: status [
-	| aResponse |
-	aResponse := self getResponse: {#items. name}.
-	^ aResponse contents.
-
-]
-
-{ #category : #reading }
 DiProtoDirectus >> getRelations [
 	<return: #DiMetaRelations>
 	<return: #ZnResponse>
