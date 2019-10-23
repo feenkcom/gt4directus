@@ -1,6 +1,8 @@
 Class {
-	#name : #DiStoreModelItemsCommand,
+	#name : #DiStoreNewModelItemsCommand,
 	#superclass : #DiDecoradedCommand,
+	#traits : 'TDiModels',
+	#classTraits : 'TDiModels classTrait',
 	#instVars : [
 		'models'
 	],
@@ -8,7 +10,7 @@ Class {
 }
 
 { #category : #asserting }
-DiStoreModelItemsCommand >> assertReadyForExecution [
+DiStoreNewModelItemsCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
 		assert: [ self models isCollection and: [ self models isNotEmpty ] ] 
@@ -17,7 +19,7 @@ DiStoreModelItemsCommand >> assertReadyForExecution [
 ]
 
 { #category : #execution }
-DiStoreModelItemsCommand >> execute [
+DiStoreNewModelItemsCommand >> execute [
 	| aResult |
 	self assertReadyForExecution.
 	self command execute.
@@ -33,18 +35,18 @@ DiStoreModelItemsCommand >> execute [
 ]
 
 { #category : #initialization }
-DiStoreModelItemsCommand >> initialize [
+DiStoreNewModelItemsCommand >> initialize [
 	super initialize.
-	self command: DiStoreItemsCommand new.
+	self command: DiStoreNewItemsCommand new.
 ]
 
 { #category : #accessing }
-DiStoreModelItemsCommand >> models [
+DiStoreNewModelItemsCommand >> models [
 	^ models
 ]
 
 { #category : #accessing }
-DiStoreModelItemsCommand >> models: aCollectionOfModels [
+DiStoreNewModelItemsCommand >> models: aCollectionOfModels [
 	self 
 		assert: [ aCollectionOfModels isCollection and: [ aCollectionOfModels isNotEmpty ] ] 
 		description: [ 'Models must be non-empty collection' ].

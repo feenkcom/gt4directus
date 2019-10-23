@@ -88,7 +88,7 @@ DiModelInstanceNameAndTypeGenerator >> text [
 	theProperties := (isUnique, ' ', isRequired) trimBoth.
 	theProperties := theProperties 
 		ifEmpty: [ theProperties asRopedText ]
-		ifNotEmpty: [ (' {', theProperties, '}') asRopedText foreground: Color lightGray ].
+		ifNotEmpty: [ (' {', theProperties, '}') asRopedText foreground: Color blue muchLighter ].
 	aName insertString: ': ' at: aName size.
 	aName insertText: aType at: aName size.
 	aName insertText: theProperties at: aName size.

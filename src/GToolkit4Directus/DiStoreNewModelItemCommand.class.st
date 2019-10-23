@@ -1,5 +1,5 @@
 Class {
-	#name : #DiStoreModelItemCommand,
+	#name : #DiStoreNewModelItemCommand,
 	#superclass : #DiDecoradedCommand,
 	#instVars : [
 		'model'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #asserting }
-DiStoreModelItemCommand >> assertReadyForExecution [
+DiStoreNewModelItemCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
 		assert: [ self model isNotNil ] 
@@ -17,7 +17,7 @@ DiStoreModelItemCommand >> assertReadyForExecution [
 ]
 
 { #category : #execution }
-DiStoreModelItemCommand >> execute [
+DiStoreNewModelItemCommand >> execute [
 	| aResult |
 	self assertReadyForExecution.
 	self command execute.
@@ -28,18 +28,18 @@ DiStoreModelItemCommand >> execute [
 ]
 
 { #category : #initialization }
-DiStoreModelItemCommand >> initialize [
+DiStoreNewModelItemCommand >> initialize [
 	super initialize.
-	self command: DiStoreItemsCommand new.
+	self command: DiStoreNewItemsCommand new.
 ]
 
 { #category : #accessing }
-DiStoreModelItemCommand >> model [
+DiStoreNewModelItemCommand >> model [
 	^ model
 ]
 
 { #category : #accessing }
-DiStoreModelItemCommand >> model: aModel [
+DiStoreNewModelItemCommand >> model: aModel [
 	self 
 		assert: [ aModel isNotNil ] 
 		description: [ 'Model must be non-nil' ].

@@ -1,6 +1,8 @@
 Class {
 	#name : #DiGetModelItemsCommand,
 	#superclass : #DiDecoradedCommand,
+	#traits : 'TDiModels',
+	#classTraits : 'TDiModels classTrait',
 	#instVars : [
 		'modelClass',
 		'model'

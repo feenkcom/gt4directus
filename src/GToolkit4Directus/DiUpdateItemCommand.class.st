@@ -1,6 +1,8 @@
 Class {
 	#name : #DiUpdateItemCommand,
 	#superclass : #DiItemsCommand,
+	#traits : 'TDiJsonContent',
+	#classTraits : 'TDiJsonContent classTrait',
 	#instVars : [
 		'jsonContent',
 		'itemId'

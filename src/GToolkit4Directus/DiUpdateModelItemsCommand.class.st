@@ -1,6 +1,8 @@
 Class {
 	#name : #DiUpdateModelItemsCommand,
 	#superclass : #DiDecoradedCommand,
+	#traits : 'TDiModels',
+	#classTraits : 'TDiModels classTrait',
 	#instVars : [
 		'models'
 	],

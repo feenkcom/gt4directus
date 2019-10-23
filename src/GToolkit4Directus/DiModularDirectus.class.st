@@ -153,7 +153,7 @@ DiModularDirectus >> patchJson: aJsonString at: anEndPoint [
 
 { #category : #writing }
 DiModularDirectus >> postCollection: aCollectionName jsonContent: aJsonItem [
-	^ DiStoreItemsCommand new
+	^ DiStoreNewItemsCommand new
 		directus: self;
 		collectionName: aCollectionName;
 		jsonContent: aJsonItem;
@@ -193,7 +193,7 @@ DiModularDirectus >> postJson: aJsonString at: anEndPoint [
 
 { #category : #writing }
 DiModularDirectus >> postModel: aModel [
-	^ DiStoreModelItemCommand new
+	^ DiStoreNewModelItemCommand new
 		directus: self;
 		model: aModel;
 		execute
@@ -201,7 +201,8 @@ DiModularDirectus >> postModel: aModel [
 
 { #category : #writing }
 DiModularDirectus >> postModels: aCollectionOfModels [
-	^ DiStoreModelItemsCommand new
+	^ DiBatchModelItemsCommands new
+		beStoreNewItems;
 		directus: self;
 		models: aCollectionOfModels;
 		execute
@@ -250,7 +251,8 @@ DiModularDirectus >> updateModel: aModel [
 
 { #category : #writing }
 DiModularDirectus >> updateModels: aCollectionOfModels [
-	^ DiUpdateModelItemsCommand new
+	^ DiBatchModelItemsCommands new
+		beUpdateExistingItems;
 		directus: self;
 		models: aCollectionOfModels;
 		execute
