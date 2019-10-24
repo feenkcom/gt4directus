@@ -56,12 +56,10 @@ DiBatchModelItemsCommands >> execute [
 	self models do: [ :eachCompany | 
 		aBatch add: eachCompany.
 		aBatch size >= self batchSize ifTrue: [ 
-			self halt.
 			self executeWithModels: aBatch.
 			self isLastResponseSuccess ifFalse: [ ^ self ].
 			aBatch := OrderedCollection new ]
 	].
-	self halt.
 	aBatch ifNotEmpty: [ self executeWithModels: aBatch ].
 ]
 

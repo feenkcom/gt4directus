@@ -26,12 +26,7 @@ DiUpdateItemsCommand >> assertReadyForExecution [
 { #category : #accessing }
 DiUpdateItemsCommand >> endPoint [
 	<return: #Array>
-	| aFinalPoint |
-	aFinalPoint := String streamContents: [ :aStream | 
-		self itemIds 
-			do: [ :eachStringId | aStream nextPutAll: eachStringId ] 
-			separatedBy: [ aStream nextPut: $, ] ].
-	^ super endPoint, { self collectionName. aFinalPoint }
+	^ super endPoint, { self collectionName }
 ]
 
 { #category : #execution }
