@@ -171,13 +171,16 @@ DiModularDirectus >> postEntity: aZnEntity at: anEndPoint [
 		assert: [ anEndPoint isCollection and: [ anEndPoint isNotEmpty ] ] 
 		description: [ 'End point must be a non-empty collection' ].
 	
-	^ ZnClient new
-		url: self projectURL;
-		addPath: anEndPoint;
-		headerAt: 'Authorization:' put: 'Bearer ', accessToken;
-		entity: aZnEntity;
-		post;
-		response.
+	ZnConnectionTimeout 
+		value: 2 * 60 
+		during: [
+			^ ZnClient new
+				url: self projectURL;
+				addPath: anEndPoint;
+				headerAt: 'Authorization:' put: 'Bearer ', accessToken;
+				entity: aZnEntity;
+				post;
+				response ].
 ]
 
 { #category : #writing }
