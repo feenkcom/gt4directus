@@ -48,6 +48,13 @@ DiBatchModelItemsCommands >> beUpdateExistingItems [
 	self command: DiUpdateModelItemsCommand new.
 ]
 
+{ #category : #initialization }
+DiBatchModelItemsCommands >> beUpdateSomeSlots: aCollectionOfSlots [
+	self command: (DiIncludedFieldsModelItemsCommand new
+		slotNames: aCollectionOfSlots;
+		command: DiUpdateModelItemsCommand new).
+]
+
 { #category : #execution }
 DiBatchModelItemsCommands >> execute [
 	| aBatch |

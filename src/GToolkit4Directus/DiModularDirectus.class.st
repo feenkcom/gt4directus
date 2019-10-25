@@ -258,6 +258,15 @@ DiModularDirectus >> updateModels: aCollectionOfModels [
 		execute
 ]
 
+{ #category : #writing }
+DiModularDirectus >> updateModels: aCollectionOfModels consideringSlots: aCollectionOfSlotNames [
+	^ DiBatchModelItemsCommands new
+		beUpdateSomeSlots: aCollectionOfSlotNames;
+		directus: self;
+		models: aCollectionOfModels;
+		execute
+]
+
 { #category : #executing }
 DiModularDirectus >> wrapperCommand [
 	<return: #DiDecoratedCommand>

@@ -13,7 +13,7 @@ TDiModels >> gtModelsFor: aView [
 ]
 
 { #category : #accessing }
-TDiModels >> jsonContent [
+TDiModels >> models [
 	<return: #Collection>
 	^ self explicitRequirement
 ]
