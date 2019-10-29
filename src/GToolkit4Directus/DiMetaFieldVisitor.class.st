@@ -28,6 +28,11 @@ DiMetaFieldVisitor >> field: aDiMetaField [
 ]
 
 { #category : #visiting }
+DiMetaFieldVisitor >> visitDiMetaFieldTypeDecimal: aDiMetaFieldTypeDecimal [
+	^ self subclassResponsibility
+]
+
+{ #category : #visiting }
 DiMetaFieldVisitor >> visitDiMetaFieldTypeFile: aDiMetaFieldTypeFile [
 	^ self subclassResponsibility
 ]
@@ -44,6 +49,11 @@ DiMetaFieldVisitor >> visitDiMetaFieldTypeManyToOne: aDiMetaFieldTypeManyToOne [
 
 { #category : #visiting }
 DiMetaFieldVisitor >> visitDiMetaFieldTypeOneToMany: aDiMetaFieldTypeOneToMany [
+	^ self subclassResponsibility
+]
+
+{ #category : #visiting }
+DiMetaFieldVisitor >> visitDiMetaFieldTypeStatus: aDiMetaFieldTypeStatus [
 	^ self subclassResponsibility
 ]
 

@@ -28,6 +28,11 @@ DiUMLMetaFieldNameAndTypeGenerator >> text [
 ]
 
 { #category : #visiting }
+DiUMLMetaFieldNameAndTypeGenerator >> visitDiMetaFieldTypeDecimal: aDiMetaFieldTypeDecimal [
+	^ 'Float'
+]
+
+{ #category : #visiting }
 DiUMLMetaFieldNameAndTypeGenerator >> visitDiMetaFieldTypeFile: aDiMetaFieldTypeFile [
 	^ 'FileReference'
 ]
@@ -49,6 +54,11 @@ DiUMLMetaFieldNameAndTypeGenerator >> visitDiMetaFieldTypeOneToMany: aDiMetaFiel
 	^ aDiMetaFieldTypeOneToMany collection 
 		ifNotNil: [ :aCollection | 'Collection of ', aCollection name ] 
 		ifNil: [ 'a Collection' ]
+]
+
+{ #category : #visiting }
+DiUMLMetaFieldNameAndTypeGenerator >> visitDiMetaFieldTypeStatus: aDiMetaFieldTypeStatus [
+	^ 'Status'
 ]
 
 { #category : #visiting }

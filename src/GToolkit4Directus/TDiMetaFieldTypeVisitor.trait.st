@@ -8,6 +8,11 @@ Trait {
 }
 
 { #category : #visiting }
+TDiMetaFieldTypeVisitor >> visitDiMetaFieldTypeDecimal: aDiMetaFieldTypeDecimal [
+	^ self explicitRequirement
+]
+
+{ #category : #visiting }
 TDiMetaFieldTypeVisitor >> visitDiMetaFieldTypeFile: aDiMetaFieldTypeFile [
 	^ self explicitRequirement
 ]
@@ -24,6 +29,11 @@ TDiMetaFieldTypeVisitor >> visitDiMetaFieldTypeManyToOne: aDiMetaFieldTypeManyTo
 
 { #category : #visiting }
 TDiMetaFieldTypeVisitor >> visitDiMetaFieldTypeOneToMany: aDiMetaFieldTypeOneToMany [
+	^ self explicitRequirement
+]
+
+{ #category : #visiting }
+TDiMetaFieldTypeVisitor >> visitDiMetaFieldTypeStatus: aDiMetaFieldTypeStatus [
 	^ self explicitRequirement
 ]
 

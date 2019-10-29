@@ -1,6 +1,7 @@
 Class {
 	#name : #DiSwiftTypeVisitor,
 	#superclass : #DiCollectionToModelBuilderPart,
+	#traits : 'TDiMetaFieldTypeVisitor',
 	#classTraits : 'TDiMetaFieldTypeVisitor classTrait',
 	#instVars : [
 		'field'
@@ -23,6 +24,11 @@ DiSwiftTypeVisitor >> field: aDiMetaField [
 ]
 
 { #category : #visiting }
+DiSwiftTypeVisitor >> visitDiMetaFieldTypeDecimal: aDiMetaFieldTypeDecimal [
+	^ self field required ifTrue: [ 'Double' ] ifFalse: [ 'Double?' ]
+]
+
+{ #category : #visiting }
 DiSwiftTypeVisitor >> visitDiMetaFieldTypeFile: aDiMetaFieldTypeFile [ 
 	^ self visitDiMetaFieldTypeInteger: aDiMetaFieldTypeFile
 ]
@@ -40,6 +46,11 @@ DiSwiftTypeVisitor >> visitDiMetaFieldTypeManyToOne: aDiMetaFieldTypeManyToOne [
 { #category : #visiting }
 DiSwiftTypeVisitor >> visitDiMetaFieldTypeOneToMany: aDiMetaFieldTypeOneToMany [ 
 	^ self field required ifTrue: [ '[Int]' ] ifFalse: [ '[Int]?' ]
+]
+
+{ #category : #visiting }
+DiSwiftTypeVisitor >> visitDiMetaFieldTypeStatus: aDiMetaFieldTypeStatus [
+	^ self field required ifTrue: [ 'String' ] ifFalse: [ 'String?' ]
 ]
 
 { #category : #visiting }

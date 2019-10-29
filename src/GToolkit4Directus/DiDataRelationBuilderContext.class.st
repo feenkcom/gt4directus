@@ -74,6 +74,11 @@ DiDataRelationBuilderContext >> values: anObject [
 ]
 
 { #category : #visiting }
+DiDataRelationBuilderContext >> visitDiMetaFieldTypeDecimal: aDiMetaFieldTypeDecimal [
+	"subclasses can do particular actions"
+]
+
+{ #category : #visiting }
 DiDataRelationBuilderContext >> visitDiMetaFieldTypeFile: aDiMetaFieldTypeFile [ 
 	"subclasses can do particular actions"
 ]
@@ -90,6 +95,11 @@ DiDataRelationBuilderContext >> visitDiMetaFieldTypeManyToOne: aDiMetaFieldTypeM
 
 { #category : #visiting }
 DiDataRelationBuilderContext >> visitDiMetaFieldTypeOneToMany: aDiMetaFieldTypeOneToMany [ 
+	"subclasses can do particular actions"
+]
+
+{ #category : #visiting }
+DiDataRelationBuilderContext >> visitDiMetaFieldTypeStatus: aDiMetaFieldTypeStatus [
 	"subclasses can do particular actions"
 ]
 
