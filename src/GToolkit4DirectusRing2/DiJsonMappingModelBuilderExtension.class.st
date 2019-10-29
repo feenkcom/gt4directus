@@ -73,8 +73,11 @@ DiJsonMappingModelBuilderExtension >> buildConvertToIdsMethod [
 			nextPutAll: 'convertToIds: anObject'; cr;
 			tab; nextPutAll: 'anObject ifNil: [ ^ anObject ].'; cr;
 			tab; nextPutAll: 'anObject isInteger ifTrue: [ ^ anObject ].'; cr;
-			tab; nextPutAll: '(anObject isCollection and: [ anObject isEmpty ]) ifTrue: [ ^ anObject ].';
-			tab; nextPutAll: '(anObject isCollection ifTrue: [ ^ anObject collect: #id ]).'; cr;
+			tab; nextPutAll: 'anObject isCollection ifTrue: [ ^ nil ].'; cr;
+			"There is no clear solution for M2M items (collections).
+			For now, we omit adding collections into a JSON string."
+			"tab; nextPutAll: '(anObject isCollection and: [ anObject isEmpty ]) ifTrue: [ ^ anObject ].'; cr;
+			tab; nextPutAll: '(anObject isCollection ifTrue: [ ^ anObject collect: #id ]).'; cr;"
 			tab; nextPutAll: '^ anObject id'; cr ].
 	self 
 		ensureLocalMethodNamed: aMethodName
