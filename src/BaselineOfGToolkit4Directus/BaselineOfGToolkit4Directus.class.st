@@ -4,26 +4,17 @@ Class {
 	#category : #BaselineOfGToolkit4Directus
 }
 
-{ #category : #baselines }
+{ #category : #baseline }
 BaselineOfGToolkit4Directus >> baseline: spec [
 	<baseline>
-	spec for: #common do: [ 
+	spec for: #'common' do: [
+		spec baseline: 'NeoJSON' with: [
+				spec repository: 'github://svenvc/NeoJSON:v17/repository' ].
 		spec 
-			baseline: 'NeoJSON' with: [
-				spec repository: 'github://svenvc/NeoJSON:v17/repository' ];
 			package: 'GToolkit4Directus' with: [
-				spec requires: #( 'NeoJSON' ) ];
+				spec requires: #('NeoJSON' ). ];
 			package: 'GToolkit4DirectusRing2' with: [
-				spec requires: #( 'GToolkit4Directus' ) ]
-	].
-
-	spec for: #Ring2 do: [ 
-		spec
-			baseline: 'Ring2' with: [ 
-				spec repository: 'github://pavel-krivanek/Ring2/src' ];
-			package: 'GToolkit4DirectusRing2' with: [
-				spec requires: #( 'GToolkit4Directus' 'Ring2' ) ]
-	].
+				spec requires: #('GToolkit4Directus' ). ]. ].
 
 ]
 
