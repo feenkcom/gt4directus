@@ -55,7 +55,7 @@ DiProtoDirectus >> getCollections [
 
 { #category : #reading }
 DiProtoDirectus >> getCollectionsWithRelations [
-	<return: #DiMetaCollections>
+	<return: #DiMetaCollectionsWithRelations>
 	<return: #ZnResponse>
 	| aCollectionOrResponse aRelationOrResponse |
 	aCollectionOrResponse := self getCollections.
