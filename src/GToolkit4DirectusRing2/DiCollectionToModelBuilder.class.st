@@ -365,11 +365,6 @@ DiCollectionToModelBuilder >> useCollectionNameBuilder [
 ]
 
 { #category : #'initialization - extensions - pharo' }
-DiCollectionToModelBuilder >> useIdOrTempBuilder [
-	self addExtension: DiIdOrTempBuilderExtension new.
-]
-
-{ #category : #'initialization - extensions - pharo' }
 DiCollectionToModelBuilder >> useIncludedFieldsBuilder [
 	self addExtension: DiIncludedFieldsBuilderExtension new.
 ]
