@@ -67,8 +67,7 @@ DiData >> itemAt: aCollectionName putAll: aCollectionOfModels [
 ]
 
 { #category : #enumerating }
-DiData >> itemOf: aCollectionName andId: anItemId [ 
-	<return: #EsModel or: nil>
+DiData >> itemOf: aCollectionName andId: anItemId [
 	| anItems |
 	anItems := self itemsAt: aCollectionName.
 	^ anItems detect: [ :eachItem | eachItem id = anItemId ] ifNone: [ nil ]
@@ -81,15 +80,25 @@ DiData >> items [
 
 { #category : #accessing }
 DiData >> itemsAt: aCollectionName [
-	^ self items at: aCollectionName ifAbsent: nil
+	<return: #Collection>
+	^ self 
+		itemsAt: aCollectionName 
+		ifAbsentPut: [ OrderedCollection new ]
+]
+
+{ #category : #accessing }
+DiData >> itemsAt: aCollectionName ifAbsentPut: anAbsentBlock [
+	<return: #Collection>
+	^ self items 
+		at: aCollectionName 
+		ifAbsentPut: anAbsentBlock
 ]
 
 { #category : #enumerating }
 DiData >> itemsOf: aCollectionName that: aBlockClosure [ 
-	<return: #Collection of: #EsModel>
+	<return: #Collection>
 	| anItems |
 	anItems := self itemsAt: aCollectionName.
-	anItems ifNil: [ ^ #() ].
 	^ anItems select: aBlockClosure
 ]
 
