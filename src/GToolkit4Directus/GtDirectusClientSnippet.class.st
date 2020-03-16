@@ -18,16 +18,16 @@ GtDirectusClientSnippet class >> typeName [
 
 { #category : #converting }
 GtDirectusClientSnippet >> asElement [
-	| snippetContainer formElement urlInputElement tokenInputElement toolbar playInspectButton userInputElement |
+	| snippetContainer formElement urlInputElement passwordInputElement toolbar playInspectButton userInputElement |
 	formElement := BlElement new.
 	formElement constraintsDo: [ :c |  
 		c vertical fitContent.
 		c horizontal matchParent ].
 	formElement layout: (BlGridLayout horizontal columnCount: 2; cellSpacing: 10).
 
-	urlInputElement := self inputElementNamed: 'Url' in: formElement.
+	urlInputElement := self inputElementNamed: 'Project url' in: formElement.
 	userInputElement := self inputElementNamed: 'User' in: formElement.
-	tokenInputElement := self inputElementNamed: 'Token' in: formElement.
+	passwordInputElement := self inputElementNamed: 'Password' in: formElement.
 	
 	toolbar := BrToolbar new
 		look: BrToolbarLook new;
@@ -42,12 +42,16 @@ GtDirectusClientSnippet >> asElement [
 		label: 'Inspect connection';
 		icon: BrGlamorousIcons playinspect asElement;
 		action: [ 
-			| client  |
-			"client := JenkinsClient new
-				username: userInputElement editor text asString
-				token: tokenInputElement editor text asString
-				url: urlInputElement editor text asString.
-			playInspectButton phlow spawnObject: client blueOcean" ].
+			| editorialData directusClient metaModel |
+			directusClient := SoEditorialServicesCollectionImporter new.
+			directusClient projectURL: urlInputElement editor text asString asZnUrl.
+			directusClient 
+				authenticateWithEmail: (userInputElement editor text asString)
+				password: passwordInputElement editor text asString. 
+			directusClient authenticate.
+			
+			metaModel := directusClient getCollectionsWithRelations.
+			playInspectButton phlow spawnObject: metaModel. ].
 	toolbar addItem: playInspectButton.
 	
 	snippetContainer := BrVerticalPane new
