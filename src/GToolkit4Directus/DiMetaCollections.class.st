@@ -55,7 +55,7 @@ DiMetaCollections >> gtDataFor: aView [
 		title: 'Collections';
 		items: #yourself;
 		priority: 1;
-		itemFormat: [ :anItem | 
+		itemFormat: [ :anItem |
 			anItem name ];
 		items: [ self data ]
 ]

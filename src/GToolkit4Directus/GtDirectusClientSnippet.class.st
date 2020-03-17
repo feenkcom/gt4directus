@@ -51,7 +51,10 @@ GtDirectusClientSnippet >> asElement [
 			directusClient authenticate.
 			
 			metaModel := directusClient getCollectionsWithRelations.
-			playInspectButton phlow spawnObject: metaModel. ].
+			metaModel collectionsDo: [ :aCollection |
+				aCollection modelBuilder: directusClient ].
+			metaModel collections modelBuilder: directusClient.
+			playInspectButton phlow spawnObject: metaModel collections. ].
 	toolbar addItem: playInspectButton.
 	
 	snippetContainer := BrVerticalPane new

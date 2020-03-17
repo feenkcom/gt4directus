@@ -56,12 +56,37 @@ DiMetaCollection >> gtCanDisplayField: aFieldOne before: aFieldTwo [
 ]
 
 { #category : #'gt-extension' }
+DiMetaCollection >> gtElementsFor: aView [
+	<gtView>
+	| elements cachedElements aList |
+	cachedElements := modelBuilder getElementsFromCache.
+	elements := cachedElements itemsAt: (self name).
+	elements ifNil: [ ^ aView empty ].
+	aList := aView columnedList
+		title: 'Elements';
+		priority: 1;
+		items: [ elements ].
+
+	aList column
+		title: 'Index' translated;
+		width: 30;
+		item: [ :eachItem :eachIndex | eachIndex asRopedText foreground: Color gray].
+	
+	aList column
+		title: 'Item' translated;
+		item: [ :eachItem :eachIndex | eachItem ];
+		itemFormat: [ :eachItem | eachItem gtDisplayText ].
+	
+	^ aList
+]
+
+{ #category : #'gt-extension' }
 DiMetaCollection >> gtFieldsFor: aView [
 	<gtView>
 	self fields ifNil: [ ^ aView empty ].
 	^ aView columnedList
 		title: 'Fields';
-		priority: 2;
+		priority: 3;
 		items: [ self fields ];
 		column: 'Name' item: [ :aField | aField name ];
 		column: 'Type' item: [ :aField | aField type ifNotNil: #name ];
@@ -91,7 +116,7 @@ DiMetaCollection >> gtUMLFor: aView [
 	self fields ifNil: [ ^ aView empty ].
 	^ aView mondrian 
 		title: 'UML';
-		priority: 1;
+		priority: 2;
 		painting: [ :aMondrian | 
 			aMondrian nodes 
 				umlClassShapeWithName: [ :eachMetaCollection | eachMetaCollection name ];
