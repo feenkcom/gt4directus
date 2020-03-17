@@ -68,7 +68,7 @@ GtDirectusClientSnippet >> asElement [
 		expand;
 		look: GtCoderExpanderLook new recreateHeader;
 		header: [ BrLabel new
-			look: (BrGlamorousLabelLook new foreground: BrGlamorousColors disabledButtonTextColor);
+			look: (BrGlamorousLabelLook new glamorousCodeFontAndSize foreground: BrGlamorousColors disabledButtonTextColor);
 			text: ('Directus: ', userInputElement editor text asString, '@',urlInputElement editor text asString) ];
 		content: [ snippetContainer ].
 	
