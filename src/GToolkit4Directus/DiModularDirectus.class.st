@@ -7,6 +7,17 @@ Class {
 	#category : #'GToolkit4Directus-Importer'
 }
 
+{ #category : #'options - execution' }
+DiModularDirectus >> addWrapperCommand: aCommand [
+	| anExistingWrapperCommand |
+	self 
+		assert: [ aCommand isNotNil ]
+		description: [ 'Wrapper command must be non-nil' ].
+	anExistingWrapperCommand := self wrapperCommand.
+	anExistingWrapperCommand ifNotNil: [ aCommand command: anExistingWrapperCommand ].
+	self wrapperCommand: aCommand.
+]
+
 { #category : #authentication }
 DiModularDirectus >> authenticate [
 	| aCommand |
@@ -95,27 +106,27 @@ DiModularDirectus >> getModel: aModelClass itemIds: aCollectionOfIds [
 	^ aCommand model
 ]
 
-{ #category : #options }
+{ #category : #'options - basic' }
 DiModularDirectus >> options [
 	^ options ifNil: [ options := Dictionary new ]
 ]
 
-{ #category : #options }
+{ #category : #'options - basic' }
 DiModularDirectus >> optionsAt: aKey [
 	^ self optionsAt: aKey ifPresent: [ :aValue | aValue ] ifAbsent: [ nil ]
 ]
 
-{ #category : #options }
+{ #category : #'options - basic' }
 DiModularDirectus >> optionsAt: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
 	^ self options at: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock
 ]
 
-{ #category : #options }
+{ #category : #'options - basic' }
 DiModularDirectus >> optionsAt: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock [
 	^ self options at: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock
 ]
 
-{ #category : #options }
+{ #category : #'options - basic' }
 DiModularDirectus >> optionsAt: aKey put: aValue [
 	^ self options at: aKey put: aValue
 ]
@@ -221,17 +232,31 @@ DiModularDirectus >> printOn: aStream [
 		aStream nextPutAll: ' (authenticated)' ].
 ]
 
-{ #category : #executing }
+{ #category : #'options - execution' }
 DiModularDirectus >> reauthenticateOnForbiddenResponse [
-	| aWrapperCommand aCommand |
+	| aCommand |
 	self 
 		assert: [ self authenticateCommand isNotNil ]
 		description: [ 'Authenticate command must be defined' ].
-	aWrapperCommand := self wrapperCommand.
 	aCommand := DiRepeateOnFailure new.
 	aCommand authenticateCommand: self authenticateCommand.
-	aWrapperCommand ifNotNil: [ aCommand command: aWrapperCommand ].
-	self wrapperCommand: aCommand.
+	self addWrapperCommand: aCommand.
+]
+
+{ #category : #'options - execution' }
+DiModularDirectus >> taskIt [
+	| aCommand |
+	aCommand := DiTaskItCommand new.
+	aCommand authenticateCommand: self authenticateCommand.
+	self addWrapperCommand: aCommand.
+	^ aCommand
+]
+
+{ #category : #'options - execution' }
+DiModularDirectus >> taskItOnSuccessDo: aSuccessCallback onFailureDo: aFailureCallback [
+	self taskIt
+		onSuccessDo: aSuccessCallback;
+		onFailureDo: aFailureCallback
 ]
 
 { #category : #writing }
@@ -270,13 +295,13 @@ DiModularDirectus >> updateModels: aCollectionOfModels consideringSlots: aCollec
 		execute
 ]
 
-{ #category : #executing }
+{ #category : #'options - execution' }
 DiModularDirectus >> wrapperCommand [
 	<return: #DiDecoratedCommand>
 	^ self optionsAt: #wrapperCommand
 ]
 
-{ #category : #executing }
+{ #category : #'options - execution' }
 DiModularDirectus >> wrapperCommand: aDiDecoratedCommand [
 	^ self optionsAt: #wrapperCommand put: aDiDecoratedCommand
 ]
