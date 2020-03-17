@@ -18,7 +18,7 @@ GtDirectusClientSnippet class >> typeName [
 
 { #category : #converting }
 GtDirectusClientSnippet >> asElement [
-	| snippetContainer formElement urlInputElement passwordInputElement toolbar playInspectButton userInputElement |
+	| snippetContainer formElement urlInputElement passwordInputElement toolbar playInspectButton userInputElement anExpanderElement |
 	formElement := BlElement new.
 	formElement constraintsDo: [ :c |  
 		c vertical fitContent.
@@ -42,7 +42,7 @@ GtDirectusClientSnippet >> asElement [
 		label: 'Inspect connection';
 		icon: BrGlamorousIcons playinspect asElement;
 		action: [ 
-			| directusClient metaModel |
+			"| directusClient metaModel |
 			directusClient := SoEditorialServicesCollectionImporter new.
 			directusClient projectURL: urlInputElement editor text asString asZnUrl.
 			directusClient 
@@ -54,20 +54,29 @@ GtDirectusClientSnippet >> asElement [
 			metaModel collectionsDo: [ :aCollection |
 				aCollection modelBuilder: directusClient ].
 			metaModel collections modelBuilder: directusClient.
-			playInspectButton phlow spawnObject: metaModel collections. ].
+			playInspectButton phlow spawnObject: metaModel collections." ].
 	toolbar addItem: playInspectButton.
 	
 	snippetContainer := BrVerticalPane new
 		vFitContent;
 		hMatchParent;
-		clipChildren: false;
-		look: (GtSnippetContainerLook new snippet: self) + BrShadowLook new;
-		border: BlBorder empty;
-		padding: BlInsets empty;
-		background: (BlBackground paint: Color white).
-	snippetContainer addChild: formElement.
-	snippetContainer addChild: toolbar.
-	^ snippetContainer
+		addChildren: { formElement. toolbar }.
+	
+	anExpanderElement := BrExpander new
+		vFitContent;
+		hMatchParent;
+		expand;
+		look: GtCoderExpanderLook new recreateHeader;
+		header: [ BrLabel new
+			look: (BrGlamorousLabelLook new foreground: BrGlamorousColors disabledButtonTextColor);
+			text: ('Directus: ', userInputElement editor text asString, '@',urlInputElement editor text asString) ];
+		content: [ snippetContainer ].
+	
+	^ BrFrame new
+		vFitContent;
+		hMatchParent;
+		look: (GtSnippetContainerLook new snippet: self);
+		addChild: anExpanderElement
 ]
 
 { #category : #converting }
