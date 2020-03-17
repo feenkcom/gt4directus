@@ -53,6 +53,10 @@ DiMetaCollections >> gtDataFor: aView [
 	self data ifNil: [ ^ aView empty ].
 	^ aView list
 		title: 'Collections';
+		items: #yourself;
+		priority: 1;
+		itemFormat: [ :anItem | 
+			anItem name ];
 		items: [ self data ]
 ]
 

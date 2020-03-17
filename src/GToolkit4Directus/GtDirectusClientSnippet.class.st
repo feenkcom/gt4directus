@@ -42,7 +42,7 @@ GtDirectusClientSnippet >> asElement [
 		label: 'Inspect connection';
 		icon: BrGlamorousIcons playinspect asElement;
 		action: [ 
-			| editorialData directusClient metaModel |
+			| directusClient metaModel |
 			directusClient := SoEditorialServicesCollectionImporter new.
 			directusClient projectURL: urlInputElement editor text asString asZnUrl.
 			directusClient 
