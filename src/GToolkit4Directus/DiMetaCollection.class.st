@@ -105,6 +105,68 @@ DiMetaCollection >> gtNoteFor: aView [
 		text: [ self note ]
 ]
 
+{ #category : #'as yet unclassified' }
+DiMetaCollection >> gtQueryFor: aView [
+	<gtView>
+	| formElement queryInputElement toolbar playInspectButton snippetContainer labelElement text |
+	^ aView explicit
+		title: 'GraphQL Query';
+		priority: 2;
+		stencil: [
+			formElement := BlElement new.
+			formElement constraintsDo: [ :c |  
+				c vertical fitContent.
+				c horizontal matchParent ].
+			formElement layout: (BlGridLayout horizontal columnCount: 2; cellSpacing: 10).
+	
+			labelElement := BrLabel new text: 'GraphQL query:'; look: BrGlamorousLabelLook.
+			labelElement constraintsDo: [ :c | 
+				c vertical fitContent.
+				c horizontal fitContent.
+				c grid vertical alignCenter ].
+			queryInputElement := BrEditorElement new.
+			queryInputElement look: BrGlamorousInputFieldSpacingLook.
+			queryInputElement constraintsDo: [ :c | 
+				c vertical fitContent.
+				c horizontal matchParent.
+				c grid vertical alignCenter ].
+			text := '' asRopedText 
+				weight: 400;
+				fontName: 'Source Sans Pro';
+				fontSize: 14.
+			queryInputElement editor: (BrTextEditor new text: text).
+			formElement addChild: labelElement.
+			formElement addChild: queryInputElement.
+	
+			toolbar := BrToolbar new
+				look: BrToolbarLook new;
+				layout: (BlGridLayout horizontal rowCount: 5; cellSpacing: 10);
+				constraintsDo: [ :c |
+					c horizontal fitContent.
+					c vertical fitContent ].
+			playInspectButton := BrButton new.
+			playInspectButton 
+				beSmall;
+				look: BrGlamorousButtonWithIconLook;
+				label: 'Run query';
+				icon: BrGlamorousIcons playinspect asElement;
+				action: [ 
+					"playInspectButton phlow spawnObject: metaModel collections." ].
+			toolbar addItem: playInspectButton.
+	
+			snippetContainer := BrVerticalPane new
+				vFitContent;
+				hMatchParent;
+				addChildren: { formElement. toolbar }.
+
+			BrFrame new
+				vFitContent;
+				hMatchParent;
+				look: (GtSnippetContainerLook new snippet: self);
+				addChild: snippetContainer
+	].
+]
+
 { #category : #'gt-extension' }
 DiMetaCollection >> gtSortedFields [
 	^ self fields sorted: [ :a :b | self gtCanDisplayField: a before: b ].
