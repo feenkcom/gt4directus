@@ -42,7 +42,7 @@ GtDirectusClientSnippet >> asElement [
 		label: 'Inspect connection';
 		icon: BrGlamorousIcons playinspect asElement;
 		action: [ 
-			"| directusClient metaModel |
+			| directusClient metaModel |
 			directusClient := SoEditorialServicesCollectionImporter new.
 			directusClient projectURL: urlInputElement editor text asString asZnUrl.
 			directusClient 
@@ -54,7 +54,7 @@ GtDirectusClientSnippet >> asElement [
 			metaModel collectionsDo: [ :aCollection |
 				aCollection modelBuilder: directusClient ].
 			metaModel collections modelBuilder: directusClient.
-			playInspectButton phlow spawnObject: metaModel collections." ].
+			playInspectButton phlow spawnObject: metaModel collections. ].
 	toolbar addItem: playInspectButton.
 	
 	snippetContainer := BrVerticalPane new
