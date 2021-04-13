@@ -19,7 +19,7 @@ RGBehavior >> gtDefinitionFor: aView [
 	^ aView textEditor
 			title: 'Definition';
 			priority: 1;
-			look: BrGlamorousCodeEditorLook new;
+			look: BrGlamorousCodeEditorAptitude new;
 			styler: (BrRBTextStyler new environment: self environment);
 			text: [ self definition asRopedText  ];
 			actionButtonIcon: BrGlamorousIcons browse action: [ :aBrTab | 
