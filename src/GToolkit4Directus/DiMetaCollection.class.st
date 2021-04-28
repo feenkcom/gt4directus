@@ -125,7 +125,7 @@ DiMetaCollection >> gtQueryFor: aView [
 				c horizontal fitContent.
 				c grid vertical alignCenter ].
 			queryInputElement := BrEditorElement new.
-			queryInputElement look: BrGlamorousInputFieldSpacingLook.
+			queryInputElement look: BrGlamorousInputFieldSpacingAptitude.
 			queryInputElement constraintsDo: [ :c | 
 				c vertical fitContent.
 				c horizontal matchParent.
@@ -139,7 +139,7 @@ DiMetaCollection >> gtQueryFor: aView [
 			formElement addChild: queryInputElement.
 	
 			toolbar := BrToolbar new
-				look: BrToolbarLook new;
+				look: BrToolbarAptitude new;
 				layout: (BlGridLayout horizontal rowCount: 5; cellSpacing: 10);
 				constraintsDo: [ :c |
 					c horizontal fitContent.
@@ -147,7 +147,7 @@ DiMetaCollection >> gtQueryFor: aView [
 			playInspectButton := BrButton new.
 			playInspectButton 
 				beSmall;
-				look: BrGlamorousButtonWithIconLook;
+				look: BrGlamorousButtonWithIconAptitude;
 				label: 'Run query';
 				icon: BrGlamorousIcons playinspect asElement;
 				action: [ 
@@ -162,7 +162,7 @@ DiMetaCollection >> gtQueryFor: aView [
 			BrFrame new
 				vFitContent;
 				hMatchParent;
-				look: (GtSnippetContainerLook new snippet: self);
+				look: (GtSnippetContainerAptitude new snippet: self);
 				addChild: snippetContainer
 	].
 ]
