@@ -16,6 +16,11 @@ GtDirectusClientSnippet class >> typeName [
 	^ 'directus'
 ]
 
+{ #category : #'json mapping' }
+GtDirectusClientSnippet class >> xdocSnippetMappingFor: aNeoJSONMapper [
+	"ignore"
+]
+
 { #category : #converting }
 GtDirectusClientSnippet >> asElement [
 	| snippetContainer formElement urlInputElement passwordInputElement toolbar playInspectButton userInputElement anExpanderElement |

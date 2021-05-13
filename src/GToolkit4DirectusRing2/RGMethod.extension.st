@@ -6,7 +6,7 @@ RGMethod >> gtSourceFor: aView [
 	self hasSourceCode ifFalse: [ ^ aView empty ].
 	^ aView textEditor
 		title: 'SourceCode';
-		look: BrGlamorousCodeEditorLook new;
+		aptitude: BrGlamorousCodeEditorAptitude;
 		styler: (BrRBTextStyler new
 			classOrMetaClass: self parent);
 		text: [ self sourceCode asRopedText ]
