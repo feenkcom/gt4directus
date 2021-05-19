@@ -35,7 +35,7 @@ GtDirectusClientSnippet >> asElement [
 	passwordInputElement := self inputElementNamed: 'Password' in: formElement.
 	
 	toolbar := BrToolbar new
-		look: BrToolbarLook new;
+		look: BrToolbarAptitude  new;
 		layout: (BlGridLayout horizontal rowCount: 1; cellSpacing: 10);
 		constraintsDo: [ :c |
 			c horizontal fitContent.
@@ -43,7 +43,7 @@ GtDirectusClientSnippet >> asElement [
 	playInspectButton := BrButton new.
 	playInspectButton 
 		beSmall;
-		look: BrGlamorousButtonWithIconLook;
+		look: BrGlamorousButtonWithIconAptitude;
 		label: 'Inspect connection';
 		icon: BrGlamorousIcons playinspect asElement;
 		action: [ 
@@ -71,7 +71,7 @@ GtDirectusClientSnippet >> asElement [
 		vFitContent;
 		hMatchParent;
 		expand;
-		look: GtCoderExpanderLook new recreateHeader;
+		look: GtCoderExpanderAptitude  new recreateHeader;
 		header: [ BrLabel new
 			look: (BrGlamorousLabelLook new glamorousCodeFontAndSize foreground: BrGlamorousColors disabledButtonTextColor);
 			text: ('Directus: ', userInputElement editor text asString, '@',urlInputElement editor text asString) ];
@@ -80,7 +80,7 @@ GtDirectusClientSnippet >> asElement [
 	^ BrFrame new
 		vFitContent;
 		hMatchParent;
-		look: (GtSnippetContainerLook new snippet: self);
+		look: (GtSnippetContainerAptitude new snippet: self);
 		addChild: anExpanderElement
 ]
 
