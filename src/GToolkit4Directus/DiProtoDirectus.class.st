@@ -1,10 +1,10 @@
 "
-I communicate with *Directus>https://directus.io* using RESTful API.
-You can find the API documentation at *https://docs.directus.io*.
+I communicate with [Directus](https://directus.io) using RESTful API.
+You can find the API documentation at <https://docs.directus.io>.
 
-I am an abstract class. Subclasses must implement ${method:DiProtoDirectus>>#email}$ and ${method:DiProtoDirectus>>#password}$ methods.
+I am an abstract class. Subclasses must implement {{gtMethod:DiProtoDirectus>>#email}} and {{gtMethod:DiProtoDirectus>>#password}} methods.
 
-${class:DiProtoDirectus|show=#gtSubclassesFor:|height=200|expanded=true}$ subclasses:
+{{gtClass:DiProtoDirectus|show=#gtSubclassesFor:|height=200|expanded=true}} subclasses:
 
 
 "

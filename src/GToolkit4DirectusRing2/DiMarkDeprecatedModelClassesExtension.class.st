@@ -1,20 +1,20 @@
 "
-I interate over all models (classes) in a ${method:DiMarkDeprecatedModelClassesExtension>>#targetEnvironment}$ target environment and I mark any of the existing models as deprecated if they are not present in a new model build.
+I interate over all models (classes) in a {{gtMethod:DiMarkDeprecatedModelClassesExtension>>#targetEnvironment}} target environment and I mark any of the existing models as deprecated if they are not present in a new model build.
 
-I override the ${method:Class>>#isDeprecated}$ method to do so. In other words, I add a ==isDeprecated== class-side method that returns ==true== or ==false==.
+I override the {{gtMethod:Class>>#isDeprecated}} method to do so. In other words, I add a `isDeprecated` class-side method that returns `true` or `false`.
 
-!! Example
+## Example
 
-Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCountryAndCompany|codeExpanded=false|previewExpanded=true}$
+Using the following company meta-model: {{gtExample:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCountryAndCompany|codeExpanded=false|previewExpanded=true}}
 
 I build the following country class-side model (see local methods):
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithDeprecatedCountry_ClassSideCountryBehavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithDeprecatedCountry_ClassSideCountryBehavior|codeExpanded=false|previewExpanded=true}}
 
 And I build the following company class-side model (see local methods):
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithDeprecatedCountry_ClassSideCompanyBehavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithDeprecatedCountry_ClassSideCompanyBehavior|codeExpanded=false|previewExpanded=true}}
 
 Here you can browse the full model where you can find the country method as a package extension:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithDeprecatedCountry|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithDeprecatedCountry|codeExpanded=false|previewExpanded=true}}
 
 
 "

@@ -1,9 +1,9 @@
 "
 I represent an object field (an instance variable description), describing its name and type.
 
-A JSON representation of me: ${example:DiExamples>>#metaFieldOfNameStonJson|noCode=true}$
+A JSON representation of me: {{gtExample:DiExamples>>#metaFieldOfNameStonJson|noCode=true}}
 
-An object representation of the JSON string above: ${example:DiExamples>>#metaFieldOfName|noCode=true}$
+An object representation of the JSON string above: {{gtExample:DiExamples>>#metaFieldOfName|noCode=true}}
 
 
 "

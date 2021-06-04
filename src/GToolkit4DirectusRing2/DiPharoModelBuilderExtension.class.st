@@ -1,16 +1,16 @@
 "
 I build a Pharo classes.
-I should be called (added) as a first extension to the ${class:DiCollectionToModelBuilder}$ using ${method:DiCollectionToModelBuilder>>#useCollectionNameBuilder}$.
+I should be called (added) as a first extension to the {{gtClass:DiCollectionToModelBuilder}} using {{gtMethod:DiCollectionToModelBuilder>>#useCollectionNameBuilder}}.
 
-!! Example
+## Example
 
-Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+Using the following company meta-model: {{gtExample:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}}
 
 I generate the following Pharo model: 
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly_Behavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly_Behavior|codeExpanded=false|previewExpanded=true}}
 
 Here you can browse the full model:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly|codeExpanded=false|previewExpanded=true}}
 
 
 "

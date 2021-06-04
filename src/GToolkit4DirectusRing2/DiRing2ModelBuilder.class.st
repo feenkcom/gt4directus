@@ -1,17 +1,17 @@
 "
 I am a concrete model builder.
-I build Pharo models (classes, Traits, packages, methods, etc.) in a Ring2 environment, see ${class:RGEnvironment}$.
+I build Pharo models (classes, Traits, packages, methods, etc.) in a Ring2 environment, see {{gtClass:RGEnvironment}}.
 
-!! Examples 
+## Examples 
 
 The following example shows a class and its metaclass without defined superclass:
-${example:DiRing2ModelBuilderExamples>>#ring2BuilderWithRootModelClass|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiRing2ModelBuilderExamples>>#ring2BuilderWithRootModelClass|codeExpanded=false|previewExpanded=true}}
 
 The following example shows the same class as above with defined superclass: 
-${example:DiRing2ModelBuilderExamples>>#ring2BuilderWithRootModelClassHavingSuperclass|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiRing2ModelBuilderExamples>>#ring2BuilderWithRootModelClassHavingSuperclass|codeExpanded=false|previewExpanded=true}}
 
 The following example shows the same class as above with defined superclass and package: 
-${example:DiRing2ModelBuilderExamples>>#ring2BuilderWithRootModelClassHavingSuperclassAndPackage|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiRing2ModelBuilderExamples>>#ring2BuilderWithRootModelClassHavingSuperclassAndPackage|codeExpanded=false|previewExpanded=true}}
 
 
 "

@@ -1,13 +1,13 @@
 "
-I export a model provided by ${class:DiCollectionToModelBuilder}$ into a JavaScript source code.
+I export a model provided by {{gtClass:DiCollectionToModelBuilder}} into a JavaScript source code.
 
-!! Example 
+## Example 
 
 I export the following model 
-${example:DiJavascripModelExporterExamples>>#companyAndCountryBuilder|previewExpanded=true|codeExpanded=false}$
+{{gtExample:DiJavascripModelExporterExamples>>#companyAndCountryBuilder|previewExpanded=true|codeExpanded=false}}
 
 into the following JavaScript code:
-${example:DiJavascripModelExporterExamples>>#companyAndCountryBuilder|previewExpanded=true|codeExpanded=false}$
+{{gtExample:DiJavascripModelExporterExamples>>#companyAndCountryBuilder|previewExpanded=true|codeExpanded=false}}
 
 
 "

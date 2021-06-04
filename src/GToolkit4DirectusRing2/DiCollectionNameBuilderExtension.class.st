@@ -1,23 +1,24 @@
 "
-I add a ==collectionName== method to models in order to easily associate to which ${class:DiMetaCollection}$ belongs.
-Someone can then call ==modelNamed:== with ${class:DiMetaCollection}$'s name on the model root class in order to identify the correct model class.
+I add a `collectionName` method to models in order to easily associate to which {{gtClass:DiMetaCollection}} belongs.
+Someone can then call `modelNamed:` with {{gtClass:DiMetaCollection}}'s name on the model root class in order to identify the correct model class.
 
-!! Example
+## Example
 
-Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+Using the following company meta-model: {{gtExample:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}}
 
 I build the following root model:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithPrintOnMethod_Behavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithPrintOnMethod_Behavior|codeExpanded=false|previewExpanded=true}}
 
 Here you can browse the full model:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithPrintOnMethod|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithPrintOnMethod|codeExpanded=false|previewExpanded=true}}
 
 You can compare the model above with the standard build without my extension: 
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly|codeExpanded=false|previewExpanded=true}}
 
-!! Related
+## Related
 
-Similarly, ${class:DiIncludedFieldsBuilderExtension}$ add a method that returns ${class:DiMetaField}$ objects considered (included) during the model (class) build.
+Similarly, {{gtClass:DiIncludedFieldsBuilderExtension}} add a method that returns {{gtClass:DiMetaField}} objects considered (included) during the model (class) build.
+
 
 "
 Class {

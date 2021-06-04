@@ -1,18 +1,18 @@
 "
-I add a ==userData== method to a root model class. The method returns a ${class:Dictionary}$ and can be used to store any user data.
+I add a `userData` method to a root model class. The method returns a {{gtClass:Dictionary}} and can be used to store any user data.
 
-!! Example with One Trait
+## Example with One Trait
 
-Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+Using the following company meta-model: {{gtExample:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}}
 
 I build the following root model:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithUserDataMethod_Behavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithUserDataMethod_Behavior|codeExpanded=false|previewExpanded=true}}
 
 Here you can browse the full model:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithUserDataMethod|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithUserDataMethod|codeExpanded=false|previewExpanded=true}}
 
 You can compare the model above with the standard build without my extension: 
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly|codeExpanded=false|previewExpanded=true}}
 
 
 

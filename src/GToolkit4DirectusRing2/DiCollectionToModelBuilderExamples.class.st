@@ -1,5 +1,5 @@
 "
-I exemplify ${class:DiCollectionToModelBuilder}$.
+I exemplify {{gtClass:DiCollectionToModelBuilder}}.
 
 
 "

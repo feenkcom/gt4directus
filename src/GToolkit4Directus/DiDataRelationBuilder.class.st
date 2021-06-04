@@ -2,7 +2,8 @@
 I build data relations.
 A given database data are received as a JSON string, that is transformed to a particular model. Be default, such data includes IDs instead of real referenced data (objects). I therefore iterate over all given data and set the real objects instead of their IDs. 
 
-I first update one-to-many relations using ${class:DiDataRelationBuilderContext}$, followed by many-to-one relation updates using ${class:DiManyToOneRelationContext}$.
+I first update one-to-many relations using {{gtClass:DiDataRelationBuilderContext}}, followed by many-to-one relation updates using {{gtClass:DiManyToOneRelationContext}}.
+
 
 "
 Class {

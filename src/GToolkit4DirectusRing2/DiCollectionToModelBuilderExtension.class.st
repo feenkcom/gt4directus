@@ -1,8 +1,8 @@
 "
-I am an abstract ${class:DiCollectionToModelBuilder}$ extension.
-My subclasses do particular actions implementing ${method:DiCollectionToModelBuilderExtension>>#build}$ and ${method:DiCollectionToModelBuilderExtension>>#postInstall}$.
+I am an abstract {{gtClass:DiCollectionToModelBuilder}} extension.
+My subclasses do particular actions implementing {{gtMethod:DiCollectionToModelBuilderExtension>>#build}} and {{gtMethod:DiCollectionToModelBuilderExtension>>#postInstall}}.
 
-See ${class:DiCollectionToModelBuilderExtension|expanded=true|show=gtSubclassesFor:}$ for more examples.
+See {{gtClass:DiCollectionToModelBuilderExtension|expanded=true|show=gtSubclassesFor:}} for more examples.
 
 
 "

@@ -1,6 +1,7 @@
 "
 I am an abstract data relation builder context. 
-${class:DiDataRelationBuilder}$ uses my subclasses.
+{{gtClass:DiDataRelationBuilder}} uses my subclasses.
+
 "
 Class {
 	#name : #DiDataRelationBuilderContext,

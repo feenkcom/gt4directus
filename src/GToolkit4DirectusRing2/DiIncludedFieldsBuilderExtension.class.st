@@ -1,19 +1,20 @@
 "
-I add a ==includedCollectionFields== class-side method that returns a collection of all ${class:DiMetaField}$ names that are included in the particular model (class) build.
+I add a `includedCollectionFields` class-side method that returns a collection of all {{gtClass:DiMetaField}} names that are included in the particular model (class) build.
 
-!! Example
+## Example
 
-Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCountryAndCompany|codeExpanded=false|previewExpanded=true}$
+Using the following company meta-model: {{gtExample:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCountryAndCompany|codeExpanded=false|previewExpanded=true}}
 
 I build the following company class-side model:
-${example:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithIncludedCollectionFields_Behavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithIncludedCollectionFields_Behavior|codeExpanded=false|previewExpanded=true}}
 
 Here you can browse the full model:
-${example:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithIncludedCollectionFields|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithIncludedCollectionFields|codeExpanded=false|previewExpanded=true}}
 
-!! Related
+## Related
 
-Similarly, ${class:DiCollectionNameBuilderExtension}$ add a method that returns a ${class:DiMetaCollection}$ name that is represented the particular model (class).
+Similarly, {{gtClass:DiCollectionNameBuilderExtension}} add a method that returns a {{gtClass:DiMetaCollection}} name that is represented the particular model (class).
+
 
 "
 Class {

@@ -1,7 +1,8 @@
 "
 I update model instances with many-to-one relations. 
 In such case, a given model instance variable holds a nil, instead of a collection of model instances. I find all model instances that belong to the model instance and update its value.
-I am used by ${class:DiDataRelationBuilder}$. The ${class:DiOneToManyRelationContext}$ must be performed before I am used.
+I am used by {{gtClass:DiDataRelationBuilder}}. The {{gtClass:DiOneToManyRelationContext}} must be performed before I am used.
+
 "
 Class {
 	#name : #DiManyToOneRelationContext,

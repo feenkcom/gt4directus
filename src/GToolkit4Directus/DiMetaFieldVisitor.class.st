@@ -1,5 +1,6 @@
 "
-I am an abstract visitor for ${class:DiMetaField}$ types ${class:DiMetaFieldType}$.
+I am an abstract visitor for {{gtClass:DiMetaField}} types {{gtClass:DiMetaFieldType}}.
+
 
 "
 Class {

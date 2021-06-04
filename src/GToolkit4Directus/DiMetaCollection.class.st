@@ -1,8 +1,8 @@
 "
 I represent a description of an object (database table).
-I keep collection of ${class:DiMetaField}$ (instance variables).
+I keep collection of {{gtClass:DiMetaField}} (instance variables).
 
-Example: ${example:DiExamples>>#metaCollection|noCode=true|previewHeight=500}$
+Example: {{gtExample:DiExamples>>#metaCollection|noCode=true|previewHeight=500}}
 
 
 "
