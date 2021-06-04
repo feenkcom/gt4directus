@@ -22,11 +22,11 @@ ${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceAndA
 
 !! Extensions
 
-For more extensions see ${class:DiCollectionToModelBuilderExtension|expanded=true|show=gtSubclassesFor:}$:
+For more extensions see ${class:DiCollectionToModelBuilderExtension|expanded=true|previewShow=gtSubclassesFor:}$:
 
 !! Filteres
 
-For more filteres see ${class:DiCollectionToModelBuilderFilter|expanded=true|show=gtSubclassesFor:}$:
+For more filteres see ${class:DiCollectionToModelBuilderFilter|expanded=true|previewShow=gtSubclassesFor:}$:
 
 
 "
