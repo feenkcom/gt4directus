@@ -1,19 +1,19 @@
 "
-I exclude Directus system fields from ${class:DiMetaCollection}$ model builds.
-System fields are defined in ${method:DiMetaField class>>#systemFieldNames}$.
+I exclude Directus system fields from {{gtClass:DiMetaCollection}} model builds.
+System fields are defined in {{gtMethod:DiMetaField class>>#systemFieldNames}}.
 
-!! Example
+## Example
 
-Using the following company and country meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCountryAndCompanyAndSystemFields|codeExpanded=false|previewExpanded=true}$
+Using the following company and country meta-model: {{gtExample:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCountryAndCompanyAndSystemFields|codeExpanded=false|previewExpanded=true}}
 
 I will exclude the system fields from the model, see the instance variables and methods in this model:
-${example:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemFields_Behavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemFields_Behavior|codeExpanded=false|previewExpanded=true}}
 
 You can compare it with the model that includes the system fields:
-${example:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemFields_Unfiltered_Behavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemFields_Unfiltered_Behavior|codeExpanded=false|previewExpanded=true}}
 
 The full model without system fields is available here:
-${example:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemFields|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemFields|codeExpanded=false|previewExpanded=true}}
 
 
 "

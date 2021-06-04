@@ -1,5 +1,6 @@
 "
-I hold data of a given ${class:DiMetaCollections}$ meta model and real data.
+I hold data of a given {{gtClass:DiMetaCollections}} meta model and real data.
+
 "
 Class {
 	#name : #DiData,

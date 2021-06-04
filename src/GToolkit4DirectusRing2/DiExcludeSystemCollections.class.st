@@ -1,19 +1,19 @@
 "
 I exclude Directus system collections from model builds.
-System collections are defined in ${method:DiMetaCollection>>#isSystemCollection}$.
+System collections are defined in {{gtMethod:DiMetaCollection>>#isSystemCollection}}.
 
-!! Example
+## Example
 
-Using the following company, country, and the system collection directus-user meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCountryAndCompanyAndDirectusUser|codeExpanded=false|previewExpanded=true}$
+Using the following company, country, and the system collection directus-user meta-model: {{gtExample:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCountryAndCompanyAndDirectusUser|codeExpanded=false|previewExpanded=true}}
 
-I will exclude the system collection called ==directus_user== from the model, allowing to build only company and country model classes:
-${example:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemCollections|codeExpanded=false|previewExpanded=true}$
+I will exclude the system collection called `directus_user` from the model, allowing to build only company and country model classes:
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemCollections|codeExpanded=false|previewExpanded=true}}
 
 You can compare it with the model that includes the system collection:
-${example:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemCollections_Unfiltered|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemCollections_Unfiltered|codeExpanded=false|previewExpanded=true}}
 
-The model above also includes the ==directus_user== model (class):
-${example:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemCollections_Unfiltered_Behavior|codeExpanded=false|previewExpanded=true}$
+The model above also includes the `directus_user` model (class):
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFilteredModelWithoutSystemCollections_Unfiltered_Behavior|codeExpanded=false|previewExpanded=true}}
 
 
 "

@@ -1,7 +1,7 @@
 "
-I represent a relation between ${class:DiMetaField}$ objects.
+I represent a relation between {{gtClass:DiMetaField}} objects.
 
-Example: ${example:DiExamples>>#metaRelationOfFieldManyRole|noCode=true|previewHeight=500}$
+Example: {{gtExample:DiExamples>>#metaRelationOfFieldManyRole|noCode=true|previewHeight=500}}
 
 
 "

@@ -1,6 +1,7 @@
 "
-I build an UML style ${class:DiMetaField}$ name with type as ==field_name: Type { properties }==.
+I build an UML style {{gtClass:DiMetaField}} name with type as `field_name: Type { properties }`.
 I can be used to build a UML diagrams.
+
 
 "
 Class {

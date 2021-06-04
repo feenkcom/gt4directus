@@ -1,7 +1,7 @@
 "
-I keep all ${class:DiMetaCollection}$ objects.
+I keep all {{gtClass:DiMetaCollection}} objects.
 
-Example with two ${class:DiMetaCollection}$ instances: ${example:DiExamples>>#metaCollections|noCode}$
+Example with two {{gtClass:DiMetaCollection}} instances: {{gtExample:DiExamples>>#metaCollections|noCode}}
 
 
 "
@@ -55,8 +55,7 @@ DiMetaCollections >> gtDataFor: aView [
 		title: 'Collections';
 		items: #yourself;
 		priority: 1;
-		itemFormat: [ :anItem |
-			anItem name ];
+		itemText: [ :anItem | anItem name ];
 		items: [ self data ]
 ]
 

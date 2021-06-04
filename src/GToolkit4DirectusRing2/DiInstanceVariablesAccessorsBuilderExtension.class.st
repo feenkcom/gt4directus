@@ -1,16 +1,16 @@
 "
-I build instance variable accessors for each ${class:DiMetaCollection}$ class based on ${method:DiMetaCollection>>#fields}$ information, which is a collection of ${class:DiMetaField}$.
-The instance variables should be generated before my execution using ${class:DiInstanceVariablesBuilderExtension}$.
+I build instance variable accessors for each {{gtClass:DiMetaCollection}} class based on {{gtMethod:DiMetaCollection>>#fields}} information, which is a collection of {{gtClass:DiMetaField}}.
+The instance variables should be generated before my execution using {{gtClass:DiInstanceVariablesBuilderExtension}}.
 
-!! Example
+## Example
 
-Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+Using the following company meta-model: {{gtExample:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}}
 
 I build the following model:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceAndAccessorsVariables_Behavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceAndAccessorsVariables_Behavior|codeExpanded=false|previewExpanded=true}}
 
 Here you can browse the full model:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceAndAccessorsVariables|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceAndAccessorsVariables|codeExpanded=false|previewExpanded=true}}
 
 
 "

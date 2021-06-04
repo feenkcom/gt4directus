@@ -1,5 +1,6 @@
 "
-I exemplify ${class:DiRing2ModelBuilder}$.
+I exemplify {{gtClass:DiRing2ModelBuilder}}.
+
 
 "
 Class {

@@ -1,9 +1,9 @@
 "
 I am an abstract filter.
-My subclasses are responsible in aswering whether a ${class:DiMetaCollection}$ or ${class:DiMetaField}$ should be included for model (Pharo classes) building.
-My subclasses are used by ${class:DiCollectionToModelBuilder}$. 
+My subclasses are responsible in aswering whether a {{gtClass:DiMetaCollection}} or {{gtClass:DiMetaField}} should be included for model (Pharo classes) building.
+My subclasses are used by {{gtClass:DiCollectionToModelBuilder}}. 
 
-For more details and examples, see my ${class:DiCollectionToModelBuilderFilter|expanded=true|show=gtSubclassesFor:}$ subclasses:
+For more details and examples, see my {{gtClass:DiCollectionToModelBuilderFilter|expanded=true|show=gtSubclassesFor:}} subclasses:
 
 
 

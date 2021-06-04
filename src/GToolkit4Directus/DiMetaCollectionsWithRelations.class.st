@@ -1,6 +1,6 @@
 "
-I keep both, ${class:DiMetaCollections}$ and ${class:DiMetaRelations}$ instances.
-I am able to update the relations in ${class:DiMetaField}$ instances, using ${method:DiMetaCollectionsWithRelations>>#buildRelations}$.
+I keep both, {{gtClass:DiMetaCollections}} and {{gtClass:DiMetaRelations}} instances.
+I am able to update the relations in {{gtClass:DiMetaField}} instances, using {{gtMethod:DiMetaCollectionsWithRelations>>#buildRelations}}.
 
 
 "

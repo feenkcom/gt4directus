@@ -1,32 +1,32 @@
 "
-I build a model based on ${class:DiMetaCollectionsWithRelations}$.
+I build a model based on {{gtClass:DiMetaCollectionsWithRelations}}.
 
-By default, I build a Pharo model (classes, Traits, methods, etc.) using ${class:DiModelBuilder}$ subclasses. 
-By default, I use ${class:DiRing2ModelBuilder}$, see ${method:DiCollectionToModelBuilder>>#initializeModelBuilder}$.
+By default, I build a Pharo model (classes, Traits, methods, etc.) using {{gtClass:DiModelBuilder}} subclasses. 
+By default, I use {{gtClass:DiRing2ModelBuilder}}, see {{gtMethod:DiCollectionToModelBuilder>>#initializeModelBuilder}}.
 
-!! Example
+## Example
 
-Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+Using the following company meta-model: {{gtExample:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}}
 
 I generate the following Pharo model: 
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly_Behavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly_Behavior|codeExpanded=false|previewExpanded=true}}
 
 Here you can browse the full model:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelClassesOnly|codeExpanded=false|previewExpanded=true}}
 
 
-By default, I generate only the plain Pharo model (classes only). I can be extended by many ${class:DiCollectionToModelBuilderExtension}$ extensions and ${class:DiCollectionToModelBuilderFilter}$ filters. I also use ${class:DiModelNamingStrategy}$ naming strategy (by default ${class:DiCamelNamingStrategy}$, see ${method:DiCollectionToModelBuilder>>#initializeNamingStrategy}$). 
+By default, I generate only the plain Pharo model (classes only). I can be extended by many {{gtClass:DiCollectionToModelBuilderExtension}} extensions and {{gtClass:DiCollectionToModelBuilderFilter}} filters. I also use {{gtClass:DiModelNamingStrategy}} naming strategy (by default {{gtClass:DiCamelNamingStrategy}}, see {{gtMethod:DiCollectionToModelBuilder>>#initializeNamingStrategy}}). 
 
 As an example, the following example shows how to build a Pharo model with instance variables and accessors: 
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceAndAccessorsVariables|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceAndAccessorsVariables|codeExpanded=false|previewExpanded=true}}
 
-!! Extensions
+## Extensions
 
-For more extensions see ${class:DiCollectionToModelBuilderExtension|expanded=true|previewShow=gtSubclassesFor:}$:
+For more extensions see {{gtClass:DiCollectionToModelBuilderExtension|expanded=true|show=gtSubclassesFor:}}:
 
-!! Filteres
+## Filteres
 
-For more filteres see ${class:DiCollectionToModelBuilderFilter|expanded=true|previewShow=gtSubclassesFor:}$:
+For more filteres see {{gtClass:DiCollectionToModelBuilderFilter|expanded=true|show=gtSubclassesFor:}}:
 
 
 "

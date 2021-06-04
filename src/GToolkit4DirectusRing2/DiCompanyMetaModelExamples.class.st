@@ -1,6 +1,7 @@
 "
-I exemplify meta models, subclasses of ${class:DiMetaModel}$. 
+I exemplify meta models, subclasses of {{gtClass:DiMetaModel}}. 
  
+
 "
 Class {
 	#name : #DiCompanyMetaModelExamples,

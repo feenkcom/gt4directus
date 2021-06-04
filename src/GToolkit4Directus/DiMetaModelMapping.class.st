@@ -1,8 +1,8 @@
 "
 I define JSON-to-Object mappings.
-I use ${class:NeoJSONReader}$ for reading JSON strings.
+I use {{gtClass:NeoJSONReader}} for reading JSON strings.
 
-For some examples look at ${class:DiMetaModel}$ subclasses: ${class:DiMetaModel|expanded=true|show=gtSubclassesFor:|height=200}$
+For some examples look at {{gtClass:DiMetaModel}} subclasses: {{gtClass:DiMetaModel|expanded=true|show=gtSubclassesFor:|height=200}}
 
 
 "

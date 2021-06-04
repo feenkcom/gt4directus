@@ -1,15 +1,15 @@
 "
-I build instance variables for each ${class:DiMetaCollection}$ class based on ${method:DiMetaCollection>>#fields}$ information, which is a collection of ${class:DiMetaField}$.
+I build instance variables for each {{gtClass:DiMetaCollection}} class based on {{gtMethod:DiMetaCollection>>#fields}} information, which is a collection of {{gtClass:DiMetaField}}.
 
-!! Example
+## Example
 
-Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+Using the following company meta-model: {{gtExample:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}}
 
 I build the following model:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceVariables_Behavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceVariables_Behavior|codeExpanded=false|previewExpanded=true}}
 
 Here you can browse the full model:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceVariables|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithAllInstanceVariables|codeExpanded=false|previewExpanded=true}}
 
 
 "

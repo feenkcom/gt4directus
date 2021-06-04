@@ -1,6 +1,7 @@
 "
-I am an abstract strategy used by ${class:DiCollectionToModelBuilder}$. 
-My subclasses implement naming strategies, e.g., building a model (class) name from a ${class:DiMetaCollection}$ object.
+I am an abstract strategy used by {{gtClass:DiCollectionToModelBuilder}}. 
+My subclasses implement naming strategies, e.g., building a model (class) name from a {{gtClass:DiMetaCollection}} object.
+
 
 "
 Class {

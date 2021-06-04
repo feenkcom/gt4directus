@@ -1,10 +1,10 @@
 "
 I update meta-model.
-I add coresponding ${class:DiMetaCollection}$ and ${class:DiMetaRelation}$ meta-model objects in to ${class:DiMetaFieldTypeManyToOne}$ and ${class:DiMetaFieldTypeOneToMany}$ objects.
+I add coresponding {{gtClass:DiMetaCollection}} and {{gtClass:DiMetaRelation}} meta-model objects in to {{gtClass:DiMetaFieldTypeManyToOne}} and {{gtClass:DiMetaFieldTypeOneToMany}} objects.
 
-The following example shows a meta-model without updated relation types: ${example:DiExamples>>#metaCollectionsWithRelationsOfCompany_NotComputed|codeExpanded=false|previewExpanded=true}$
+The following example shows a meta-model without updated relation types: {{gtExample:DiExamples>>#metaCollectionsWithRelationsOfCompany_NotComputed|codeExpanded=false|previewExpanded=true}}
 
-And the next example shows the same meta-model with updated relation types: ${example:DiExamples>>#metaCollectionsWithRelationsOfCompany|codeExpanded=false|previewExpanded=true}$
+And the next example shows the same meta-model with updated relation types: {{gtExample:DiExamples>>#metaCollectionsWithRelationsOfCompany|codeExpanded=false|previewExpanded=true}}
 
 
 "

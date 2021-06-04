@@ -1,6 +1,7 @@
 "
 I exemplify Editorial Services.
-See ${class:DiMetaCollections}$ for more details about the model.
+See {{gtClass:DiMetaCollections}} for more details about the model.
+
 "
 Class {
 	#name : #DiImporterExamples,

@@ -1,6 +1,7 @@
 "
-I build an UML style instance variable name with type as ==instVar: Type { properties }==.
+I build an UML style instance variable name with type as `instVar: Type { properties }`.
 I can be used to build a UML diagrams.
+
 
 "
 Class {

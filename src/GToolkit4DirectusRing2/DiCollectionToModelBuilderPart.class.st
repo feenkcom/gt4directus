@@ -1,8 +1,8 @@
 "
-I am an abstract ${class:DiCollectionToModelBuilder}$ part.
-I hold the builder in ${method:DiCollectionToModelBuilderPart>>#builder}$ and I offer some common methods to access and build model.
+I am an abstract {{gtClass:DiCollectionToModelBuilder}} part.
+I hold the builder in {{gtMethod:DiCollectionToModelBuilderPart>>#builder}} and I offer some common methods to access and build model.
 
-See ${class:DiCollectionToModelBuilderPart|expanded=true|show=gtSubclassesFor:}$ for specific builder parts.
+See {{gtClass:DiCollectionToModelBuilderPart|expanded=true|show=gtSubclassesFor:}} for specific builder parts.
 
 
 "

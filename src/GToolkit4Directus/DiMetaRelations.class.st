@@ -1,7 +1,7 @@
 "
-I keep all ${class:DiMetaRelation}$ objects.
+I keep all {{gtClass:DiMetaRelation}} objects.
 
-Example with two ${class:DiMetaRelation}$ instances: ${example:DiExamples>>#metaRelationsOfFieldManyUserAndRole|noCode}$
+Example with two {{gtClass:DiMetaRelation}} instances: {{gtExample:DiExamples>>#metaRelationsOfFieldManyUserAndRole|noCode}}
 
 
 "

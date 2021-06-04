@@ -1,15 +1,15 @@
 "
-I build a JSON-to-Model reader that uses ${class:NeoJSONReader}$.
+I build a JSON-to-Model reader that uses {{gtClass:NeoJSONReader}}.
 
-!! Example 
+## Example 
 
-Using the following company meta-model: ${example:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}$
+Using the following company meta-model: {{gtExample:DiCollectionToModelBuilderExamples>>#collectionsAndRelationsWithCompany|codeExpanded=false|previewExpanded=true}}
 
 I build the following JSON-to-Model reader:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithJsonMapping_Behavior|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithJsonMapping_Behavior|codeExpanded=false|previewExpanded=true}}
 
 Here you can browse the full model:
-${example:DiCollectionToModelBuilderExamples>>#buildFullModelWithJsonMapping|codeExpanded=false|previewExpanded=true}$
+{{gtExample:DiCollectionToModelBuilderExamples>>#buildFullModelWithJsonMapping|codeExpanded=false|previewExpanded=true}}
 
 
 "
