@@ -1,16 +1,16 @@
 Class {
-	#name : #DiUpdateItemsCommand,
-	#superclass : #DiItemsCommand,
+	#name : 'DiUpdateItemsCommand',
+	#superclass : 'DiItemsCommand',
 	#traits : 'TDiJsonContent',
 	#classTraits : 'TDiJsonContent classTrait',
 	#instVars : [
 		'jsonContent',
 		'itemIds'
 	],
-	#category : #'GToolkit4Directus-Commands'
+	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DiUpdateItemsCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
@@ -23,13 +23,13 @@ DiUpdateItemsCommand >> assertReadyForExecution [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiUpdateItemsCommand >> endPoint [
 	<return: #Array>
 	^ super endPoint, { self collectionName }
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 DiUpdateItemsCommand >> execute [
 	| aResponse |
 	self assertReadyForExecution.
@@ -37,13 +37,13 @@ DiUpdateItemsCommand >> execute [
 	self response: aResponse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiUpdateItemsCommand >> itemIds [
 	<return: #Array of: #String>
 	^ itemIds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiUpdateItemsCommand >> itemIds: anArray [
 	self 
 		assert: [ anArray isCollection and: [ anArray isNotEmpty ] ]
@@ -54,13 +54,13 @@ DiUpdateItemsCommand >> itemIds: anArray [
 	itemIds := anArray collect: #asString as: Array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiUpdateItemsCommand >> jsonContent [
 	<return: #String>
 	^ jsonContent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiUpdateItemsCommand >> jsonContent: aString [
 	self 
 		assert: [ aString isString and: [ aString isNotEmpty ] ] 

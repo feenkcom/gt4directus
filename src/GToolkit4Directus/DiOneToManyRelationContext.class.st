@@ -5,12 +5,12 @@ I am used by {{gtClass:DiDataRelationBuilder}}
 
 "
 Class {
-	#name : #DiOneToManyRelationContext,
-	#superclass : #DiDataRelationBuilderContext,
-	#category : #'GToolkit4Directus-Builder'
+	#name : 'DiOneToManyRelationContext',
+	#superclass : 'DiDataRelationBuilderContext',
+	#category : 'GToolkit4Directus-Builder'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiOneToManyRelationContext >> visitDiMetaFieldTypeManyToOne: aDiMetaFieldTypeManyToOne [ 
 	| anItemType anItemId anItem |
 	anItemType := aDiMetaFieldTypeManyToOne collectionName.

@@ -1,13 +1,13 @@
 Class {
-	#name : #DiModularDirectus,
-	#superclass : #DiProtoDirectus,
+	#name : 'DiModularDirectus',
+	#superclass : 'DiProtoDirectus',
 	#instVars : [
 		'options'
 	],
-	#category : #'GToolkit4Directus-Importer'
+	#category : 'GToolkit4Directus-Importer'
 }
 
-{ #category : #'options - execution' }
+{ #category : 'options - execution' }
 DiModularDirectus >> addWrapperCommand: aCommand [
 	| anExistingWrapperCommand |
 	self 
@@ -18,7 +18,7 @@ DiModularDirectus >> addWrapperCommand: aCommand [
 	self wrapperCommand: aCommand.
 ]
 
-{ #category : #authentication }
+{ #category : 'authentication' }
 DiModularDirectus >> authenticate [
 	| aCommand |
 	aCommand := self authenticateCommand.
@@ -28,19 +28,19 @@ DiModularDirectus >> authenticate [
 	aCommand execute
 ]
 
-{ #category : #authentication }
+{ #category : 'authentication' }
 DiModularDirectus >> authenticateCommand [
 	<return: #DiAuthenticateCommand>
 	^ self optionsAt: #authenticate
 ]
 
-{ #category : #authentication }
+{ #category : 'authentication' }
 DiModularDirectus >> authenticateWith: aDiAuthenticateCommand [
 	self optionsAt: #authenticate put: aDiAuthenticateCommand.
 	aDiAuthenticateCommand execute
 ]
 
-{ #category : #authentication }
+{ #category : 'authentication' }
 DiModularDirectus >> authenticateWithEmail: anEmail password: aPassword [
 	| aCommand |
 	aCommand := DiAuthenticateByEmailAndPasswordCommand new
@@ -50,7 +50,7 @@ DiModularDirectus >> authenticateWithEmail: anEmail password: aPassword [
 	self authenticateWith: aCommand.
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DiModularDirectus >> executeCommand: aDiResponseCommand [
 	<return: #DiCommand>
 	| aWrapperCommand |
@@ -60,7 +60,7 @@ DiModularDirectus >> executeCommand: aDiResponseCommand [
 		ifNotNil: [ (aWrapperCommand copy deepCommand: aDiResponseCommand) execute ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiModularDirectus >> getCollection: aCollectionName itemId: anItemId [
 	| aCommand |
 	aCommand := DiGetItemCommand new
@@ -71,7 +71,7 @@ DiModularDirectus >> getCollection: aCollectionName itemId: anItemId [
 	^ aCommand
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiModularDirectus >> getCollection: aCollectionName itemIds: aCollectionOfIds [
 	| aCommand |
 	aCommand := DiGetItemsCommand new
@@ -82,7 +82,7 @@ DiModularDirectus >> getCollection: aCollectionName itemIds: aCollectionOfIds [
 	^ aCommand
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiModularDirectus >> getModel: aModelClass itemId: anItemId [
 	"Return a model object"
 	| aCommand |
@@ -94,7 +94,7 @@ DiModularDirectus >> getModel: aModelClass itemId: anItemId [
 	^ aCommand model
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiModularDirectus >> getModel: aModelClass itemIds: aCollectionOfIds [
 	"Return a model object"
 	| aCommand |
@@ -106,32 +106,32 @@ DiModularDirectus >> getModel: aModelClass itemIds: aCollectionOfIds [
 	^ aCommand model
 ]
 
-{ #category : #'options - basic' }
+{ #category : 'options - basic' }
 DiModularDirectus >> options [
 	^ options ifNil: [ options := Dictionary new ]
 ]
 
-{ #category : #'options - basic' }
+{ #category : 'options - basic' }
 DiModularDirectus >> optionsAt: aKey [
 	^ self optionsAt: aKey ifPresent: [ :aValue | aValue ] ifAbsent: [ nil ]
 ]
 
-{ #category : #'options - basic' }
+{ #category : 'options - basic' }
 DiModularDirectus >> optionsAt: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
 	^ self options at: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock
 ]
 
-{ #category : #'options - basic' }
+{ #category : 'options - basic' }
 DiModularDirectus >> optionsAt: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock [
 	^ self options at: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock
 ]
 
-{ #category : #'options - basic' }
+{ #category : 'options - basic' }
 DiModularDirectus >> optionsAt: aKey put: aValue [
 	^ self options at: aKey put: aValue
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiModularDirectus >> patchEntity: aZnEntity at: anEndPoint [
 	<return: #ZnResponse>
 	
@@ -151,7 +151,7 @@ DiModularDirectus >> patchEntity: aZnEntity at: anEndPoint [
 		response.
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiModularDirectus >> patchJson: aJsonString at: anEndPoint [
 	<return: #ZnResponse>
 	| anEntity |
@@ -162,7 +162,7 @@ DiModularDirectus >> patchJson: aJsonString at: anEndPoint [
 	^ self patchEntity: anEntity at: anEndPoint.
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiModularDirectus >> postCollection: aCollectionName jsonContent: aJsonItem [
 	^ DiStoreNewItemsCommand new
 		directus: self;
@@ -171,7 +171,7 @@ DiModularDirectus >> postCollection: aCollectionName jsonContent: aJsonItem [
 		execute
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiModularDirectus >> postEntity: aZnEntity at: anEndPoint [
 	<return: #ZnResponse>
 	
@@ -194,7 +194,7 @@ DiModularDirectus >> postEntity: aZnEntity at: anEndPoint [
 				response ].
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiModularDirectus >> postJson: aJsonString at: anEndPoint [
 	<return: #ZnResponse>
 	| anEntity |
@@ -205,7 +205,7 @@ DiModularDirectus >> postJson: aJsonString at: anEndPoint [
 	^ self postEntity: anEntity at: anEndPoint.
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiModularDirectus >> postModel: aModel [
 	^ DiStoreNewModelItemCommand new
 		directus: self;
@@ -213,7 +213,7 @@ DiModularDirectus >> postModel: aModel [
 		execute
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiModularDirectus >> postModels: aCollectionOfModels [
 	^ DiBatchModelItemsCommands new
 		beStoreNewItems;
@@ -222,7 +222,7 @@ DiModularDirectus >> postModels: aCollectionOfModels [
 		execute
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DiModularDirectus >> printOn: aStream [
 	self projectURL ifNil: [ ^ super printOn: aStream ].
 	aStream 
@@ -232,7 +232,7 @@ DiModularDirectus >> printOn: aStream [
 		aStream nextPutAll: ' (authenticated)' ].
 ]
 
-{ #category : #'options - execution' }
+{ #category : 'options - execution' }
 DiModularDirectus >> reauthenticateOnForbiddenResponse [
 	| aCommand |
 	self 
@@ -243,7 +243,7 @@ DiModularDirectus >> reauthenticateOnForbiddenResponse [
 	self addWrapperCommand: aCommand.
 ]
 
-{ #category : #'options - execution' }
+{ #category : 'options - execution' }
 DiModularDirectus >> taskIt [
 	| aCommand |
 	aCommand := DiTaskItCommand new.
@@ -252,14 +252,14 @@ DiModularDirectus >> taskIt [
 	^ aCommand
 ]
 
-{ #category : #'options - execution' }
+{ #category : 'options - execution' }
 DiModularDirectus >> taskItOnSuccessDo: aSuccessCallback onFailureDo: aFailureCallback [
 	self taskIt
 		onSuccessDo: aSuccessCallback;
 		onFailureDo: aFailureCallback
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiModularDirectus >> updateCollection: aCollectionName itemId: anItemId jsonContent: aJsonItem [
 	^ DiUpdateItemCommand new
 		directus: self;
@@ -269,7 +269,7 @@ DiModularDirectus >> updateCollection: aCollectionName itemId: anItemId jsonCont
 		execute
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiModularDirectus >> updateModel: aModel [
 	^ DiUpdateModelItemCommand new
 		directus: self;
@@ -277,7 +277,7 @@ DiModularDirectus >> updateModel: aModel [
 		execute
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiModularDirectus >> updateModels: aCollectionOfModels [
 	^ DiBatchModelItemsCommands new
 		beUpdateExistingItems;
@@ -286,7 +286,7 @@ DiModularDirectus >> updateModels: aCollectionOfModels [
 		execute
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiModularDirectus >> updateModels: aCollectionOfModels consideringSlots: aCollectionOfSlotNames [
 	^ DiBatchModelItemsCommands new
 		beUpdateSomeSlots: aCollectionOfSlotNames;
@@ -295,13 +295,13 @@ DiModularDirectus >> updateModels: aCollectionOfModels consideringSlots: aCollec
 		execute
 ]
 
-{ #category : #'options - execution' }
+{ #category : 'options - execution' }
 DiModularDirectus >> wrapperCommand [
 	<return: #DiDecoratedCommand>
 	^ self optionsAt: #wrapperCommand
 ]
 
-{ #category : #'options - execution' }
+{ #category : 'options - execution' }
 DiModularDirectus >> wrapperCommand: aDiDecoratedCommand [
 	^ self optionsAt: #wrapperCommand put: aDiDecoratedCommand
 ]

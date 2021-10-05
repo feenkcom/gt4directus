@@ -9,16 +9,16 @@ And the next example shows the same meta-model with updated relation types: {{gt
 
 "
 Class {
-	#name : #DiMetaModelRelationBuilder,
-	#superclass : #Object,
+	#name : 'DiMetaModelRelationBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'collections',
 		'relations'
 	],
-	#category : #'GToolkit4Directus-Builder'
+	#category : 'GToolkit4Directus-Builder'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 DiMetaModelRelationBuilder >> build [
 	self collections data do: [ :eachCollection | 
 		eachCollection fields do: [ :eachField |
@@ -27,17 +27,17 @@ DiMetaModelRelationBuilder >> build [
 			 ] ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaModelRelationBuilder >> collections [
 	^ collections
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaModelRelationBuilder >> collections: anObject [
 	collections := anObject
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 DiMetaModelRelationBuilder >> relateManyToOneForCollection: aDiMetaCollection field: aDiMetaField [ 
 	| aRelation aCollection |
 	aRelation := self relations data 
@@ -52,7 +52,7 @@ DiMetaModelRelationBuilder >> relateManyToOneForCollection: aDiMetaCollection fi
 		relation: aRelation.
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 DiMetaModelRelationBuilder >> relateOneToManyForCollection: aDiMetaCollection field: aDiMetaField [ 
 	| aRelation aCollection |
 	aRelation := self relations data detect: [ :eachRelation | 
@@ -65,12 +65,12 @@ DiMetaModelRelationBuilder >> relateOneToManyForCollection: aDiMetaCollection fi
 		relation: aRelation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaModelRelationBuilder >> relations [
 	^ relations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaModelRelationBuilder >> relations: anObject [
 	relations := anObject
 ]

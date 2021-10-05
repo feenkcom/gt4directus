@@ -1,71 +1,71 @@
 Class {
-	#name : #DiMetaFieldTypeManyToOne,
-	#superclass : #DiMetaFieldType,
+	#name : 'DiMetaFieldTypeManyToOne',
+	#superclass : 'DiMetaFieldType',
 	#instVars : [
 		'collection',
 		'relation'
 	],
-	#category : #'GToolkit4Directus-Meta Model'
+	#category : 'GToolkit4Directus-Meta Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiMetaFieldTypeManyToOne class >> matchesName: aString [
 	<return: #Boolean>
 	^ aString = 'M2O' or: [ aString = 'm2o' ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 DiMetaFieldTypeManyToOne >> accept: aVisitor [
 	^ aVisitor visitDiMetaFieldTypeManyToOne: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaFieldTypeManyToOne >> collection [
 	<return: #DiMetaCollection>
 	^ collection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaFieldTypeManyToOne >> collection: aDiMetaCollection [
 	self assert: collection isNil.
 	collection := aDiMetaCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaFieldTypeManyToOne >> collectionName [
 	<return: #String>
 	^ self collection name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaFieldTypeManyToOne >> collectionOrNil [
 	<return: #DiMetaCollection or: nil>
 	^ self collection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiMetaFieldTypeManyToOne >> isManyToOne [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiMetaFieldTypeManyToOne >> isModelType [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiMetaFieldTypeManyToOne >> isRelatedToCollection: aDiMetaCollection [
 	<return: #Boolean>
 	^ self collection isNotNil and: [ self collection name = aDiMetaCollection name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaFieldTypeManyToOne >> jsonName [
 	<return: #String>
 	^ 'm2o'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaFieldTypeManyToOne >> name [
 	<return: #String>
 	^ self collection 
@@ -73,19 +73,19 @@ DiMetaFieldTypeManyToOne >> name [
 		ifNil: [ 'an Object' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaFieldTypeManyToOne >> relation [
 	<return: #DiMetaRelation>
 	^ relation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaFieldTypeManyToOne >> relation: aDiMetaRelation [ 
 	self assert: relation isNil.
 	relation := aDiMetaRelation
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 DiMetaFieldTypeManyToOne >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>

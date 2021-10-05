@@ -6,25 +6,25 @@ Example with two {{gtClass:DiMetaRelation}} instances: {{gtExample:DiExamples>>#
 
 "
 Class {
-	#name : #DiMetaRelations,
-	#superclass : #DiMetaModel,
+	#name : 'DiMetaRelations',
+	#superclass : 'DiMetaModel',
 	#instVars : [
 		'data'
 	],
-	#category : #'GToolkit4Directus-Meta Model'
+	#category : 'GToolkit4Directus-Meta Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaRelations >> data [
 	^ data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaRelations >> data: anObject [
 	data := anObject
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiMetaRelations >> gtDataFor: aView [
 	<gtView>
 	self data ifNil: [ ^ aView empty ].
@@ -33,18 +33,18 @@ DiMetaRelations >> gtDataFor: aView [
 		items: [ self data ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiMetaRelations >> initialize [
 	super initialize.
 	data := #().
 ]
 
-{ #category : #convenient }
+{ #category : 'convenient' }
 DiMetaRelations >> numberOfData [
 	^ self data size
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DiMetaRelations >> selectCollectionOneNamed: aString [ 
 	<return: #Array of: #DiMetaRelation>
 	^ self data select: [ :eachRelation | eachRelation collectionOne = aString ]

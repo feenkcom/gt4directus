@@ -1,14 +1,14 @@
 Class {
-	#name : #DiIncludedFieldsModelItemsCommand,
-	#superclass : #DiDecoradedCommand,
+	#name : 'DiIncludedFieldsModelItemsCommand',
+	#superclass : 'DiDecoradedCommand',
 	#instVars : [
 		'models',
 		'slotNames'
 	],
-	#category : #'GToolkit4Directus-Commands'
+	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DiIncludedFieldsModelItemsCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
@@ -23,12 +23,12 @@ DiIncludedFieldsModelItemsCommand >> assertReadyForExecution [
 		description: [ 'Slot names must be existing model slot names' ].
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DiIncludedFieldsModelItemsCommand >> assertSubCommand [
 	"do nothing"
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 DiIncludedFieldsModelItemsCommand >> execute [
 	| anUpdatedModels |
 	self assertReadyForExecution.
@@ -38,7 +38,7 @@ DiIncludedFieldsModelItemsCommand >> execute [
 	self command execute.
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 DiIncludedFieldsModelItemsCommand >> modelWithDeletedFields: aModel [
 	| anUpdatedModel |
 	anUpdatedModel := aModel class basicNew.
@@ -49,12 +49,12 @@ DiIncludedFieldsModelItemsCommand >> modelWithDeletedFields: aModel [
 	^ anUpdatedModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiIncludedFieldsModelItemsCommand >> models [
 	^ models
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiIncludedFieldsModelItemsCommand >> models: aCollectionOfModels [
 	self 
 		assert: [ aCollectionOfModels isCollection and: [ aCollectionOfModels isNotEmpty ] ] 
@@ -67,13 +67,13 @@ DiIncludedFieldsModelItemsCommand >> models: aCollectionOfModels [
 	models := aCollectionOfModels.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiIncludedFieldsModelItemsCommand >> slotNames [
 	<return: #Collection>
 	^ slotNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiIncludedFieldsModelItemsCommand >> slotNames: aCollectionOfSlotNames [
 	self 
 		assert: [ aCollectionOfSlotNames isCollection and: [ aCollectionOfSlotNames isNotEmpty ] ] 

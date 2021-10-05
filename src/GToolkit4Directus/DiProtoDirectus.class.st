@@ -9,22 +9,22 @@ I am an abstract class. Subclasses must implement {{gtMethod:DiProtoDirectus>>#e
 
 "
 Class {
-	#name : #DiProtoDirectus,
-	#superclass : #Object,
+	#name : 'DiProtoDirectus',
+	#superclass : 'Object',
 	#instVars : [
 		'accessToken',
 		'projectURL'
 	],
-	#category : #'GToolkit4Directus-Importer'
+	#category : 'GToolkit4Directus-Importer'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiProtoDirectus >> accessToken [
 	<return: #String>
 	^ accessToken
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiProtoDirectus >> accessToken: aString [
 	self 
 		assert: [ aString isString and: [ aString isNotEmpty ] ] 
@@ -32,7 +32,7 @@ DiProtoDirectus >> accessToken: aString [
 	^ accessToken := aString
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiProtoDirectus >> get: endpoint [
 	<return: #Dictionary or: nil>
 	
@@ -43,7 +43,7 @@ DiProtoDirectus >> get: endpoint [
 		ifFalse: [ nil ].
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiProtoDirectus >> getCollections [
 	<return: #DiMetaCollections>
 	<return: #ZnResponse>
@@ -53,7 +53,7 @@ DiProtoDirectus >> getCollections [
 	^ DiMetaModelMapping uniqueInstance readCollections: aResponse contents.
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiProtoDirectus >> getCollectionsWithRelations [
 	<return: #DiMetaCollectionsWithRelations>
 	<return: #ZnResponse>
@@ -68,7 +68,7 @@ DiProtoDirectus >> getCollectionsWithRelations [
 		buildRelations
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiProtoDirectus >> getElementsInCollection: name [
 	| aResponse |
 	aResponse := self getResponse: {#items. name}.
@@ -76,7 +76,7 @@ DiProtoDirectus >> getElementsInCollection: name [
 
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiProtoDirectus >> getElementsInCollection: name withQuery: keyedCollection [
 	| aResponse |
 	aResponse := self getResponse: {#items. name} withQuery: keyedCollection.
@@ -84,7 +84,7 @@ DiProtoDirectus >> getElementsInCollection: name withQuery: keyedCollection [
 
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiProtoDirectus >> getRelations [
 	<return: #DiMetaRelations>
 	<return: #ZnResponse>
@@ -94,7 +94,7 @@ DiProtoDirectus >> getRelations [
 	^ DiMetaModelMapping uniqueInstance readRelations: aResponse contents.
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiProtoDirectus >> getResponse: endpoint [
 	<return: #ZnResponse>
 	
@@ -106,7 +106,7 @@ DiProtoDirectus >> getResponse: endpoint [
 		response.
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiProtoDirectus >> getResponse: endpoint withQuery: keyedCollection [
 	<return: #ZnResponse>
 	
@@ -119,19 +119,19 @@ DiProtoDirectus >> getResponse: endpoint withQuery: keyedCollection [
 		response.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiProtoDirectus >> isAuthenticated [
 	<return: #Boolean>
 	^ accessToken isNotNil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiProtoDirectus >> projectURL [
 	<return: #ZnUrl>
 	^ projectURL
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiProtoDirectus >> projectURL: aZnUrl [
 	self 
 		assert: [ aZnUrl isNotNil ] 
@@ -139,7 +139,7 @@ DiProtoDirectus >> projectURL: aZnUrl [
 	projectURL := aZnUrl asZnUrl
 ]
 
-{ #category : #authentication }
+{ #category : 'authentication' }
 DiProtoDirectus >> resetToken [
 	accessToken := nil
 ]

@@ -7,30 +7,30 @@ For some examples look at {{gtClass:DiMetaModel}} subclasses: {{gtClass:DiMetaMo
 
 "
 Class {
-	#name : #DiMetaModelMapping,
-	#superclass : #Object,
+	#name : 'DiMetaModelMapping',
+	#superclass : 'Object',
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'GToolkit4Directus-Json Mapping'
+	#category : 'GToolkit4Directus-Json Mapping'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 DiMetaModelMapping class >> cleanUp [
 	self resetUniqueInstance
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 DiMetaModelMapping class >> resetUniqueInstance [
 	uniqueInstance := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaModelMapping class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DiMetaModelMapping >> collectionOfMetaCollectionMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: #CollectionOfMetaCollection customDo: [ :mapping |
@@ -39,7 +39,7 @@ DiMetaModelMapping >> collectionOfMetaCollectionMappingFor: aNeoJSONMapper [
 
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DiMetaModelMapping >> collectionOfMetaRelationMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: #CollectionOfMetaRelation customDo: [ :mapping |
@@ -48,7 +48,7 @@ DiMetaModelMapping >> collectionOfMetaRelationMappingFor: aNeoJSONMapper [
 
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DiMetaModelMapping >> dataOfFieldsMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: #DataOfFields customDo: [ :mapping |
@@ -70,7 +70,7 @@ DiMetaModelMapping >> dataOfFieldsMappingFor: aNeoJSONMapper [
 	self metaFieldMappingFor: aNeoJSONMapper.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DiMetaModelMapping >> metaCollectionMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: DiMetaCollection do: [ :mapping |
@@ -86,7 +86,7 @@ DiMetaModelMapping >> metaCollectionMappingFor: aNeoJSONMapper [
 	self dataOfFieldsMappingFor: aNeoJSONMapper.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DiMetaModelMapping >> metaCollectionsMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: DiMetaCollections do: [ :mapping |
@@ -96,7 +96,7 @@ DiMetaModelMapping >> metaCollectionsMappingFor: aNeoJSONMapper [
 
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DiMetaModelMapping >> metaFieldMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: DiMetaField do: [ :mapping |
@@ -109,7 +109,7 @@ DiMetaModelMapping >> metaFieldMappingFor: aNeoJSONMapper [
 	self metaFieldTypeMappingFor: aNeoJSONMapper.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DiMetaModelMapping >> metaFieldTypeMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: DiMetaFieldType customDo: [ :mapping |
@@ -118,7 +118,7 @@ DiMetaModelMapping >> metaFieldTypeMappingFor: aNeoJSONMapper [
 			encoder: [ :aType | aType jsonName ] ].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DiMetaModelMapping >> metaRelationMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: DiMetaRelation do: [ :mapping |
@@ -130,7 +130,7 @@ DiMetaModelMapping >> metaRelationMappingFor: aNeoJSONMapper [
 		].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DiMetaModelMapping >> metaRelationsMappingFor: aNeoJSONMapper [
 	aNeoJSONMapper
 		for: DiMetaRelations do: [ :mapping |
@@ -140,7 +140,7 @@ DiMetaModelMapping >> metaRelationsMappingFor: aNeoJSONMapper [
 
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiMetaModelMapping >> read: aJsonSchema withMapping: aMessageSymbol on: aReadStream [ 
 	"Read a JSON string using json schema and return an object.
 	The messageSymbol variable is a message to configure mapping between JSON and objects."
@@ -150,24 +150,24 @@ DiMetaModelMapping >> read: aJsonSchema withMapping: aMessageSymbol on: aReadStr
 	^ reader nextAs: aJsonSchema
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiMetaModelMapping >> readCollections: aJson [
 	^ self read: DiMetaCollections withMapping: #metaCollectionsMappingFor: on: aJson readStream
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 DiMetaModelMapping >> readRelations: aJson [
 	^ self read: DiMetaRelations withMapping: #metaRelationsMappingFor: on: aJson readStream.
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiMetaModelMapping >> write: aXdObject mappedTo: mappingSymbol [ 
 	"Return a JSON string representation of the meta-model."
 	<return: #String>
 	^ self write: aXdObject mappedTo: mappingSymbol prettyPrint: false
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiMetaModelMapping >> write: aXdObject mappedTo: aMappingSymbol prettyPrint: aBoolean [
 	"Return a JSON string representation of the meta-model."
 	<return: #String>
@@ -179,7 +179,7 @@ DiMetaModelMapping >> write: aXdObject mappedTo: aMappingSymbol prettyPrint: aBo
 		aJsonWriter nextPut: aXdObject ].
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 DiMetaModelMapping >> writeCollections: aDiMetaCollections [
 	^ self write: aDiMetaCollections mappedTo: #metaCollectionsMappingFor:
 ]

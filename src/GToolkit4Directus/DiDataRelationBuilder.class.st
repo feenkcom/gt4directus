@@ -7,16 +7,16 @@ I first update one-to-many relations using {{gtClass:DiDataRelationBuilderContex
 
 "
 Class {
-	#name : #DiDataRelationBuilder,
-	#superclass : #Object,
+	#name : 'DiDataRelationBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'data',
 		'extensions'
 	],
-	#category : #'GToolkit4Directus-Builder'
+	#category : 'GToolkit4Directus-Builder'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilder >> addExtension: anExtension [
 	self 
 		assert: [ anExtension isNotNil ] 
@@ -25,51 +25,51 @@ DiDataRelationBuilder >> addExtension: anExtension [
 	self extensions add: anExtension
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 DiDataRelationBuilder >> buildUsingExtensions [
 	self extensions
 		do: [ :eachBuilderExtension | eachBuilderExtension build ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilder >> data [
 	<return: #DiData>
 	^ data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilder >> data: aDiData [
 	data := aDiData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilder >> extensions [
 	^ extensions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilder >> extensions: anObject [
 	extensions := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiDataRelationBuilder >> initialize [
 	super initialize.
 	data := nil.
 	extensions := OrderedCollection new.
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DiDataRelationBuilder >> itemOf: aCollectionName andId: anItemId [ 
 	^ self data itemOf: aCollectionName andId: anItemId 
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DiDataRelationBuilder >> itemsOf: aString that: aBlockClosure [ 
 	^ self data itemsOf: aString that: aBlockClosure 
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 DiDataRelationBuilder >> relate [
 	self relateWithContextClass: DiOneToManyRelationContext.
 	self relateWithContextClass: DiManyToOneRelationContext.
@@ -77,7 +77,7 @@ DiDataRelationBuilder >> relate [
 	^ self data
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 DiDataRelationBuilder >> relateItem: aModel ofCollectionName: aCollectionName withContextClass: aClass [ 
 	| aCollection |
 	aCollection := self data collectionNamed: aCollectionName.
@@ -94,7 +94,7 @@ DiDataRelationBuilder >> relateItem: aModel ofCollectionName: aCollectionName wi
 	]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 DiDataRelationBuilder >> relateItems: aCollectionOfItems ofCollectionName: aCollectionName withContextClass: aClass [
 	aCollectionOfItems
 		do: [ :eachItem | 
@@ -104,7 +104,7 @@ DiDataRelationBuilder >> relateItems: aCollectionOfItems ofCollectionName: aColl
 				withContextClass: aClass ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 DiDataRelationBuilder >> relateWithContextClass: aClass [
 	self data items
 		keysAndValuesDo: [ :eachCollectionName :aCollectionOfItems | 

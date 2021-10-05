@@ -1,15 +1,15 @@
 Class {
-	#name : #DiStoreNewModelItemsCommand,
-	#superclass : #DiDecoradedCommand,
+	#name : 'DiStoreNewModelItemsCommand',
+	#superclass : 'DiDecoradedCommand',
 	#traits : 'TDiModels',
 	#classTraits : 'TDiModels classTrait',
 	#instVars : [
 		'models'
 	],
-	#category : #'GToolkit4Directus-Commands'
+	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DiStoreNewModelItemsCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
@@ -18,7 +18,7 @@ DiStoreNewModelItemsCommand >> assertReadyForExecution [
 
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 DiStoreNewModelItemsCommand >> execute [
 	| aResult |
 	self assertReadyForExecution.
@@ -34,18 +34,18 @@ DiStoreNewModelItemsCommand >> execute [
 		do: [ :anOriginalModel :aResultModel | anOriginalModel id: aResultModel id ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiStoreNewModelItemsCommand >> initialize [
 	super initialize.
 	self command: DiStoreNewItemsCommand new.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiStoreNewModelItemsCommand >> models [
 	^ models
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiStoreNewModelItemsCommand >> models: aCollectionOfModels [
 	self 
 		assert: [ aCollectionOfModels isCollection and: [ aCollectionOfModels isNotEmpty ] ] 

@@ -7,8 +7,8 @@ Example: {{gtExample:DiExamples>>#metaCollection|noCode=true|previewHeight=500}}
 
 "
 Class {
-	#name : #DiMetaCollection,
-	#superclass : #DiMetaModel,
+	#name : 'DiMetaCollection',
+	#superclass : 'DiMetaModel',
 	#instVars : [
 		'single',
 		'icon',
@@ -19,28 +19,28 @@ Class {
 		'managed',
 		'name'
 	],
-	#category : #'GToolkit4Directus-Meta Model'
+	#category : 'GToolkit4Directus-Meta Model'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DiMetaCollection >> collectFieldsRelatedToCollection: aDiMetaCollection [
 	<return: #Array of: #DiMetaField>
 	^ self fields select: [ :eachField | 
 		eachField isRelatedToCollection: aDiMetaCollection ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DiMetaCollection >> fieldNamed: aString [
 	<return: #DiMetaField>
 	^ self fields detect: [ :eachField | eachField name = aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> fields [
 	^ fields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> fields: anArray [
 	self 
 		assert: [ anArray isNotNil ] 
@@ -48,14 +48,14 @@ DiMetaCollection >> fields: anArray [
 	fields := anArray
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiMetaCollection >> gtCanDisplayField: aFieldOne before: aFieldTwo [
 	(aFieldOne isSystemField and: [ aFieldTwo isSystemField not ]) ifTrue: [ ^ false ].
 	(aFieldOne isSystemField not and: [ aFieldTwo isSystemField ]) ifTrue: [ ^ true ].
 	^ aFieldOne name < aFieldTwo name
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiMetaCollection >> gtElementsFor: aView [
 	<gtView>
 	| elements cachedElements aList |
@@ -80,7 +80,7 @@ DiMetaCollection >> gtElementsFor: aView [
 	^ aList
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiMetaCollection >> gtFieldsFor: aView [
 	<gtView>
 	self fields ifNil: [ ^ aView empty ].
@@ -94,7 +94,7 @@ DiMetaCollection >> gtFieldsFor: aView [
 		column: 'Required' item: [ :aField | aField required ifTrue: [ 'required' ] ifFalse: [ '' ] ] width: 50
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> gtNoteFor: aView [
 	<gtView>
 	note ifNil: [ ^ aView empty ].
@@ -105,7 +105,7 @@ DiMetaCollection >> gtNoteFor: aView [
 		text: [ self note ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DiMetaCollection >> gtQueryFor: aView [
 	<gtView>
 	| formElement queryInputElement toolbar playInspectButton snippetContainer labelElement text |
@@ -167,12 +167,12 @@ DiMetaCollection >> gtQueryFor: aView [
 	].
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiMetaCollection >> gtSortedFields [
 	^ self fields sorted: [ :a :b | self gtCanDisplayField: a before: b ].
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiMetaCollection >> gtUMLFor: aView [
 	<gtView>
 	self fields ifNil: [ ^ aView empty ].
@@ -194,33 +194,33 @@ DiMetaCollection >> gtUMLFor: aView [
 		]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> hidden [
 	^ hidden
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> hidden: anObject [
 	hidden := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> icon [
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> icon: anObject [
 	icon := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiMetaCollection >> includesFieldOfType: aType [
 	<return: #Boolean>
 	^ self fields anySatisfy: [ :eachField | eachField type = aType ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiMetaCollection >> initialize [
 	super initialize.
 	name := '<uninitialized name>'.
@@ -233,23 +233,23 @@ DiMetaCollection >> initialize [
 	translation := nil.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiMetaCollection >> isSystemCollection [
 	<return: #Boolean>
 	^ self name beginsWith: 'directus_'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> managed [
 	^ managed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> managed: anObject [
 	managed := anObject
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 DiMetaCollection >> modelClassName [
 	"Return a model class name representing the collection.
 	The name is without a possible class prefix."
@@ -258,33 +258,33 @@ DiMetaCollection >> modelClassName [
 		self printModelClassNameOn: aStream ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> note [
 	^ note
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> note: anObject [
 	note := anObject
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 DiMetaCollection >> numberOfFields [
 	<return: #Integer>
 	^ self fields size
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DiMetaCollection >> printModelClassNameOn: aStream [
 	| aFirstChar | 
 	aFirstChar := true.
@@ -299,7 +299,7 @@ DiMetaCollection >> printModelClassNameOn: aStream [
 					aStream nextPut: eachCharacter ] ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DiMetaCollection >> printOn: aStream [
 	self name ifNil: [ super printOn: aStream. ^ self ].
 	aStream 
@@ -307,27 +307,27 @@ DiMetaCollection >> printOn: aStream [
 		print: self name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> single [
 	^ single
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> single: anObject [
 	single := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> translation [
 	^ translation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollection >> translation: anObject [
 	translation := anObject
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 DiMetaCollection >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>

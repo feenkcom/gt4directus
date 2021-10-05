@@ -15,31 +15,31 @@ Notice, that the last example includes exact one-to-many and many-to-one data ty
 
 "
 Class {
-	#name : #DiDirectus,
-	#superclass : #DiMonoliteDirectus,
+	#name : 'DiDirectus',
+	#superclass : 'DiMonoliteDirectus',
 	#instVars : [
 		'email',
 		'password'
 	],
-	#category : #'GToolkit4Directus-Importer'
+	#category : 'GToolkit4Directus-Importer'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDirectus >> email [
 	^ email
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDirectus >> email: anObject [
 	email := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDirectus >> password [
 	^ password
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDirectus >> password: anObject [
 	password := anObject
 ]

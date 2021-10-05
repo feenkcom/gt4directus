@@ -1,10 +1,10 @@
 Class {
-	#name : #DiManyToOneModelExamples,
-	#superclass : #DiCommonImporterExamples,
-	#category : #'GToolkit4Directus-Examples'
+	#name : 'DiManyToOneModelExamples',
+	#superclass : 'DiCommonImporterExamples',
+	#category : 'GToolkit4Directus-Examples'
 }
 
-{ #category : #'model builder' }
+{ #category : 'model builder' }
 DiManyToOneModelExamples >> dummyPackage [
 	<gtExample>
 	"<after: #removeDummyPackage>"
@@ -16,12 +16,12 @@ DiManyToOneModelExamples >> dummyPackage [
 	^ aPackage
 ]
 
-{ #category : #'model builder' }
+{ #category : 'model builder' }
 DiManyToOneModelExamples >> dummyPackageName [
 	^ 'Dummy2-Package-For' , self class package name
 ]
 
-{ #category : #'company - importer' }
+{ #category : 'company - importer' }
 DiManyToOneModelExamples >> importCompanyCollectionsWithRelations [
 	<gtExample>
 	| anImporter aMetaModel aCollection aRelation aField |
@@ -36,7 +36,7 @@ DiManyToOneModelExamples >> importCompanyCollectionsWithRelations [
 	^ aMetaModel
 ]
 
-{ #category : #'company - importer' }
+{ #category : 'company - importer' }
 DiManyToOneModelExamples >> importCompanyMetaModel [
 	<gtExample>
 	| anImporter aMetaModel aCollection aField |
@@ -54,7 +54,7 @@ DiManyToOneModelExamples >> importCompanyMetaModel [
 	^ aMetaModel
 ]
 
-{ #category : #'company - importer' }
+{ #category : 'company - importer' }
 DiManyToOneModelExamples >> importCompanyRelations [
 	<gtExample>
 	| anImporter theCollections |
@@ -66,7 +66,7 @@ DiManyToOneModelExamples >> importCompanyRelations [
 	^ theCollections
 ]
 
-{ #category : #server }
+{ #category : 'server' }
 DiManyToOneModelExamples >> initializeDelegate [
 	super initializeDelegate.
 	delegate
@@ -78,7 +78,7 @@ DiManyToOneModelExamples >> initializeDelegate [
 			aResponse entity: (ZnEntity json: self metaRelationsOfParentCompanyJsonString) ]
 ]
 
-{ #category : #'company - json data' }
+{ #category : 'company - json data' }
 DiManyToOneModelExamples >> metaCollectionOfCompanyWithParentCompanyJsonString [
 	^ '{"collection":"company","fields":{',
 			'"id":', self metaFieldOfIdJsonString, ',',
@@ -87,7 +87,7 @@ DiManyToOneModelExamples >> metaCollectionOfCompanyWithParentCompanyJsonString [
 		'},"hidden":false,"icon":"location_city","managed":true,"single":false}'			
 ]
 
-{ #category : #'company - reading' }
+{ #category : 'company - reading' }
 DiManyToOneModelExamples >> metaCollectionsOfCompany [
 	<gtExample>
 	| aJson anObject |
@@ -98,12 +98,12 @@ DiManyToOneModelExamples >> metaCollectionsOfCompany [
 	^ anObject
 ]
 
-{ #category : #'company - json data' }
+{ #category : 'company - json data' }
 DiManyToOneModelExamples >> metaCollectionsOfCompanyWithParentCompanyJsonString [
 	^ '{"data":[', self metaCollectionOfCompanyWithParentCompanyJsonString, ']}'
 ]
 
-{ #category : #'company - json data' }
+{ #category : 'company - json data' }
 DiManyToOneModelExamples >> metaCollectionsOfCompanyWithParentCompanyStonJson [
 	<gtExample>
 	| aString anObject |
@@ -115,17 +115,17 @@ DiManyToOneModelExamples >> metaCollectionsOfCompanyWithParentCompanyStonJson [
 	^ anObject
 ]
 
-{ #category : #'company - json data' }
+{ #category : 'company - json data' }
 DiManyToOneModelExamples >> metaRelationOfParentCompanyJsonString [
 	^ '{"collection_many":"company","field_many":"parent_company","collection_one":"company"}'
 ]
 
-{ #category : #'company - json data' }
+{ #category : 'company - json data' }
 DiManyToOneModelExamples >> metaRelationsOfParentCompanyJsonString [
 	^ '{"data":[', self metaRelationOfParentCompanyJsonString, ']}'			
 ]
 
-{ #category : #'company - json data' }
+{ #category : 'company - json data' }
 DiManyToOneModelExamples >> metaRelationsOfParentCompanyStonJson [
 	<gtExample>
 	| aString anObject |

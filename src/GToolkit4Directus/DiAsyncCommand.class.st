@@ -1,8 +1,8 @@
 Class {
-	#name : #DiAsyncCommand,
-	#superclass : #DiDecoradedCommand,
+	#name : 'DiAsyncCommand',
+	#superclass : 'DiDecoradedCommand',
 	#instVars : [
 		'callback'
 	],
-	#category : #'GToolkit4Directus-Commands'
+	#category : 'GToolkit4Directus-Commands'
 }

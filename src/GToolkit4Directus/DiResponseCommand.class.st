@@ -1,27 +1,27 @@
 Class {
-	#name : #DiResponseCommand,
-	#superclass : #DiCommand,
+	#name : 'DiResponseCommand',
+	#superclass : 'DiCommand',
 	#traits : 'TDiCommandResponse + TDiCommandDirectus',
 	#classTraits : 'TDiCommandResponse classTrait + TDiCommandDirectus classTrait',
 	#instVars : [
 		'directus',
 		'response'
 	],
-	#category : #'GToolkit4Directus-Commands'
+	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiResponseCommand class >> endPoint [
 	<return: #Array of: #Symbol>
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiResponseCommand class >> isAbstract [
 	^ self name = #DiResponseCommand 
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DiResponseCommand >> assertReadyForExecution [
 	"Subclasses may assert if a command is ready for execution."
 	super assertReadyForExecution.
@@ -30,26 +30,26 @@ DiResponseCommand >> assertReadyForExecution [
 		description: [ 'Directus must be non-nil' ]
 ]
 
-{ #category : #'accessing - directus' }
+{ #category : 'accessing - directus' }
 DiResponseCommand >> clientWithEndPoint [
 	^ ZnClient new
 		url: self projectURL;
 		addPath: self endPoint
 ]
 
-{ #category : #'accessing - response' }
+{ #category : 'accessing - response' }
 DiResponseCommand >> commandResponse [
 	<return: #ZnResponse>
 	^ self response
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiResponseCommand >> directus [
 	<return: #DiProtoDirectus>
 	^ directus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiResponseCommand >> directus: aDiProtoDirectus [
 	self
 		assert: [ aDiProtoDirectus isNotNil ] 
@@ -57,26 +57,26 @@ DiResponseCommand >> directus: aDiProtoDirectus [
 	directus := aDiProtoDirectus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiResponseCommand >> endPoint [
 	"Return a end point URL path used for the communication with the Directus server."
 	<return: #Array>
 	^ self class endPoint
 ]
 
-{ #category : #'reading - directus' }
+{ #category : 'reading - directus' }
 DiResponseCommand >> getResponse [
 	<return: #ZnResponse>
 	^ self getResponse: self endPoint
 ]
 
-{ #category : #'reading - directus' }
+{ #category : 'reading - directus' }
 DiResponseCommand >> getResponse: anEndPoint [
 	<return: #ZnResponse>
 	^ self directus getResponse: anEndPoint
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiResponseCommand >> gtJsonFor: aView [
 	<gtView>
 	self response ifNil: [ ^ aView empty ].
@@ -85,7 +85,7 @@ DiResponseCommand >> gtJsonFor: aView [
 			aBrTab phlow spawnObject: self response ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiResponseCommand >> gtResponseFor: aView [
 	<gtView>
 	self response ifNil: [ ^ aView empty ].
@@ -94,33 +94,33 @@ DiResponseCommand >> gtResponseFor: aView [
 			aBrTab phlow spawnObject: self response ]
 ]
 
-{ #category : #'writing - directus' }
+{ #category : 'writing - directus' }
 DiResponseCommand >> patchEntity: anEntity at: anEndPoint [
 	^ self directus patchEntity: anEntity at: anEndPoint
 ]
 
-{ #category : #'writing - directus' }
+{ #category : 'writing - directus' }
 DiResponseCommand >> patchJson: aJsonString at: anEndPoint [
 	^ self directus patchJson: aJsonString at: anEndPoint
 ]
 
-{ #category : #'writing - directus' }
+{ #category : 'writing - directus' }
 DiResponseCommand >> postEntity: anEntity at: anEndPoint [
 	^ self directus postEntity: anEntity at: anEndPoint
 ]
 
-{ #category : #'writing - directus' }
+{ #category : 'writing - directus' }
 DiResponseCommand >> postJson: aJsonString at: anEndPoint [
 	^ self directus postJson: aJsonString at: anEndPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiResponseCommand >> response [
 	<return: #ZnResponse>
 	^ response
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiResponseCommand >> response: aZnResponse [
 	self
 		assert: [ aZnResponse isNotNil ]

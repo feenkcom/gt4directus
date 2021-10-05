@@ -1,15 +1,15 @@
 Class {
-	#name : #DiUpdateModelItemCommand,
-	#superclass : #DiDecoradedCommand,
+	#name : 'DiUpdateModelItemCommand',
+	#superclass : 'DiDecoradedCommand',
 	#traits : 'TDiModel',
 	#classTraits : 'TDiModel classTrait',
 	#instVars : [
 		'model'
 	],
-	#category : #'GToolkit4Directus-Commands'
+	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DiUpdateModelItemCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
@@ -18,7 +18,7 @@ DiUpdateModelItemCommand >> assertReadyForExecution [
 
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 DiUpdateModelItemCommand >> execute [
 	| aResult |
 	self assertReadyForExecution.
@@ -29,18 +29,18 @@ DiUpdateModelItemCommand >> execute [
 	self model id: aResult id.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiUpdateModelItemCommand >> initialize [
 	super initialize.
 	self command: DiUpdateItemCommand new.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiUpdateModelItemCommand >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiUpdateModelItemCommand >> model: aModel [
 	self 
 		assert: [ aModel isNotNil ] 

@@ -1,15 +1,15 @@
 Class {
-	#name : #DiAuthenticateCommand,
-	#superclass : #DiResponseCommand,
-	#category : #'GToolkit4Directus-Commands'
+	#name : 'DiAuthenticateCommand',
+	#superclass : 'DiResponseCommand',
+	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : #authentication }
+{ #category : 'authentication' }
 DiAuthenticateCommand >> authenticate [
 	^ self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 DiAuthenticateCommand >> execute [
 	self assertReadyForExecution.
 	self authenticate.

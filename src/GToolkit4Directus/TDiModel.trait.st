@@ -1,9 +1,9 @@
 Trait {
-	#name : #TDiModel,
-	#category : #'GToolkit4Directus-Commands'
+	#name : 'TDiModel',
+	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 TDiModel >> gtModelFor: anAction [
 	<gtAction>
 	self model ifNil: [ ^ anAction noAction ].
@@ -13,7 +13,7 @@ TDiModel >> gtModelFor: anAction [
 		action: [ :aBrTab | aBrTab phlow spawnObject: self model ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TDiModel >> model [
 	^ self explicitRequirement
 ]

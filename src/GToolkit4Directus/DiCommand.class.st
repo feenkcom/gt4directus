@@ -1,15 +1,15 @@
 Class {
-	#name : #DiCommand,
-	#superclass : #Object,
-	#category : #'GToolkit4Directus-Commands'
+	#name : 'DiCommand',
+	#superclass : 'Object',
+	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DiCommand >> assertReadyForExecution [
 	"Subclasses may define assertions"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiCommand >> deepCommand: aDiCommand parent: aDiParentCommand [
 	"Put the command at the bottom"
 	self 
@@ -18,14 +18,14 @@ DiCommand >> deepCommand: aDiCommand parent: aDiParentCommand [
 	aDiParentCommand command: aDiCommand.
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 DiCommand >> execute [
 	"Perform a command action. 
 	The command may return a result."
 	self subclassResponsibility
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiCommand >> putDecoratedCommandInto: aStream [
 	"do nothing"
 ]

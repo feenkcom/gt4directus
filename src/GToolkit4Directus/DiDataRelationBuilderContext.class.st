@@ -4,112 +4,112 @@ I am an abstract data relation builder context.
 
 "
 Class {
-	#name : #DiDataRelationBuilderContext,
-	#superclass : #Object,
+	#name : 'DiDataRelationBuilderContext',
+	#superclass : 'Object',
 	#traits : 'TDiMetaFieldTypeVisitor',
 	#classTraits : 'TDiMetaFieldTypeVisitor classTrait',
 	#instVars : [
 		'builder',
 		'values'
 	],
-	#category : #'GToolkit4Directus-Builder'
+	#category : 'GToolkit4Directus-Builder'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilderContext >> builder [
 	^ builder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilderContext >> builder: anObject [
 	builder := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilderContext >> collection [
 	<return: #DiMetaCollection> 
 	^ self values at: #collection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilderContext >> collection: aDiMetaCollection [ 
 	self values at: #collection put: aDiMetaCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilderContext >> field [
 	<return: #DiMetaField> 
 	^ self values at: #field
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilderContext >> field: aDiMetaField [ 
 	self values at: #field put: aDiMetaField
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiDataRelationBuilderContext >> initialize [
 	super initialize.
 	builder := nil.
 	values := Dictionary new.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilderContext >> model [
 	^ self values at: #model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilderContext >> model: aModel [ 
 	self values at: #model put: aModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilderContext >> values [
 	^ values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDataRelationBuilderContext >> values: anObject [
 	values := anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiDataRelationBuilderContext >> visitDiMetaFieldTypeDecimal: aDiMetaFieldTypeDecimal [
 	"subclasses can do particular actions"
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiDataRelationBuilderContext >> visitDiMetaFieldTypeFile: aDiMetaFieldTypeFile [ 
 	"subclasses can do particular actions"
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiDataRelationBuilderContext >> visitDiMetaFieldTypeInteger: aDiMetaFieldTypeInteger [ 
 	"subclasses can do particular actions"
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiDataRelationBuilderContext >> visitDiMetaFieldTypeManyToOne: aDiMetaFieldTypeManyToOne [ 
 	"subclasses can do particular actions"
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiDataRelationBuilderContext >> visitDiMetaFieldTypeOneToMany: aDiMetaFieldTypeOneToMany [ 
 	"subclasses can do particular actions"
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiDataRelationBuilderContext >> visitDiMetaFieldTypeStatus: aDiMetaFieldTypeStatus [
 	"subclasses can do particular actions"
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiDataRelationBuilderContext >> visitDiMetaFieldTypeString: aDiMetaFieldTypeString [ 
 	"subclasses can do particular actions"
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiDataRelationBuilderContext >> visitDiMetaFieldUnrecognizedType: aDiMetaFieldUnrecognizedType [ 
 	"subclasses can do particular actions"
 ]

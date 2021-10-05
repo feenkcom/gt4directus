@@ -1,20 +1,20 @@
 Class {
-	#name : #DiDecoradedCommand,
-	#superclass : #DiCommand,
+	#name : 'DiDecoradedCommand',
+	#superclass : 'DiCommand',
 	#traits : 'TDiCommandResponse + TDiCommandDirectus',
 	#classTraits : 'TDiCommandResponse classTrait + TDiCommandDirectus classTrait',
 	#instVars : [
 		'command'
 	],
-	#category : #'GToolkit4Directus-Commands'
+	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiDecoradedCommand class >> isAbstract [
 	^ self name = #DiDecoradedCommand
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DiDecoradedCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self
@@ -23,18 +23,18 @@ DiDecoradedCommand >> assertReadyForExecution [
 	self assertSubCommand
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DiDecoradedCommand >> assertSubCommand [
 	self command assertReadyForExecution
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDecoradedCommand >> command [
 	<return: #DiCommand>
 	^ command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiDecoradedCommand >> command: aDiCommand [
 	self
 		assert: [ aDiCommand isNotNil ]
@@ -42,31 +42,31 @@ DiDecoradedCommand >> command: aDiCommand [
 	command := aDiCommand
 ]
 
-{ #category : #'accessing - response' }
+{ #category : 'accessing - response' }
 DiDecoradedCommand >> commandResponse [
 	<return: #ZnResponse>
 	^ self command commandResponse
 ]
 
-{ #category : #'accessing - directus' }
+{ #category : 'accessing - directus' }
 DiDecoradedCommand >> directus [
 	<return: #DiDirectus>
 	^ self command directus
 ]
 
-{ #category : #'accessing - directus' }
+{ #category : 'accessing - directus' }
 DiDecoradedCommand >> directus: aDiProtoDirectus [
 	self command directus: aDiProtoDirectus
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiDecoradedCommand >> gtDecoratedCommands [
 	<return: #Array of: #DiCommand>
 	^ Array streamContents: [ :aStream | 
 		self putDecoratedCommandInto: aStream ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiDecoradedCommand >> gtDecoratedCommandsFor: aView [
 	<gtView>
 	self command ifNil: [ ^ aView empty ].
@@ -75,7 +75,7 @@ DiDecoradedCommand >> gtDecoratedCommandsFor: aView [
 		items: [ self gtDecoratedCommands ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiDecoradedCommand >> gtJsonFor: aView [
 	<gtView>
 	self commandResponse ifNil: [ ^ aView empty ].
@@ -84,7 +84,7 @@ DiDecoradedCommand >> gtJsonFor: aView [
 			aBrTab phlow spawnObject: self commandResponse ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiDecoradedCommand >> gtResponseFor: aView [
 	<gtView>
 	self commandResponse ifNil: [ ^ aView empty ].
@@ -93,7 +93,7 @@ DiDecoradedCommand >> gtResponseFor: aView [
 			aBrTab phlow spawnObject: self commandResponse ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiDecoradedCommand >> putDecoratedCommandInto: aStream [
 	self command ifNil: [ ^ self ].
 	aStream nextPut: self command.

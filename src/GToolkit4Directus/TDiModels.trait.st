@@ -1,9 +1,9 @@
 Trait {
-	#name : #TDiModels,
-	#category : #'GToolkit4Directus-Commands'
+	#name : 'TDiModels',
+	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 TDiModels >> gtModelsFor: aView [
 	<gtView>
 	self models ifNil: [ ^ aView empty ].
@@ -12,7 +12,7 @@ TDiModels >> gtModelsFor: aView [
 		items: [ self models ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TDiModels >> models [
 	<return: #Collection>
 	^ self explicitRequirement

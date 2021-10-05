@@ -1,6 +1,6 @@
 Class {
-	#name : #DiBatchModelItemsCommands,
-	#superclass : #DiDecoradedCommand,
+	#name : 'DiBatchModelItemsCommands',
+	#superclass : 'DiDecoradedCommand',
 	#traits : 'TDiModels',
 	#classTraits : 'TDiModels classTrait',
 	#instVars : [
@@ -8,10 +8,10 @@ Class {
 		'batchSize',
 		'responses'
 	],
-	#category : #'GToolkit4Directus-Commands'
+	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DiBatchModelItemsCommands >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
@@ -19,18 +19,18 @@ DiBatchModelItemsCommands >> assertReadyForExecution [
 		description: [ 'Models must be non-empty collection' ].
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DiBatchModelItemsCommands >> assertSubCommand [
 	"do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiBatchModelItemsCommands >> batchSize [
 	<return: #Integer>
 	^ batchSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiBatchModelItemsCommands >> batchSize: anInteger [
 	self 
 		assert: [ anInteger isInteger and: [ anInteger > 0 ] ] 
@@ -38,24 +38,24 @@ DiBatchModelItemsCommands >> batchSize: anInteger [
 	batchSize := anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiBatchModelItemsCommands >> beStoreNewItems [
 	self command: DiStoreNewModelItemsCommand new.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiBatchModelItemsCommands >> beUpdateExistingItems [
 	self command: DiUpdateModelItemsCommand new.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiBatchModelItemsCommands >> beUpdateSomeSlots: aCollectionOfSlots [
 	self command: (DiIncludedFieldsModelItemsCommand new
 		slotNames: aCollectionOfSlots;
 		command: DiUpdateModelItemsCommand new).
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 DiBatchModelItemsCommands >> execute [
 	| aBatch |
 	self assertReadyForExecution.
@@ -70,7 +70,7 @@ DiBatchModelItemsCommands >> execute [
 	aBatch ifNotEmpty: [ self executeWithModels: aBatch ].
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 DiBatchModelItemsCommands >> executeWithModels: aCollectionOfModels [
 	| aResponse |
 	self 
@@ -83,7 +83,7 @@ DiBatchModelItemsCommands >> executeWithModels: aCollectionOfModels [
 	responses add: aResponse.
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiBatchModelItemsCommands >> gtAllResponsesFor: aView [
 	<gtView>
 	self responses ifNil: [ ^ aView empty ].
@@ -99,7 +99,7 @@ DiBatchModelItemsCommands >> gtAllResponsesFor: aView [
 			
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiBatchModelItemsCommands >> initialize [
 	super initialize.
 	self beStoreNewItems.
@@ -108,18 +108,18 @@ DiBatchModelItemsCommands >> initialize [
 
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 DiBatchModelItemsCommands >> isLastResponseSuccess [
 	<return: #Boolean>
 	^ self responses last isSuccess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiBatchModelItemsCommands >> models [
 	^ models
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiBatchModelItemsCommands >> models: aCollectionOfModels [
 	self 
 		assert: [ aCollectionOfModels isCollection and: [ aCollectionOfModels isNotEmpty ] ] 
@@ -132,7 +132,7 @@ DiBatchModelItemsCommands >> models: aCollectionOfModels [
 	models := aCollectionOfModels.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiBatchModelItemsCommands >> responses [
 	<return: #Collection of: #ZnResponse>
 	^ responses

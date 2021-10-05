@@ -6,48 +6,48 @@ Example with two {{gtClass:DiMetaCollection}} instances: {{gtExample:DiExamples>
 
 "
 Class {
-	#name : #DiMetaCollections,
-	#superclass : #DiMetaModel,
+	#name : 'DiMetaCollections',
+	#superclass : 'DiMetaModel',
 	#instVars : [
 		'data'
 	],
-	#category : #'GToolkit4Directus-Meta Model'
+	#category : 'GToolkit4Directus-Meta Model'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DiMetaCollections >> collectFieldsRelatedToCollection: aDiMetaCollection [
 	<return: #Array of: #DiMetaField>
 	^ self data flatCollect: [ :eachCollection | 
 		eachCollection collectFieldsRelatedToCollection: aDiMetaCollection ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DiMetaCollections >> collectionsDo: aBlockClosure [ 
 	"Enumerate collections"
 	self data do: aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollections >> data [
 	^ data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollections >> data: anObject [
 	data := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaCollections >> detect: aDetectBlock ifNone: aNoneBlock [
 	^ self data detect: aDetectBlock ifNone: aNoneBlock 
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DiMetaCollections >> do: aBlockClosure [ 
 	self data do: aBlockClosure
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiMetaCollections >> gtDataFor: aView [
 	<gtView>
 	self data ifNil: [ ^ aView empty ].
@@ -59,7 +59,7 @@ DiMetaCollections >> gtDataFor: aView [
 		items: [ self data ]
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 DiMetaCollections >> gtUMLFor: aView [
 	<gtView>
 	self data ifNil: [ ^ aView empty ].
@@ -88,29 +88,29 @@ DiMetaCollections >> gtUMLFor: aView [
 		]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiMetaCollections >> initialize [
 	super initialize.
 	data := #().
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DiMetaCollections >> named: aString [ 
 	<return: #DiMetaCollection>
 	^ self data detect: [ :eachCollection | eachCollection name = aString ]
 ]
 
-{ #category : #convenient }
+{ #category : 'convenient' }
 DiMetaCollections >> numberOfData [
 	^ self data size
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DiMetaCollections >> reject: aBlock [
 	^ self data reject: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DiMetaCollections >> selectInCollectionManyRelations: aCollectionOfMetaRelation [
 	<return: #Array of: #DiMetaCollection>
 	^ self data select: [ :eachCollection | 

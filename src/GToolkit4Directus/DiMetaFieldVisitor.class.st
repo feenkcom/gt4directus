@@ -4,23 +4,23 @@ I am an abstract visitor for {{gtClass:DiMetaField}} types {{gtClass:DiMetaField
 
 "
 Class {
-	#name : #DiMetaFieldVisitor,
-	#superclass : #Object,
+	#name : 'DiMetaFieldVisitor',
+	#superclass : 'Object',
 	#traits : 'TDiMetaFieldTypeVisitor',
 	#classTraits : 'TDiMetaFieldTypeVisitor classTrait',
 	#instVars : [
 		'field'
 	],
-	#category : #'GToolkit4Directus-Utility'
+	#category : 'GToolkit4Directus-Utility'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaFieldVisitor >> field [
 	<return: #DiMetaField>
 	^ field
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiMetaFieldVisitor >> field: aDiMetaField [
 	self 
 		assert: [ aDiMetaField isNotNil ] 
@@ -28,42 +28,42 @@ DiMetaFieldVisitor >> field: aDiMetaField [
 	field := aDiMetaField
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiMetaFieldVisitor >> visitDiMetaFieldTypeDecimal: aDiMetaFieldTypeDecimal [
 	^ self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiMetaFieldVisitor >> visitDiMetaFieldTypeFile: aDiMetaFieldTypeFile [
 	^ self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiMetaFieldVisitor >> visitDiMetaFieldTypeInteger: aDiMetaFieldTypeInteger [
 	^ self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiMetaFieldVisitor >> visitDiMetaFieldTypeManyToOne: aDiMetaFieldTypeManyToOne [
 	^ self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiMetaFieldVisitor >> visitDiMetaFieldTypeOneToMany: aDiMetaFieldTypeOneToMany [
 	^ self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiMetaFieldVisitor >> visitDiMetaFieldTypeStatus: aDiMetaFieldTypeStatus [
 	^ self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiMetaFieldVisitor >> visitDiMetaFieldTypeString: aDiMetaFieldTypeString [
 	^ self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DiMetaFieldVisitor >> visitDiMetaFieldUnrecognizedType: aDiMetaFieldUnrecognizedType [
 	^ self subclassResponsibility
 ]
