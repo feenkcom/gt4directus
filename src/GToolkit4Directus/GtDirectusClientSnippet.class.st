@@ -1,12 +1,12 @@
 Class {
 	#name : #GtDirectusClientSnippet,
-	#superclass : #GtSnippet,
+	#superclass : #Object,
 	#instVars : [
 		'url',
 		'user',
 		'token'
 	],
-	#category : #GToolkit4Directus
+	#category : 'GToolkit4Directus'
 }
 
 { #category : #accessing }
