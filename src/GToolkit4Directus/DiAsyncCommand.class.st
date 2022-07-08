@@ -1,6 +1,6 @@
 Class {
-	#name : 'DiAsyncCommand',
-	#superclass : 'DiDecoradedCommand',
+	#name : #DiAsyncCommand,
+	#superclass : #DiDecoradedCommand,
 	#instVars : [
 		'callback'
 	],

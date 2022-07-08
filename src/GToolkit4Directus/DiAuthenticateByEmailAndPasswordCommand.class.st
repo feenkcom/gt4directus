@@ -1,6 +1,6 @@
 Class {
-	#name : 'DiAuthenticateByEmailAndPasswordCommand',
-	#superclass : 'DiAuthenticateCommand',
+	#name : #DiAuthenticateByEmailAndPasswordCommand,
+	#superclass : #DiAuthenticateCommand,
 	#instVars : [
 		'email',
 		'password'
@@ -8,17 +8,17 @@ Class {
 	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiAuthenticateByEmailAndPasswordCommand class >> endPoint [
 	^ #(auth authenticate)
 ]
 
-{ #category : 'accessing - directus' }
+{ #category : #'accessing - directus' }
 DiAuthenticateByEmailAndPasswordCommand >> accessToken: aString [
 	self directus accessToken: aString
 ]
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 DiAuthenticateByEmailAndPasswordCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
@@ -30,12 +30,12 @@ DiAuthenticateByEmailAndPasswordCommand >> assertReadyForExecution [
 
 ]
 
-{ #category : 'authentication' }
+{ #category : #authentication }
 DiAuthenticateByEmailAndPasswordCommand >> authenticate [
 	self authenticateWithEmail: self email password: self password
 ]
 
-{ #category : 'authentication' }
+{ #category : #authentication }
 DiAuthenticateByEmailAndPasswordCommand >> authenticateWithEmail: anEmail password: aPassword [
 	| aJsonObject aJsonContent |
 	aJsonContent := self
@@ -51,13 +51,13 @@ DiAuthenticateByEmailAndPasswordCommand >> authenticateWithEmail: anEmail passwo
 	self accessToken: (aJsonObject atPath: #('data' 'token')).
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiAuthenticateByEmailAndPasswordCommand >> email [
 	<return: #String>
 	^ email
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiAuthenticateByEmailAndPasswordCommand >> email: aString [
 	self 
 		assert: [ aString isString and: [ aString isNotEmpty ] ] 
@@ -65,7 +65,7 @@ DiAuthenticateByEmailAndPasswordCommand >> email: aString [
 	email := aString
 ]
 
-{ #category : 'authentication' }
+{ #category : #authentication }
 DiAuthenticateByEmailAndPasswordCommand >> jsonContentWithEmail: anEmail password: aPassword [
 	<return: #String>
 	| aContent |
@@ -76,13 +76,13 @@ DiAuthenticateByEmailAndPasswordCommand >> jsonContentWithEmail: anEmail passwor
 	^ STONJSON toString: aContent
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiAuthenticateByEmailAndPasswordCommand >> password [
 	<return: #String>
 	^ password
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiAuthenticateByEmailAndPasswordCommand >> password: aString [
 	self 
 		assert: [ aString isString and: [ aString isNotEmpty ] ] 

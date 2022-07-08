@@ -6,8 +6,8 @@ Example: {{gtExample:DiExamples>>#metaRelationOfFieldManyRole|noCode=true|previe
 
 "
 Class {
-	#name : 'DiMetaRelation',
-	#superclass : 'DiMetaModel',
+	#name : #DiMetaRelation,
+	#superclass : #DiMetaModel,
 	#instVars : [
 		'fieldOne',
 		'junctionField',
@@ -15,56 +15,56 @@ Class {
 		'fieldMany',
 		'collectionOne'
 	],
-	#category : 'GToolkit4Directus-Meta Model'
+	#category : #'GToolkit4Directus-Meta Model'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaRelation >> collectionMany [
 	^ collectionMany
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaRelation >> collectionMany: anObject [
 	collectionMany := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaRelation >> collectionOne [
 	^ collectionOne
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaRelation >> collectionOne: anObject [
 	collectionOne := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaRelation >> fieldMany [
 	^ fieldMany
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaRelation >> fieldMany: anObject [
 	fieldMany := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaRelation >> fieldOne [
 	^ fieldOne
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaRelation >> fieldOne: anObject [
 	fieldOne := anObject
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 DiMetaRelation >> gtRelationFor: aView [
 	<gtView>
 	^ aView columnedList
 		title: 'Description';
 		items: [ | aDictionary | 
-			aDictionary := OrderPreservingDictionary new.
+			aDictionary := OrderedDictionary new.
 			aDictionary at: 'Relation from one-collection' put: self collectionOne.
 			self fieldOne ifNotNil: [ aDictionary at: 'and one-filed' put: self fieldOne ].
 			aDictionary
@@ -77,17 +77,17 @@ DiMetaRelation >> gtRelationFor: aView [
 		send: [ :anAssoc | anAssoc value ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaRelation >> junctionField [
 	^ junctionField
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaRelation >> junctionField: anObject [
 	junctionField := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 DiMetaRelation >> printBiDirectionalOn: aStream [
 	aStream 
 		nextPutAll: 'Bi-Directional Relation: ';
@@ -104,7 +104,7 @@ DiMetaRelation >> printBiDirectionalOn: aStream [
 		nextPutAll: self collectionOne.
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 DiMetaRelation >> printManyToManyOn: aStream [
 	aStream 
 		nextPutAll: 'ManyToMany Relation: ';
@@ -123,7 +123,7 @@ DiMetaRelation >> printManyToManyOn: aStream [
 		nextPutAll: self junctionField.
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 DiMetaRelation >> printManyToOneOn: aStream [
 	aStream 
 		nextPutAll: 'ManyToOne Relation: ';
@@ -134,7 +134,7 @@ DiMetaRelation >> printManyToOneOn: aStream [
 		nextPutAll: self collectionOne
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 DiMetaRelation >> printOn: aStream [
 	self collectionOne ifNil: [ ^ super printOn: aStream ].
 	self fieldOne isNil ifTrue: [ ^ self printManyToOneOn: aStream ].
@@ -143,7 +143,7 @@ DiMetaRelation >> printOn: aStream [
 	self printBiDirectionalOn: aStream.
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 DiMetaRelation >> printOneToManyOn: aStream [
 	aStream 
 		nextPutAll: 'OneToMany Relation: ';

@@ -8,8 +8,8 @@ An object representation of the JSON string above: {{gtExample:DiExamples>>#meta
 
 "
 Class {
-	#name : 'DiMetaField',
-	#superclass : 'DiMetaModel',
+	#name : #DiMetaField,
+	#superclass : #DiMetaModel,
 	#instVars : [
 		'note',
 		'type',
@@ -20,18 +20,18 @@ Class {
 	#category : 'GToolkit4Directus-Meta Model'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField class >> systemFieldNames [
 	^ #('created_by' 'created_on' 'modified_by' 'modified_on' 'updated_on' 'updated_by')
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> collectionOrNil [
 	<return: #DiMetaCollection or: nil>
 	^ self type collectionOrNil
 ]
 
-{ #category : 'accessing - model' }
+{ #category : #'accessing - model' }
 DiMetaField >> getter [
 	"Return a Smalltalk getter name (method name)"
 	<return: #String>
@@ -49,53 +49,53 @@ DiMetaField >> getter [
 						aStream nextPut: eachCharacter ] ] ] ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 DiMetaField >> initialize [
 	super initialize.
 	required := false.
 	unique := false.
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 DiMetaField >> isModelType [
 	^ self type isModelType
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 DiMetaField >> isRelatedToCollection: aDiMetaCollection [
 	<return: #Boolean>
 	^ self type isRelatedToCollection: aDiMetaCollection
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 DiMetaField >> isSystemField [
 	<return: #Boolean>
 	^ self class systemFieldNames includes: self name
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> name [
 	<return: #String>
 	^ name
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> name: aString [
 	name := aString
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> note [
 	<return: #String>
 	^ note
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> note: aString [
 	note := aString
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 DiMetaField >> printOn: aStream [
 	self name ifNil: [ ^ super printOn: aStream ].
 	self type ifNil: [ ^ super printOn: aStream ].
@@ -106,55 +106,55 @@ DiMetaField >> printOn: aStream [
 		print: self type name
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> required [
 	<return: #Boolean>
 	^ required
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> required: aBoolean [
 	required := aBoolean
 ]
 
-{ #category : 'accessing - model' }
+{ #category : #'accessing - model' }
 DiMetaField >> setter [
 	"Return a Smalltalk setter name (method name)"
 	<return: #String>
 	^ self getter, ':'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> type [
 	<return: #DiMetaFieldType>
 	^ type
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> type: aDiMetaFieldType [
 	type := aDiMetaFieldType
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> typeName [
 	<return: #String>
 	^ self type name
 ]
 
-{ #category : 'accessing - model' }
+{ #category : #'accessing - model' }
 DiMetaField >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>
 	^ self type typeNameUsingNaming: aDiNamingStrategy 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> unique [
 	<return: #Boolean>
 	^ unique
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaField >> unique: aBoolean [
 	unique := aBoolean
 ]

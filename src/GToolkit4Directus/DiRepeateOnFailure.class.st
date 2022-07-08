@@ -1,13 +1,13 @@
 Class {
-	#name : 'DiRepeateOnFailure',
-	#superclass : 'DiDecoradedCommand',
+	#name : #DiRepeateOnFailure,
+	#superclass : #DiDecoradedCommand,
 	#instVars : [
 		'authenticateCommand'
 	],
 	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 DiRepeateOnFailure >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
@@ -15,18 +15,18 @@ DiRepeateOnFailure >> assertReadyForExecution [
 		description: [ 'Authentication command must be non-nil' ].
 ]
 
-{ #category : 'authentication' }
+{ #category : #authentication }
 DiRepeateOnFailure >> authenticate [
 	self authenticateCommand execute
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiRepeateOnFailure >> authenticateCommand [
 	<return: #DiAuthenticateCommand>
 	^ authenticateCommand
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiRepeateOnFailure >> authenticateCommand: aDiAuthenticateCommand [
 	self 
 		assert: [ aDiAuthenticateCommand isNotNil ] 
@@ -34,13 +34,13 @@ DiRepeateOnFailure >> authenticateCommand: aDiAuthenticateCommand [
 	authenticateCommand := aDiAuthenticateCommand
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiRepeateOnFailure >> deepCommand: aDiCommand [
 	"Put the command at the bottom"
 	self deepCommand: aDiCommand parent: self.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiRepeateOnFailure >> deepCommand: aDiCommand parent: aDiParentCommand [
 	"Put the command at the bottom"
 	self command 
@@ -48,7 +48,7 @@ DiRepeateOnFailure >> deepCommand: aDiCommand parent: aDiParentCommand [
 		ifNil: [ self command: aDiCommand ].
 ]
 
-{ #category : 'execution' }
+{ #category : #execution }
 DiRepeateOnFailure >> execute [
 	self assertReadyForExecution.
 	self isDirectusAuthenticated ifFalse: [ self authenticate ].

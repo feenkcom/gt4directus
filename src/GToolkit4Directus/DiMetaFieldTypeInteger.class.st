@@ -1,33 +1,33 @@
 Class {
-	#name : 'DiMetaFieldTypeInteger',
-	#superclass : 'DiMetaFieldType',
+	#name : #DiMetaFieldTypeInteger,
+	#superclass : #DiMetaFieldType,
 	#category : 'GToolkit4Directus-Meta Model'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 DiMetaFieldTypeInteger class >> matchesName: aString [
 	<return: #Boolean>
 	^ aString = 'integer'
 ]
 
-{ #category : 'visitor' }
+{ #category : #visitor }
 DiMetaFieldTypeInteger >> accept: aVisitor [
 	^ aVisitor visitDiMetaFieldTypeInteger: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaFieldTypeInteger >> jsonName [
 	<return: #String>
 	^ 'integer'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaFieldTypeInteger >> name [
 	<return: #String>
 	^ 'Integer'
 ]
 
-{ #category : 'accessing - model' }
+{ #category : #'accessing - model' }
 DiMetaFieldTypeInteger >> typeNameUsingNaming: aDiNamingStrategy [ 
 	"Return a class name (if possible) representing the meta field type"
 	<return: #Symbol>

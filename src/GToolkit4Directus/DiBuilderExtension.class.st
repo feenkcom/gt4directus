@@ -1,18 +1,18 @@
 Class {
-	#name : 'DiBuilderExtension',
-	#superclass : 'Object',
+	#name : #DiBuilderExtension,
+	#superclass : #Object,
 	#instVars : [
 		'builder'
 	],
 	#category : 'GToolkit4Directus-Builder'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiBuilderExtension >> builder [
 	^ builder
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiBuilderExtension >> builder: anObject [
 	builder := anObject
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : 'DiTaskItCommand',
-	#superclass : 'DiDecoradedCommand',
+	#name : #DiTaskItCommand,
+	#superclass : #DiDecoradedCommand,
 	#instVars : [
 		'onSuccess',
 		'onFailure'
@@ -8,7 +8,7 @@ Class {
 	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : 'execution' }
+{ #category : #execution }
 DiTaskItCommand >> execute [
 	"Perform a command action. 
 	The command may return a result."
@@ -20,14 +20,14 @@ DiTaskItCommand >> execute [
 	self initializeFutureCallbacksFor: aFuture
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 DiTaskItCommand >> initialize [
 	super initialize.
 	onFailure := OrderedCollection new: 2.
 	onSuccess := OrderedCollection new: 2.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 DiTaskItCommand >> initializeFutureCallbacksFor: aFuture [
 	self onSuccess
 		do: [ :eachCallback | aFuture onSuccessDo: eachCallback ].
@@ -35,22 +35,22 @@ DiTaskItCommand >> initializeFutureCallbacksFor: aFuture [
 		do: [ :eachCallback | aFuture onFailureDo: eachCallback ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiTaskItCommand >> onFailure [
 	^ onFailure
 ]
 
-{ #category : 'callbacks' }
+{ #category : #callbacks }
 DiTaskItCommand >> onFailureDo: aCallback [
 	onFailure add: aCallback
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiTaskItCommand >> onSuccess [
 	^ onSuccess
 ]
 
-{ #category : 'callbacks' }
+{ #category : #callbacks }
 DiTaskItCommand >> onSuccessDo: aCallback [
 	onSuccess add: aCallback
 ]

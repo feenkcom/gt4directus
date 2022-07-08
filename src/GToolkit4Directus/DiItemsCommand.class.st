@@ -1,23 +1,23 @@
 Class {
-	#name : 'DiItemsCommand',
-	#superclass : 'DiResponseCommand',
+	#name : #DiItemsCommand,
+	#superclass : #DiResponseCommand,
 	#instVars : [
 		'collectionName'
 	],
 	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiItemsCommand class >> endPoint [
 	^ #( 'items' )
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 DiItemsCommand class >> isAbstract [
 	^ self name = #DiItemsCommand 
 ]
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 DiItemsCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
@@ -26,13 +26,13 @@ DiItemsCommand >> assertReadyForExecution [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiItemsCommand >> collectionName [
 	<return: #String>
 	^ collectionName
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiItemsCommand >> collectionName: aString [
 	self 
 		assert: [ aString isString and: [ aString isNotEmpty ] ]

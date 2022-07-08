@@ -1,6 +1,6 @@
 Class {
-	#name : 'DiGetModelItemCommand',
-	#superclass : 'DiDecoradedCommand',
+	#name : #DiGetModelItemCommand,
+	#superclass : #DiDecoradedCommand,
 	#traits : 'TDiModel',
 	#classTraits : 'TDiModel classTrait',
 	#instVars : [
@@ -10,7 +10,7 @@ Class {
 	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : 'execution' }
+{ #category : #execution }
 DiGetModelItemCommand >> execute [
 	| aModel |
 	self assertReadyForExecution.
@@ -20,40 +20,40 @@ DiGetModelItemCommand >> execute [
 	self model: aModel
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 DiGetModelItemCommand >> initialize [
 	super initialize.
 	self command: DiGetItemCommand new.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetModelItemCommand >> itemId [
 	<return: #String>
 	^ self command itemId
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetModelItemCommand >> itemId: anInteger [
 	self command itemId: anInteger
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetModelItemCommand >> model [
 	^ model
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetModelItemCommand >> model: anObject [
 	model := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetModelItemCommand >> modelClass [
 	<return: #Class>
 	^ modelClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetModelItemCommand >> modelClass: aClass [
 	modelClass := aClass.
 	self command collectionName: aClass collectionName.

@@ -1,9 +1,9 @@
 Trait {
-	#name : 'TDiJsonContent',
+	#name : #TDiJsonContent,
 	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 TDiJsonContent >> gtJsonContentFor: aView [
 	<gtView>
 	self jsonContent ifNil: [ ^ aView empty ].
@@ -17,7 +17,7 @@ TDiJsonContent >> gtJsonContentFor: aView [
 				spawnObject: (STONJSON fromString: self jsonContent) ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TDiJsonContent >> jsonContent [
 	<return: #String>
 	^ self explicitRequirement

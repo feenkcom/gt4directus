@@ -1,13 +1,13 @@
 Class {
-	#name : 'DiGetItemCommand',
-	#superclass : 'DiItemsCommand',
+	#name : #DiGetItemCommand,
+	#superclass : #DiItemsCommand,
 	#instVars : [
 		'itemId'
 	],
 	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 DiGetItemCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
@@ -16,26 +16,26 @@ DiGetItemCommand >> assertReadyForExecution [
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetItemCommand >> endPoint [
 	<return: #Array>
 	^ super endPoint, { self collectionName. self itemId }
 ]
 
-{ #category : 'execution' }
+{ #category : #execution }
 DiGetItemCommand >> execute [
 	self assertReadyForExecution.
 	self response: self getResponse.
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetItemCommand >> itemId [
 	<return: #String>
 	^ itemId
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetItemCommand >> itemId: anInteger [
 	self 
 		assert: [ anInteger isInteger and: [ anInteger > 0 ] ]

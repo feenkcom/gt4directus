@@ -1,13 +1,13 @@
 Class {
-	#name : 'DiGetItemsCommand',
-	#superclass : 'DiItemsCommand',
+	#name : #DiGetItemsCommand,
+	#superclass : #DiItemsCommand,
 	#instVars : [
 		'itemIds'
 	],
 	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 DiGetItemsCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
@@ -19,7 +19,7 @@ DiGetItemsCommand >> assertReadyForExecution [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetItemsCommand >> endPoint [
 	<return: #Array>
 	| aFinalPoint |
@@ -30,20 +30,20 @@ DiGetItemsCommand >> endPoint [
 	^ super endPoint, { self collectionName. aFinalPoint }
 ]
 
-{ #category : 'execution' }
+{ #category : #execution }
 DiGetItemsCommand >> execute [
 	self assertReadyForExecution.
 	self response: self getResponse.
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetItemsCommand >> itemIds [
 	<return: #Array of: #String>
 	^ itemIds
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiGetItemsCommand >> itemIds: anArray [
 	self 
 		assert: [ anArray isCollection and: [ anArray isNotEmpty ] ]

@@ -5,8 +5,8 @@ I can be used to build a UML diagrams.
 
 "
 Class {
-	#name : 'DiModelInstanceNameAndTypeGenerator',
-	#superclass : 'Object',
+	#name : #DiModelInstanceNameAndTypeGenerator,
+	#superclass : #Object,
 	#instVars : [
 		'modelClass',
 		'modelInstanceVariableName'
@@ -14,29 +14,29 @@ Class {
 	#category : 'GToolkit4Directus-Utility'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 DiModelInstanceNameAndTypeGenerator >> isModelRequired [
 	<return: #Boolean>
 	^ (self modelPragmaNamed: #required: argumentAt: 1) ifNil: [ false ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 DiModelInstanceNameAndTypeGenerator >> isModelUnique [
 	<return: #Boolean>
 	^ (self modelPragmaNamed: #unique: argumentAt: 1) ifNil: [ false ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiModelInstanceNameAndTypeGenerator >> modelClass [
 	^ modelClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiModelInstanceNameAndTypeGenerator >> modelClass: anObject [
 	modelClass := anObject
 ]
 
-{ #category : 'accessing - computed' }
+{ #category : #'accessing - computed' }
 DiModelInstanceNameAndTypeGenerator >> modelCompiledMethod [
 	<return: #CompiledMethod>
 	^ self modelClass 
@@ -45,17 +45,17 @@ DiModelInstanceNameAndTypeGenerator >> modelCompiledMethod [
 		ifAbsent: [ nil ] 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiModelInstanceNameAndTypeGenerator >> modelInstanceVariableName [
 	^ modelInstanceVariableName
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiModelInstanceNameAndTypeGenerator >> modelInstanceVariableName: anObject [
 	modelInstanceVariableName := anObject
 ]
 
-{ #category : 'accessing - computed' }
+{ #category : #'accessing - computed' }
 DiModelInstanceNameAndTypeGenerator >> modelPragmaNamed: aName [
 	<return: #Pragma>
 	^ self modelCompiledMethod
@@ -63,13 +63,13 @@ DiModelInstanceNameAndTypeGenerator >> modelPragmaNamed: aName [
 		ifNil: [ nil ]
 ]
 
-{ #category : 'accessing - computed' }
+{ #category : #'accessing - computed' }
 DiModelInstanceNameAndTypeGenerator >> modelPragmaNamed: aName argumentAt: anIndex [
 	^ (self modelPragmaNamed: aName) ifNotNil: [ :aPragma | 
 			aPragma argumentAt: anIndex ]
 ]
 
-{ #category : 'accessing - computed' }
+{ #category : #'accessing - computed' }
 DiModelInstanceNameAndTypeGenerator >> modelReturnType [
 	<return: #BlRopedText>
 	| aSymbol |
@@ -78,7 +78,7 @@ DiModelInstanceNameAndTypeGenerator >> modelReturnType [
 	^ aSymbol asString asRopedText foreground: Color lightGray.
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 DiModelInstanceNameAndTypeGenerator >> text [
 	<return: #BlRopedText>
 	| aName aType isUnique isRequired theProperties |

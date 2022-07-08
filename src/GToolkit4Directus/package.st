@@ -1,1 +1,1 @@
-Package { #name : 'GToolkit4Directus' }
+Package { #name : #GToolkit4Directus }

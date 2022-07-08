@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtDirectusClientSnippet',
-	#superclass : 'Object',
+	#name : #GtDirectusClientSnippet,
+	#superclass : #Object,
 	#instVars : [
 		'url',
 		'user',
@@ -9,19 +9,19 @@ Class {
 	#category : 'GToolkit4Directus'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtDirectusClientSnippet class >> typeName [
 	<return: #String>
 
 	^ 'directus'
 ]
 
-{ #category : 'json mapping' }
+{ #category : #'json mapping' }
 GtDirectusClientSnippet class >> xdocSnippetMappingFor: aNeoJSONMapper [
 	"ignore"
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtDirectusClientSnippet >> asElement [
 	| snippetContainer formElement urlInputElement passwordInputElement toolbar playInspectButton userInputElement anExpanderElement |
 	formElement := BlElement new.
@@ -84,16 +84,16 @@ GtDirectusClientSnippet >> asElement [
 		addChild: anExpanderElement
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtDirectusClientSnippet >> asStencilBuilder [
 	^ self
 ]
 
-{ #category : 'api - instantiation' }
+{ #category : #'api - instantiation' }
 GtDirectusClientSnippet >> bind: aSnippet to: aSnippetElement [
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtDirectusClientSnippet >> inputElementNamed: aString in: formElement [
 	| labelElement inputElement text |
 	labelElement := BrLabel new text: aString, ':'; look: BrGlamorousLabelLook.
@@ -117,7 +117,7 @@ GtDirectusClientSnippet >> inputElementNamed: aString in: formElement [
 	^ inputElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtDirectusClientSnippet >> string [
 	<return: #String>
 	^ String streamContents: [ :aStream | 
@@ -126,38 +126,38 @@ GtDirectusClientSnippet >> string [
 		self user ifNotNil: [ aStream space; print: self user ]. ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtDirectusClientSnippet >> text [
 	<return: #BlRope>
 	^ self string asRopedText
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtDirectusClientSnippet >> token [
 	^ token
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtDirectusClientSnippet >> token: anObject [
 	token := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtDirectusClientSnippet >> url [
 	^ url
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtDirectusClientSnippet >> url: anObject [
 	url := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtDirectusClientSnippet >> user [
 	^ user
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtDirectusClientSnippet >> user: anObject [
 	user := anObject
 ]

@@ -3,8 +3,8 @@ I hold data of a given {{gtClass:DiMetaCollections}} meta model and real data.
 
 "
 Class {
-	#name : 'DiData',
-	#superclass : 'Object',
+	#name : #DiData,
+	#superclass : #Object,
 	#instVars : [
 		'collections',
 		'items'
@@ -12,23 +12,23 @@ Class {
 	#category : 'GToolkit4Directus-Model'
 }
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 DiData >> collectionNamed: aString [ 
 	<return: #DiMetaCollection>
 	^ self collections named: aString
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiData >> collections [
 	^ collections
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiData >> collections: anObject [
 	collections := anObject
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 DiData >> gtItemsFor: aView [
 	<gtView>
 	self items ifNil: [ ^ aView empty ].
@@ -36,21 +36,21 @@ DiData >> gtItemsFor: aView [
 			title: 'Data'
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 DiData >> gtUMLFor: aView [
 	<gtView>
 	self collections ifNil: [ ^ aView empty ].
 	^ self collections gtUMLFor: aView
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 DiData >> initialize [
 	super initialize.
 	collections := nil.
 	items := Dictionary new.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiData >> itemAt: aCollectionName put: aModel [
 	self items 
 		at: aCollectionName 
@@ -58,7 +58,7 @@ DiData >> itemAt: aCollectionName put: aModel [
 		ifAbsentPut: [ OrderedCollection new add: aModel; yourself ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiData >> itemAt: aCollectionName putAll: aCollectionOfModels [
 	self items 
 		at: aCollectionName 
@@ -67,19 +67,19 @@ DiData >> itemAt: aCollectionName putAll: aCollectionOfModels [
 			addAll: aCollectionOfModels; yourself ]
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 DiData >> itemOf: aCollectionName andId: anItemId [
 	| anItems |
 	anItems := self itemsAt: aCollectionName.
 	^ anItems detect: [ :eachItem | eachItem id = anItemId ] ifNone: [ nil ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiData >> items [
 	^ items
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiData >> itemsAt: aCollectionName [
 	<return: #Collection>
 	^ self 
@@ -87,7 +87,7 @@ DiData >> itemsAt: aCollectionName [
 		ifAbsentPut: [ OrderedCollection new ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiData >> itemsAt: aCollectionName ifAbsentPut: anAbsentBlock [
 	<return: #Collection>
 	^ self items 
@@ -95,7 +95,7 @@ DiData >> itemsAt: aCollectionName ifAbsentPut: anAbsentBlock [
 		ifAbsentPut: anAbsentBlock
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 DiData >> itemsOf: aCollectionName that: aBlockClosure [ 
 	<return: #Collection>
 	| anItems |
@@ -103,12 +103,12 @@ DiData >> itemsOf: aCollectionName that: aBlockClosure [
 	^ anItems select: aBlockClosure
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 DiData >> relate [
 	self relationBuilder relate
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 DiData >> relationBuilder [
 	^ DiDataRelationBuilder new
 		data: self

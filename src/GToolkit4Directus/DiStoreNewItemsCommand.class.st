@@ -1,6 +1,6 @@
 Class {
-	#name : 'DiStoreNewItemsCommand',
-	#superclass : 'DiItemsCommand',
+	#name : #DiStoreNewItemsCommand,
+	#superclass : #DiItemsCommand,
 	#traits : 'TDiJsonContent',
 	#classTraits : 'TDiJsonContent classTrait',
 	#instVars : [
@@ -9,7 +9,7 @@ Class {
 	#category : 'GToolkit4Directus-Commands'
 }
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 DiStoreNewItemsCommand >> assertReadyForExecution [
 	super assertReadyForExecution.
 	self 
@@ -18,13 +18,13 @@ DiStoreNewItemsCommand >> assertReadyForExecution [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiStoreNewItemsCommand >> endPoint [
 	<return: #Array>
 	^ super endPoint, { self collectionName }
 ]
 
-{ #category : 'execution' }
+{ #category : #execution }
 DiStoreNewItemsCommand >> execute [
 	| aResponse |
 	self assertReadyForExecution.
@@ -32,13 +32,13 @@ DiStoreNewItemsCommand >> execute [
 	self response: aResponse
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiStoreNewItemsCommand >> jsonContent [
 	<return: #String>
 	^ jsonContent
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiStoreNewItemsCommand >> jsonContent: aString [
 	self 
 		assert: [ aString isString and: [ aString isNotEmpty ] ] 

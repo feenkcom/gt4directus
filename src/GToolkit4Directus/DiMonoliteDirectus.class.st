@@ -1,15 +1,15 @@
 Class {
-	#name : 'DiMonoliteDirectus',
-	#superclass : 'DiProtoDirectus',
+	#name : #DiMonoliteDirectus,
+	#superclass : #DiProtoDirectus,
 	#category : 'GToolkit4Directus-Importer'
 }
 
-{ #category : 'authentication' }
+{ #category : #authentication }
 DiMonoliteDirectus >> authenticate [
 	self authenticateWithEmail: self email password: self password
 ]
 
-{ #category : 'authentication' }
+{ #category : #authentication }
 DiMonoliteDirectus >> authenticateWithEmail: anEmail password: aPassword [
 	| aResponse aJsonObject |
 	accessToken ifNil: [ 
@@ -33,13 +33,13 @@ DiMonoliteDirectus >> authenticateWithEmail: anEmail password: aPassword [
 	].
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMonoliteDirectus >> email [
 	<return: #String>
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMonoliteDirectus >> password [
 	<return: #String>
 	^ self subclassResponsibility

@@ -7,27 +7,27 @@ See my subclasses for more detials: {{gtClass:DiMetaModel|expanded=true|show=gtS
 
 "
 Class {
-	#name : 'DiMetaModel',
-	#superclass : 'Object',
+	#name : #DiMetaModel,
+	#superclass : #Object,
 	#instVars : [
 		'modelBuilder'
 	],
 	#category : 'GToolkit4Directus-Meta Model'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 DiMetaModel >> isSuccess [
 	"Polymorphic to ${method:ZnResponse>>#isSuccess}$.
 	This is likely not an optimal solution."
 	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaModel >> modelBuilder [
 	^ modelBuilder
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiMetaModel >> modelBuilder: anObject [
 	modelBuilder := anObject
 ]

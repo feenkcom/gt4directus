@@ -1,6 +1,6 @@
 Class {
-	#name : 'DiModularDirectusExamples',
-	#superclass : 'Object',
+	#name : #DiModularDirectusExamples,
+	#superclass : #Object,
 	#traits : 'TGtZnServerExamples',
 	#classTraits : 'TGtZnServerExamples classTrait',
 	#instVars : [
@@ -10,7 +10,7 @@ Class {
 	#category : 'GToolkit4Directus-Examples'
 }
 
-{ #category : 'example - commands' }
+{ #category : #'example - commands' }
 DiModularDirectusExamples >> authenticateUsingEmailAndPassword [
 	<gtExample>
 	| aDirectus aCommand |
@@ -27,7 +27,7 @@ DiModularDirectusExamples >> authenticateUsingEmailAndPassword [
 	^ aCommand
 ]
 
-{ #category : 'example - directus' }
+{ #category : #'example - directus' }
 DiModularDirectusExamples >> basicDirectus [
 	<gtExample>
 	| aDirectus |
@@ -37,12 +37,12 @@ DiModularDirectusExamples >> basicDirectus [
 	^ aDirectus
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiModularDirectusExamples >> email [
 	^ 'my@email.com'
 ]
 
-{ #category : 'example - commands' }
+{ #category : #'example - commands' }
 DiModularDirectusExamples >> getItemOfCompany [
 	<gtExample>
 	| aDirectus aCommand |
@@ -63,20 +63,20 @@ DiModularDirectusExamples >> getItemOfCompany [
 	^ aCommand
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 DiModularDirectusExamples >> initialize [
 	super initialize.
 	zincExamples := GtZnServerExamples new.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 DiModularDirectusExamples >> initializeDelegate [
 	delegate
 		map: '/auth/authenticate'
 		to: [ :aRequest :aResponse | aResponse entity: (ZnEntity json: '{"data":{"token":"my-token"}}') ]
 ]
 
-{ #category : 'example - directus' }
+{ #category : #'example - directus' }
 DiModularDirectusExamples >> localDirectus [
 	<gtExample>
 	| aDirectus |
@@ -87,14 +87,14 @@ DiModularDirectusExamples >> localDirectus [
 	^ aDirectus
 ]
 
-{ #category : 'server' }
+{ #category : #server }
 DiModularDirectusExamples >> mapEndPoint: anArray to: aBlock [
 	self delegate
 		map: (self mappingForEndPoint: anArray)
 		to: aBlock
 ]
 
-{ #category : 'server' }
+{ #category : #server }
 DiModularDirectusExamples >> mappingForEndPoint: anArray [
 	<return: #String>
 	^ String streamContents: [ :aStream | 
@@ -105,25 +105,25 @@ DiModularDirectusExamples >> mappingForEndPoint: anArray [
 			separatedBy: [ aStream nextPut: $/ ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 DiModularDirectusExamples >> password [
 	^ 'my-password'
 ]
 
-{ #category : 'server' }
+{ #category : #server }
 DiModularDirectusExamples >> zincDelegate [
 	"Return a locally stored server delegate (not by accessing a ZnServer)"
 	<return: #ZnDispatcherDelegate>
 	^ delegate
 ]
 
-{ #category : 'server' }
+{ #category : #server }
 DiModularDirectusExamples >> zincDelegate: aZnDispatcherDelegate [
 	"Store the server delegate locally to an instance variable"
 	delegate := aZnDispatcherDelegate
 ]
 
-{ #category : 'server' }
+{ #category : #server }
 DiModularDirectusExamples >> zincExamples [
 	<return: #GtZnServerExamples>
 	^ zincExamples
