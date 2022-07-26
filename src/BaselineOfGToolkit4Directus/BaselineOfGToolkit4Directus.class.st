@@ -15,20 +15,6 @@ BaselineOfGToolkit4Directus >> baseline: spec [
 				spec requires: #( 'NeoJSON' ) ];
 			package: 'GToolkit4DirectusRing2' with: [
 				spec requires: #( 'GToolkit4Directus' ) ]
-	].
+	]
 
-	spec for: #Ring2 do: [ 
-		spec
-			baseline: 'Ring2' with: [ 
-				spec repository: 'github://pavel-krivanek/Ring2/src' ];
-			package: 'GToolkit4DirectusRing2' with: [
-				spec requires: #( 'GToolkit4Directus' 'Ring2' ) ]
-	].
-
-]
-
-{ #category : #accessing }
-BaselineOfGToolkit4Directus >> customProjectAttributes [
-	SystemVersion current major = 7 ifTrue: [ ^ #( Ring2 ) ].
-	^ super customProjectAttributes 
 ]
