@@ -1,50 +1,50 @@
 Trait {
-	#name : #TModelBuilder,
+	#name : #TDiModelBuilder,
 	#category : #'GToolkit4DirectusRing2-Model Builders'
 }
 
 { #category : #'accessing - model' }
-TModelBuilder >> behaviorNamed: aString [
+TDiModelBuilder >> behaviorNamed: aString [
 	^ self modelBuilder behaviorNamed: aString
 ]
 
 { #category : #'building - model' }
-TModelBuilder >> ensureClassAndMetaClassNamed: aString [ 
+TDiModelBuilder >> ensureClassAndMetaClassNamed: aString [ 
 	^ self modelBuilder ensureClassAndMetaClassNamed: aString 
 ]
 
 { #category : #'building - model' }
-TModelBuilder >> ensureClassComment: aString forBehavior: aBRBehavior [
+TDiModelBuilder >> ensureClassComment: aString forBehavior: aBRBehavior [
 	^ self modelBuilder ensureClassComment: aString forBehavior: aBRBehavior
 ]
 
 { #category : #'building - model' }
-TModelBuilder >> ensureInstanceVariable: aString inBehavior: aRGBehavior [
+TDiModelBuilder >> ensureInstanceVariable: aString inBehavior: aRGBehavior [
 	^ self modelBuilder ensureInstanceVariable: aString inBehavior: aRGBehavior
 ]
 
 { #category : #'building - model' }
-TModelBuilder >> ensureInstanceVariables: aCollection inBehavior: aRGBehavior [
+TDiModelBuilder >> ensureInstanceVariables: aCollection inBehavior: aRGBehavior [
 	^ self modelBuilder ensureInstanceVariables: aCollection inBehavior: aRGBehavior
 ]
 
 { #category : #'building - model' }
-TModelBuilder >> ensureLocalMethodNamed: aMethodName withSourceCode: aSourceCode andProtocol: aProtocolName inBehavior: aRGBehavior [
+TDiModelBuilder >> ensureLocalMethodNamed: aMethodName withSourceCode: aSourceCode andProtocol: aProtocolName inBehavior: aRGBehavior [
 	^ self modelBuilder ensureLocalMethodNamed: aMethodName withSourceCode: aSourceCode andProtocol: aProtocolName inBehavior: aRGBehavior
 ]
 
 { #category : #'building - model' }
-TModelBuilder >> ensureObjectAsSuperclassForBehavior: aRGBehavior [ 
+TDiModelBuilder >> ensureObjectAsSuperclassForBehavior: aRGBehavior [ 
 	^ self modelBuilder ensureObjectAsSuperclassForBehavior: aRGBehavior 
 ]
 
 { #category : #'building - model' }
-TModelBuilder >> ensureTraitNamed: aTraitName inBehavior: aRGBehavior [
+TDiModelBuilder >> ensureTraitNamed: aTraitName inBehavior: aRGBehavior [
 	^ self modelBuilder ensureTraitNamed: aTraitName inBehavior: aRGBehavior
 ]
 
 { #category : #'model builder' }
-TModelBuilder >> modelBuilder [
+TDiModelBuilder >> modelBuilder [
 	<return: #DiModelBuilder>
 	^ self explicitRequirement
 ]
