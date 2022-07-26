@@ -64,7 +64,7 @@ DiMetaRelation >> gtRelationFor: aView [
 	^ aView columnedList
 		title: 'Description';
 		items: [ | aDictionary | 
-			aDictionary := OrderPreservingDictionary new.
+			aDictionary := OrderedDictionary new.
 			aDictionary at: 'Relation from one-collection' put: self collectionOne.
 			self fieldOne ifNotNil: [ aDictionary at: 'and one-filed' put: self fieldOne ].
 			aDictionary

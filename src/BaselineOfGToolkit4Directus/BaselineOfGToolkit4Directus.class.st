@@ -18,9 +18,3 @@ BaselineOfGToolkit4Directus >> baseline: spec [
 			spec requires: #('GToolkit4Directus') ].
 	]
 ]
-
-{ #category : #accessing }
-BaselineOfGToolkit4Directus >> customProjectAttributes [
-	SystemVersion current major = 7 ifTrue: [ ^ #( Ring2 ) ].
-	^ super customProjectAttributes 
-]

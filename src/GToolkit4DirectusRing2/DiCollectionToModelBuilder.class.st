@@ -33,8 +33,8 @@ For more filteres see {{gtClass:DiCollectionToModelBuilderFilter|expanded=true|s
 Class {
 	#name : #DiCollectionToModelBuilder,
 	#superclass : #Object,
-	#traits : 'TCollectionIterator + TModelBuilder',
-	#classTraits : 'TCollectionIterator classTrait + TModelBuilder classTrait',
+	#traits : 'TDiCollectionIterator + TDiModelBuilder',
+	#classTraits : 'TDiCollectionIterator classTrait + TDiModelBuilder classTrait',
 	#instVars : [
 		'namingStrategy',
 		'extensions',
