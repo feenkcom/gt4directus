@@ -1,10 +1,11 @@
 "
-I represent ${class:DiMetaFieldType}$ sub-instance visitor.
+I represent {{gtClass:DiMetaFieldType}} sub-instance visitor.
+
 
 "
 Trait {
 	#name : #TDiMetaFieldTypeVisitor,
-	#category : 'GToolkit4Directus-Meta Model'
+	#category : #'GToolkit4Directus-Meta Model'
 }
 
 { #category : #visiting }
