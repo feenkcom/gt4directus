@@ -1,5 +1,6 @@
 "
-I am a dummy ${class:Trait}$ to exemplify ${class:DiAddTraitExtension}$ behavior.
+I am a dummy {{gtClass:Trait}} to exemplify {{gtClass:DiAddTraitExtension}} behavior.
+
 
 "
 Trait {

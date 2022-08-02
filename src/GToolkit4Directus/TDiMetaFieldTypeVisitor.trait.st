@@ -1,5 +1,6 @@
 "
-I represent ${class:DiMetaFieldType}$ sub-instance visitor.
+I represent {{gtClass:DiMetaFieldType}} sub-instance visitor.
+
 
 "
 Trait {
