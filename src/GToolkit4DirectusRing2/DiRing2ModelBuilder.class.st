@@ -190,6 +190,7 @@ DiRing2ModelBuilder >> ensurePackageNamed: aString [
 	self 
 		assert: [ aString isNotNil and: [ aString isNotEmpty ] ] 
 		description: [ 'Package name must be non-nil and non-empty string' ].
+	
 	^ self ringEnvironment ensurePackageNamed: aString
 ]
 

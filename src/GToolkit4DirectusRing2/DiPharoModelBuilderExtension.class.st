@@ -38,5 +38,6 @@ DiPharoModelBuilderExtension >> buildBehavior: aDiMetaCollection [
 
 { #category : #building }
 DiPharoModelBuilderExtension >> buildBehaviors [
-	self includedCollectionsDo: [ :eachCollection | self buildBehavior: eachCollection ]
+	self includedCollectionsDo: [ :eachCollection | 
+		self buildBehavior: eachCollection ]
 ]

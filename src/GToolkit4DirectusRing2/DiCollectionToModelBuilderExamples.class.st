@@ -509,11 +509,13 @@ DiCollectionToModelBuilderExamples >> buildFullModelWithUserDataMethod_Behavior 
 DiCollectionToModelBuilderExamples >> collectionToModelBuilder [
 	<gtExample>
 	| aBuilder |
+	
 	aBuilder := self basicCollectionToModelBuilder.
 	aBuilder packageName: self dummyPackageName.
 	aBuilder modelClassPrefix: self dummyModelClassPrefix.
 	aBuilder modelRootClassName: self dummyModelRootClassName.
 	aBuilder usePharoModelBuilder.
+	
 	self assert: aBuilder packageName equals: self dummyPackageName.
 	self assert: aBuilder modelClassPrefix equals: self dummyModelClassPrefix.
 	self assert: aBuilder modelRootClassName equals: self dummyModelRootClassName.

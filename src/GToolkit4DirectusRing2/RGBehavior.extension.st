@@ -37,8 +37,7 @@ RGBehavior >> gtLocalMethodFor: aView [
 	^ aView columnedList
 		title: 'Local Methods';
 		priority: 2;
-		items: [ self localMethods 
-			sort: [ :a :b | a isRingResolved and: [ a name < b name ] ] ];
-		column: 'Name' item: [ :aMethod | aMethod name ];
-		column: 'Protocol' item: [ :aMethod | aMethod protocol ]
+		items: [ self localMethods sort: [ :a :b | a isRingResolved and: [ a name < b name ] ] ];
+		column: 'Name' text: [ :aMethod | aMethod name ];
+		column: 'Protocol' text: [ :aMethod | aMethod protocol ]
 ]

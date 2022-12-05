@@ -13,14 +13,12 @@ RGEnvironment >> gtBehaviorsFor: aView [
 	^ aView columnedList
 		title: 'Behaviors';
 		priority: 1;
-		items: [ (behaviors asOrderedCollection 
-			reject: [ :aBehavior | 
-				aBehavior isRGUnresolvedValue or: [ 
-					aBehavior isRingResolved not ]]) 
-			sort: [ :a :b | self gtPutBehavior: a before: b ] ];
-		column: 'Name' item: [ :aBehavior | aBehavior ];
-		column: 'Superclass' item: [ :aBehavior | aBehavior superclass name ];
-		column: 'Package' item: [ :aBehavior | aBehavior package name ]
+		items: [ (behaviors asOrderedCollection
+				reject: [ :aBehavior | aBehavior isRGUnresolvedValue or: [ aBehavior isRingResolved not ] ])
+				sort: [ :a :b | self gtPutBehavior: a before: b ] ];
+		column: 'Name' text: [ :aBehavior | aBehavior ];
+		column: 'Superclass' text: [ :aBehavior | aBehavior superclass name ];
+		column: 'Package' text: [ :aBehavior | aBehavior package name ]
 ]
 
 { #category : #'*GToolkit4DirectusRing2' }
@@ -30,14 +28,13 @@ RGEnvironment >> gtPackagesFor: aView [
 	^ aView columnedList
 		title: 'Packages';
 		priority: 2;
-		items: [ (packages asOrderedCollection 
-			reject: [ :aBehavior |  
-				aBehavior isRGUnresolvedValue or: [ 
-					aBehavior isRingResolved not ] ] )
-			sort: [ :a :b | a isRingResolved and: [ a name < b name ] ] ];
-		column: 'Name' item: [ :aPackage | aPackage name ];
-		column: 'Behaviors' item: [ :aPackage | aPackage definedBehaviors size ];
-		column: 'Extended Behaviors' item: [ :aPackage | aPackage extendedBehaviors size ]
+		items: [ (packages asOrderedCollection
+				reject: [ :aBehavior | aBehavior isRGUnresolvedValue or: [ aBehavior isRingResolved not ] ])
+				sort: [ :a :b | a isRingResolved and: [ a name < b name ] ] ];
+		column: 'Name' text: [ :aPackage | aPackage name ];
+		column: 'Behaviors' text: [ :aPackage | aPackage definedBehaviors size ];
+		column: 'Extended Behaviors'
+			text: [ :aPackage | aPackage extendedBehaviors size ]
 ]
 
 { #category : #'*GToolkit4DirectusRing2' }
@@ -61,14 +58,13 @@ RGEnvironment >> gtTreeBehaviorsFor: aView [
 	^ aView columnedTree
 		title: 'Tree Behaviors';
 		priority: 3;
-		items: [ (behaviors asOrderedCollection 
-			select: [ :aBehavior | 
-				aBehavior isRGUnresolvedValue not and: [ 
-					aBehavior isRingResolved and: [
-						aBehavior superclass isRingResolved not ]]]) 
-			sort: [ :a :b | self gtPutBehavior: a before: b ] ];
+		items: [ (behaviors asOrderedCollection
+				select: [ :aBehavior | 
+					aBehavior isRGUnresolvedValue not
+						and: [ aBehavior isRingResolved and: [ aBehavior superclass isRingResolved not ] ] ])
+				sort: [ :a :b | self gtPutBehavior: a before: b ] ];
 		children: [ :aBehavior | aBehavior subclasses ];
 		expandUpTo: 1;
-		column: 'Name' item: [ :aBehavior | aBehavior ];
-		column: 'Package' item: [ :aBehavior | aBehavior package name ]
+		column: 'Name' text: [ :aBehavior | aBehavior ];
+		column: 'Package' text: [ :aBehavior | aBehavior package name ]
 ]
